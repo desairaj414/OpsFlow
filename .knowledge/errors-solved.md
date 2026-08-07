@@ -1,8 +1,9 @@
 ---
-type: errors
+type: reference
 title: Errors Solved
-status: draft
+status: active
 updated: 2026-08-07
+related: [env-network.md, state-progress.md]
 ---
 
 ## Error Template

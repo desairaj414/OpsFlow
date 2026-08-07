@@ -1,0 +1,53 @@
+---
+type: domain
+title: Domain — Multimodal Intake (Voice + Vision)
+status: draft
+updated: 2026-08-07
+related: [api-contract.md, models-routing.md, domain-privacy.md, prd-phase-3.md]
+---
+
+From PRD §2.4 D1 (core, not stretch) and §3.2. One `intake/` component, three entry paths, one
+canonical [`MaintenanceSignal`](api-contract.md) object — this is why voice+vision is affordable:
+they share the normaliser, the scrubber, and everything downstream.
+
+## Alert path (primary, unchanged)
+HTTP ingestion from the monitoring simulator. Clause C3 is not weakened by adding voice/image — the
+alert trigger remains primary.
+
+## Voice path (Whisper) — scoped to commands, not free-form dictation
+Audio → Whisper → text → **deterministic closed-vocabulary intent parser** (no LLM, see
+[models-routing.md](models-routing.md)) → an action against an existing API.
+Supported intents (do not expand this list without the human's sign-off — it is a deliberate,
+audited scope):
+- show open incidents / show P1s
+- show incident X
+- approve X
+- reject X with reason
+- what changed on CI Y
+- start scenario Z
+
+Every voice action lands in the audit log with `modality: voice`. **Destructive or approving
+intents are confirmed on screen before executing** — a misheard "approve" must never commit a
+production change.
+
+## Vision path (Llama Vision)
+Paste/upload a screenshot (error dialog, stack trace, monitoring chart). Model extracts error text,
+identifiers, timestamps, apparent service names → normalised into `MaintenanceSignal` → **shown to
+the user for confirmation before entering a workflow** → cited thereafter as `IMG-nnn` so provenance
+survives into the diagnosis.
+
+## Both paths are additive
+Alert trigger stays primary (clause C3). Voice and image are additional entry points, never replacements.
+
+## Bias created by this feature (must be raised unprompted, see [domain-guardrails.md](domain-guardrails.md))
+Accent/speech-pattern bias (voice) and image-context bias (vision) — mitigations listed in
+[domain-guardrails.md](domain-guardrails.md), not repeated here.
+
+## Test data requirement (PRD §6.1)
+At least 2 deliberately noisy/accented voice samples and 1 low-quality/legacy-UI screenshot in the
+scenario library (PRD §5 Phase 5) — these exist because §2.5 claims the system handles them; an
+untested accessibility claim is a liability.
+
+## Do not re-decide
+Command-scoped voice (not free dictation), mandatory confirmation-before-action on both paths, and
+"alert stays primary" are resolved decisions — see [decisions-log.md](decisions-log.md).
