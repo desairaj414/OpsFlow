@@ -1,0 +1,12 @@
+{
+  "id": "SCEN-05",
+  "name": "Performance tuning, prod Power Platform environment — advisory-only, never auto-executes",
+  "workflow_type": "performance",
+  "is_edge_case": false,
+  "ci_id": "CI-0138",
+  "alert_category": "degradation",
+  "auto_approve": false,
+  "expected": {
+    "status": "pending_approval"
+  }
+}

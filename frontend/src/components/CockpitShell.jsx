@@ -12,6 +12,7 @@ import ChunkInspector from "@/components/ChunkInspector.jsx";
 import MetricsEval from "@/components/MetricsEval.jsx";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { TAB_INFO } from "@/lib/tabInfo";
 import { useAlertStream } from "@/hooks/useAlertStream";
 import { useWorkflowRun } from "@/hooks/useWorkflowRun";
 
@@ -37,6 +38,17 @@ function PlaceholderTab({ name }) {
     <p className="rounded-md border border-dashed border-border p-6 text-sm text-muted-foreground">
       {name} — not yet built (see prd-phase-4.md atomic steps).
     </p>
+  );
+}
+
+function TabInfoBanner({ tab }) {
+  const info = TAB_INFO[tab];
+  if (!info) return null;
+  return (
+    <div className="mb-4 rounded-lg border border-border bg-secondary/40 px-4 py-3">
+      <p className="text-sm font-semibold text-foreground">{info.tagline}</p>
+      <p className="mt-0.5 text-sm text-muted-foreground">{info.description}</p>
+    </div>
   );
 }
 
@@ -103,24 +115,41 @@ export default function CockpitShell({ token, apiBase, username, onLogout }) {
       />
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex shrink-0 items-center justify-between border-b border-border px-6 py-3">
-          <h1 className="text-lg font-semibold">Maintenance Control Plane</h1>
-          <div className="flex items-center gap-3 text-sm text-muted-foreground">
+        <header className="flex shrink-0 items-center justify-between bg-header px-6 py-3 text-header-foreground">
+          <div className="flex items-center gap-3">
+            <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true" className="shrink-0">
+              <rect x="0" y="0" width="10" height="10" fill="#f25022" />
+              <rect x="12" y="0" width="10" height="10" fill="#7fba00" />
+              <rect x="0" y="12" width="10" height="10" fill="#00a4ef" />
+              <rect x="12" y="12" width="10" height="10" fill="#ffb900" />
+            </svg>
+            <div>
+              <h1 className="text-base font-semibold leading-tight">Maintenance Control Plane</h1>
+              <p className="text-xs text-header-foreground/60 leading-tight">Microsoft 365 &amp; Power Platform estate</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 text-sm text-header-foreground/80">
             <span>{username}</span>
-            <Button variant="outline" size="sm" onClick={onLogout}>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={onLogout}
+              className="border-header-foreground/25 bg-transparent text-header-foreground hover:bg-header-foreground/10"
+            >
               Log out
             </Button>
           </div>
         </header>
 
-        <nav className="flex shrink-0 gap-1 overflow-x-auto border-b border-border px-4 py-2">
+        <nav className="flex shrink-0 gap-1 overflow-x-auto border-b border-border bg-card px-4">
           {TABS.map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
+              title={TAB_INFO[tab]?.description}
               className={cn(
-                "whitespace-nowrap rounded-md px-3 py-1.5 text-sm hover:bg-secondary",
-                activeTab === tab && "bg-secondary font-medium"
+                "whitespace-nowrap border-b-2 border-transparent px-3 py-2.5 text-sm text-muted-foreground hover:text-foreground",
+                activeTab === tab && "border-accent font-medium text-foreground"
               )}
             >
               {tab}
@@ -131,6 +160,7 @@ export default function CockpitShell({ token, apiBase, username, onLogout }) {
         <GoldenPathBar scenario={scenario} setScenario={setScenario} incident={incident} onStart={startIncident} />
 
         <main className="min-w-0 flex-1 overflow-y-auto p-6">
+          <TabInfoBanner tab={activeTab} />
           {activeTab === "Ops Board" && (
             <OpsBoard
               apiBase={apiBase}

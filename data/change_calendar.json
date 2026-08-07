@@ -2,201 +2,201 @@
   {
     "id": "CHG-001",
     "ci_id": "CI-0019",
-    "window_start": "2026-08-11T17:27:01",
-    "window_end": "2026-08-11T19:30:34.983700",
+    "window_start": "2026-08-11T23:53:02",
+    "window_end": "2026-08-12T01:56:35.983700",
     "change_type": "config",
-    "description": "Maintenance window for cache-article-019"
+    "description": "Maintenance window for onedrive-sync-cache-article-019"
   },
   {
     "id": "CHG-002",
     "ci_id": "CI-0065",
-    "window_start": "2026-08-28T05:08:01",
-    "window_end": "2026-08-28T08:45:25.946949",
+    "window_start": "2026-08-28T11:34:02",
+    "window_end": "2026-08-28T15:11:26.946949",
     "change_type": "config",
-    "description": "Maintenance window for api-gateway-stop-065"
+    "description": "Maintenance window for power-automate-gateway-stop-065"
   },
   {
     "id": "CHG-003",
     "ci_id": "CI-0198",
-    "window_start": "2026-08-29T16:17:44",
-    "window_end": "2026-08-29T18:52:52.318287",
+    "window_start": "2026-08-29T22:43:45",
+    "window_end": "2026-08-30T01:18:53.318287",
     "change_type": "tuning",
-    "description": "Maintenance window for web-server-score-198"
+    "description": "Maintenance window for sharepoint-site-score-198"
   },
   {
     "id": "CHG-004",
     "ci_id": "CI-0124",
-    "window_start": "2026-09-04T14:36:06",
-    "window_end": "2026-09-04T15:51:06.812247",
+    "window_start": "2026-09-04T21:02:07",
+    "window_end": "2026-09-04T22:17:07.812247",
     "change_type": "config",
-    "description": "Maintenance window for load-balancer-region-124"
+    "description": "Maintenance window for exchange-online-connector-region-124"
   },
   {
     "id": "CHG-005",
     "ci_id": "CI-0102",
-    "window_start": "2026-09-01T17:35:14",
-    "window_end": "2026-09-01T20:50:10.047627",
+    "window_start": "2026-09-02T00:01:15",
+    "window_end": "2026-09-02T03:16:11.047627",
     "change_type": "tuning",
-    "description": "Maintenance window for load-balancer-unit-102"
+    "description": "Maintenance window for exchange-online-connector-unit-102"
   },
   {
     "id": "CHG-006",
     "ci_id": "CI-0180",
-    "window_start": "2026-09-05T15:28:38",
-    "window_end": "2026-09-05T19:13:34.728661",
+    "window_start": "2026-09-05T21:54:39",
+    "window_end": "2026-09-06T01:39:35.728661",
     "change_type": "tuning",
-    "description": "Maintenance window for web-server-see-180"
+    "description": "Maintenance window for sharepoint-site-see-180"
   },
   {
     "id": "CHG-007",
     "ci_id": "CI-0114",
-    "window_start": "2026-08-10T13:49:08",
-    "window_end": "2026-08-10T17:28:29.915267",
+    "window_start": "2026-08-10T20:15:09",
+    "window_end": "2026-08-10T23:54:30.915267",
     "change_type": "patch",
-    "description": "Maintenance window for db-server-stop-114"
+    "description": "Maintenance window for dataverse-instance-stop-114"
   },
   {
     "id": "CHG-008",
     "ci_id": "CI-0077",
-    "window_start": "2026-09-02T07:35:35",
-    "window_end": "2026-09-02T08:54:04.865164",
+    "window_start": "2026-09-02T14:01:36",
+    "window_end": "2026-09-02T15:20:05.865164",
     "change_type": "tuning",
-    "description": "Maintenance window for app-server-natural-077"
+    "description": "Maintenance window for power-platform-environment-natural-077"
   },
   {
     "id": "CHG-009",
     "ci_id": "CI-0116",
-    "window_start": "2026-08-16T08:46:33",
-    "window_end": "2026-08-16T11:19:13.156172",
+    "window_start": "2026-08-16T15:12:34",
+    "window_end": "2026-08-16T17:45:14.156172",
     "change_type": "patch",
-    "description": "Maintenance window for load-balancer-long-116"
+    "description": "Maintenance window for exchange-online-connector-long-116"
   },
   {
     "id": "CHG-010",
     "ci_id": "CI-0014",
-    "window_start": "2026-08-21T16:11:21",
-    "window_end": "2026-08-21T19:16:33.466764",
+    "window_start": "2026-08-21T22:37:22",
+    "window_end": "2026-08-22T01:42:34.466764",
     "change_type": "config",
-    "description": "Maintenance window for storage-volume-choice-014"
+    "description": "Maintenance window for sharepoint-document-library-choice-014"
   },
   {
     "id": "CHG-011",
     "ci_id": "CI-0199",
-    "window_start": "2026-08-08T11:45:39",
-    "window_end": "2026-08-08T14:27:33.213037",
+    "window_start": "2026-08-08T18:11:40",
+    "window_end": "2026-08-08T20:53:34.213037",
     "change_type": "tuning",
-    "description": "Maintenance window for message-queue-stock-199"
+    "description": "Maintenance window for teams-notification-queue-stock-199"
   },
   {
     "id": "CHG-012",
     "ci_id": "CI-0187",
-    "window_start": "2026-09-03T19:07:44",
-    "window_end": "2026-09-03T20:52:41.708746",
+    "window_start": "2026-09-04T01:33:45",
+    "window_end": "2026-09-04T03:18:42.708746",
     "change_type": "patch",
-    "description": "Maintenance window for api-gateway-stop-187"
+    "description": "Maintenance window for power-automate-gateway-stop-187"
   },
   {
     "id": "CHG-013",
     "ci_id": "CI-0165",
-    "window_start": "2026-09-06T10:55:17",
-    "window_end": "2026-09-06T12:14:45.729088",
+    "window_start": "2026-09-06T17:21:18",
+    "window_end": "2026-09-06T18:40:46.729088",
     "change_type": "tuning",
-    "description": "Maintenance window for storage-volume-strong-165"
+    "description": "Maintenance window for sharepoint-document-library-strong-165"
   },
   {
     "id": "CHG-014",
     "ci_id": "CI-0179",
-    "window_start": "2026-08-09T17:18:52",
-    "window_end": "2026-08-09T18:35:48.327502",
+    "window_start": "2026-08-09T23:44:53",
+    "window_end": "2026-08-10T01:01:49.327502",
     "change_type": "config",
-    "description": "Maintenance window for network-switch-page-179"
+    "description": "Maintenance window for azure-ad-connect-sync-page-179"
   },
   {
     "id": "CHG-015",
     "ci_id": "CI-0050",
-    "window_start": "2026-08-17T02:04:40",
-    "window_end": "2026-08-17T04:32:13.358138",
+    "window_start": "2026-08-17T08:30:41",
+    "window_end": "2026-08-17T10:58:14.358138",
     "change_type": "config",
-    "description": "Maintenance window for app-server-follow-050"
+    "description": "Maintenance window for power-platform-environment-follow-050"
   },
   {
     "id": "CHG-016",
     "ci_id": "CI-0039",
-    "window_start": "2026-08-26T15:18:15",
-    "window_end": "2026-08-26T17:12:39.896743",
+    "window_start": "2026-08-26T21:44:16",
+    "window_end": "2026-08-26T23:38:40.896743",
     "change_type": "tuning",
-    "description": "Maintenance window for storage-volume-room-039"
+    "description": "Maintenance window for sharepoint-document-library-room-039"
   },
   {
     "id": "CHG-017",
     "ci_id": "CI-0147",
-    "window_start": "2026-08-17T19:03:06",
-    "window_end": "2026-08-17T22:55:30.560165",
+    "window_start": "2026-08-18T01:29:07",
+    "window_end": "2026-08-18T05:21:31.560165",
     "change_type": "patch",
-    "description": "Maintenance window for message-queue-sport-147"
+    "description": "Maintenance window for teams-notification-queue-sport-147"
   },
   {
     "id": "CHG-018",
     "ci_id": "CI-0180",
-    "window_start": "2026-08-23T20:48:29",
-    "window_end": "2026-08-23T23:16:45.957083",
+    "window_start": "2026-08-24T03:14:30",
+    "window_end": "2026-08-24T05:42:46.957083",
     "change_type": "config",
-    "description": "Maintenance window for web-server-see-180"
+    "description": "Maintenance window for sharepoint-site-see-180"
   },
   {
     "id": "CHG-019",
     "ci_id": "CI-0074",
-    "window_start": "2026-08-27T20:32:07",
-    "window_end": "2026-08-27T22:28:47.865882",
+    "window_start": "2026-08-28T02:58:08",
+    "window_end": "2026-08-28T04:54:48.865882",
     "change_type": "config",
-    "description": "Maintenance window for db-server-test-074"
+    "description": "Maintenance window for dataverse-instance-test-074"
   },
   {
     "id": "CHG-020",
     "ci_id": "CI-0186",
-    "window_start": "2026-08-07T23:43:54",
-    "window_end": "2026-08-08T02:53:18.196730",
+    "window_start": "2026-08-08T06:09:55",
+    "window_end": "2026-08-08T09:19:19.196730",
     "change_type": "config",
-    "description": "Maintenance window for network-switch-gun-186"
+    "description": "Maintenance window for azure-ad-connect-sync-gun-186"
   },
   {
     "id": "CHG-021",
     "ci_id": "CI-0049",
-    "window_start": "2026-08-11T08:20:21",
-    "window_end": "2026-08-11T12:06:15.514893",
+    "window_start": "2026-08-11T14:46:22",
+    "window_end": "2026-08-11T18:32:16.514893",
     "change_type": "config",
-    "description": "Maintenance window for web-server-than-049"
+    "description": "Maintenance window for sharepoint-site-than-049"
   },
   {
     "id": "CHG-022",
     "ci_id": "CI-0111",
-    "window_start": "2026-09-04T04:53:04",
-    "window_end": "2026-09-04T08:09:27.675427",
+    "window_start": "2026-09-04T11:19:05",
+    "window_end": "2026-09-04T14:35:28.675427",
     "change_type": "config",
-    "description": "Maintenance window for web-server-long-111"
+    "description": "Maintenance window for sharepoint-site-long-111"
   },
   {
     "id": "CHG-023",
     "ci_id": "CI-0052",
-    "window_start": "2026-08-21T03:11:21",
-    "window_end": "2026-08-21T05:19:20.973227",
+    "window_start": "2026-08-21T09:37:22",
+    "window_end": "2026-08-21T11:45:21.973227",
     "change_type": "tuning",
-    "description": "Maintenance window for network-switch-long-052"
+    "description": "Maintenance window for azure-ad-connect-sync-long-052"
   },
   {
     "id": "CHG-024",
     "ci_id": "CI-0068",
-    "window_start": "2026-08-25T06:33:36",
-    "window_end": "2026-08-25T08:03:13.171296",
+    "window_start": "2026-08-25T12:59:37",
+    "window_end": "2026-08-25T14:29:14.171296",
     "change_type": "tuning",
-    "description": "Maintenance window for db-server-tax-068"
+    "description": "Maintenance window for dataverse-instance-tax-068"
   },
   {
     "id": "CHG-025",
     "ci_id": "CI-0161",
-    "window_start": "2026-08-08T11:36:23",
-    "window_end": "2026-08-08T13:52:53.253117",
+    "window_start": "2026-08-08T18:02:24",
+    "window_end": "2026-08-08T20:18:54.253117",
     "change_type": "tuning",
-    "description": "Maintenance window for app-server-law-161"
+    "description": "Maintenance window for power-platform-environment-law-161"
   }
 ]

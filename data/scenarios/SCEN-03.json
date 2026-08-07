@@ -1,0 +1,12 @@
+{
+  "id": "SCEN-03",
+  "name": "High-blast-radius incident — blocked before approval",
+  "workflow_type": "incident",
+  "is_edge_case": false,
+  "ci_id": "CI-0009",
+  "alert_category": "fault",
+  "auto_approve": true,
+  "expected": {
+    "status": "blocked"
+  }
+}

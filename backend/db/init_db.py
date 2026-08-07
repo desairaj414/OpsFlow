@@ -78,6 +78,25 @@ def populate_pii_ground_truth(conn: sqlite3.Connection) -> None:
     conn.executemany("INSERT INTO pii_ground_truth (source_ref, item_type, location) VALUES (?,?,?)", rows)
 
 
+def populate_scenarios(conn: sqlite3.Connection) -> None:
+    """Loads the Scenario Library (Phase 5) — each data/scenarios/*.json fixture becomes one row,
+    referencing its own file as fixture_path so the eval harness can re-open it for CI/alert/expected
+    fields without touching this table's schema."""
+    scenarios_dir = os.path.join(DATA_DIR, "scenarios")
+    rows = []
+    for fname in sorted(os.listdir(scenarios_dir)):
+        if not fname.endswith(".json"):
+            continue
+        with open(os.path.join(scenarios_dir, fname), encoding="utf-8") as f:
+            scenario = json.load(f)
+        rows.append((scenario["id"], scenario["name"], scenario["workflow_type"],
+                      int(scenario["is_edge_case"]), f"scenarios/{fname}"))
+    conn.executemany(
+        "INSERT OR REPLACE INTO scenarios (id, name, workflow_type, is_edge_case, fixture_path) VALUES (?,?,?,?,?)",
+        rows,
+    )
+
+
 def populate_runbooks(conn: sqlite3.Connection) -> None:
     runbooks_dir = os.path.join(DATA_DIR, "runbooks")
     rows = []
@@ -105,6 +124,7 @@ def main() -> None:
         populate_negative_kb(conn)
         populate_runbooks(conn)
         populate_pii_ground_truth(conn)
+        populate_scenarios(conn)
         conn.commit()
     finally:
         conn.close()
@@ -132,7 +152,8 @@ if __name__ == "__main__":
     assert counts["negative_kb_entries"] == 40
     assert counts["runbooks"] == 22
     assert counts["pii_ground_truth"] == 31
+    assert counts["scenarios"] == 6  # Phase 5 step 1: SCEN-01..06 (non-edge-case); step 2 adds edge cases on top
     empty_expected = ["incidents", "evidence", "hypotheses", "plans", "approvals", "verification_results",
-                       "audit_log", "autonomy_ladder", "scenarios", "model_call_cache"]
+                       "audit_log", "autonomy_ladder", "model_call_cache"]
     assert all(counts[t] == 0 for t in empty_expected), "a table meant to be runtime-only has pre-seeded rows"
     print("\nSELF-TEST PASSED: all 17 tables created, populated tables have correct volumes, runtime-only tables correctly empty.")

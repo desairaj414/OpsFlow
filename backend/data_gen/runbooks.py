@@ -19,7 +19,7 @@ DATA_DIR = os.path.join(REPO_ROOT, "data")
 RUNBOOKS_DIR = os.path.join(DATA_DIR, "runbooks")
 POSTMORTEMS_DIR = os.path.join(DATA_DIR, "postmortems")
 
-CI_CONTEXTS = ["web-server", "app-server", "db-server", "load-balancer", "api-gateway", "cache", "message-queue"]
+CI_CONTEXTS = ["sharepoint-site", "power-platform-environment", "dataverse-instance", "exchange-online-connector", "power-automate-gateway", "onedrive-sync-cache", "teams-notification-queue"]
 
 REMEDIATION_STEPS = [
     "Confirm the alert against the monitoring simulator: check current status and severity for the affected CI before taking any action.",

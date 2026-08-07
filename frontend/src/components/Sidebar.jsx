@@ -164,7 +164,7 @@ export default function Sidebar({ role, onRoleChange, connectionStatus, apiBase,
       <div>
         <label className="mb-1 block text-xs font-medium text-muted-foreground">Role</label>
         <select
-          className="w-full rounded-md border border-border bg-background px-2 py-2 text-sm"
+          className="w-full rounded-md border border-border bg-background px-2 py-2 text-sm focus:border-accent focus:outline-none"
           value={role}
           onChange={(e) => onRoleChange(e.target.value)}
         >
@@ -176,7 +176,7 @@ export default function Sidebar({ role, onRoleChange, connectionStatus, apiBase,
         </select>
       </div>
 
-      <div className="flex items-center gap-2 rounded-md border border-border p-3">
+      <div className="flex items-center gap-2 rounded-md border border-border bg-secondary/50 p-3">
         <Radio
           className={cn(
             "h-4 w-4",
@@ -196,8 +196,8 @@ export default function Sidebar({ role, onRoleChange, connectionStatus, apiBase,
             key={key}
             onClick={() => setActivePanel(activePanel === key ? null : key)}
             className={cn(
-              "flex items-center gap-2 rounded-md px-3 py-2 text-left text-sm hover:bg-secondary",
-              activePanel === key && "bg-secondary"
+              "flex items-center gap-2 rounded-md border-l-2 border-transparent px-3 py-2 text-left text-sm text-muted-foreground hover:bg-secondary hover:text-foreground",
+              activePanel === key && "border-accent bg-accent-soft font-medium text-foreground"
             )}
           >
             <Icon className="h-4 w-4" />

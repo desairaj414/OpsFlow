@@ -27,27 +27,30 @@ CI_COUNT = 200
 GROUND_TRUTH_DIVERGENCE_RATE = 0.35
 FAILED_REMEDIATION_COUNT = 40
 
-CI_TYPES = ["web-server", "app-server", "db-server", "load-balancer", "api-gateway", "cache", "message-queue", "storage-volume", "network-switch"]
+CI_TYPES = ["sharepoint-site", "power-platform-environment", "dataverse-instance", "exchange-online-connector", "power-automate-gateway", "onedrive-sync-cache", "teams-notification-queue", "sharepoint-document-library", "azure-ad-connect-sync"]
 ENVIRONMENTS = ["prod", "staging", "dev"]
 CRITICALITIES = ["P1", "P2", "P3", "P4"]
-OWNER_TEAMS = ["Platform", "Payments", "Identity", "Search", "Checkout", "Data Pipeline", "Mobile Gateway", "Notifications"]
+OWNER_TEAMS = ["Sales", "Marketing", "Finance", "HR", "Legal", "Engineering", "Customer Success", "Global IT"]
 RELATION_TYPES = ["depends_on", "hosts", "connects_to", "replicates_to"]
 
 FAILURE_SIGNATURES = [
-    "OOM kill loop", "connection pool exhaustion", "disk full", "cert expiry mid-rollout",
-    "cascading timeout from upstream dependency", "deadlock under load", "config drift after patch",
-    "queue backlog unbounded growth", "DNS resolution flapping", "memory leak in worker process",
+    "access denied on SharePoint site collection", "OneDrive sync stuck / not syncing",
+    "Power Automate flow run failures (throttled)", "Dataverse API throttling (429)",
+    "Conditional Access policy blocking sign-in", "SharePoint document library storage quota exceeded",
+    "Exchange Online mail delivery delayed", "Power BI dataset refresh failure",
+    "Teams meeting audio/video degraded", "Azure AD Connect sync interruption",
 ]
 ATTEMPTED_FIXES = [
-    "restarted the service", "scaled out replica count", "cleared local cache", "rolled back last deploy",
-    "increased connection pool size", "rotated the certificate", "purged the queue", "bounced the load balancer",
+    "re-granted site permissions", "restarted the OneDrive sync client", "increased the connector throttling limit",
+    "requested a Dataverse capacity add-on", "added the user to the Conditional Access exclusion group",
+    "requested additional SharePoint storage quota", "restarted the Exchange Online transport queue", "cleared the Teams client cache",
 ]
 FAILURE_REASONS = [
-    "root cause was upstream, restart only masked it temporarily",
-    "fix addressed a symptom, underlying leak was in application code",
-    "config drift reintroduced by the next scheduled deploy",
-    "scaling did not address the actual bottleneck (DB connection limit, not CPU)",
-    "rollback target itself carried the same defect",
+    "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "fix addressed a symptom, underlying license assignment was still missing",
+    "the Conditional Access policy was reapplied by the next sync cycle",
+    "the throttling limit increase did not address the actual API call volume spike",
+    "the exclusion group itself was scoped incorrectly",
 ]
 
 

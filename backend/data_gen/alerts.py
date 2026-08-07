@@ -26,12 +26,12 @@ ALERT_COUNT = 500
 DEGRADATION_RATE = 0.30  # performance-tuning-triggering alerts vs. fault (incident-triggering)
 
 FAULT_SUMMARIES = [
-    "service unreachable", "process crash-looped", "disk usage critical", "connection refused",
-    "health check failing", "5xx error rate spike", "queue consumer stalled", "certificate expired",
+    "access denied - permission error", "sync client crash-looped", "storage quota critical", "connection refused",
+    "health check failing", "5xx error rate spike", "flow run failed - throttled", "certificate expired",
 ]
 DEGRADATION_SUMMARIES = [
-    "latency creeping upward over past hour", "memory usage trending up, no recovery between GC cycles",
-    "query duration p95 rising steadily", "CPU steady-state higher than baseline for 3 days",
+    "latency creeping upward over past hour", "sync queue backlog trending up, no recovery",
+    "API call duration p95 rising steadily", "throttling rate higher than baseline for 3 days",
     "connection pool utilization trending toward saturation",
 ]
 SEVERITIES = ["critical", "warning", "info"]

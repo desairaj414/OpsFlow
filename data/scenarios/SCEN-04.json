@@ -1,0 +1,12 @@
+{
+  "id": "SCEN-04",
+  "name": "Patch workflow — grouped maintenance window, approval required",
+  "workflow_type": "patch",
+  "is_edge_case": false,
+  "ci_id": "CI-0059",
+  "alert_category": "fault",
+  "auto_approve": false,
+  "expected": {
+    "status": ["complete", "pending_approval", "stopped"]
+  }
+}

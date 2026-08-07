@@ -2,2003 +2,2003 @@
   "cis": [
     {
       "id": "CI-0001",
-      "name": "web-server-along-001",
-      "type": "web-server",
-      "owner": "Data Pipeline",
+      "name": "sharepoint-site-along-001",
+      "type": "sharepoint-site",
+      "owner": "Engineering",
       "environment": "staging",
       "criticality": "P4",
       "patch_level": "1.10.6",
-      "last_verified_at": "2026-06-10T17:19:17"
+      "last_verified_at": "2026-06-10T23:47:27"
     },
     {
       "id": "CI-0002",
-      "name": "storage-volume-speech-002",
-      "type": "storage-volume",
-      "owner": "Checkout",
+      "name": "sharepoint-document-library-speech-002",
+      "type": "sharepoint-document-library",
+      "owner": "Legal",
       "environment": "staging",
       "criticality": "P3",
       "patch_level": "2.2.9",
-      "last_verified_at": "2026-06-13T14:35:09"
+      "last_verified_at": "2026-06-13T21:03:19"
     },
     {
       "id": "CI-0003",
-      "name": "web-server-likely-003",
-      "type": "web-server",
-      "owner": "Search",
+      "name": "sharepoint-site-likely-003",
+      "type": "sharepoint-site",
+      "owner": "HR",
       "environment": "dev",
       "criticality": "P2",
       "patch_level": "2.20.8",
-      "last_verified_at": "2026-05-15T02:10:04"
+      "last_verified_at": "2026-05-15T08:38:14"
     },
     {
       "id": "CI-0004",
-      "name": "message-queue-form-004",
-      "type": "message-queue",
-      "owner": "Platform",
+      "name": "teams-notification-queue-form-004",
+      "type": "teams-notification-queue",
+      "owner": "Sales",
       "environment": "staging",
       "criticality": "P1",
       "patch_level": "7.3.1",
-      "last_verified_at": "2026-06-20T10:30:29"
+      "last_verified_at": "2026-06-20T16:58:39"
     },
     {
       "id": "CI-0005",
-      "name": "network-switch-that-005",
-      "type": "network-switch",
-      "owner": "Identity",
+      "name": "azure-ad-connect-sync-that-005",
+      "type": "azure-ad-connect-sync",
+      "owner": "Finance",
       "environment": "staging",
       "criticality": "P2",
       "patch_level": "6.14.1",
-      "last_verified_at": "2026-06-24T17:24:48"
+      "last_verified_at": "2026-06-24T23:52:58"
     },
     {
       "id": "CI-0006",
-      "name": "load-balancer-figure-006",
-      "type": "load-balancer",
-      "owner": "Payments",
+      "name": "exchange-online-connector-figure-006",
+      "type": "exchange-online-connector",
+      "owner": "Marketing",
       "environment": "prod",
       "criticality": "P2",
       "patch_level": "4.5.5",
-      "last_verified_at": "2026-06-24T00:29:59"
+      "last_verified_at": "2026-06-24T06:58:09"
     },
     {
       "id": "CI-0007",
-      "name": "web-server-his-007",
-      "type": "web-server",
-      "owner": "Identity",
+      "name": "sharepoint-site-his-007",
+      "type": "sharepoint-site",
+      "owner": "Finance",
       "environment": "prod",
       "criticality": "P1",
       "patch_level": "7.17.0",
-      "last_verified_at": "2026-05-17T00:28:02"
+      "last_verified_at": "2026-05-17T06:56:12"
     },
     {
       "id": "CI-0008",
-      "name": "app-server-wait-008",
-      "type": "app-server",
-      "owner": "Data Pipeline",
+      "name": "power-platform-environment-wait-008",
+      "type": "power-platform-environment",
+      "owner": "Engineering",
       "environment": "staging",
       "criticality": "P2",
       "patch_level": "7.13.4",
-      "last_verified_at": "2026-05-17T16:46:03"
+      "last_verified_at": "2026-05-17T23:14:13"
     },
     {
       "id": "CI-0009",
-      "name": "db-server-police-009",
-      "type": "db-server",
-      "owner": "Checkout",
+      "name": "dataverse-instance-police-009",
+      "type": "dataverse-instance",
+      "owner": "Legal",
       "environment": "dev",
       "criticality": "P4",
       "patch_level": "8.11.9",
-      "last_verified_at": "2026-08-03T12:31:18"
+      "last_verified_at": "2026-08-03T18:59:28"
     },
     {
       "id": "CI-0010",
-      "name": "api-gateway-art-010",
-      "type": "api-gateway",
-      "owner": "Identity",
+      "name": "power-automate-gateway-art-010",
+      "type": "power-automate-gateway",
+      "owner": "Finance",
       "environment": "prod",
       "criticality": "P2",
       "patch_level": "2.1.3",
-      "last_verified_at": "2026-06-30T16:00:43"
+      "last_verified_at": "2026-06-30T22:28:53"
     },
     {
       "id": "CI-0011",
-      "name": "db-server-drug-011",
-      "type": "db-server",
-      "owner": "Notifications",
+      "name": "dataverse-instance-drug-011",
+      "type": "dataverse-instance",
+      "owner": "Global IT",
       "environment": "staging",
       "criticality": "P1",
       "patch_level": "2.6.4",
-      "last_verified_at": "2026-07-14T21:46:52"
+      "last_verified_at": "2026-07-15T04:15:02"
     },
     {
       "id": "CI-0012",
-      "name": "storage-volume-religious-012",
-      "type": "storage-volume",
-      "owner": "Identity",
+      "name": "sharepoint-document-library-religious-012",
+      "type": "sharepoint-document-library",
+      "owner": "Finance",
       "environment": "staging",
       "criticality": "P2",
       "patch_level": "3.14.3",
-      "last_verified_at": "2026-06-30T18:13:15"
+      "last_verified_at": "2026-07-01T00:41:25"
     },
     {
       "id": "CI-0013",
-      "name": "db-server-politics-013",
-      "type": "db-server",
-      "owner": "Notifications",
+      "name": "dataverse-instance-politics-013",
+      "type": "dataverse-instance",
+      "owner": "Global IT",
       "environment": "prod",
       "criticality": "P2",
       "patch_level": "9.18.0",
-      "last_verified_at": "2026-08-05T06:48:42"
+      "last_verified_at": "2026-08-05T13:16:52"
     },
     {
       "id": "CI-0014",
-      "name": "storage-volume-choice-014",
-      "type": "storage-volume",
-      "owner": "Data Pipeline",
+      "name": "sharepoint-document-library-choice-014",
+      "type": "sharepoint-document-library",
+      "owner": "Engineering",
       "environment": "staging",
       "criticality": "P2",
       "patch_level": "4.16.9",
-      "last_verified_at": "2026-05-18T06:56:54"
+      "last_verified_at": "2026-05-18T13:25:04"
     },
     {
       "id": "CI-0015",
-      "name": "load-balancer-while-015",
-      "type": "load-balancer",
-      "owner": "Checkout",
+      "name": "exchange-online-connector-while-015",
+      "type": "exchange-online-connector",
+      "owner": "Legal",
       "environment": "dev",
       "criticality": "P4",
       "patch_level": "2.3.0",
-      "last_verified_at": "2026-07-09T13:35:36"
+      "last_verified_at": "2026-07-09T20:03:46"
     },
     {
       "id": "CI-0016",
-      "name": "network-switch-trial-016",
-      "type": "network-switch",
-      "owner": "Notifications",
+      "name": "azure-ad-connect-sync-trial-016",
+      "type": "azure-ad-connect-sync",
+      "owner": "Global IT",
       "environment": "staging",
       "criticality": "P1",
       "patch_level": "5.17.8",
-      "last_verified_at": "2026-07-18T15:27:19"
+      "last_verified_at": "2026-07-18T21:55:29"
     },
     {
       "id": "CI-0017",
-      "name": "network-switch-most-017",
-      "type": "network-switch",
-      "owner": "Search",
+      "name": "azure-ad-connect-sync-most-017",
+      "type": "azure-ad-connect-sync",
+      "owner": "HR",
       "environment": "dev",
       "criticality": "P2",
       "patch_level": "8.11.3",
-      "last_verified_at": "2026-06-19T20:33:19"
+      "last_verified_at": "2026-06-20T03:01:29"
     },
     {
       "id": "CI-0018",
-      "name": "message-queue-while-018",
-      "type": "message-queue",
-      "owner": "Platform",
+      "name": "teams-notification-queue-while-018",
+      "type": "teams-notification-queue",
+      "owner": "Sales",
       "environment": "prod",
       "criticality": "P4",
       "patch_level": "7.4.9",
-      "last_verified_at": "2026-06-29T13:41:13"
+      "last_verified_at": "2026-06-29T20:09:23"
     },
     {
       "id": "CI-0019",
-      "name": "cache-article-019",
-      "type": "cache",
-      "owner": "Checkout",
+      "name": "onedrive-sync-cache-article-019",
+      "type": "onedrive-sync-cache",
+      "owner": "Legal",
       "environment": "prod",
       "criticality": "P4",
       "patch_level": "3.11.6",
-      "last_verified_at": "2026-07-31T04:30:32"
+      "last_verified_at": "2026-07-31T10:58:42"
     },
     {
       "id": "CI-0020",
-      "name": "db-server-large-020",
-      "type": "db-server",
-      "owner": "Platform",
+      "name": "dataverse-instance-large-020",
+      "type": "dataverse-instance",
+      "owner": "Sales",
       "environment": "prod",
       "criticality": "P4",
       "patch_level": "7.0.1",
-      "last_verified_at": "2026-07-04T06:08:35"
+      "last_verified_at": "2026-07-04T12:36:45"
     },
     {
       "id": "CI-0021",
-      "name": "cache-opportunity-021",
-      "type": "cache",
-      "owner": "Checkout",
+      "name": "onedrive-sync-cache-opportunity-021",
+      "type": "onedrive-sync-cache",
+      "owner": "Legal",
       "environment": "prod",
       "criticality": "P4",
       "patch_level": "8.12.6",
-      "last_verified_at": "2026-07-23T13:33:07"
+      "last_verified_at": "2026-07-23T20:01:17"
     },
     {
       "id": "CI-0022",
-      "name": "app-server-off-022",
-      "type": "app-server",
-      "owner": "Search",
+      "name": "power-platform-environment-off-022",
+      "type": "power-platform-environment",
+      "owner": "HR",
       "environment": "prod",
       "criticality": "P1",
       "patch_level": "8.8.8",
-      "last_verified_at": "2026-07-01T18:47:22"
+      "last_verified_at": "2026-07-02T01:15:32"
     },
     {
       "id": "CI-0023",
-      "name": "message-queue-surface-023",
-      "type": "message-queue",
-      "owner": "Identity",
+      "name": "teams-notification-queue-surface-023",
+      "type": "teams-notification-queue",
+      "owner": "Finance",
       "environment": "prod",
       "criticality": "P2",
       "patch_level": "4.0.6",
-      "last_verified_at": "2026-08-02T17:12:48"
+      "last_verified_at": "2026-08-02T23:40:58"
     },
     {
       "id": "CI-0024",
-      "name": "app-server-adult-024",
-      "type": "app-server",
-      "owner": "Mobile Gateway",
+      "name": "power-platform-environment-adult-024",
+      "type": "power-platform-environment",
+      "owner": "Customer Success",
       "environment": "staging",
       "criticality": "P4",
       "patch_level": "7.19.0",
-      "last_verified_at": "2026-06-18T14:19:51"
+      "last_verified_at": "2026-06-18T20:48:01"
     },
     {
       "id": "CI-0025",
-      "name": "web-server-but-025",
-      "type": "web-server",
-      "owner": "Payments",
+      "name": "sharepoint-site-but-025",
+      "type": "sharepoint-site",
+      "owner": "Marketing",
       "environment": "prod",
       "criticality": "P4",
       "patch_level": "9.2.8",
-      "last_verified_at": "2026-07-17T00:47:32"
+      "last_verified_at": "2026-07-17T07:15:42"
     },
     {
       "id": "CI-0026",
-      "name": "network-switch-born-026",
-      "type": "network-switch",
-      "owner": "Checkout",
+      "name": "azure-ad-connect-sync-born-026",
+      "type": "azure-ad-connect-sync",
+      "owner": "Legal",
       "environment": "prod",
       "criticality": "P4",
       "patch_level": "9.17.8",
-      "last_verified_at": "2026-08-05T14:42:53"
+      "last_verified_at": "2026-08-05T21:11:03"
     },
     {
       "id": "CI-0027",
-      "name": "db-server-number-027",
-      "type": "db-server",
-      "owner": "Mobile Gateway",
+      "name": "dataverse-instance-number-027",
+      "type": "dataverse-instance",
+      "owner": "Customer Success",
       "environment": "staging",
       "criticality": "P2",
       "patch_level": "8.12.6",
-      "last_verified_at": "2026-08-01T11:30:59"
+      "last_verified_at": "2026-08-01T17:59:09"
     },
     {
       "id": "CI-0028",
-      "name": "app-server-commercial-028",
-      "type": "app-server",
-      "owner": "Identity",
+      "name": "power-platform-environment-commercial-028",
+      "type": "power-platform-environment",
+      "owner": "Finance",
       "environment": "prod",
       "criticality": "P1",
       "patch_level": "3.3.5",
-      "last_verified_at": "2026-06-20T13:36:54"
+      "last_verified_at": "2026-06-20T20:05:04"
     },
     {
       "id": "CI-0029",
-      "name": "load-balancer-side-029",
-      "type": "load-balancer",
-      "owner": "Data Pipeline",
+      "name": "exchange-online-connector-side-029",
+      "type": "exchange-online-connector",
+      "owner": "Engineering",
       "environment": "staging",
       "criticality": "P4",
       "patch_level": "5.14.4",
-      "last_verified_at": "2026-05-24T22:56:38"
+      "last_verified_at": "2026-05-25T05:24:48"
     },
     {
       "id": "CI-0030",
-      "name": "load-balancer-guess-030",
-      "type": "load-balancer",
-      "owner": "Payments",
+      "name": "exchange-online-connector-guess-030",
+      "type": "exchange-online-connector",
+      "owner": "Marketing",
       "environment": "prod",
       "criticality": "P4",
       "patch_level": "6.15.0",
-      "last_verified_at": "2026-06-23T19:49:31"
+      "last_verified_at": "2026-06-24T02:17:41"
     },
     {
       "id": "CI-0031",
-      "name": "message-queue-capital-031",
-      "type": "message-queue",
-      "owner": "Checkout",
+      "name": "teams-notification-queue-capital-031",
+      "type": "teams-notification-queue",
+      "owner": "Legal",
       "environment": "prod",
       "criticality": "P3",
       "patch_level": "3.10.4",
-      "last_verified_at": "2026-07-05T11:53:08"
+      "last_verified_at": "2026-07-05T18:21:18"
     },
     {
       "id": "CI-0032",
-      "name": "db-server-direction-032",
-      "type": "db-server",
-      "owner": "Search",
+      "name": "dataverse-instance-direction-032",
+      "type": "dataverse-instance",
+      "owner": "HR",
       "environment": "dev",
       "criticality": "P2",
       "patch_level": "5.13.3",
-      "last_verified_at": "2026-05-17T17:21:58"
+      "last_verified_at": "2026-05-17T23:50:08"
     },
     {
       "id": "CI-0033",
-      "name": "network-switch-start-033",
-      "type": "network-switch",
-      "owner": "Platform",
+      "name": "azure-ad-connect-sync-start-033",
+      "type": "azure-ad-connect-sync",
+      "owner": "Sales",
       "environment": "dev",
       "criticality": "P2",
       "patch_level": "4.5.2",
-      "last_verified_at": "2026-08-05T11:33:19"
+      "last_verified_at": "2026-08-05T18:01:29"
     },
     {
       "id": "CI-0034",
-      "name": "storage-volume-cut-034",
-      "type": "storage-volume",
-      "owner": "Mobile Gateway",
+      "name": "sharepoint-document-library-cut-034",
+      "type": "sharepoint-document-library",
+      "owner": "Customer Success",
       "environment": "staging",
       "criticality": "P2",
       "patch_level": "9.10.0",
-      "last_verified_at": "2026-05-22T06:45:40"
+      "last_verified_at": "2026-05-22T13:13:50"
     },
     {
       "id": "CI-0035",
-      "name": "cache-door-035",
-      "type": "cache",
-      "owner": "Search",
+      "name": "onedrive-sync-cache-door-035",
+      "type": "onedrive-sync-cache",
+      "owner": "HR",
       "environment": "staging",
       "criticality": "P3",
       "patch_level": "9.1.6",
-      "last_verified_at": "2026-05-27T08:12:51"
+      "last_verified_at": "2026-05-27T14:41:01"
     },
     {
       "id": "CI-0036",
-      "name": "network-switch-grow-036",
-      "type": "network-switch",
-      "owner": "Identity",
+      "name": "azure-ad-connect-sync-grow-036",
+      "type": "azure-ad-connect-sync",
+      "owner": "Finance",
       "environment": "dev",
       "criticality": "P1",
       "patch_level": "5.18.0",
-      "last_verified_at": "2026-05-10T01:30:34"
+      "last_verified_at": "2026-05-10T07:58:44"
     },
     {
       "id": "CI-0037",
-      "name": "cache-room-037",
-      "type": "cache",
-      "owner": "Search",
+      "name": "onedrive-sync-cache-room-037",
+      "type": "onedrive-sync-cache",
+      "owner": "HR",
       "environment": "staging",
       "criticality": "P4",
       "patch_level": "4.16.6",
-      "last_verified_at": "2026-05-24T22:46:29"
+      "last_verified_at": "2026-05-25T05:14:39"
     },
     {
       "id": "CI-0038",
-      "name": "db-server-authority-038",
-      "type": "db-server",
-      "owner": "Data Pipeline",
+      "name": "dataverse-instance-authority-038",
+      "type": "dataverse-instance",
+      "owner": "Engineering",
       "environment": "staging",
       "criticality": "P2",
       "patch_level": "9.8.6",
-      "last_verified_at": "2026-05-11T23:10:58"
+      "last_verified_at": "2026-05-12T05:39:08"
     },
     {
       "id": "CI-0039",
-      "name": "storage-volume-room-039",
-      "type": "storage-volume",
-      "owner": "Payments",
+      "name": "sharepoint-document-library-room-039",
+      "type": "sharepoint-document-library",
+      "owner": "Marketing",
       "environment": "staging",
       "criticality": "P2",
       "patch_level": "2.11.1",
-      "last_verified_at": "2026-06-19T13:06:56"
+      "last_verified_at": "2026-06-19T19:35:06"
     },
     {
       "id": "CI-0040",
-      "name": "message-queue-stock-040",
-      "type": "message-queue",
-      "owner": "Mobile Gateway",
+      "name": "teams-notification-queue-stock-040",
+      "type": "teams-notification-queue",
+      "owner": "Customer Success",
       "environment": "dev",
       "criticality": "P2",
       "patch_level": "2.19.4",
-      "last_verified_at": "2026-07-12T20:35:57"
+      "last_verified_at": "2026-07-13T03:04:07"
     },
     {
       "id": "CI-0041",
-      "name": "db-server-of-041",
-      "type": "db-server",
-      "owner": "Mobile Gateway",
+      "name": "dataverse-instance-of-041",
+      "type": "dataverse-instance",
+      "owner": "Customer Success",
       "environment": "dev",
       "criticality": "P4",
       "patch_level": "3.3.0",
-      "last_verified_at": "2026-05-09T21:35:58"
+      "last_verified_at": "2026-05-10T04:04:08"
     },
     {
       "id": "CI-0042",
-      "name": "load-balancer-their-042",
-      "type": "load-balancer",
-      "owner": "Mobile Gateway",
+      "name": "exchange-online-connector-their-042",
+      "type": "exchange-online-connector",
+      "owner": "Customer Success",
       "environment": "staging",
       "criticality": "P3",
       "patch_level": "7.3.0",
-      "last_verified_at": "2026-07-21T00:09:34"
+      "last_verified_at": "2026-07-21T06:37:44"
     },
     {
       "id": "CI-0043",
-      "name": "network-switch-beat-043",
-      "type": "network-switch",
-      "owner": "Payments",
+      "name": "azure-ad-connect-sync-beat-043",
+      "type": "azure-ad-connect-sync",
+      "owner": "Marketing",
       "environment": "dev",
       "criticality": "P2",
       "patch_level": "5.13.9",
-      "last_verified_at": "2026-06-12T08:42:32"
+      "last_verified_at": "2026-06-12T15:10:42"
     },
     {
       "id": "CI-0044",
-      "name": "web-server-expert-044",
-      "type": "web-server",
-      "owner": "Identity",
+      "name": "sharepoint-site-expert-044",
+      "type": "sharepoint-site",
+      "owner": "Finance",
       "environment": "staging",
       "criticality": "P1",
       "patch_level": "1.16.5",
-      "last_verified_at": "2026-07-01T09:31:10"
+      "last_verified_at": "2026-07-01T15:59:20"
     },
     {
       "id": "CI-0045",
-      "name": "network-switch-early-045",
-      "type": "network-switch",
-      "owner": "Search",
+      "name": "azure-ad-connect-sync-early-045",
+      "type": "azure-ad-connect-sync",
+      "owner": "HR",
       "environment": "dev",
       "criticality": "P3",
       "patch_level": "2.19.8",
-      "last_verified_at": "2026-08-01T21:52:33"
+      "last_verified_at": "2026-08-02T04:20:43"
     },
     {
       "id": "CI-0046",
-      "name": "message-queue-test-046",
-      "type": "message-queue",
-      "owner": "Checkout",
+      "name": "teams-notification-queue-test-046",
+      "type": "teams-notification-queue",
+      "owner": "Legal",
       "environment": "prod",
       "criticality": "P3",
       "patch_level": "3.3.1",
-      "last_verified_at": "2026-07-15T10:40:25"
+      "last_verified_at": "2026-07-15T17:08:35"
     },
     {
       "id": "CI-0047",
-      "name": "storage-volume-item-047",
-      "type": "storage-volume",
-      "owner": "Checkout",
+      "name": "sharepoint-document-library-item-047",
+      "type": "sharepoint-document-library",
+      "owner": "Legal",
       "environment": "prod",
       "criticality": "P1",
       "patch_level": "9.2.6",
-      "last_verified_at": "2026-06-18T11:59:23"
+      "last_verified_at": "2026-06-18T18:27:33"
     },
     {
       "id": "CI-0048",
-      "name": "storage-volume-song-048",
-      "type": "storage-volume",
-      "owner": "Payments",
+      "name": "sharepoint-document-library-song-048",
+      "type": "sharepoint-document-library",
+      "owner": "Marketing",
       "environment": "dev",
       "criticality": "P2",
       "patch_level": "5.0.8",
-      "last_verified_at": "2026-06-03T09:20:42"
+      "last_verified_at": "2026-06-03T15:48:52"
     },
     {
       "id": "CI-0049",
-      "name": "web-server-than-049",
-      "type": "web-server",
-      "owner": "Search",
+      "name": "sharepoint-site-than-049",
+      "type": "sharepoint-site",
+      "owner": "HR",
       "environment": "staging",
       "criticality": "P2",
       "patch_level": "6.13.0",
-      "last_verified_at": "2026-05-23T13:15:44"
+      "last_verified_at": "2026-05-23T19:43:54"
     },
     {
       "id": "CI-0050",
-      "name": "app-server-follow-050",
-      "type": "app-server",
-      "owner": "Checkout",
+      "name": "power-platform-environment-follow-050",
+      "type": "power-platform-environment",
+      "owner": "Legal",
       "environment": "staging",
       "criticality": "P1",
       "patch_level": "7.15.4",
-      "last_verified_at": "2026-07-07T11:49:50"
+      "last_verified_at": "2026-07-07T18:18:00"
     },
     {
       "id": "CI-0051",
-      "name": "message-queue-third-051",
-      "type": "message-queue",
-      "owner": "Mobile Gateway",
+      "name": "teams-notification-queue-third-051",
+      "type": "teams-notification-queue",
+      "owner": "Customer Success",
       "environment": "dev",
       "criticality": "P2",
       "patch_level": "2.14.5",
-      "last_verified_at": "2026-06-25T20:36:23"
+      "last_verified_at": "2026-06-26T03:04:33"
     },
     {
       "id": "CI-0052",
-      "name": "network-switch-long-052",
-      "type": "network-switch",
-      "owner": "Mobile Gateway",
+      "name": "azure-ad-connect-sync-long-052",
+      "type": "azure-ad-connect-sync",
+      "owner": "Customer Success",
       "environment": "staging",
       "criticality": "P4",
       "patch_level": "3.1.3",
-      "last_verified_at": "2026-07-23T07:35:41"
+      "last_verified_at": "2026-07-23T14:03:51"
     },
     {
       "id": "CI-0053",
-      "name": "db-server-hope-053",
-      "type": "db-server",
-      "owner": "Checkout",
+      "name": "dataverse-instance-hope-053",
+      "type": "dataverse-instance",
+      "owner": "Legal",
       "environment": "prod",
       "criticality": "P2",
       "patch_level": "9.6.3",
-      "last_verified_at": "2026-07-04T16:52:53"
+      "last_verified_at": "2026-07-04T23:21:03"
     },
     {
       "id": "CI-0054",
-      "name": "storage-volume-family-054",
-      "type": "storage-volume",
-      "owner": "Payments",
+      "name": "sharepoint-document-library-family-054",
+      "type": "sharepoint-document-library",
+      "owner": "Marketing",
       "environment": "staging",
       "criticality": "P4",
       "patch_level": "5.1.9",
-      "last_verified_at": "2026-07-31T14:42:42"
+      "last_verified_at": "2026-07-31T21:10:52"
     },
     {
       "id": "CI-0055",
-      "name": "message-queue-character-055",
-      "type": "message-queue",
-      "owner": "Notifications",
+      "name": "teams-notification-queue-character-055",
+      "type": "teams-notification-queue",
+      "owner": "Global IT",
       "environment": "dev",
       "criticality": "P3",
       "patch_level": "2.19.8",
-      "last_verified_at": "2026-05-28T12:31:12"
+      "last_verified_at": "2026-05-28T18:59:22"
     },
     {
       "id": "CI-0056",
-      "name": "api-gateway-develop-056",
-      "type": "api-gateway",
-      "owner": "Payments",
+      "name": "power-automate-gateway-develop-056",
+      "type": "power-automate-gateway",
+      "owner": "Marketing",
       "environment": "dev",
       "criticality": "P4",
       "patch_level": "4.20.4",
-      "last_verified_at": "2026-05-16T01:45:53"
+      "last_verified_at": "2026-05-16T08:14:03"
     },
     {
       "id": "CI-0057",
-      "name": "api-gateway-arrive-057",
-      "type": "api-gateway",
-      "owner": "Checkout",
+      "name": "power-automate-gateway-arrive-057",
+      "type": "power-automate-gateway",
+      "owner": "Legal",
       "environment": "prod",
       "criticality": "P2",
       "patch_level": "8.17.6",
-      "last_verified_at": "2026-05-31T22:14:14"
+      "last_verified_at": "2026-06-01T04:42:24"
     },
     {
       "id": "CI-0058",
-      "name": "api-gateway-second-058",
-      "type": "api-gateway",
-      "owner": "Search",
+      "name": "power-automate-gateway-second-058",
+      "type": "power-automate-gateway",
+      "owner": "HR",
       "environment": "dev",
       "criticality": "P2",
       "patch_level": "7.1.1",
-      "last_verified_at": "2026-05-22T21:44:52"
+      "last_verified_at": "2026-05-23T04:13:02"
     },
     {
       "id": "CI-0059",
-      "name": "load-balancer-major-059",
-      "type": "load-balancer",
-      "owner": "Search",
+      "name": "exchange-online-connector-major-059",
+      "type": "exchange-online-connector",
+      "owner": "HR",
       "environment": "staging",
       "criticality": "P3",
       "patch_level": "8.6.7",
-      "last_verified_at": "2026-06-04T23:47:43"
+      "last_verified_at": "2026-06-05T06:15:53"
     },
     {
       "id": "CI-0060",
-      "name": "api-gateway-these-060",
-      "type": "api-gateway",
-      "owner": "Search",
+      "name": "power-automate-gateway-these-060",
+      "type": "power-automate-gateway",
+      "owner": "HR",
       "environment": "staging",
       "criticality": "P4",
       "patch_level": "8.4.9",
-      "last_verified_at": "2026-05-20T01:43:39"
+      "last_verified_at": "2026-05-20T08:11:49"
     },
     {
       "id": "CI-0061",
-      "name": "app-server-back-061",
-      "type": "app-server",
-      "owner": "Search",
+      "name": "power-platform-environment-back-061",
+      "type": "power-platform-environment",
+      "owner": "HR",
       "environment": "dev",
       "criticality": "P3",
       "patch_level": "2.13.4",
-      "last_verified_at": "2026-05-29T04:27:58"
+      "last_verified_at": "2026-05-29T10:56:08"
     },
     {
       "id": "CI-0062",
-      "name": "web-server-experience-062",
-      "type": "web-server",
-      "owner": "Data Pipeline",
+      "name": "sharepoint-site-experience-062",
+      "type": "sharepoint-site",
+      "owner": "Engineering",
       "environment": "staging",
       "criticality": "P3",
       "patch_level": "5.6.4",
-      "last_verified_at": "2026-07-05T01:48:53"
+      "last_verified_at": "2026-07-05T08:17:03"
     },
     {
       "id": "CI-0063",
-      "name": "web-server-medical-063",
-      "type": "web-server",
-      "owner": "Identity",
+      "name": "sharepoint-site-medical-063",
+      "type": "sharepoint-site",
+      "owner": "Finance",
       "environment": "staging",
       "criticality": "P3",
       "patch_level": "8.2.8",
-      "last_verified_at": "2026-07-20T05:57:51"
+      "last_verified_at": "2026-07-20T12:26:01"
     },
     {
       "id": "CI-0064",
-      "name": "app-server-must-064",
-      "type": "app-server",
-      "owner": "Mobile Gateway",
+      "name": "power-platform-environment-must-064",
+      "type": "power-platform-environment",
+      "owner": "Customer Success",
       "environment": "prod",
       "criticality": "P1",
       "patch_level": "2.18.5",
-      "last_verified_at": "2026-06-28T08:45:44"
+      "last_verified_at": "2026-06-28T15:13:54"
     },
     {
       "id": "CI-0065",
-      "name": "api-gateway-stop-065",
-      "type": "api-gateway",
-      "owner": "Data Pipeline",
+      "name": "power-automate-gateway-stop-065",
+      "type": "power-automate-gateway",
+      "owner": "Engineering",
       "environment": "staging",
       "criticality": "P3",
       "patch_level": "7.19.3",
-      "last_verified_at": "2026-07-15T12:38:55"
+      "last_verified_at": "2026-07-15T19:07:05"
     },
     {
       "id": "CI-0066",
-      "name": "network-switch-sea-066",
-      "type": "network-switch",
-      "owner": "Mobile Gateway",
+      "name": "azure-ad-connect-sync-sea-066",
+      "type": "azure-ad-connect-sync",
+      "owner": "Customer Success",
       "environment": "prod",
       "criticality": "P4",
       "patch_level": "5.15.3",
-      "last_verified_at": "2026-07-24T00:01:44"
+      "last_verified_at": "2026-07-24T06:29:54"
     },
     {
       "id": "CI-0067",
-      "name": "load-balancer-see-067",
-      "type": "load-balancer",
-      "owner": "Payments",
+      "name": "exchange-online-connector-see-067",
+      "type": "exchange-online-connector",
+      "owner": "Marketing",
       "environment": "prod",
       "criticality": "P4",
       "patch_level": "2.1.1",
-      "last_verified_at": "2026-06-27T05:27:29"
+      "last_verified_at": "2026-06-27T11:55:39"
     },
     {
       "id": "CI-0068",
-      "name": "db-server-tax-068",
-      "type": "db-server",
-      "owner": "Data Pipeline",
+      "name": "dataverse-instance-tax-068",
+      "type": "dataverse-instance",
+      "owner": "Engineering",
       "environment": "dev",
       "criticality": "P2",
       "patch_level": "1.20.0",
-      "last_verified_at": "2026-07-09T03:52:06"
+      "last_verified_at": "2026-07-09T10:20:16"
     },
     {
       "id": "CI-0069",
-      "name": "load-balancer-course-069",
-      "type": "load-balancer",
-      "owner": "Notifications",
+      "name": "exchange-online-connector-course-069",
+      "type": "exchange-online-connector",
+      "owner": "Global IT",
       "environment": "dev",
       "criticality": "P4",
       "patch_level": "7.3.7",
-      "last_verified_at": "2026-06-18T01:21:39"
+      "last_verified_at": "2026-06-18T07:49:49"
     },
     {
       "id": "CI-0070",
-      "name": "db-server-seven-070",
-      "type": "db-server",
-      "owner": "Platform",
+      "name": "dataverse-instance-seven-070",
+      "type": "dataverse-instance",
+      "owner": "Sales",
       "environment": "staging",
       "criticality": "P3",
       "patch_level": "6.9.1",
-      "last_verified_at": "2026-05-24T01:15:29"
+      "last_verified_at": "2026-05-24T07:43:39"
     },
     {
       "id": "CI-0071",
-      "name": "storage-volume-theory-071",
-      "type": "storage-volume",
-      "owner": "Search",
+      "name": "sharepoint-document-library-theory-071",
+      "type": "sharepoint-document-library",
+      "owner": "HR",
       "environment": "staging",
       "criticality": "P2",
       "patch_level": "3.16.5",
-      "last_verified_at": "2026-08-05T16:03:55"
+      "last_verified_at": "2026-08-05T22:32:05"
     },
     {
       "id": "CI-0072",
-      "name": "storage-volume-claim-072",
-      "type": "storage-volume",
-      "owner": "Data Pipeline",
+      "name": "sharepoint-document-library-claim-072",
+      "type": "sharepoint-document-library",
+      "owner": "Engineering",
       "environment": "staging",
       "criticality": "P2",
       "patch_level": "4.1.9",
-      "last_verified_at": "2026-06-21T10:53:52"
+      "last_verified_at": "2026-06-21T17:22:02"
     },
     {
       "id": "CI-0073",
-      "name": "web-server-society-073",
-      "type": "web-server",
-      "owner": "Mobile Gateway",
+      "name": "sharepoint-site-society-073",
+      "type": "sharepoint-site",
+      "owner": "Customer Success",
       "environment": "prod",
       "criticality": "P2",
       "patch_level": "7.2.6",
-      "last_verified_at": "2026-05-29T13:07:12"
+      "last_verified_at": "2026-05-29T19:35:22"
     },
     {
       "id": "CI-0074",
-      "name": "db-server-test-074",
-      "type": "db-server",
-      "owner": "Platform",
+      "name": "dataverse-instance-test-074",
+      "type": "dataverse-instance",
+      "owner": "Sales",
       "environment": "prod",
       "criticality": "P3",
       "patch_level": "2.17.2",
-      "last_verified_at": "2026-05-23T20:11:54"
+      "last_verified_at": "2026-05-24T02:40:04"
     },
     {
       "id": "CI-0075",
-      "name": "storage-volume-let-075",
-      "type": "storage-volume",
-      "owner": "Search",
+      "name": "sharepoint-document-library-let-075",
+      "type": "sharepoint-document-library",
+      "owner": "HR",
       "environment": "dev",
       "criticality": "P3",
       "patch_level": "5.4.3",
-      "last_verified_at": "2026-05-14T04:26:32"
+      "last_verified_at": "2026-05-14T10:54:42"
     },
     {
       "id": "CI-0076",
-      "name": "db-server-discussion-076",
-      "type": "db-server",
-      "owner": "Notifications",
+      "name": "dataverse-instance-discussion-076",
+      "type": "dataverse-instance",
+      "owner": "Global IT",
       "environment": "dev",
       "criticality": "P3",
       "patch_level": "6.9.2",
-      "last_verified_at": "2026-07-21T17:56:30"
+      "last_verified_at": "2026-07-22T00:24:40"
     },
     {
       "id": "CI-0077",
-      "name": "app-server-natural-077",
-      "type": "app-server",
-      "owner": "Mobile Gateway",
+      "name": "power-platform-environment-natural-077",
+      "type": "power-platform-environment",
+      "owner": "Customer Success",
       "environment": "prod",
       "criticality": "P1",
       "patch_level": "4.20.7",
-      "last_verified_at": "2026-07-04T01:07:56"
+      "last_verified_at": "2026-07-04T07:36:06"
     },
     {
       "id": "CI-0078",
-      "name": "network-switch-treatment-078",
-      "type": "network-switch",
-      "owner": "Payments",
+      "name": "azure-ad-connect-sync-treatment-078",
+      "type": "azure-ad-connect-sync",
+      "owner": "Marketing",
       "environment": "dev",
       "criticality": "P4",
       "patch_level": "9.12.3",
-      "last_verified_at": "2026-07-29T09:14:46"
+      "last_verified_at": "2026-07-29T15:42:56"
     },
     {
       "id": "CI-0079",
-      "name": "message-queue-argue-079",
-      "type": "message-queue",
-      "owner": "Payments",
+      "name": "teams-notification-queue-argue-079",
+      "type": "teams-notification-queue",
+      "owner": "Marketing",
       "environment": "dev",
       "criticality": "P2",
       "patch_level": "4.15.3",
-      "last_verified_at": "2026-06-23T22:49:27"
+      "last_verified_at": "2026-06-24T05:17:37"
     },
     {
       "id": "CI-0080",
-      "name": "api-gateway-should-080",
-      "type": "api-gateway",
-      "owner": "Notifications",
+      "name": "power-automate-gateway-should-080",
+      "type": "power-automate-gateway",
+      "owner": "Global IT",
       "environment": "dev",
       "criticality": "P3",
       "patch_level": "4.10.5",
-      "last_verified_at": "2026-06-11T12:05:03"
+      "last_verified_at": "2026-06-11T18:33:13"
     },
     {
       "id": "CI-0081",
-      "name": "web-server-level-081",
-      "type": "web-server",
-      "owner": "Search",
+      "name": "sharepoint-site-level-081",
+      "type": "sharepoint-site",
+      "owner": "HR",
       "environment": "staging",
       "criticality": "P3",
       "patch_level": "7.6.8",
-      "last_verified_at": "2026-05-23T14:53:33"
+      "last_verified_at": "2026-05-23T21:21:43"
     },
     {
       "id": "CI-0082",
-      "name": "api-gateway-down-082",
-      "type": "api-gateway",
-      "owner": "Payments",
+      "name": "power-automate-gateway-down-082",
+      "type": "power-automate-gateway",
+      "owner": "Marketing",
       "environment": "staging",
       "criticality": "P3",
       "patch_level": "1.20.9",
-      "last_verified_at": "2026-06-28T22:53:16"
+      "last_verified_at": "2026-06-29T05:21:26"
     },
     {
       "id": "CI-0083",
-      "name": "cache-us-083",
-      "type": "cache",
-      "owner": "Payments",
+      "name": "onedrive-sync-cache-us-083",
+      "type": "onedrive-sync-cache",
+      "owner": "Marketing",
       "environment": "dev",
       "criticality": "P1",
       "patch_level": "3.0.4",
-      "last_verified_at": "2026-07-05T18:31:47"
+      "last_verified_at": "2026-07-06T00:59:57"
     },
     {
       "id": "CI-0084",
-      "name": "api-gateway-design-084",
-      "type": "api-gateway",
-      "owner": "Identity",
+      "name": "power-automate-gateway-design-084",
+      "type": "power-automate-gateway",
+      "owner": "Finance",
       "environment": "prod",
       "criticality": "P4",
       "patch_level": "1.20.9",
-      "last_verified_at": "2026-08-06T04:48:29"
+      "last_verified_at": "2026-08-06T11:16:39"
     },
     {
       "id": "CI-0085",
-      "name": "app-server-federal-085",
-      "type": "app-server",
-      "owner": "Checkout",
+      "name": "power-platform-environment-federal-085",
+      "type": "power-platform-environment",
+      "owner": "Legal",
       "environment": "staging",
       "criticality": "P2",
       "patch_level": "7.19.0",
-      "last_verified_at": "2026-06-28T14:09:20"
+      "last_verified_at": "2026-06-28T20:37:30"
     },
     {
       "id": "CI-0086",
-      "name": "app-server-oil-086",
-      "type": "app-server",
-      "owner": "Mobile Gateway",
+      "name": "power-platform-environment-oil-086",
+      "type": "power-platform-environment",
+      "owner": "Customer Success",
       "environment": "prod",
       "criticality": "P1",
       "patch_level": "2.6.0",
-      "last_verified_at": "2026-06-26T22:41:23"
+      "last_verified_at": "2026-06-27T05:09:33"
     },
     {
       "id": "CI-0087",
-      "name": "load-balancer-policy-087",
-      "type": "load-balancer",
-      "owner": "Notifications",
+      "name": "exchange-online-connector-policy-087",
+      "type": "exchange-online-connector",
+      "owner": "Global IT",
       "environment": "staging",
       "criticality": "P4",
       "patch_level": "4.13.9",
-      "last_verified_at": "2026-08-03T15:35:46"
+      "last_verified_at": "2026-08-03T22:03:56"
     },
     {
       "id": "CI-0088",
-      "name": "db-server-because-088",
-      "type": "db-server",
-      "owner": "Payments",
+      "name": "dataverse-instance-because-088",
+      "type": "dataverse-instance",
+      "owner": "Marketing",
       "environment": "prod",
       "criticality": "P2",
       "patch_level": "9.9.5",
-      "last_verified_at": "2026-05-20T12:38:21"
+      "last_verified_at": "2026-05-20T19:06:31"
     },
     {
       "id": "CI-0089",
-      "name": "network-switch-agree-089",
-      "type": "network-switch",
-      "owner": "Platform",
+      "name": "azure-ad-connect-sync-agree-089",
+      "type": "azure-ad-connect-sync",
+      "owner": "Sales",
       "environment": "dev",
       "criticality": "P1",
       "patch_level": "4.18.2",
-      "last_verified_at": "2026-07-26T02:17:00"
+      "last_verified_at": "2026-07-26T08:45:10"
     },
     {
       "id": "CI-0090",
-      "name": "network-switch-want-090",
-      "type": "network-switch",
-      "owner": "Platform",
+      "name": "azure-ad-connect-sync-want-090",
+      "type": "azure-ad-connect-sync",
+      "owner": "Sales",
       "environment": "staging",
       "criticality": "P4",
       "patch_level": "6.8.1",
-      "last_verified_at": "2026-06-28T23:29:36"
+      "last_verified_at": "2026-06-29T05:57:46"
     },
     {
       "id": "CI-0091",
-      "name": "network-switch-need-091",
-      "type": "network-switch",
-      "owner": "Checkout",
+      "name": "azure-ad-connect-sync-need-091",
+      "type": "azure-ad-connect-sync",
+      "owner": "Legal",
       "environment": "staging",
       "criticality": "P4",
       "patch_level": "3.18.0",
-      "last_verified_at": "2026-06-24T13:35:26"
+      "last_verified_at": "2026-06-24T20:03:36"
     },
     {
       "id": "CI-0092",
-      "name": "cache-look-092",
-      "type": "cache",
-      "owner": "Mobile Gateway",
+      "name": "onedrive-sync-cache-look-092",
+      "type": "onedrive-sync-cache",
+      "owner": "Customer Success",
       "environment": "dev",
       "criticality": "P2",
       "patch_level": "1.16.6",
-      "last_verified_at": "2026-05-11T09:09:10"
+      "last_verified_at": "2026-05-11T15:37:20"
     },
     {
       "id": "CI-0093",
-      "name": "db-server-tax-093",
-      "type": "db-server",
-      "owner": "Data Pipeline",
+      "name": "dataverse-instance-tax-093",
+      "type": "dataverse-instance",
+      "owner": "Engineering",
       "environment": "dev",
       "criticality": "P2",
       "patch_level": "3.1.4",
-      "last_verified_at": "2026-07-04T18:40:01"
+      "last_verified_at": "2026-07-05T01:08:11"
     },
     {
       "id": "CI-0094",
-      "name": "storage-volume-upon-094",
-      "type": "storage-volume",
-      "owner": "Payments",
+      "name": "sharepoint-document-library-upon-094",
+      "type": "sharepoint-document-library",
+      "owner": "Marketing",
       "environment": "prod",
       "criticality": "P3",
       "patch_level": "7.1.3",
-      "last_verified_at": "2026-07-19T20:49:43"
+      "last_verified_at": "2026-07-20T03:17:53"
     },
     {
       "id": "CI-0095",
-      "name": "app-server-expert-095",
-      "type": "app-server",
-      "owner": "Payments",
+      "name": "power-platform-environment-expert-095",
+      "type": "power-platform-environment",
+      "owner": "Marketing",
       "environment": "staging",
       "criticality": "P2",
       "patch_level": "7.17.8",
-      "last_verified_at": "2026-07-18T09:16:26"
+      "last_verified_at": "2026-07-18T15:44:36"
     },
     {
       "id": "CI-0096",
-      "name": "db-server-official-096",
-      "type": "db-server",
-      "owner": "Data Pipeline",
+      "name": "dataverse-instance-official-096",
+      "type": "dataverse-instance",
+      "owner": "Engineering",
       "environment": "dev",
       "criticality": "P3",
       "patch_level": "7.8.5",
-      "last_verified_at": "2026-06-30T09:07:15"
+      "last_verified_at": "2026-06-30T15:35:25"
     },
     {
       "id": "CI-0097",
-      "name": "message-queue-opportunity-097",
-      "type": "message-queue",
-      "owner": "Identity",
+      "name": "teams-notification-queue-opportunity-097",
+      "type": "teams-notification-queue",
+      "owner": "Finance",
       "environment": "prod",
       "criticality": "P1",
       "patch_level": "4.13.8",
-      "last_verified_at": "2026-05-28T23:22:10"
+      "last_verified_at": "2026-05-29T05:50:20"
     },
     {
       "id": "CI-0098",
-      "name": "load-balancer-sell-098",
-      "type": "load-balancer",
-      "owner": "Mobile Gateway",
+      "name": "exchange-online-connector-sell-098",
+      "type": "exchange-online-connector",
+      "owner": "Customer Success",
       "environment": "staging",
       "criticality": "P4",
       "patch_level": "7.20.0",
-      "last_verified_at": "2026-07-08T10:25:42"
+      "last_verified_at": "2026-07-08T16:53:52"
     },
     {
       "id": "CI-0099",
-      "name": "db-server-election-099",
-      "type": "db-server",
-      "owner": "Notifications",
+      "name": "dataverse-instance-election-099",
+      "type": "dataverse-instance",
+      "owner": "Global IT",
       "environment": "dev",
       "criticality": "P3",
       "patch_level": "9.16.8",
-      "last_verified_at": "2026-08-04T11:00:35"
+      "last_verified_at": "2026-08-04T17:28:45"
     },
     {
       "id": "CI-0100",
-      "name": "cache-skill-100",
-      "type": "cache",
-      "owner": "Checkout",
+      "name": "onedrive-sync-cache-skill-100",
+      "type": "onedrive-sync-cache",
+      "owner": "Legal",
       "environment": "staging",
       "criticality": "P2",
       "patch_level": "3.0.7",
-      "last_verified_at": "2026-08-04T00:44:23"
+      "last_verified_at": "2026-08-04T07:12:33"
     },
     {
       "id": "CI-0101",
-      "name": "network-switch-modern-101",
-      "type": "network-switch",
-      "owner": "Notifications",
+      "name": "azure-ad-connect-sync-modern-101",
+      "type": "azure-ad-connect-sync",
+      "owner": "Global IT",
       "environment": "prod",
       "criticality": "P3",
       "patch_level": "2.9.6",
-      "last_verified_at": "2026-06-14T00:43:03"
+      "last_verified_at": "2026-06-14T07:11:13"
     },
     {
       "id": "CI-0102",
-      "name": "load-balancer-unit-102",
-      "type": "load-balancer",
-      "owner": "Payments",
+      "name": "exchange-online-connector-unit-102",
+      "type": "exchange-online-connector",
+      "owner": "Marketing",
       "environment": "staging",
       "criticality": "P4",
       "patch_level": "8.4.3",
-      "last_verified_at": "2026-06-01T11:23:40"
+      "last_verified_at": "2026-06-01T17:51:50"
     },
     {
       "id": "CI-0103",
-      "name": "cache-knowledge-103",
-      "type": "cache",
-      "owner": "Data Pipeline",
+      "name": "onedrive-sync-cache-knowledge-103",
+      "type": "onedrive-sync-cache",
+      "owner": "Engineering",
       "environment": "dev",
       "criticality": "P3",
       "patch_level": "5.13.3",
-      "last_verified_at": "2026-05-12T23:53:33"
+      "last_verified_at": "2026-05-13T06:21:43"
     },
     {
       "id": "CI-0104",
-      "name": "app-server-direction-104",
-      "type": "app-server",
-      "owner": "Search",
+      "name": "power-platform-environment-direction-104",
+      "type": "power-platform-environment",
+      "owner": "HR",
       "environment": "prod",
       "criticality": "P1",
       "patch_level": "8.7.2",
-      "last_verified_at": "2026-06-23T01:01:09"
+      "last_verified_at": "2026-06-23T07:29:19"
     },
     {
       "id": "CI-0105",
-      "name": "cache-sort-105",
-      "type": "cache",
-      "owner": "Identity",
+      "name": "onedrive-sync-cache-sort-105",
+      "type": "onedrive-sync-cache",
+      "owner": "Finance",
       "environment": "staging",
       "criticality": "P2",
       "patch_level": "5.12.2",
-      "last_verified_at": "2026-07-08T09:21:32"
+      "last_verified_at": "2026-07-08T15:49:42"
     },
     {
       "id": "CI-0106",
-      "name": "web-server-kitchen-106",
-      "type": "web-server",
-      "owner": "Data Pipeline",
+      "name": "sharepoint-site-kitchen-106",
+      "type": "sharepoint-site",
+      "owner": "Engineering",
       "environment": "dev",
       "criticality": "P4",
       "patch_level": "5.14.9",
-      "last_verified_at": "2026-05-22T05:13:41"
+      "last_verified_at": "2026-05-22T11:41:51"
     },
     {
       "id": "CI-0107",
-      "name": "app-server-poor-107",
-      "type": "app-server",
-      "owner": "Notifications",
+      "name": "power-platform-environment-poor-107",
+      "type": "power-platform-environment",
+      "owner": "Global IT",
       "environment": "dev",
       "criticality": "P3",
       "patch_level": "9.19.6",
-      "last_verified_at": "2026-07-27T16:16:28"
+      "last_verified_at": "2026-07-27T22:44:38"
     },
     {
       "id": "CI-0108",
-      "name": "load-balancer-girl-108",
-      "type": "load-balancer",
-      "owner": "Checkout",
+      "name": "exchange-online-connector-girl-108",
+      "type": "exchange-online-connector",
+      "owner": "Legal",
       "environment": "dev",
       "criticality": "P4",
       "patch_level": "6.12.2",
-      "last_verified_at": "2026-06-07T00:31:25"
+      "last_verified_at": "2026-06-07T06:59:35"
     },
     {
       "id": "CI-0109",
-      "name": "web-server-course-109",
-      "type": "web-server",
-      "owner": "Checkout",
+      "name": "sharepoint-site-course-109",
+      "type": "sharepoint-site",
+      "owner": "Legal",
       "environment": "prod",
       "criticality": "P4",
       "patch_level": "6.3.7",
-      "last_verified_at": "2026-07-31T01:18:56"
+      "last_verified_at": "2026-07-31T07:47:06"
     },
     {
       "id": "CI-0110",
-      "name": "web-server-wait-110",
-      "type": "web-server",
-      "owner": "Platform",
+      "name": "sharepoint-site-wait-110",
+      "type": "sharepoint-site",
+      "owner": "Sales",
       "environment": "staging",
       "criticality": "P3",
       "patch_level": "8.20.1",
-      "last_verified_at": "2026-08-04T12:39:36"
+      "last_verified_at": "2026-08-04T19:07:46"
     },
     {
       "id": "CI-0111",
-      "name": "web-server-long-111",
-      "type": "web-server",
-      "owner": "Platform",
+      "name": "sharepoint-site-long-111",
+      "type": "sharepoint-site",
+      "owner": "Sales",
       "environment": "dev",
       "criticality": "P1",
       "patch_level": "9.14.8",
-      "last_verified_at": "2026-07-03T08:28:14"
+      "last_verified_at": "2026-07-03T14:56:24"
     },
     {
       "id": "CI-0112",
-      "name": "load-balancer-cost-112",
-      "type": "load-balancer",
-      "owner": "Notifications",
+      "name": "exchange-online-connector-cost-112",
+      "type": "exchange-online-connector",
+      "owner": "Global IT",
       "environment": "dev",
       "criticality": "P4",
       "patch_level": "9.16.0",
-      "last_verified_at": "2026-06-13T23:33:09"
+      "last_verified_at": "2026-06-14T06:01:19"
     },
     {
       "id": "CI-0113",
-      "name": "api-gateway-include-113",
-      "type": "api-gateway",
-      "owner": "Platform",
+      "name": "power-automate-gateway-include-113",
+      "type": "power-automate-gateway",
+      "owner": "Sales",
       "environment": "dev",
       "criticality": "P3",
       "patch_level": "4.3.2",
-      "last_verified_at": "2026-05-23T19:43:00"
+      "last_verified_at": "2026-05-24T02:11:10"
     },
     {
       "id": "CI-0114",
-      "name": "db-server-stop-114",
-      "type": "db-server",
-      "owner": "Data Pipeline",
+      "name": "dataverse-instance-stop-114",
+      "type": "dataverse-instance",
+      "owner": "Engineering",
       "environment": "prod",
       "criticality": "P1",
       "patch_level": "1.17.0",
-      "last_verified_at": "2026-07-29T06:48:41"
+      "last_verified_at": "2026-07-29T13:16:51"
     },
     {
       "id": "CI-0115",
-      "name": "cache-also-115",
-      "type": "cache",
-      "owner": "Notifications",
+      "name": "onedrive-sync-cache-also-115",
+      "type": "onedrive-sync-cache",
+      "owner": "Global IT",
       "environment": "prod",
       "criticality": "P3",
       "patch_level": "9.18.6",
-      "last_verified_at": "2026-05-19T18:56:05"
+      "last_verified_at": "2026-05-20T01:24:15"
     },
     {
       "id": "CI-0116",
-      "name": "load-balancer-long-116",
-      "type": "load-balancer",
-      "owner": "Payments",
+      "name": "exchange-online-connector-long-116",
+      "type": "exchange-online-connector",
+      "owner": "Marketing",
       "environment": "dev",
       "criticality": "P1",
       "patch_level": "4.9.1",
-      "last_verified_at": "2026-07-19T18:50:02"
+      "last_verified_at": "2026-07-20T01:18:12"
     },
     {
       "id": "CI-0117",
-      "name": "storage-volume-see-117",
-      "type": "storage-volume",
-      "owner": "Data Pipeline",
+      "name": "sharepoint-document-library-see-117",
+      "type": "sharepoint-document-library",
+      "owner": "Engineering",
       "environment": "prod",
       "criticality": "P2",
       "patch_level": "7.17.5",
-      "last_verified_at": "2026-06-16T07:12:32"
+      "last_verified_at": "2026-06-16T13:40:42"
     },
     {
       "id": "CI-0118",
-      "name": "api-gateway-wear-118",
-      "type": "api-gateway",
-      "owner": "Data Pipeline",
+      "name": "power-automate-gateway-wear-118",
+      "type": "power-automate-gateway",
+      "owner": "Engineering",
       "environment": "dev",
       "criticality": "P3",
       "patch_level": "3.1.8",
-      "last_verified_at": "2026-07-18T11:04:50"
+      "last_verified_at": "2026-07-18T17:33:00"
     },
     {
       "id": "CI-0119",
-      "name": "load-balancer-whose-119",
-      "type": "load-balancer",
-      "owner": "Platform",
+      "name": "exchange-online-connector-whose-119",
+      "type": "exchange-online-connector",
+      "owner": "Sales",
       "environment": "dev",
       "criticality": "P1",
       "patch_level": "3.17.8",
-      "last_verified_at": "2026-05-10T05:00:27"
+      "last_verified_at": "2026-05-10T11:28:37"
     },
     {
       "id": "CI-0120",
-      "name": "db-server-black-120",
-      "type": "db-server",
-      "owner": "Notifications",
+      "name": "dataverse-instance-black-120",
+      "type": "dataverse-instance",
+      "owner": "Global IT",
       "environment": "prod",
       "criticality": "P2",
       "patch_level": "4.20.3",
-      "last_verified_at": "2026-06-10T07:04:45"
+      "last_verified_at": "2026-06-10T13:32:55"
     },
     {
       "id": "CI-0121",
-      "name": "cache-that-121",
-      "type": "cache",
-      "owner": "Notifications",
+      "name": "onedrive-sync-cache-that-121",
+      "type": "onedrive-sync-cache",
+      "owner": "Global IT",
       "environment": "dev",
       "criticality": "P3",
       "patch_level": "1.19.2",
-      "last_verified_at": "2026-07-29T08:35:00"
+      "last_verified_at": "2026-07-29T15:03:10"
     },
     {
       "id": "CI-0122",
-      "name": "network-switch-fire-122",
-      "type": "network-switch",
-      "owner": "Checkout",
+      "name": "azure-ad-connect-sync-fire-122",
+      "type": "azure-ad-connect-sync",
+      "owner": "Legal",
       "environment": "staging",
       "criticality": "P3",
       "patch_level": "4.14.7",
-      "last_verified_at": "2026-05-17T06:05:09"
+      "last_verified_at": "2026-05-17T12:33:19"
     },
     {
       "id": "CI-0123",
-      "name": "load-balancer-pretty-123",
-      "type": "load-balancer",
-      "owner": "Notifications",
+      "name": "exchange-online-connector-pretty-123",
+      "type": "exchange-online-connector",
+      "owner": "Global IT",
       "environment": "dev",
       "criticality": "P3",
       "patch_level": "2.18.3",
-      "last_verified_at": "2026-06-15T02:22:20"
+      "last_verified_at": "2026-06-15T08:50:30"
     },
     {
       "id": "CI-0124",
-      "name": "load-balancer-region-124",
-      "type": "load-balancer",
-      "owner": "Notifications",
+      "name": "exchange-online-connector-region-124",
+      "type": "exchange-online-connector",
+      "owner": "Global IT",
       "environment": "staging",
       "criticality": "P4",
       "patch_level": "6.2.9",
-      "last_verified_at": "2026-06-21T08:46:14"
+      "last_verified_at": "2026-06-21T15:14:24"
     },
     {
       "id": "CI-0125",
-      "name": "message-queue-important-125",
-      "type": "message-queue",
-      "owner": "Data Pipeline",
+      "name": "teams-notification-queue-important-125",
+      "type": "teams-notification-queue",
+      "owner": "Engineering",
       "environment": "staging",
       "criticality": "P4",
       "patch_level": "5.6.1",
-      "last_verified_at": "2026-07-13T11:58:19"
+      "last_verified_at": "2026-07-13T18:26:29"
     },
     {
       "id": "CI-0126",
-      "name": "db-server-it-126",
-      "type": "db-server",
-      "owner": "Search",
+      "name": "dataverse-instance-it-126",
+      "type": "dataverse-instance",
+      "owner": "HR",
       "environment": "dev",
       "criticality": "P4",
       "patch_level": "7.11.3",
-      "last_verified_at": "2026-05-17T18:46:21"
+      "last_verified_at": "2026-05-18T01:14:31"
     },
     {
       "id": "CI-0127",
-      "name": "load-balancer-wind-127",
-      "type": "load-balancer",
-      "owner": "Search",
+      "name": "exchange-online-connector-wind-127",
+      "type": "exchange-online-connector",
+      "owner": "HR",
       "environment": "dev",
       "criticality": "P3",
       "patch_level": "4.7.4",
-      "last_verified_at": "2026-07-13T15:15:34"
+      "last_verified_at": "2026-07-13T21:43:44"
     },
     {
       "id": "CI-0128",
-      "name": "cache-development-128",
-      "type": "cache",
-      "owner": "Mobile Gateway",
+      "name": "onedrive-sync-cache-development-128",
+      "type": "onedrive-sync-cache",
+      "owner": "Customer Success",
       "environment": "dev",
       "criticality": "P3",
       "patch_level": "7.6.3",
-      "last_verified_at": "2026-05-13T05:34:20"
+      "last_verified_at": "2026-05-13T12:02:30"
     },
     {
       "id": "CI-0129",
-      "name": "message-queue-sea-129",
-      "type": "message-queue",
-      "owner": "Mobile Gateway",
+      "name": "teams-notification-queue-sea-129",
+      "type": "teams-notification-queue",
+      "owner": "Customer Success",
       "environment": "dev",
       "criticality": "P3",
       "patch_level": "3.18.1",
-      "last_verified_at": "2026-07-09T17:59:59"
+      "last_verified_at": "2026-07-10T00:28:09"
     },
     {
       "id": "CI-0130",
-      "name": "load-balancer-boy-130",
-      "type": "load-balancer",
-      "owner": "Platform",
+      "name": "exchange-online-connector-boy-130",
+      "type": "exchange-online-connector",
+      "owner": "Sales",
       "environment": "staging",
       "criticality": "P3",
       "patch_level": "7.8.0",
-      "last_verified_at": "2026-06-24T09:42:21"
+      "last_verified_at": "2026-06-24T16:10:31"
     },
     {
       "id": "CI-0131",
-      "name": "app-server-ever-131",
-      "type": "app-server",
-      "owner": "Checkout",
+      "name": "power-platform-environment-ever-131",
+      "type": "power-platform-environment",
+      "owner": "Legal",
       "environment": "staging",
       "criticality": "P4",
       "patch_level": "9.12.5",
-      "last_verified_at": "2026-07-01T03:20:31"
+      "last_verified_at": "2026-07-01T09:48:41"
     },
     {
       "id": "CI-0132",
-      "name": "web-server-toward-132",
-      "type": "web-server",
-      "owner": "Platform",
+      "name": "sharepoint-site-toward-132",
+      "type": "sharepoint-site",
+      "owner": "Sales",
       "environment": "staging",
       "criticality": "P2",
       "patch_level": "4.6.1",
-      "last_verified_at": "2026-07-25T15:10:18"
+      "last_verified_at": "2026-07-25T21:38:28"
     },
     {
       "id": "CI-0133",
-      "name": "api-gateway-increase-133",
-      "type": "api-gateway",
-      "owner": "Checkout",
+      "name": "power-automate-gateway-increase-133",
+      "type": "power-automate-gateway",
+      "owner": "Legal",
       "environment": "dev",
       "criticality": "P4",
       "patch_level": "1.16.8",
-      "last_verified_at": "2026-05-24T21:33:36"
+      "last_verified_at": "2026-05-25T04:01:46"
     },
     {
       "id": "CI-0134",
-      "name": "cache-choice-134",
-      "type": "cache",
-      "owner": "Mobile Gateway",
+      "name": "onedrive-sync-cache-choice-134",
+      "type": "onedrive-sync-cache",
+      "owner": "Customer Success",
       "environment": "dev",
       "criticality": "P2",
       "patch_level": "6.18.1",
-      "last_verified_at": "2026-05-28T16:22:16"
+      "last_verified_at": "2026-05-28T22:50:26"
     },
     {
       "id": "CI-0135",
-      "name": "storage-volume-popular-135",
-      "type": "storage-volume",
-      "owner": "Platform",
+      "name": "sharepoint-document-library-popular-135",
+      "type": "sharepoint-document-library",
+      "owner": "Sales",
       "environment": "prod",
       "criticality": "P2",
       "patch_level": "1.16.4",
-      "last_verified_at": "2026-06-02T17:37:11"
+      "last_verified_at": "2026-06-03T00:05:21"
     },
     {
       "id": "CI-0136",
-      "name": "api-gateway-a-136",
-      "type": "api-gateway",
-      "owner": "Checkout",
+      "name": "power-automate-gateway-a-136",
+      "type": "power-automate-gateway",
+      "owner": "Legal",
       "environment": "dev",
       "criticality": "P4",
       "patch_level": "2.13.9",
-      "last_verified_at": "2026-07-13T18:33:29"
+      "last_verified_at": "2026-07-14T01:01:39"
     },
     {
       "id": "CI-0137",
-      "name": "web-server-knowledge-137",
-      "type": "web-server",
-      "owner": "Checkout",
+      "name": "sharepoint-site-knowledge-137",
+      "type": "sharepoint-site",
+      "owner": "Legal",
       "environment": "dev",
       "criticality": "P2",
       "patch_level": "8.7.4",
-      "last_verified_at": "2026-05-19T20:04:23"
+      "last_verified_at": "2026-05-20T02:32:33"
     },
     {
       "id": "CI-0138",
-      "name": "app-server-identify-138",
-      "type": "app-server",
-      "owner": "Payments",
+      "name": "power-platform-environment-identify-138",
+      "type": "power-platform-environment",
+      "owner": "Marketing",
       "environment": "prod",
       "criticality": "P1",
       "patch_level": "8.16.0",
-      "last_verified_at": "2026-07-31T10:32:38"
+      "last_verified_at": "2026-07-31T17:00:48"
     },
     {
       "id": "CI-0139",
-      "name": "db-server-lawyer-139",
-      "type": "db-server",
-      "owner": "Mobile Gateway",
+      "name": "dataverse-instance-lawyer-139",
+      "type": "dataverse-instance",
+      "owner": "Customer Success",
       "environment": "dev",
       "criticality": "P3",
       "patch_level": "6.8.5",
-      "last_verified_at": "2026-07-11T07:24:01"
+      "last_verified_at": "2026-07-11T13:52:11"
     },
     {
       "id": "CI-0140",
-      "name": "storage-volume-make-140",
-      "type": "storage-volume",
-      "owner": "Identity",
+      "name": "sharepoint-document-library-make-140",
+      "type": "sharepoint-document-library",
+      "owner": "Finance",
       "environment": "staging",
       "criticality": "P4",
       "patch_level": "4.1.4",
-      "last_verified_at": "2026-06-18T21:37:28"
+      "last_verified_at": "2026-06-19T04:05:38"
     },
     {
       "id": "CI-0141",
-      "name": "web-server-pretty-141",
-      "type": "web-server",
-      "owner": "Mobile Gateway",
+      "name": "sharepoint-site-pretty-141",
+      "type": "sharepoint-site",
+      "owner": "Customer Success",
       "environment": "dev",
       "criticality": "P3",
       "patch_level": "3.9.5",
-      "last_verified_at": "2026-05-15T06:35:12"
+      "last_verified_at": "2026-05-15T13:03:22"
     },
     {
       "id": "CI-0142",
-      "name": "app-server-any-142",
-      "type": "app-server",
-      "owner": "Platform",
+      "name": "power-platform-environment-any-142",
+      "type": "power-platform-environment",
+      "owner": "Sales",
       "environment": "prod",
       "criticality": "P1",
       "patch_level": "6.20.1",
-      "last_verified_at": "2026-07-13T11:25:45"
+      "last_verified_at": "2026-07-13T17:53:55"
     },
     {
       "id": "CI-0143",
-      "name": "network-switch-between-143",
-      "type": "network-switch",
-      "owner": "Platform",
+      "name": "azure-ad-connect-sync-between-143",
+      "type": "azure-ad-connect-sync",
+      "owner": "Sales",
       "environment": "staging",
       "criticality": "P4",
       "patch_level": "3.18.2",
-      "last_verified_at": "2026-05-27T14:37:47"
+      "last_verified_at": "2026-05-27T21:05:57"
     },
     {
       "id": "CI-0144",
-      "name": "db-server-indicate-144",
-      "type": "db-server",
-      "owner": "Notifications",
+      "name": "dataverse-instance-indicate-144",
+      "type": "dataverse-instance",
+      "owner": "Global IT",
       "environment": "staging",
       "criticality": "P3",
       "patch_level": "4.18.3",
-      "last_verified_at": "2026-06-28T11:59:50"
+      "last_verified_at": "2026-06-28T18:28:00"
     },
     {
       "id": "CI-0145",
-      "name": "web-server-audience-145",
-      "type": "web-server",
-      "owner": "Notifications",
+      "name": "sharepoint-site-audience-145",
+      "type": "sharepoint-site",
+      "owner": "Global IT",
       "environment": "prod",
       "criticality": "P3",
       "patch_level": "6.2.3",
-      "last_verified_at": "2026-07-13T06:53:46"
+      "last_verified_at": "2026-07-13T13:21:56"
     },
     {
       "id": "CI-0146",
-      "name": "message-queue-win-146",
-      "type": "message-queue",
-      "owner": "Identity",
+      "name": "teams-notification-queue-win-146",
+      "type": "teams-notification-queue",
+      "owner": "Finance",
       "environment": "dev",
       "criticality": "P3",
       "patch_level": "2.5.2",
-      "last_verified_at": "2026-06-28T11:38:11"
+      "last_verified_at": "2026-06-28T18:06:21"
     },
     {
       "id": "CI-0147",
-      "name": "message-queue-sport-147",
-      "type": "message-queue",
-      "owner": "Platform",
+      "name": "teams-notification-queue-sport-147",
+      "type": "teams-notification-queue",
+      "owner": "Sales",
       "environment": "dev",
       "criticality": "P2",
       "patch_level": "3.17.4",
-      "last_verified_at": "2026-07-02T15:47:23"
+      "last_verified_at": "2026-07-02T22:15:33"
     },
     {
       "id": "CI-0148",
-      "name": "app-server-fish-148",
-      "type": "app-server",
-      "owner": "Checkout",
+      "name": "power-platform-environment-fish-148",
+      "type": "power-platform-environment",
+      "owner": "Legal",
       "environment": "staging",
       "criticality": "P4",
       "patch_level": "1.14.8",
-      "last_verified_at": "2026-05-11T07:10:26"
+      "last_verified_at": "2026-05-11T13:38:36"
     },
     {
       "id": "CI-0149",
-      "name": "app-server-million-149",
-      "type": "app-server",
-      "owner": "Mobile Gateway",
+      "name": "power-platform-environment-million-149",
+      "type": "power-platform-environment",
+      "owner": "Customer Success",
       "environment": "staging",
       "criticality": "P3",
       "patch_level": "6.9.4",
-      "last_verified_at": "2026-06-28T01:14:19"
+      "last_verified_at": "2026-06-28T07:42:29"
     },
     {
       "id": "CI-0150",
-      "name": "cache-or-150",
-      "type": "cache",
-      "owner": "Payments",
+      "name": "onedrive-sync-cache-or-150",
+      "type": "onedrive-sync-cache",
+      "owner": "Marketing",
       "environment": "dev",
       "criticality": "P3",
       "patch_level": "3.9.4",
-      "last_verified_at": "2026-06-27T16:37:59"
+      "last_verified_at": "2026-06-27T23:06:09"
     },
     {
       "id": "CI-0151",
-      "name": "network-switch-Congress-151",
-      "type": "network-switch",
-      "owner": "Checkout",
+      "name": "azure-ad-connect-sync-Congress-151",
+      "type": "azure-ad-connect-sync",
+      "owner": "Legal",
       "environment": "dev",
       "criticality": "P1",
       "patch_level": "4.7.7",
-      "last_verified_at": "2026-06-20T08:56:36"
+      "last_verified_at": "2026-06-20T15:24:46"
     },
     {
       "id": "CI-0152",
-      "name": "web-server-loss-152",
-      "type": "web-server",
-      "owner": "Identity",
+      "name": "sharepoint-site-loss-152",
+      "type": "sharepoint-site",
+      "owner": "Finance",
       "environment": "prod",
       "criticality": "P3",
       "patch_level": "2.0.4",
-      "last_verified_at": "2026-07-06T15:53:36"
+      "last_verified_at": "2026-07-06T22:21:46"
     },
     {
       "id": "CI-0153",
-      "name": "storage-volume-easy-153",
-      "type": "storage-volume",
-      "owner": "Notifications",
+      "name": "sharepoint-document-library-easy-153",
+      "type": "sharepoint-document-library",
+      "owner": "Global IT",
       "environment": "staging",
       "criticality": "P1",
       "patch_level": "9.6.9",
-      "last_verified_at": "2026-06-23T03:48:24"
+      "last_verified_at": "2026-06-23T10:16:34"
     },
     {
       "id": "CI-0154",
-      "name": "cache-interesting-154",
-      "type": "cache",
-      "owner": "Mobile Gateway",
+      "name": "onedrive-sync-cache-interesting-154",
+      "type": "onedrive-sync-cache",
+      "owner": "Customer Success",
       "environment": "dev",
       "criticality": "P1",
       "patch_level": "9.1.3",
-      "last_verified_at": "2026-07-17T05:22:33"
+      "last_verified_at": "2026-07-17T11:50:43"
     },
     {
       "id": "CI-0155",
-      "name": "api-gateway-key-155",
-      "type": "api-gateway",
-      "owner": "Search",
+      "name": "power-automate-gateway-key-155",
+      "type": "power-automate-gateway",
+      "owner": "HR",
       "environment": "dev",
       "criticality": "P4",
       "patch_level": "2.20.0",
-      "last_verified_at": "2026-05-17T17:25:49"
+      "last_verified_at": "2026-05-17T23:53:59"
     },
     {
       "id": "CI-0156",
-      "name": "web-server-close-156",
-      "type": "web-server",
-      "owner": "Platform",
+      "name": "sharepoint-site-close-156",
+      "type": "sharepoint-site",
+      "owner": "Sales",
       "environment": "dev",
       "criticality": "P1",
       "patch_level": "8.5.0",
-      "last_verified_at": "2026-05-26T07:38:30"
+      "last_verified_at": "2026-05-26T14:06:40"
     },
     {
       "id": "CI-0157",
-      "name": "load-balancer-begin-157",
-      "type": "load-balancer",
-      "owner": "Checkout",
+      "name": "exchange-online-connector-begin-157",
+      "type": "exchange-online-connector",
+      "owner": "Legal",
       "environment": "staging",
       "criticality": "P4",
       "patch_level": "8.17.1",
-      "last_verified_at": "2026-08-03T11:10:12"
+      "last_verified_at": "2026-08-03T17:38:22"
     },
     {
       "id": "CI-0158",
-      "name": "cache-consumer-158",
-      "type": "cache",
-      "owner": "Search",
+      "name": "onedrive-sync-cache-consumer-158",
+      "type": "onedrive-sync-cache",
+      "owner": "HR",
       "environment": "prod",
       "criticality": "P3",
       "patch_level": "1.18.9",
-      "last_verified_at": "2026-05-20T15:59:56"
+      "last_verified_at": "2026-05-20T22:28:06"
     },
     {
       "id": "CI-0159",
-      "name": "api-gateway-guy-159",
-      "type": "api-gateway",
-      "owner": "Checkout",
+      "name": "power-automate-gateway-guy-159",
+      "type": "power-automate-gateway",
+      "owner": "Legal",
       "environment": "dev",
       "criticality": "P3",
       "patch_level": "6.10.9",
-      "last_verified_at": "2026-05-27T17:09:13"
+      "last_verified_at": "2026-05-27T23:37:23"
     },
     {
       "id": "CI-0160",
-      "name": "app-server-form-160",
-      "type": "app-server",
-      "owner": "Payments",
+      "name": "power-platform-environment-form-160",
+      "type": "power-platform-environment",
+      "owner": "Marketing",
       "environment": "prod",
       "criticality": "P2",
       "patch_level": "6.16.5",
-      "last_verified_at": "2026-06-13T03:16:06"
+      "last_verified_at": "2026-06-13T09:44:16"
     },
     {
       "id": "CI-0161",
-      "name": "app-server-law-161",
-      "type": "app-server",
-      "owner": "Search",
+      "name": "power-platform-environment-law-161",
+      "type": "power-platform-environment",
+      "owner": "HR",
       "environment": "prod",
       "criticality": "P2",
       "patch_level": "2.17.2",
-      "last_verified_at": "2026-07-14T19:52:55"
+      "last_verified_at": "2026-07-15T02:21:05"
     },
     {
       "id": "CI-0162",
-      "name": "web-server-focus-162",
-      "type": "web-server",
-      "owner": "Platform",
+      "name": "sharepoint-site-focus-162",
+      "type": "sharepoint-site",
+      "owner": "Sales",
       "environment": "staging",
       "criticality": "P1",
       "patch_level": "2.2.5",
-      "last_verified_at": "2026-06-22T14:19:50"
+      "last_verified_at": "2026-06-22T20:48:00"
     },
     {
       "id": "CI-0163",
-      "name": "message-queue-fact-163",
-      "type": "message-queue",
-      "owner": "Mobile Gateway",
+      "name": "teams-notification-queue-fact-163",
+      "type": "teams-notification-queue",
+      "owner": "Customer Success",
       "environment": "dev",
       "criticality": "P2",
       "patch_level": "2.13.4",
-      "last_verified_at": "2026-05-30T17:11:23"
+      "last_verified_at": "2026-05-30T23:39:33"
     },
     {
       "id": "CI-0164",
-      "name": "cache-board-164",
-      "type": "cache",
-      "owner": "Data Pipeline",
+      "name": "onedrive-sync-cache-board-164",
+      "type": "onedrive-sync-cache",
+      "owner": "Engineering",
       "environment": "prod",
       "criticality": "P4",
       "patch_level": "2.17.4",
-      "last_verified_at": "2026-05-09T20:11:27"
+      "last_verified_at": "2026-05-10T02:39:37"
     },
     {
       "id": "CI-0165",
-      "name": "storage-volume-strong-165",
-      "type": "storage-volume",
-      "owner": "Payments",
+      "name": "sharepoint-document-library-strong-165",
+      "type": "sharepoint-document-library",
+      "owner": "Marketing",
       "environment": "dev",
       "criticality": "P4",
       "patch_level": "8.5.6",
-      "last_verified_at": "2026-08-01T17:10:19"
+      "last_verified_at": "2026-08-01T23:38:29"
     },
     {
       "id": "CI-0166",
-      "name": "db-server-make-166",
-      "type": "db-server",
-      "owner": "Platform",
+      "name": "dataverse-instance-make-166",
+      "type": "dataverse-instance",
+      "owner": "Sales",
       "environment": "staging",
       "criticality": "P3",
       "patch_level": "1.8.6",
-      "last_verified_at": "2026-06-14T02:28:46"
+      "last_verified_at": "2026-06-14T08:56:56"
     },
     {
       "id": "CI-0167",
-      "name": "db-server-military-167",
-      "type": "db-server",
-      "owner": "Search",
+      "name": "dataverse-instance-military-167",
+      "type": "dataverse-instance",
+      "owner": "HR",
       "environment": "staging",
       "criticality": "P1",
       "patch_level": "8.14.9",
-      "last_verified_at": "2026-05-15T12:55:56"
+      "last_verified_at": "2026-05-15T19:24:06"
     },
     {
       "id": "CI-0168",
-      "name": "api-gateway-large-168",
-      "type": "api-gateway",
-      "owner": "Notifications",
+      "name": "power-automate-gateway-large-168",
+      "type": "power-automate-gateway",
+      "owner": "Global IT",
       "environment": "prod",
       "criticality": "P4",
       "patch_level": "7.2.9",
-      "last_verified_at": "2026-06-05T13:20:04"
+      "last_verified_at": "2026-06-05T19:48:14"
     },
     {
       "id": "CI-0169",
-      "name": "db-server-boy-169",
-      "type": "db-server",
-      "owner": "Platform",
+      "name": "dataverse-instance-boy-169",
+      "type": "dataverse-instance",
+      "owner": "Sales",
       "environment": "dev",
       "criticality": "P3",
       "patch_level": "5.8.5",
-      "last_verified_at": "2026-06-08T09:05:27"
+      "last_verified_at": "2026-06-08T15:33:37"
     },
     {
       "id": "CI-0170",
-      "name": "message-queue-social-170",
-      "type": "message-queue",
-      "owner": "Search",
+      "name": "teams-notification-queue-social-170",
+      "type": "teams-notification-queue",
+      "owner": "HR",
       "environment": "prod",
       "criticality": "P3",
       "patch_level": "5.16.9",
-      "last_verified_at": "2026-07-13T07:24:19"
+      "last_verified_at": "2026-07-13T13:52:29"
     },
     {
       "id": "CI-0171",
-      "name": "web-server-company-171",
-      "type": "web-server",
-      "owner": "Identity",
+      "name": "sharepoint-site-company-171",
+      "type": "sharepoint-site",
+      "owner": "Finance",
       "environment": "dev",
       "criticality": "P1",
       "patch_level": "4.0.5",
-      "last_verified_at": "2026-06-10T00:48:55"
+      "last_verified_at": "2026-06-10T07:17:05"
     },
     {
       "id": "CI-0172",
-      "name": "message-queue-face-172",
-      "type": "message-queue",
-      "owner": "Notifications",
+      "name": "teams-notification-queue-face-172",
+      "type": "teams-notification-queue",
+      "owner": "Global IT",
       "environment": "staging",
       "criticality": "P4",
       "patch_level": "7.8.2",
-      "last_verified_at": "2026-07-09T10:43:58"
+      "last_verified_at": "2026-07-09T17:12:08"
     },
     {
       "id": "CI-0173",
-      "name": "app-server-concern-173",
-      "type": "app-server",
-      "owner": "Payments",
+      "name": "power-platform-environment-concern-173",
+      "type": "power-platform-environment",
+      "owner": "Marketing",
       "environment": "prod",
       "criticality": "P4",
       "patch_level": "6.15.9",
-      "last_verified_at": "2026-07-07T01:53:28"
+      "last_verified_at": "2026-07-07T08:21:38"
     },
     {
       "id": "CI-0174",
-      "name": "storage-volume-positive-174",
-      "type": "storage-volume",
-      "owner": "Notifications",
+      "name": "sharepoint-document-library-positive-174",
+      "type": "sharepoint-document-library",
+      "owner": "Global IT",
       "environment": "prod",
       "criticality": "P3",
       "patch_level": "6.7.7",
-      "last_verified_at": "2026-06-30T06:36:36"
+      "last_verified_at": "2026-06-30T13:04:46"
     },
     {
       "id": "CI-0175",
-      "name": "storage-volume-draw-175",
-      "type": "storage-volume",
-      "owner": "Identity",
+      "name": "sharepoint-document-library-draw-175",
+      "type": "sharepoint-document-library",
+      "owner": "Finance",
       "environment": "prod",
       "criticality": "P1",
       "patch_level": "9.2.1",
-      "last_verified_at": "2026-06-28T19:25:06"
+      "last_verified_at": "2026-06-29T01:53:16"
     },
     {
       "id": "CI-0176",
-      "name": "api-gateway-catch-176",
-      "type": "api-gateway",
-      "owner": "Search",
+      "name": "power-automate-gateway-catch-176",
+      "type": "power-automate-gateway",
+      "owner": "HR",
       "environment": "staging",
       "criticality": "P1",
       "patch_level": "7.20.9",
-      "last_verified_at": "2026-06-05T16:30:32"
+      "last_verified_at": "2026-06-05T22:58:42"
     },
     {
       "id": "CI-0177",
-      "name": "db-server-know-177",
-      "type": "db-server",
-      "owner": "Notifications",
+      "name": "dataverse-instance-know-177",
+      "type": "dataverse-instance",
+      "owner": "Global IT",
       "environment": "dev",
       "criticality": "P4",
       "patch_level": "8.18.6",
-      "last_verified_at": "2026-05-29T18:14:38"
+      "last_verified_at": "2026-05-30T00:42:48"
     },
     {
       "id": "CI-0178",
-      "name": "storage-volume-news-178",
-      "type": "storage-volume",
-      "owner": "Data Pipeline",
+      "name": "sharepoint-document-library-news-178",
+      "type": "sharepoint-document-library",
+      "owner": "Engineering",
       "environment": "prod",
       "criticality": "P2",
       "patch_level": "5.13.5",
-      "last_verified_at": "2026-05-09T22:26:14"
+      "last_verified_at": "2026-05-10T04:54:24"
     },
     {
       "id": "CI-0179",
-      "name": "network-switch-page-179",
-      "type": "network-switch",
-      "owner": "Identity",
+      "name": "azure-ad-connect-sync-page-179",
+      "type": "azure-ad-connect-sync",
+      "owner": "Finance",
       "environment": "dev",
       "criticality": "P2",
       "patch_level": "5.10.0",
-      "last_verified_at": "2026-05-22T11:26:32"
+      "last_verified_at": "2026-05-22T17:54:42"
     },
     {
       "id": "CI-0180",
-      "name": "web-server-see-180",
-      "type": "web-server",
-      "owner": "Platform",
+      "name": "sharepoint-site-see-180",
+      "type": "sharepoint-site",
+      "owner": "Sales",
       "environment": "prod",
       "criticality": "P3",
       "patch_level": "1.6.3",
-      "last_verified_at": "2026-05-30T16:34:37"
+      "last_verified_at": "2026-05-30T23:02:47"
     },
     {
       "id": "CI-0181",
-      "name": "app-server-create-181",
-      "type": "app-server",
-      "owner": "Notifications",
+      "name": "power-platform-environment-create-181",
+      "type": "power-platform-environment",
+      "owner": "Global IT",
       "environment": "staging",
       "criticality": "P4",
       "patch_level": "9.12.7",
-      "last_verified_at": "2026-05-24T08:38:13"
+      "last_verified_at": "2026-05-24T15:06:23"
     },
     {
       "id": "CI-0182",
-      "name": "web-server-management-182",
-      "type": "web-server",
-      "owner": "Mobile Gateway",
+      "name": "sharepoint-site-management-182",
+      "type": "sharepoint-site",
+      "owner": "Customer Success",
       "environment": "dev",
       "criticality": "P1",
       "patch_level": "5.10.6",
-      "last_verified_at": "2026-07-03T01:34:11"
+      "last_verified_at": "2026-07-03T08:02:21"
     },
     {
       "id": "CI-0183",
-      "name": "api-gateway-responsibility-183",
-      "type": "api-gateway",
-      "owner": "Payments",
+      "name": "power-automate-gateway-responsibility-183",
+      "type": "power-automate-gateway",
+      "owner": "Marketing",
       "environment": "staging",
       "criticality": "P4",
       "patch_level": "6.16.6",
-      "last_verified_at": "2026-08-03T15:50:57"
+      "last_verified_at": "2026-08-03T22:19:07"
     },
     {
       "id": "CI-0184",
-      "name": "storage-volume-law-184",
-      "type": "storage-volume",
-      "owner": "Platform",
+      "name": "sharepoint-document-library-law-184",
+      "type": "sharepoint-document-library",
+      "owner": "Sales",
       "environment": "dev",
       "criticality": "P4",
       "patch_level": "9.6.3",
-      "last_verified_at": "2026-06-26T23:56:18"
+      "last_verified_at": "2026-06-27T06:24:28"
     },
     {
       "id": "CI-0185",
-      "name": "web-server-east-185",
-      "type": "web-server",
-      "owner": "Mobile Gateway",
+      "name": "sharepoint-site-east-185",
+      "type": "sharepoint-site",
+      "owner": "Customer Success",
       "environment": "staging",
       "criticality": "P4",
       "patch_level": "1.9.9",
-      "last_verified_at": "2026-07-01T18:47:20"
+      "last_verified_at": "2026-07-02T01:15:30"
     },
     {
       "id": "CI-0186",
-      "name": "network-switch-gun-186",
-      "type": "network-switch",
-      "owner": "Payments",
+      "name": "azure-ad-connect-sync-gun-186",
+      "type": "azure-ad-connect-sync",
+      "owner": "Marketing",
       "environment": "staging",
       "criticality": "P4",
       "patch_level": "2.2.1",
-      "last_verified_at": "2026-05-14T11:44:36"
+      "last_verified_at": "2026-05-14T18:12:46"
     },
     {
       "id": "CI-0187",
-      "name": "api-gateway-stop-187",
-      "type": "api-gateway",
-      "owner": "Notifications",
+      "name": "power-automate-gateway-stop-187",
+      "type": "power-automate-gateway",
+      "owner": "Global IT",
       "environment": "dev",
       "criticality": "P2",
       "patch_level": "1.12.2",
-      "last_verified_at": "2026-06-13T02:26:25"
+      "last_verified_at": "2026-06-13T08:54:35"
     },
     {
       "id": "CI-0188",
-      "name": "web-server-drop-188",
-      "type": "web-server",
-      "owner": "Identity",
+      "name": "sharepoint-site-drop-188",
+      "type": "sharepoint-site",
+      "owner": "Finance",
       "environment": "prod",
       "criticality": "P4",
       "patch_level": "7.11.0",
-      "last_verified_at": "2026-06-12T02:43:20"
+      "last_verified_at": "2026-06-12T09:11:30"
     },
     {
       "id": "CI-0189",
-      "name": "message-queue-painting-189",
-      "type": "message-queue",
-      "owner": "Data Pipeline",
+      "name": "teams-notification-queue-painting-189",
+      "type": "teams-notification-queue",
+      "owner": "Engineering",
       "environment": "prod",
       "criticality": "P2",
       "patch_level": "1.5.7",
-      "last_verified_at": "2026-06-08T11:49:30"
+      "last_verified_at": "2026-06-08T18:17:40"
     },
     {
       "id": "CI-0190",
-      "name": "message-queue-traditional-190",
-      "type": "message-queue",
-      "owner": "Notifications",
+      "name": "teams-notification-queue-traditional-190",
+      "type": "teams-notification-queue",
+      "owner": "Global IT",
       "environment": "prod",
       "criticality": "P1",
       "patch_level": "7.20.0",
-      "last_verified_at": "2026-06-29T05:14:30"
+      "last_verified_at": "2026-06-29T11:42:40"
     },
     {
       "id": "CI-0191",
-      "name": "storage-volume-why-191",
-      "type": "storage-volume",
-      "owner": "Platform",
+      "name": "sharepoint-document-library-why-191",
+      "type": "sharepoint-document-library",
+      "owner": "Sales",
       "environment": "staging",
       "criticality": "P3",
       "patch_level": "9.4.3",
-      "last_verified_at": "2026-05-14T04:02:54"
+      "last_verified_at": "2026-05-14T10:31:04"
     },
     {
       "id": "CI-0192",
-      "name": "load-balancer-kid-192",
-      "type": "load-balancer",
-      "owner": "Identity",
+      "name": "exchange-online-connector-kid-192",
+      "type": "exchange-online-connector",
+      "owner": "Finance",
       "environment": "prod",
       "criticality": "P2",
       "patch_level": "9.1.5",
-      "last_verified_at": "2026-06-27T13:07:18"
+      "last_verified_at": "2026-06-27T19:35:28"
     },
     {
       "id": "CI-0193",
-      "name": "app-server-north-193",
-      "type": "app-server",
-      "owner": "Payments",
+      "name": "power-platform-environment-north-193",
+      "type": "power-platform-environment",
+      "owner": "Marketing",
       "environment": "dev",
       "criticality": "P2",
       "patch_level": "5.19.3",
-      "last_verified_at": "2026-05-24T20:14:11"
+      "last_verified_at": "2026-05-25T02:42:21"
     },
     {
       "id": "CI-0194",
-      "name": "load-balancer-worker-194",
-      "type": "load-balancer",
-      "owner": "Checkout",
+      "name": "exchange-online-connector-worker-194",
+      "type": "exchange-online-connector",
+      "owner": "Legal",
       "environment": "staging",
       "criticality": "P4",
       "patch_level": "2.15.7",
-      "last_verified_at": "2026-07-22T07:42:06"
+      "last_verified_at": "2026-07-22T14:10:16"
     },
     {
       "id": "CI-0195",
-      "name": "web-server-recognize-195",
-      "type": "web-server",
-      "owner": "Data Pipeline",
+      "name": "sharepoint-site-recognize-195",
+      "type": "sharepoint-site",
+      "owner": "Engineering",
       "environment": "dev",
       "criticality": "P3",
       "patch_level": "8.15.2",
-      "last_verified_at": "2026-05-12T22:05:33"
+      "last_verified_at": "2026-05-13T04:33:43"
     },
     {
       "id": "CI-0196",
-      "name": "storage-volume-fast-196",
-      "type": "storage-volume",
-      "owner": "Data Pipeline",
+      "name": "sharepoint-document-library-fast-196",
+      "type": "sharepoint-document-library",
+      "owner": "Engineering",
       "environment": "dev",
       "criticality": "P2",
       "patch_level": "2.3.6",
-      "last_verified_at": "2026-07-06T01:51:58"
+      "last_verified_at": "2026-07-06T08:20:08"
     },
     {
       "id": "CI-0197",
-      "name": "api-gateway-a-197",
-      "type": "api-gateway",
-      "owner": "Mobile Gateway",
+      "name": "power-automate-gateway-a-197",
+      "type": "power-automate-gateway",
+      "owner": "Customer Success",
       "environment": "staging",
       "criticality": "P3",
       "patch_level": "8.7.5",
-      "last_verified_at": "2026-06-09T22:29:46"
+      "last_verified_at": "2026-06-10T04:57:56"
     },
     {
       "id": "CI-0198",
-      "name": "web-server-score-198",
-      "type": "web-server",
-      "owner": "Payments",
+      "name": "sharepoint-site-score-198",
+      "type": "sharepoint-site",
+      "owner": "Marketing",
       "environment": "staging",
       "criticality": "P1",
       "patch_level": "3.17.4",
-      "last_verified_at": "2026-05-31T14:20:44"
+      "last_verified_at": "2026-05-31T20:48:54"
     },
     {
       "id": "CI-0199",
-      "name": "message-queue-stock-199",
-      "type": "message-queue",
-      "owner": "Identity",
+      "name": "teams-notification-queue-stock-199",
+      "type": "teams-notification-queue",
+      "owner": "Finance",
       "environment": "dev",
       "criticality": "P2",
       "patch_level": "7.7.4",
-      "last_verified_at": "2026-06-08T20:59:27"
+      "last_verified_at": "2026-06-09T03:27:37"
     },
     {
       "id": "CI-0200",
-      "name": "app-server-involve-200",
-      "type": "app-server",
-      "owner": "Identity",
+      "name": "power-platform-environment-involve-200",
+      "type": "power-platform-environment",
+      "owner": "Finance",
       "environment": "staging",
       "criticality": "P1",
       "patch_level": "5.1.8",
-      "last_verified_at": "2026-05-30T06:15:00"
+      "last_verified_at": "2026-05-30T12:43:10"
     }
   ],
   "relationships": [
