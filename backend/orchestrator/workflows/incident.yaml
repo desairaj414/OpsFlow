@@ -1,0 +1,19 @@
+# Incident Resolution — the reference chain (domain-workflows.md, PRD §1.2 A3).
+# Build order: this file is built FIRST; patch.yaml and performance.yaml are derived from it.
+workflow_type: incident
+runbook_class: remediation
+key_evidence: [alerts, logs, ci_graph, past_incidents]
+plan_output: remediation_steps
+verification_criterion: alert_cleared_and_health_probe_recovered
+autonomy_tier: auto_execute_eligible
+steps:
+  - agent: correlate       # deterministic, Phase 2 correlation engine — not an LLM agent
+  - agent: enrichment
+  - agent: diagnosis
+  - agent: planner
+  - agent: policy_gate      # deterministic, Phase 2 — not an LLM agent
+  - agent: approval          # human step — workflow pauses here until a decision is recorded
+  - agent: execute
+  - agent: verification
+  - agent: sync
+  - agent: knowledge

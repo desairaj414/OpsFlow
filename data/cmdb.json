@@ -1,0 +1,3506 @@
+{
+  "cis": [
+    {
+      "id": "CI-0001",
+      "name": "web-server-along-001",
+      "type": "web-server",
+      "owner": "Data Pipeline",
+      "environment": "staging",
+      "criticality": "P4",
+      "patch_level": "1.10.6",
+      "last_verified_at": "2026-06-10T17:19:17"
+    },
+    {
+      "id": "CI-0002",
+      "name": "storage-volume-speech-002",
+      "type": "storage-volume",
+      "owner": "Checkout",
+      "environment": "staging",
+      "criticality": "P3",
+      "patch_level": "2.2.9",
+      "last_verified_at": "2026-06-13T14:35:09"
+    },
+    {
+      "id": "CI-0003",
+      "name": "web-server-likely-003",
+      "type": "web-server",
+      "owner": "Search",
+      "environment": "dev",
+      "criticality": "P2",
+      "patch_level": "2.20.8",
+      "last_verified_at": "2026-05-15T02:10:04"
+    },
+    {
+      "id": "CI-0004",
+      "name": "message-queue-form-004",
+      "type": "message-queue",
+      "owner": "Platform",
+      "environment": "staging",
+      "criticality": "P1",
+      "patch_level": "7.3.1",
+      "last_verified_at": "2026-06-20T10:30:29"
+    },
+    {
+      "id": "CI-0005",
+      "name": "network-switch-that-005",
+      "type": "network-switch",
+      "owner": "Identity",
+      "environment": "staging",
+      "criticality": "P2",
+      "patch_level": "6.14.1",
+      "last_verified_at": "2026-06-24T17:24:48"
+    },
+    {
+      "id": "CI-0006",
+      "name": "load-balancer-figure-006",
+      "type": "load-balancer",
+      "owner": "Payments",
+      "environment": "prod",
+      "criticality": "P2",
+      "patch_level": "4.5.5",
+      "last_verified_at": "2026-06-24T00:29:59"
+    },
+    {
+      "id": "CI-0007",
+      "name": "web-server-his-007",
+      "type": "web-server",
+      "owner": "Identity",
+      "environment": "prod",
+      "criticality": "P1",
+      "patch_level": "7.17.0",
+      "last_verified_at": "2026-05-17T00:28:02"
+    },
+    {
+      "id": "CI-0008",
+      "name": "app-server-wait-008",
+      "type": "app-server",
+      "owner": "Data Pipeline",
+      "environment": "staging",
+      "criticality": "P2",
+      "patch_level": "7.13.4",
+      "last_verified_at": "2026-05-17T16:46:03"
+    },
+    {
+      "id": "CI-0009",
+      "name": "db-server-police-009",
+      "type": "db-server",
+      "owner": "Checkout",
+      "environment": "dev",
+      "criticality": "P4",
+      "patch_level": "8.11.9",
+      "last_verified_at": "2026-08-03T12:31:18"
+    },
+    {
+      "id": "CI-0010",
+      "name": "api-gateway-art-010",
+      "type": "api-gateway",
+      "owner": "Identity",
+      "environment": "prod",
+      "criticality": "P2",
+      "patch_level": "2.1.3",
+      "last_verified_at": "2026-06-30T16:00:43"
+    },
+    {
+      "id": "CI-0011",
+      "name": "db-server-drug-011",
+      "type": "db-server",
+      "owner": "Notifications",
+      "environment": "staging",
+      "criticality": "P1",
+      "patch_level": "2.6.4",
+      "last_verified_at": "2026-07-14T21:46:52"
+    },
+    {
+      "id": "CI-0012",
+      "name": "storage-volume-religious-012",
+      "type": "storage-volume",
+      "owner": "Identity",
+      "environment": "staging",
+      "criticality": "P2",
+      "patch_level": "3.14.3",
+      "last_verified_at": "2026-06-30T18:13:15"
+    },
+    {
+      "id": "CI-0013",
+      "name": "db-server-politics-013",
+      "type": "db-server",
+      "owner": "Notifications",
+      "environment": "prod",
+      "criticality": "P2",
+      "patch_level": "9.18.0",
+      "last_verified_at": "2026-08-05T06:48:42"
+    },
+    {
+      "id": "CI-0014",
+      "name": "storage-volume-choice-014",
+      "type": "storage-volume",
+      "owner": "Data Pipeline",
+      "environment": "staging",
+      "criticality": "P2",
+      "patch_level": "4.16.9",
+      "last_verified_at": "2026-05-18T06:56:54"
+    },
+    {
+      "id": "CI-0015",
+      "name": "load-balancer-while-015",
+      "type": "load-balancer",
+      "owner": "Checkout",
+      "environment": "dev",
+      "criticality": "P4",
+      "patch_level": "2.3.0",
+      "last_verified_at": "2026-07-09T13:35:36"
+    },
+    {
+      "id": "CI-0016",
+      "name": "network-switch-trial-016",
+      "type": "network-switch",
+      "owner": "Notifications",
+      "environment": "staging",
+      "criticality": "P1",
+      "patch_level": "5.17.8",
+      "last_verified_at": "2026-07-18T15:27:19"
+    },
+    {
+      "id": "CI-0017",
+      "name": "network-switch-most-017",
+      "type": "network-switch",
+      "owner": "Search",
+      "environment": "dev",
+      "criticality": "P2",
+      "patch_level": "8.11.3",
+      "last_verified_at": "2026-06-19T20:33:19"
+    },
+    {
+      "id": "CI-0018",
+      "name": "message-queue-while-018",
+      "type": "message-queue",
+      "owner": "Platform",
+      "environment": "prod",
+      "criticality": "P4",
+      "patch_level": "7.4.9",
+      "last_verified_at": "2026-06-29T13:41:13"
+    },
+    {
+      "id": "CI-0019",
+      "name": "cache-article-019",
+      "type": "cache",
+      "owner": "Checkout",
+      "environment": "prod",
+      "criticality": "P4",
+      "patch_level": "3.11.6",
+      "last_verified_at": "2026-07-31T04:30:32"
+    },
+    {
+      "id": "CI-0020",
+      "name": "db-server-large-020",
+      "type": "db-server",
+      "owner": "Platform",
+      "environment": "prod",
+      "criticality": "P4",
+      "patch_level": "7.0.1",
+      "last_verified_at": "2026-07-04T06:08:35"
+    },
+    {
+      "id": "CI-0021",
+      "name": "cache-opportunity-021",
+      "type": "cache",
+      "owner": "Checkout",
+      "environment": "prod",
+      "criticality": "P4",
+      "patch_level": "8.12.6",
+      "last_verified_at": "2026-07-23T13:33:07"
+    },
+    {
+      "id": "CI-0022",
+      "name": "app-server-off-022",
+      "type": "app-server",
+      "owner": "Search",
+      "environment": "prod",
+      "criticality": "P1",
+      "patch_level": "8.8.8",
+      "last_verified_at": "2026-07-01T18:47:22"
+    },
+    {
+      "id": "CI-0023",
+      "name": "message-queue-surface-023",
+      "type": "message-queue",
+      "owner": "Identity",
+      "environment": "prod",
+      "criticality": "P2",
+      "patch_level": "4.0.6",
+      "last_verified_at": "2026-08-02T17:12:48"
+    },
+    {
+      "id": "CI-0024",
+      "name": "app-server-adult-024",
+      "type": "app-server",
+      "owner": "Mobile Gateway",
+      "environment": "staging",
+      "criticality": "P4",
+      "patch_level": "7.19.0",
+      "last_verified_at": "2026-06-18T14:19:51"
+    },
+    {
+      "id": "CI-0025",
+      "name": "web-server-but-025",
+      "type": "web-server",
+      "owner": "Payments",
+      "environment": "prod",
+      "criticality": "P4",
+      "patch_level": "9.2.8",
+      "last_verified_at": "2026-07-17T00:47:32"
+    },
+    {
+      "id": "CI-0026",
+      "name": "network-switch-born-026",
+      "type": "network-switch",
+      "owner": "Checkout",
+      "environment": "prod",
+      "criticality": "P4",
+      "patch_level": "9.17.8",
+      "last_verified_at": "2026-08-05T14:42:53"
+    },
+    {
+      "id": "CI-0027",
+      "name": "db-server-number-027",
+      "type": "db-server",
+      "owner": "Mobile Gateway",
+      "environment": "staging",
+      "criticality": "P2",
+      "patch_level": "8.12.6",
+      "last_verified_at": "2026-08-01T11:30:59"
+    },
+    {
+      "id": "CI-0028",
+      "name": "app-server-commercial-028",
+      "type": "app-server",
+      "owner": "Identity",
+      "environment": "prod",
+      "criticality": "P1",
+      "patch_level": "3.3.5",
+      "last_verified_at": "2026-06-20T13:36:54"
+    },
+    {
+      "id": "CI-0029",
+      "name": "load-balancer-side-029",
+      "type": "load-balancer",
+      "owner": "Data Pipeline",
+      "environment": "staging",
+      "criticality": "P4",
+      "patch_level": "5.14.4",
+      "last_verified_at": "2026-05-24T22:56:38"
+    },
+    {
+      "id": "CI-0030",
+      "name": "load-balancer-guess-030",
+      "type": "load-balancer",
+      "owner": "Payments",
+      "environment": "prod",
+      "criticality": "P4",
+      "patch_level": "6.15.0",
+      "last_verified_at": "2026-06-23T19:49:31"
+    },
+    {
+      "id": "CI-0031",
+      "name": "message-queue-capital-031",
+      "type": "message-queue",
+      "owner": "Checkout",
+      "environment": "prod",
+      "criticality": "P3",
+      "patch_level": "3.10.4",
+      "last_verified_at": "2026-07-05T11:53:08"
+    },
+    {
+      "id": "CI-0032",
+      "name": "db-server-direction-032",
+      "type": "db-server",
+      "owner": "Search",
+      "environment": "dev",
+      "criticality": "P2",
+      "patch_level": "5.13.3",
+      "last_verified_at": "2026-05-17T17:21:58"
+    },
+    {
+      "id": "CI-0033",
+      "name": "network-switch-start-033",
+      "type": "network-switch",
+      "owner": "Platform",
+      "environment": "dev",
+      "criticality": "P2",
+      "patch_level": "4.5.2",
+      "last_verified_at": "2026-08-05T11:33:19"
+    },
+    {
+      "id": "CI-0034",
+      "name": "storage-volume-cut-034",
+      "type": "storage-volume",
+      "owner": "Mobile Gateway",
+      "environment": "staging",
+      "criticality": "P2",
+      "patch_level": "9.10.0",
+      "last_verified_at": "2026-05-22T06:45:40"
+    },
+    {
+      "id": "CI-0035",
+      "name": "cache-door-035",
+      "type": "cache",
+      "owner": "Search",
+      "environment": "staging",
+      "criticality": "P3",
+      "patch_level": "9.1.6",
+      "last_verified_at": "2026-05-27T08:12:51"
+    },
+    {
+      "id": "CI-0036",
+      "name": "network-switch-grow-036",
+      "type": "network-switch",
+      "owner": "Identity",
+      "environment": "dev",
+      "criticality": "P1",
+      "patch_level": "5.18.0",
+      "last_verified_at": "2026-05-10T01:30:34"
+    },
+    {
+      "id": "CI-0037",
+      "name": "cache-room-037",
+      "type": "cache",
+      "owner": "Search",
+      "environment": "staging",
+      "criticality": "P4",
+      "patch_level": "4.16.6",
+      "last_verified_at": "2026-05-24T22:46:29"
+    },
+    {
+      "id": "CI-0038",
+      "name": "db-server-authority-038",
+      "type": "db-server",
+      "owner": "Data Pipeline",
+      "environment": "staging",
+      "criticality": "P2",
+      "patch_level": "9.8.6",
+      "last_verified_at": "2026-05-11T23:10:58"
+    },
+    {
+      "id": "CI-0039",
+      "name": "storage-volume-room-039",
+      "type": "storage-volume",
+      "owner": "Payments",
+      "environment": "staging",
+      "criticality": "P2",
+      "patch_level": "2.11.1",
+      "last_verified_at": "2026-06-19T13:06:56"
+    },
+    {
+      "id": "CI-0040",
+      "name": "message-queue-stock-040",
+      "type": "message-queue",
+      "owner": "Mobile Gateway",
+      "environment": "dev",
+      "criticality": "P2",
+      "patch_level": "2.19.4",
+      "last_verified_at": "2026-07-12T20:35:57"
+    },
+    {
+      "id": "CI-0041",
+      "name": "db-server-of-041",
+      "type": "db-server",
+      "owner": "Mobile Gateway",
+      "environment": "dev",
+      "criticality": "P4",
+      "patch_level": "3.3.0",
+      "last_verified_at": "2026-05-09T21:35:58"
+    },
+    {
+      "id": "CI-0042",
+      "name": "load-balancer-their-042",
+      "type": "load-balancer",
+      "owner": "Mobile Gateway",
+      "environment": "staging",
+      "criticality": "P3",
+      "patch_level": "7.3.0",
+      "last_verified_at": "2026-07-21T00:09:34"
+    },
+    {
+      "id": "CI-0043",
+      "name": "network-switch-beat-043",
+      "type": "network-switch",
+      "owner": "Payments",
+      "environment": "dev",
+      "criticality": "P2",
+      "patch_level": "5.13.9",
+      "last_verified_at": "2026-06-12T08:42:32"
+    },
+    {
+      "id": "CI-0044",
+      "name": "web-server-expert-044",
+      "type": "web-server",
+      "owner": "Identity",
+      "environment": "staging",
+      "criticality": "P1",
+      "patch_level": "1.16.5",
+      "last_verified_at": "2026-07-01T09:31:10"
+    },
+    {
+      "id": "CI-0045",
+      "name": "network-switch-early-045",
+      "type": "network-switch",
+      "owner": "Search",
+      "environment": "dev",
+      "criticality": "P3",
+      "patch_level": "2.19.8",
+      "last_verified_at": "2026-08-01T21:52:33"
+    },
+    {
+      "id": "CI-0046",
+      "name": "message-queue-test-046",
+      "type": "message-queue",
+      "owner": "Checkout",
+      "environment": "prod",
+      "criticality": "P3",
+      "patch_level": "3.3.1",
+      "last_verified_at": "2026-07-15T10:40:25"
+    },
+    {
+      "id": "CI-0047",
+      "name": "storage-volume-item-047",
+      "type": "storage-volume",
+      "owner": "Checkout",
+      "environment": "prod",
+      "criticality": "P1",
+      "patch_level": "9.2.6",
+      "last_verified_at": "2026-06-18T11:59:23"
+    },
+    {
+      "id": "CI-0048",
+      "name": "storage-volume-song-048",
+      "type": "storage-volume",
+      "owner": "Payments",
+      "environment": "dev",
+      "criticality": "P2",
+      "patch_level": "5.0.8",
+      "last_verified_at": "2026-06-03T09:20:42"
+    },
+    {
+      "id": "CI-0049",
+      "name": "web-server-than-049",
+      "type": "web-server",
+      "owner": "Search",
+      "environment": "staging",
+      "criticality": "P2",
+      "patch_level": "6.13.0",
+      "last_verified_at": "2026-05-23T13:15:44"
+    },
+    {
+      "id": "CI-0050",
+      "name": "app-server-follow-050",
+      "type": "app-server",
+      "owner": "Checkout",
+      "environment": "staging",
+      "criticality": "P1",
+      "patch_level": "7.15.4",
+      "last_verified_at": "2026-07-07T11:49:50"
+    },
+    {
+      "id": "CI-0051",
+      "name": "message-queue-third-051",
+      "type": "message-queue",
+      "owner": "Mobile Gateway",
+      "environment": "dev",
+      "criticality": "P2",
+      "patch_level": "2.14.5",
+      "last_verified_at": "2026-06-25T20:36:23"
+    },
+    {
+      "id": "CI-0052",
+      "name": "network-switch-long-052",
+      "type": "network-switch",
+      "owner": "Mobile Gateway",
+      "environment": "staging",
+      "criticality": "P4",
+      "patch_level": "3.1.3",
+      "last_verified_at": "2026-07-23T07:35:41"
+    },
+    {
+      "id": "CI-0053",
+      "name": "db-server-hope-053",
+      "type": "db-server",
+      "owner": "Checkout",
+      "environment": "prod",
+      "criticality": "P2",
+      "patch_level": "9.6.3",
+      "last_verified_at": "2026-07-04T16:52:53"
+    },
+    {
+      "id": "CI-0054",
+      "name": "storage-volume-family-054",
+      "type": "storage-volume",
+      "owner": "Payments",
+      "environment": "staging",
+      "criticality": "P4",
+      "patch_level": "5.1.9",
+      "last_verified_at": "2026-07-31T14:42:42"
+    },
+    {
+      "id": "CI-0055",
+      "name": "message-queue-character-055",
+      "type": "message-queue",
+      "owner": "Notifications",
+      "environment": "dev",
+      "criticality": "P3",
+      "patch_level": "2.19.8",
+      "last_verified_at": "2026-05-28T12:31:12"
+    },
+    {
+      "id": "CI-0056",
+      "name": "api-gateway-develop-056",
+      "type": "api-gateway",
+      "owner": "Payments",
+      "environment": "dev",
+      "criticality": "P4",
+      "patch_level": "4.20.4",
+      "last_verified_at": "2026-05-16T01:45:53"
+    },
+    {
+      "id": "CI-0057",
+      "name": "api-gateway-arrive-057",
+      "type": "api-gateway",
+      "owner": "Checkout",
+      "environment": "prod",
+      "criticality": "P2",
+      "patch_level": "8.17.6",
+      "last_verified_at": "2026-05-31T22:14:14"
+    },
+    {
+      "id": "CI-0058",
+      "name": "api-gateway-second-058",
+      "type": "api-gateway",
+      "owner": "Search",
+      "environment": "dev",
+      "criticality": "P2",
+      "patch_level": "7.1.1",
+      "last_verified_at": "2026-05-22T21:44:52"
+    },
+    {
+      "id": "CI-0059",
+      "name": "load-balancer-major-059",
+      "type": "load-balancer",
+      "owner": "Search",
+      "environment": "staging",
+      "criticality": "P3",
+      "patch_level": "8.6.7",
+      "last_verified_at": "2026-06-04T23:47:43"
+    },
+    {
+      "id": "CI-0060",
+      "name": "api-gateway-these-060",
+      "type": "api-gateway",
+      "owner": "Search",
+      "environment": "staging",
+      "criticality": "P4",
+      "patch_level": "8.4.9",
+      "last_verified_at": "2026-05-20T01:43:39"
+    },
+    {
+      "id": "CI-0061",
+      "name": "app-server-back-061",
+      "type": "app-server",
+      "owner": "Search",
+      "environment": "dev",
+      "criticality": "P3",
+      "patch_level": "2.13.4",
+      "last_verified_at": "2026-05-29T04:27:58"
+    },
+    {
+      "id": "CI-0062",
+      "name": "web-server-experience-062",
+      "type": "web-server",
+      "owner": "Data Pipeline",
+      "environment": "staging",
+      "criticality": "P3",
+      "patch_level": "5.6.4",
+      "last_verified_at": "2026-07-05T01:48:53"
+    },
+    {
+      "id": "CI-0063",
+      "name": "web-server-medical-063",
+      "type": "web-server",
+      "owner": "Identity",
+      "environment": "staging",
+      "criticality": "P3",
+      "patch_level": "8.2.8",
+      "last_verified_at": "2026-07-20T05:57:51"
+    },
+    {
+      "id": "CI-0064",
+      "name": "app-server-must-064",
+      "type": "app-server",
+      "owner": "Mobile Gateway",
+      "environment": "prod",
+      "criticality": "P1",
+      "patch_level": "2.18.5",
+      "last_verified_at": "2026-06-28T08:45:44"
+    },
+    {
+      "id": "CI-0065",
+      "name": "api-gateway-stop-065",
+      "type": "api-gateway",
+      "owner": "Data Pipeline",
+      "environment": "staging",
+      "criticality": "P3",
+      "patch_level": "7.19.3",
+      "last_verified_at": "2026-07-15T12:38:55"
+    },
+    {
+      "id": "CI-0066",
+      "name": "network-switch-sea-066",
+      "type": "network-switch",
+      "owner": "Mobile Gateway",
+      "environment": "prod",
+      "criticality": "P4",
+      "patch_level": "5.15.3",
+      "last_verified_at": "2026-07-24T00:01:44"
+    },
+    {
+      "id": "CI-0067",
+      "name": "load-balancer-see-067",
+      "type": "load-balancer",
+      "owner": "Payments",
+      "environment": "prod",
+      "criticality": "P4",
+      "patch_level": "2.1.1",
+      "last_verified_at": "2026-06-27T05:27:29"
+    },
+    {
+      "id": "CI-0068",
+      "name": "db-server-tax-068",
+      "type": "db-server",
+      "owner": "Data Pipeline",
+      "environment": "dev",
+      "criticality": "P2",
+      "patch_level": "1.20.0",
+      "last_verified_at": "2026-07-09T03:52:06"
+    },
+    {
+      "id": "CI-0069",
+      "name": "load-balancer-course-069",
+      "type": "load-balancer",
+      "owner": "Notifications",
+      "environment": "dev",
+      "criticality": "P4",
+      "patch_level": "7.3.7",
+      "last_verified_at": "2026-06-18T01:21:39"
+    },
+    {
+      "id": "CI-0070",
+      "name": "db-server-seven-070",
+      "type": "db-server",
+      "owner": "Platform",
+      "environment": "staging",
+      "criticality": "P3",
+      "patch_level": "6.9.1",
+      "last_verified_at": "2026-05-24T01:15:29"
+    },
+    {
+      "id": "CI-0071",
+      "name": "storage-volume-theory-071",
+      "type": "storage-volume",
+      "owner": "Search",
+      "environment": "staging",
+      "criticality": "P2",
+      "patch_level": "3.16.5",
+      "last_verified_at": "2026-08-05T16:03:55"
+    },
+    {
+      "id": "CI-0072",
+      "name": "storage-volume-claim-072",
+      "type": "storage-volume",
+      "owner": "Data Pipeline",
+      "environment": "staging",
+      "criticality": "P2",
+      "patch_level": "4.1.9",
+      "last_verified_at": "2026-06-21T10:53:52"
+    },
+    {
+      "id": "CI-0073",
+      "name": "web-server-society-073",
+      "type": "web-server",
+      "owner": "Mobile Gateway",
+      "environment": "prod",
+      "criticality": "P2",
+      "patch_level": "7.2.6",
+      "last_verified_at": "2026-05-29T13:07:12"
+    },
+    {
+      "id": "CI-0074",
+      "name": "db-server-test-074",
+      "type": "db-server",
+      "owner": "Platform",
+      "environment": "prod",
+      "criticality": "P3",
+      "patch_level": "2.17.2",
+      "last_verified_at": "2026-05-23T20:11:54"
+    },
+    {
+      "id": "CI-0075",
+      "name": "storage-volume-let-075",
+      "type": "storage-volume",
+      "owner": "Search",
+      "environment": "dev",
+      "criticality": "P3",
+      "patch_level": "5.4.3",
+      "last_verified_at": "2026-05-14T04:26:32"
+    },
+    {
+      "id": "CI-0076",
+      "name": "db-server-discussion-076",
+      "type": "db-server",
+      "owner": "Notifications",
+      "environment": "dev",
+      "criticality": "P3",
+      "patch_level": "6.9.2",
+      "last_verified_at": "2026-07-21T17:56:30"
+    },
+    {
+      "id": "CI-0077",
+      "name": "app-server-natural-077",
+      "type": "app-server",
+      "owner": "Mobile Gateway",
+      "environment": "prod",
+      "criticality": "P1",
+      "patch_level": "4.20.7",
+      "last_verified_at": "2026-07-04T01:07:56"
+    },
+    {
+      "id": "CI-0078",
+      "name": "network-switch-treatment-078",
+      "type": "network-switch",
+      "owner": "Payments",
+      "environment": "dev",
+      "criticality": "P4",
+      "patch_level": "9.12.3",
+      "last_verified_at": "2026-07-29T09:14:46"
+    },
+    {
+      "id": "CI-0079",
+      "name": "message-queue-argue-079",
+      "type": "message-queue",
+      "owner": "Payments",
+      "environment": "dev",
+      "criticality": "P2",
+      "patch_level": "4.15.3",
+      "last_verified_at": "2026-06-23T22:49:27"
+    },
+    {
+      "id": "CI-0080",
+      "name": "api-gateway-should-080",
+      "type": "api-gateway",
+      "owner": "Notifications",
+      "environment": "dev",
+      "criticality": "P3",
+      "patch_level": "4.10.5",
+      "last_verified_at": "2026-06-11T12:05:03"
+    },
+    {
+      "id": "CI-0081",
+      "name": "web-server-level-081",
+      "type": "web-server",
+      "owner": "Search",
+      "environment": "staging",
+      "criticality": "P3",
+      "patch_level": "7.6.8",
+      "last_verified_at": "2026-05-23T14:53:33"
+    },
+    {
+      "id": "CI-0082",
+      "name": "api-gateway-down-082",
+      "type": "api-gateway",
+      "owner": "Payments",
+      "environment": "staging",
+      "criticality": "P3",
+      "patch_level": "1.20.9",
+      "last_verified_at": "2026-06-28T22:53:16"
+    },
+    {
+      "id": "CI-0083",
+      "name": "cache-us-083",
+      "type": "cache",
+      "owner": "Payments",
+      "environment": "dev",
+      "criticality": "P1",
+      "patch_level": "3.0.4",
+      "last_verified_at": "2026-07-05T18:31:47"
+    },
+    {
+      "id": "CI-0084",
+      "name": "api-gateway-design-084",
+      "type": "api-gateway",
+      "owner": "Identity",
+      "environment": "prod",
+      "criticality": "P4",
+      "patch_level": "1.20.9",
+      "last_verified_at": "2026-08-06T04:48:29"
+    },
+    {
+      "id": "CI-0085",
+      "name": "app-server-federal-085",
+      "type": "app-server",
+      "owner": "Checkout",
+      "environment": "staging",
+      "criticality": "P2",
+      "patch_level": "7.19.0",
+      "last_verified_at": "2026-06-28T14:09:20"
+    },
+    {
+      "id": "CI-0086",
+      "name": "app-server-oil-086",
+      "type": "app-server",
+      "owner": "Mobile Gateway",
+      "environment": "prod",
+      "criticality": "P1",
+      "patch_level": "2.6.0",
+      "last_verified_at": "2026-06-26T22:41:23"
+    },
+    {
+      "id": "CI-0087",
+      "name": "load-balancer-policy-087",
+      "type": "load-balancer",
+      "owner": "Notifications",
+      "environment": "staging",
+      "criticality": "P4",
+      "patch_level": "4.13.9",
+      "last_verified_at": "2026-08-03T15:35:46"
+    },
+    {
+      "id": "CI-0088",
+      "name": "db-server-because-088",
+      "type": "db-server",
+      "owner": "Payments",
+      "environment": "prod",
+      "criticality": "P2",
+      "patch_level": "9.9.5",
+      "last_verified_at": "2026-05-20T12:38:21"
+    },
+    {
+      "id": "CI-0089",
+      "name": "network-switch-agree-089",
+      "type": "network-switch",
+      "owner": "Platform",
+      "environment": "dev",
+      "criticality": "P1",
+      "patch_level": "4.18.2",
+      "last_verified_at": "2026-07-26T02:17:00"
+    },
+    {
+      "id": "CI-0090",
+      "name": "network-switch-want-090",
+      "type": "network-switch",
+      "owner": "Platform",
+      "environment": "staging",
+      "criticality": "P4",
+      "patch_level": "6.8.1",
+      "last_verified_at": "2026-06-28T23:29:36"
+    },
+    {
+      "id": "CI-0091",
+      "name": "network-switch-need-091",
+      "type": "network-switch",
+      "owner": "Checkout",
+      "environment": "staging",
+      "criticality": "P4",
+      "patch_level": "3.18.0",
+      "last_verified_at": "2026-06-24T13:35:26"
+    },
+    {
+      "id": "CI-0092",
+      "name": "cache-look-092",
+      "type": "cache",
+      "owner": "Mobile Gateway",
+      "environment": "dev",
+      "criticality": "P2",
+      "patch_level": "1.16.6",
+      "last_verified_at": "2026-05-11T09:09:10"
+    },
+    {
+      "id": "CI-0093",
+      "name": "db-server-tax-093",
+      "type": "db-server",
+      "owner": "Data Pipeline",
+      "environment": "dev",
+      "criticality": "P2",
+      "patch_level": "3.1.4",
+      "last_verified_at": "2026-07-04T18:40:01"
+    },
+    {
+      "id": "CI-0094",
+      "name": "storage-volume-upon-094",
+      "type": "storage-volume",
+      "owner": "Payments",
+      "environment": "prod",
+      "criticality": "P3",
+      "patch_level": "7.1.3",
+      "last_verified_at": "2026-07-19T20:49:43"
+    },
+    {
+      "id": "CI-0095",
+      "name": "app-server-expert-095",
+      "type": "app-server",
+      "owner": "Payments",
+      "environment": "staging",
+      "criticality": "P2",
+      "patch_level": "7.17.8",
+      "last_verified_at": "2026-07-18T09:16:26"
+    },
+    {
+      "id": "CI-0096",
+      "name": "db-server-official-096",
+      "type": "db-server",
+      "owner": "Data Pipeline",
+      "environment": "dev",
+      "criticality": "P3",
+      "patch_level": "7.8.5",
+      "last_verified_at": "2026-06-30T09:07:15"
+    },
+    {
+      "id": "CI-0097",
+      "name": "message-queue-opportunity-097",
+      "type": "message-queue",
+      "owner": "Identity",
+      "environment": "prod",
+      "criticality": "P1",
+      "patch_level": "4.13.8",
+      "last_verified_at": "2026-05-28T23:22:10"
+    },
+    {
+      "id": "CI-0098",
+      "name": "load-balancer-sell-098",
+      "type": "load-balancer",
+      "owner": "Mobile Gateway",
+      "environment": "staging",
+      "criticality": "P4",
+      "patch_level": "7.20.0",
+      "last_verified_at": "2026-07-08T10:25:42"
+    },
+    {
+      "id": "CI-0099",
+      "name": "db-server-election-099",
+      "type": "db-server",
+      "owner": "Notifications",
+      "environment": "dev",
+      "criticality": "P3",
+      "patch_level": "9.16.8",
+      "last_verified_at": "2026-08-04T11:00:35"
+    },
+    {
+      "id": "CI-0100",
+      "name": "cache-skill-100",
+      "type": "cache",
+      "owner": "Checkout",
+      "environment": "staging",
+      "criticality": "P2",
+      "patch_level": "3.0.7",
+      "last_verified_at": "2026-08-04T00:44:23"
+    },
+    {
+      "id": "CI-0101",
+      "name": "network-switch-modern-101",
+      "type": "network-switch",
+      "owner": "Notifications",
+      "environment": "prod",
+      "criticality": "P3",
+      "patch_level": "2.9.6",
+      "last_verified_at": "2026-06-14T00:43:03"
+    },
+    {
+      "id": "CI-0102",
+      "name": "load-balancer-unit-102",
+      "type": "load-balancer",
+      "owner": "Payments",
+      "environment": "staging",
+      "criticality": "P4",
+      "patch_level": "8.4.3",
+      "last_verified_at": "2026-06-01T11:23:40"
+    },
+    {
+      "id": "CI-0103",
+      "name": "cache-knowledge-103",
+      "type": "cache",
+      "owner": "Data Pipeline",
+      "environment": "dev",
+      "criticality": "P3",
+      "patch_level": "5.13.3",
+      "last_verified_at": "2026-05-12T23:53:33"
+    },
+    {
+      "id": "CI-0104",
+      "name": "app-server-direction-104",
+      "type": "app-server",
+      "owner": "Search",
+      "environment": "prod",
+      "criticality": "P1",
+      "patch_level": "8.7.2",
+      "last_verified_at": "2026-06-23T01:01:09"
+    },
+    {
+      "id": "CI-0105",
+      "name": "cache-sort-105",
+      "type": "cache",
+      "owner": "Identity",
+      "environment": "staging",
+      "criticality": "P2",
+      "patch_level": "5.12.2",
+      "last_verified_at": "2026-07-08T09:21:32"
+    },
+    {
+      "id": "CI-0106",
+      "name": "web-server-kitchen-106",
+      "type": "web-server",
+      "owner": "Data Pipeline",
+      "environment": "dev",
+      "criticality": "P4",
+      "patch_level": "5.14.9",
+      "last_verified_at": "2026-05-22T05:13:41"
+    },
+    {
+      "id": "CI-0107",
+      "name": "app-server-poor-107",
+      "type": "app-server",
+      "owner": "Notifications",
+      "environment": "dev",
+      "criticality": "P3",
+      "patch_level": "9.19.6",
+      "last_verified_at": "2026-07-27T16:16:28"
+    },
+    {
+      "id": "CI-0108",
+      "name": "load-balancer-girl-108",
+      "type": "load-balancer",
+      "owner": "Checkout",
+      "environment": "dev",
+      "criticality": "P4",
+      "patch_level": "6.12.2",
+      "last_verified_at": "2026-06-07T00:31:25"
+    },
+    {
+      "id": "CI-0109",
+      "name": "web-server-course-109",
+      "type": "web-server",
+      "owner": "Checkout",
+      "environment": "prod",
+      "criticality": "P4",
+      "patch_level": "6.3.7",
+      "last_verified_at": "2026-07-31T01:18:56"
+    },
+    {
+      "id": "CI-0110",
+      "name": "web-server-wait-110",
+      "type": "web-server",
+      "owner": "Platform",
+      "environment": "staging",
+      "criticality": "P3",
+      "patch_level": "8.20.1",
+      "last_verified_at": "2026-08-04T12:39:36"
+    },
+    {
+      "id": "CI-0111",
+      "name": "web-server-long-111",
+      "type": "web-server",
+      "owner": "Platform",
+      "environment": "dev",
+      "criticality": "P1",
+      "patch_level": "9.14.8",
+      "last_verified_at": "2026-07-03T08:28:14"
+    },
+    {
+      "id": "CI-0112",
+      "name": "load-balancer-cost-112",
+      "type": "load-balancer",
+      "owner": "Notifications",
+      "environment": "dev",
+      "criticality": "P4",
+      "patch_level": "9.16.0",
+      "last_verified_at": "2026-06-13T23:33:09"
+    },
+    {
+      "id": "CI-0113",
+      "name": "api-gateway-include-113",
+      "type": "api-gateway",
+      "owner": "Platform",
+      "environment": "dev",
+      "criticality": "P3",
+      "patch_level": "4.3.2",
+      "last_verified_at": "2026-05-23T19:43:00"
+    },
+    {
+      "id": "CI-0114",
+      "name": "db-server-stop-114",
+      "type": "db-server",
+      "owner": "Data Pipeline",
+      "environment": "prod",
+      "criticality": "P1",
+      "patch_level": "1.17.0",
+      "last_verified_at": "2026-07-29T06:48:41"
+    },
+    {
+      "id": "CI-0115",
+      "name": "cache-also-115",
+      "type": "cache",
+      "owner": "Notifications",
+      "environment": "prod",
+      "criticality": "P3",
+      "patch_level": "9.18.6",
+      "last_verified_at": "2026-05-19T18:56:05"
+    },
+    {
+      "id": "CI-0116",
+      "name": "load-balancer-long-116",
+      "type": "load-balancer",
+      "owner": "Payments",
+      "environment": "dev",
+      "criticality": "P1",
+      "patch_level": "4.9.1",
+      "last_verified_at": "2026-07-19T18:50:02"
+    },
+    {
+      "id": "CI-0117",
+      "name": "storage-volume-see-117",
+      "type": "storage-volume",
+      "owner": "Data Pipeline",
+      "environment": "prod",
+      "criticality": "P2",
+      "patch_level": "7.17.5",
+      "last_verified_at": "2026-06-16T07:12:32"
+    },
+    {
+      "id": "CI-0118",
+      "name": "api-gateway-wear-118",
+      "type": "api-gateway",
+      "owner": "Data Pipeline",
+      "environment": "dev",
+      "criticality": "P3",
+      "patch_level": "3.1.8",
+      "last_verified_at": "2026-07-18T11:04:50"
+    },
+    {
+      "id": "CI-0119",
+      "name": "load-balancer-whose-119",
+      "type": "load-balancer",
+      "owner": "Platform",
+      "environment": "dev",
+      "criticality": "P1",
+      "patch_level": "3.17.8",
+      "last_verified_at": "2026-05-10T05:00:27"
+    },
+    {
+      "id": "CI-0120",
+      "name": "db-server-black-120",
+      "type": "db-server",
+      "owner": "Notifications",
+      "environment": "prod",
+      "criticality": "P2",
+      "patch_level": "4.20.3",
+      "last_verified_at": "2026-06-10T07:04:45"
+    },
+    {
+      "id": "CI-0121",
+      "name": "cache-that-121",
+      "type": "cache",
+      "owner": "Notifications",
+      "environment": "dev",
+      "criticality": "P3",
+      "patch_level": "1.19.2",
+      "last_verified_at": "2026-07-29T08:35:00"
+    },
+    {
+      "id": "CI-0122",
+      "name": "network-switch-fire-122",
+      "type": "network-switch",
+      "owner": "Checkout",
+      "environment": "staging",
+      "criticality": "P3",
+      "patch_level": "4.14.7",
+      "last_verified_at": "2026-05-17T06:05:09"
+    },
+    {
+      "id": "CI-0123",
+      "name": "load-balancer-pretty-123",
+      "type": "load-balancer",
+      "owner": "Notifications",
+      "environment": "dev",
+      "criticality": "P3",
+      "patch_level": "2.18.3",
+      "last_verified_at": "2026-06-15T02:22:20"
+    },
+    {
+      "id": "CI-0124",
+      "name": "load-balancer-region-124",
+      "type": "load-balancer",
+      "owner": "Notifications",
+      "environment": "staging",
+      "criticality": "P4",
+      "patch_level": "6.2.9",
+      "last_verified_at": "2026-06-21T08:46:14"
+    },
+    {
+      "id": "CI-0125",
+      "name": "message-queue-important-125",
+      "type": "message-queue",
+      "owner": "Data Pipeline",
+      "environment": "staging",
+      "criticality": "P4",
+      "patch_level": "5.6.1",
+      "last_verified_at": "2026-07-13T11:58:19"
+    },
+    {
+      "id": "CI-0126",
+      "name": "db-server-it-126",
+      "type": "db-server",
+      "owner": "Search",
+      "environment": "dev",
+      "criticality": "P4",
+      "patch_level": "7.11.3",
+      "last_verified_at": "2026-05-17T18:46:21"
+    },
+    {
+      "id": "CI-0127",
+      "name": "load-balancer-wind-127",
+      "type": "load-balancer",
+      "owner": "Search",
+      "environment": "dev",
+      "criticality": "P3",
+      "patch_level": "4.7.4",
+      "last_verified_at": "2026-07-13T15:15:34"
+    },
+    {
+      "id": "CI-0128",
+      "name": "cache-development-128",
+      "type": "cache",
+      "owner": "Mobile Gateway",
+      "environment": "dev",
+      "criticality": "P3",
+      "patch_level": "7.6.3",
+      "last_verified_at": "2026-05-13T05:34:20"
+    },
+    {
+      "id": "CI-0129",
+      "name": "message-queue-sea-129",
+      "type": "message-queue",
+      "owner": "Mobile Gateway",
+      "environment": "dev",
+      "criticality": "P3",
+      "patch_level": "3.18.1",
+      "last_verified_at": "2026-07-09T17:59:59"
+    },
+    {
+      "id": "CI-0130",
+      "name": "load-balancer-boy-130",
+      "type": "load-balancer",
+      "owner": "Platform",
+      "environment": "staging",
+      "criticality": "P3",
+      "patch_level": "7.8.0",
+      "last_verified_at": "2026-06-24T09:42:21"
+    },
+    {
+      "id": "CI-0131",
+      "name": "app-server-ever-131",
+      "type": "app-server",
+      "owner": "Checkout",
+      "environment": "staging",
+      "criticality": "P4",
+      "patch_level": "9.12.5",
+      "last_verified_at": "2026-07-01T03:20:31"
+    },
+    {
+      "id": "CI-0132",
+      "name": "web-server-toward-132",
+      "type": "web-server",
+      "owner": "Platform",
+      "environment": "staging",
+      "criticality": "P2",
+      "patch_level": "4.6.1",
+      "last_verified_at": "2026-07-25T15:10:18"
+    },
+    {
+      "id": "CI-0133",
+      "name": "api-gateway-increase-133",
+      "type": "api-gateway",
+      "owner": "Checkout",
+      "environment": "dev",
+      "criticality": "P4",
+      "patch_level": "1.16.8",
+      "last_verified_at": "2026-05-24T21:33:36"
+    },
+    {
+      "id": "CI-0134",
+      "name": "cache-choice-134",
+      "type": "cache",
+      "owner": "Mobile Gateway",
+      "environment": "dev",
+      "criticality": "P2",
+      "patch_level": "6.18.1",
+      "last_verified_at": "2026-05-28T16:22:16"
+    },
+    {
+      "id": "CI-0135",
+      "name": "storage-volume-popular-135",
+      "type": "storage-volume",
+      "owner": "Platform",
+      "environment": "prod",
+      "criticality": "P2",
+      "patch_level": "1.16.4",
+      "last_verified_at": "2026-06-02T17:37:11"
+    },
+    {
+      "id": "CI-0136",
+      "name": "api-gateway-a-136",
+      "type": "api-gateway",
+      "owner": "Checkout",
+      "environment": "dev",
+      "criticality": "P4",
+      "patch_level": "2.13.9",
+      "last_verified_at": "2026-07-13T18:33:29"
+    },
+    {
+      "id": "CI-0137",
+      "name": "web-server-knowledge-137",
+      "type": "web-server",
+      "owner": "Checkout",
+      "environment": "dev",
+      "criticality": "P2",
+      "patch_level": "8.7.4",
+      "last_verified_at": "2026-05-19T20:04:23"
+    },
+    {
+      "id": "CI-0138",
+      "name": "app-server-identify-138",
+      "type": "app-server",
+      "owner": "Payments",
+      "environment": "prod",
+      "criticality": "P1",
+      "patch_level": "8.16.0",
+      "last_verified_at": "2026-07-31T10:32:38"
+    },
+    {
+      "id": "CI-0139",
+      "name": "db-server-lawyer-139",
+      "type": "db-server",
+      "owner": "Mobile Gateway",
+      "environment": "dev",
+      "criticality": "P3",
+      "patch_level": "6.8.5",
+      "last_verified_at": "2026-07-11T07:24:01"
+    },
+    {
+      "id": "CI-0140",
+      "name": "storage-volume-make-140",
+      "type": "storage-volume",
+      "owner": "Identity",
+      "environment": "staging",
+      "criticality": "P4",
+      "patch_level": "4.1.4",
+      "last_verified_at": "2026-06-18T21:37:28"
+    },
+    {
+      "id": "CI-0141",
+      "name": "web-server-pretty-141",
+      "type": "web-server",
+      "owner": "Mobile Gateway",
+      "environment": "dev",
+      "criticality": "P3",
+      "patch_level": "3.9.5",
+      "last_verified_at": "2026-05-15T06:35:12"
+    },
+    {
+      "id": "CI-0142",
+      "name": "app-server-any-142",
+      "type": "app-server",
+      "owner": "Platform",
+      "environment": "prod",
+      "criticality": "P1",
+      "patch_level": "6.20.1",
+      "last_verified_at": "2026-07-13T11:25:45"
+    },
+    {
+      "id": "CI-0143",
+      "name": "network-switch-between-143",
+      "type": "network-switch",
+      "owner": "Platform",
+      "environment": "staging",
+      "criticality": "P4",
+      "patch_level": "3.18.2",
+      "last_verified_at": "2026-05-27T14:37:47"
+    },
+    {
+      "id": "CI-0144",
+      "name": "db-server-indicate-144",
+      "type": "db-server",
+      "owner": "Notifications",
+      "environment": "staging",
+      "criticality": "P3",
+      "patch_level": "4.18.3",
+      "last_verified_at": "2026-06-28T11:59:50"
+    },
+    {
+      "id": "CI-0145",
+      "name": "web-server-audience-145",
+      "type": "web-server",
+      "owner": "Notifications",
+      "environment": "prod",
+      "criticality": "P3",
+      "patch_level": "6.2.3",
+      "last_verified_at": "2026-07-13T06:53:46"
+    },
+    {
+      "id": "CI-0146",
+      "name": "message-queue-win-146",
+      "type": "message-queue",
+      "owner": "Identity",
+      "environment": "dev",
+      "criticality": "P3",
+      "patch_level": "2.5.2",
+      "last_verified_at": "2026-06-28T11:38:11"
+    },
+    {
+      "id": "CI-0147",
+      "name": "message-queue-sport-147",
+      "type": "message-queue",
+      "owner": "Platform",
+      "environment": "dev",
+      "criticality": "P2",
+      "patch_level": "3.17.4",
+      "last_verified_at": "2026-07-02T15:47:23"
+    },
+    {
+      "id": "CI-0148",
+      "name": "app-server-fish-148",
+      "type": "app-server",
+      "owner": "Checkout",
+      "environment": "staging",
+      "criticality": "P4",
+      "patch_level": "1.14.8",
+      "last_verified_at": "2026-05-11T07:10:26"
+    },
+    {
+      "id": "CI-0149",
+      "name": "app-server-million-149",
+      "type": "app-server",
+      "owner": "Mobile Gateway",
+      "environment": "staging",
+      "criticality": "P3",
+      "patch_level": "6.9.4",
+      "last_verified_at": "2026-06-28T01:14:19"
+    },
+    {
+      "id": "CI-0150",
+      "name": "cache-or-150",
+      "type": "cache",
+      "owner": "Payments",
+      "environment": "dev",
+      "criticality": "P3",
+      "patch_level": "3.9.4",
+      "last_verified_at": "2026-06-27T16:37:59"
+    },
+    {
+      "id": "CI-0151",
+      "name": "network-switch-Congress-151",
+      "type": "network-switch",
+      "owner": "Checkout",
+      "environment": "dev",
+      "criticality": "P1",
+      "patch_level": "4.7.7",
+      "last_verified_at": "2026-06-20T08:56:36"
+    },
+    {
+      "id": "CI-0152",
+      "name": "web-server-loss-152",
+      "type": "web-server",
+      "owner": "Identity",
+      "environment": "prod",
+      "criticality": "P3",
+      "patch_level": "2.0.4",
+      "last_verified_at": "2026-07-06T15:53:36"
+    },
+    {
+      "id": "CI-0153",
+      "name": "storage-volume-easy-153",
+      "type": "storage-volume",
+      "owner": "Notifications",
+      "environment": "staging",
+      "criticality": "P1",
+      "patch_level": "9.6.9",
+      "last_verified_at": "2026-06-23T03:48:24"
+    },
+    {
+      "id": "CI-0154",
+      "name": "cache-interesting-154",
+      "type": "cache",
+      "owner": "Mobile Gateway",
+      "environment": "dev",
+      "criticality": "P1",
+      "patch_level": "9.1.3",
+      "last_verified_at": "2026-07-17T05:22:33"
+    },
+    {
+      "id": "CI-0155",
+      "name": "api-gateway-key-155",
+      "type": "api-gateway",
+      "owner": "Search",
+      "environment": "dev",
+      "criticality": "P4",
+      "patch_level": "2.20.0",
+      "last_verified_at": "2026-05-17T17:25:49"
+    },
+    {
+      "id": "CI-0156",
+      "name": "web-server-close-156",
+      "type": "web-server",
+      "owner": "Platform",
+      "environment": "dev",
+      "criticality": "P1",
+      "patch_level": "8.5.0",
+      "last_verified_at": "2026-05-26T07:38:30"
+    },
+    {
+      "id": "CI-0157",
+      "name": "load-balancer-begin-157",
+      "type": "load-balancer",
+      "owner": "Checkout",
+      "environment": "staging",
+      "criticality": "P4",
+      "patch_level": "8.17.1",
+      "last_verified_at": "2026-08-03T11:10:12"
+    },
+    {
+      "id": "CI-0158",
+      "name": "cache-consumer-158",
+      "type": "cache",
+      "owner": "Search",
+      "environment": "prod",
+      "criticality": "P3",
+      "patch_level": "1.18.9",
+      "last_verified_at": "2026-05-20T15:59:56"
+    },
+    {
+      "id": "CI-0159",
+      "name": "api-gateway-guy-159",
+      "type": "api-gateway",
+      "owner": "Checkout",
+      "environment": "dev",
+      "criticality": "P3",
+      "patch_level": "6.10.9",
+      "last_verified_at": "2026-05-27T17:09:13"
+    },
+    {
+      "id": "CI-0160",
+      "name": "app-server-form-160",
+      "type": "app-server",
+      "owner": "Payments",
+      "environment": "prod",
+      "criticality": "P2",
+      "patch_level": "6.16.5",
+      "last_verified_at": "2026-06-13T03:16:06"
+    },
+    {
+      "id": "CI-0161",
+      "name": "app-server-law-161",
+      "type": "app-server",
+      "owner": "Search",
+      "environment": "prod",
+      "criticality": "P2",
+      "patch_level": "2.17.2",
+      "last_verified_at": "2026-07-14T19:52:55"
+    },
+    {
+      "id": "CI-0162",
+      "name": "web-server-focus-162",
+      "type": "web-server",
+      "owner": "Platform",
+      "environment": "staging",
+      "criticality": "P1",
+      "patch_level": "2.2.5",
+      "last_verified_at": "2026-06-22T14:19:50"
+    },
+    {
+      "id": "CI-0163",
+      "name": "message-queue-fact-163",
+      "type": "message-queue",
+      "owner": "Mobile Gateway",
+      "environment": "dev",
+      "criticality": "P2",
+      "patch_level": "2.13.4",
+      "last_verified_at": "2026-05-30T17:11:23"
+    },
+    {
+      "id": "CI-0164",
+      "name": "cache-board-164",
+      "type": "cache",
+      "owner": "Data Pipeline",
+      "environment": "prod",
+      "criticality": "P4",
+      "patch_level": "2.17.4",
+      "last_verified_at": "2026-05-09T20:11:27"
+    },
+    {
+      "id": "CI-0165",
+      "name": "storage-volume-strong-165",
+      "type": "storage-volume",
+      "owner": "Payments",
+      "environment": "dev",
+      "criticality": "P4",
+      "patch_level": "8.5.6",
+      "last_verified_at": "2026-08-01T17:10:19"
+    },
+    {
+      "id": "CI-0166",
+      "name": "db-server-make-166",
+      "type": "db-server",
+      "owner": "Platform",
+      "environment": "staging",
+      "criticality": "P3",
+      "patch_level": "1.8.6",
+      "last_verified_at": "2026-06-14T02:28:46"
+    },
+    {
+      "id": "CI-0167",
+      "name": "db-server-military-167",
+      "type": "db-server",
+      "owner": "Search",
+      "environment": "staging",
+      "criticality": "P1",
+      "patch_level": "8.14.9",
+      "last_verified_at": "2026-05-15T12:55:56"
+    },
+    {
+      "id": "CI-0168",
+      "name": "api-gateway-large-168",
+      "type": "api-gateway",
+      "owner": "Notifications",
+      "environment": "prod",
+      "criticality": "P4",
+      "patch_level": "7.2.9",
+      "last_verified_at": "2026-06-05T13:20:04"
+    },
+    {
+      "id": "CI-0169",
+      "name": "db-server-boy-169",
+      "type": "db-server",
+      "owner": "Platform",
+      "environment": "dev",
+      "criticality": "P3",
+      "patch_level": "5.8.5",
+      "last_verified_at": "2026-06-08T09:05:27"
+    },
+    {
+      "id": "CI-0170",
+      "name": "message-queue-social-170",
+      "type": "message-queue",
+      "owner": "Search",
+      "environment": "prod",
+      "criticality": "P3",
+      "patch_level": "5.16.9",
+      "last_verified_at": "2026-07-13T07:24:19"
+    },
+    {
+      "id": "CI-0171",
+      "name": "web-server-company-171",
+      "type": "web-server",
+      "owner": "Identity",
+      "environment": "dev",
+      "criticality": "P1",
+      "patch_level": "4.0.5",
+      "last_verified_at": "2026-06-10T00:48:55"
+    },
+    {
+      "id": "CI-0172",
+      "name": "message-queue-face-172",
+      "type": "message-queue",
+      "owner": "Notifications",
+      "environment": "staging",
+      "criticality": "P4",
+      "patch_level": "7.8.2",
+      "last_verified_at": "2026-07-09T10:43:58"
+    },
+    {
+      "id": "CI-0173",
+      "name": "app-server-concern-173",
+      "type": "app-server",
+      "owner": "Payments",
+      "environment": "prod",
+      "criticality": "P4",
+      "patch_level": "6.15.9",
+      "last_verified_at": "2026-07-07T01:53:28"
+    },
+    {
+      "id": "CI-0174",
+      "name": "storage-volume-positive-174",
+      "type": "storage-volume",
+      "owner": "Notifications",
+      "environment": "prod",
+      "criticality": "P3",
+      "patch_level": "6.7.7",
+      "last_verified_at": "2026-06-30T06:36:36"
+    },
+    {
+      "id": "CI-0175",
+      "name": "storage-volume-draw-175",
+      "type": "storage-volume",
+      "owner": "Identity",
+      "environment": "prod",
+      "criticality": "P1",
+      "patch_level": "9.2.1",
+      "last_verified_at": "2026-06-28T19:25:06"
+    },
+    {
+      "id": "CI-0176",
+      "name": "api-gateway-catch-176",
+      "type": "api-gateway",
+      "owner": "Search",
+      "environment": "staging",
+      "criticality": "P1",
+      "patch_level": "7.20.9",
+      "last_verified_at": "2026-06-05T16:30:32"
+    },
+    {
+      "id": "CI-0177",
+      "name": "db-server-know-177",
+      "type": "db-server",
+      "owner": "Notifications",
+      "environment": "dev",
+      "criticality": "P4",
+      "patch_level": "8.18.6",
+      "last_verified_at": "2026-05-29T18:14:38"
+    },
+    {
+      "id": "CI-0178",
+      "name": "storage-volume-news-178",
+      "type": "storage-volume",
+      "owner": "Data Pipeline",
+      "environment": "prod",
+      "criticality": "P2",
+      "patch_level": "5.13.5",
+      "last_verified_at": "2026-05-09T22:26:14"
+    },
+    {
+      "id": "CI-0179",
+      "name": "network-switch-page-179",
+      "type": "network-switch",
+      "owner": "Identity",
+      "environment": "dev",
+      "criticality": "P2",
+      "patch_level": "5.10.0",
+      "last_verified_at": "2026-05-22T11:26:32"
+    },
+    {
+      "id": "CI-0180",
+      "name": "web-server-see-180",
+      "type": "web-server",
+      "owner": "Platform",
+      "environment": "prod",
+      "criticality": "P3",
+      "patch_level": "1.6.3",
+      "last_verified_at": "2026-05-30T16:34:37"
+    },
+    {
+      "id": "CI-0181",
+      "name": "app-server-create-181",
+      "type": "app-server",
+      "owner": "Notifications",
+      "environment": "staging",
+      "criticality": "P4",
+      "patch_level": "9.12.7",
+      "last_verified_at": "2026-05-24T08:38:13"
+    },
+    {
+      "id": "CI-0182",
+      "name": "web-server-management-182",
+      "type": "web-server",
+      "owner": "Mobile Gateway",
+      "environment": "dev",
+      "criticality": "P1",
+      "patch_level": "5.10.6",
+      "last_verified_at": "2026-07-03T01:34:11"
+    },
+    {
+      "id": "CI-0183",
+      "name": "api-gateway-responsibility-183",
+      "type": "api-gateway",
+      "owner": "Payments",
+      "environment": "staging",
+      "criticality": "P4",
+      "patch_level": "6.16.6",
+      "last_verified_at": "2026-08-03T15:50:57"
+    },
+    {
+      "id": "CI-0184",
+      "name": "storage-volume-law-184",
+      "type": "storage-volume",
+      "owner": "Platform",
+      "environment": "dev",
+      "criticality": "P4",
+      "patch_level": "9.6.3",
+      "last_verified_at": "2026-06-26T23:56:18"
+    },
+    {
+      "id": "CI-0185",
+      "name": "web-server-east-185",
+      "type": "web-server",
+      "owner": "Mobile Gateway",
+      "environment": "staging",
+      "criticality": "P4",
+      "patch_level": "1.9.9",
+      "last_verified_at": "2026-07-01T18:47:20"
+    },
+    {
+      "id": "CI-0186",
+      "name": "network-switch-gun-186",
+      "type": "network-switch",
+      "owner": "Payments",
+      "environment": "staging",
+      "criticality": "P4",
+      "patch_level": "2.2.1",
+      "last_verified_at": "2026-05-14T11:44:36"
+    },
+    {
+      "id": "CI-0187",
+      "name": "api-gateway-stop-187",
+      "type": "api-gateway",
+      "owner": "Notifications",
+      "environment": "dev",
+      "criticality": "P2",
+      "patch_level": "1.12.2",
+      "last_verified_at": "2026-06-13T02:26:25"
+    },
+    {
+      "id": "CI-0188",
+      "name": "web-server-drop-188",
+      "type": "web-server",
+      "owner": "Identity",
+      "environment": "prod",
+      "criticality": "P4",
+      "patch_level": "7.11.0",
+      "last_verified_at": "2026-06-12T02:43:20"
+    },
+    {
+      "id": "CI-0189",
+      "name": "message-queue-painting-189",
+      "type": "message-queue",
+      "owner": "Data Pipeline",
+      "environment": "prod",
+      "criticality": "P2",
+      "patch_level": "1.5.7",
+      "last_verified_at": "2026-06-08T11:49:30"
+    },
+    {
+      "id": "CI-0190",
+      "name": "message-queue-traditional-190",
+      "type": "message-queue",
+      "owner": "Notifications",
+      "environment": "prod",
+      "criticality": "P1",
+      "patch_level": "7.20.0",
+      "last_verified_at": "2026-06-29T05:14:30"
+    },
+    {
+      "id": "CI-0191",
+      "name": "storage-volume-why-191",
+      "type": "storage-volume",
+      "owner": "Platform",
+      "environment": "staging",
+      "criticality": "P3",
+      "patch_level": "9.4.3",
+      "last_verified_at": "2026-05-14T04:02:54"
+    },
+    {
+      "id": "CI-0192",
+      "name": "load-balancer-kid-192",
+      "type": "load-balancer",
+      "owner": "Identity",
+      "environment": "prod",
+      "criticality": "P2",
+      "patch_level": "9.1.5",
+      "last_verified_at": "2026-06-27T13:07:18"
+    },
+    {
+      "id": "CI-0193",
+      "name": "app-server-north-193",
+      "type": "app-server",
+      "owner": "Payments",
+      "environment": "dev",
+      "criticality": "P2",
+      "patch_level": "5.19.3",
+      "last_verified_at": "2026-05-24T20:14:11"
+    },
+    {
+      "id": "CI-0194",
+      "name": "load-balancer-worker-194",
+      "type": "load-balancer",
+      "owner": "Checkout",
+      "environment": "staging",
+      "criticality": "P4",
+      "patch_level": "2.15.7",
+      "last_verified_at": "2026-07-22T07:42:06"
+    },
+    {
+      "id": "CI-0195",
+      "name": "web-server-recognize-195",
+      "type": "web-server",
+      "owner": "Data Pipeline",
+      "environment": "dev",
+      "criticality": "P3",
+      "patch_level": "8.15.2",
+      "last_verified_at": "2026-05-12T22:05:33"
+    },
+    {
+      "id": "CI-0196",
+      "name": "storage-volume-fast-196",
+      "type": "storage-volume",
+      "owner": "Data Pipeline",
+      "environment": "dev",
+      "criticality": "P2",
+      "patch_level": "2.3.6",
+      "last_verified_at": "2026-07-06T01:51:58"
+    },
+    {
+      "id": "CI-0197",
+      "name": "api-gateway-a-197",
+      "type": "api-gateway",
+      "owner": "Mobile Gateway",
+      "environment": "staging",
+      "criticality": "P3",
+      "patch_level": "8.7.5",
+      "last_verified_at": "2026-06-09T22:29:46"
+    },
+    {
+      "id": "CI-0198",
+      "name": "web-server-score-198",
+      "type": "web-server",
+      "owner": "Payments",
+      "environment": "staging",
+      "criticality": "P1",
+      "patch_level": "3.17.4",
+      "last_verified_at": "2026-05-31T14:20:44"
+    },
+    {
+      "id": "CI-0199",
+      "name": "message-queue-stock-199",
+      "type": "message-queue",
+      "owner": "Identity",
+      "environment": "dev",
+      "criticality": "P2",
+      "patch_level": "7.7.4",
+      "last_verified_at": "2026-06-08T20:59:27"
+    },
+    {
+      "id": "CI-0200",
+      "name": "app-server-involve-200",
+      "type": "app-server",
+      "owner": "Identity",
+      "environment": "staging",
+      "criticality": "P1",
+      "patch_level": "5.1.8",
+      "last_verified_at": "2026-05-30T06:15:00"
+    }
+  ],
+  "relationships": [
+    {
+      "ci_id": "CI-0001",
+      "related_ci_id": "CI-0116",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0001",
+      "related_ci_id": "CI-0132",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0002",
+      "related_ci_id": "CI-0038",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0002",
+      "related_ci_id": "CI-0146",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0003",
+      "related_ci_id": "CI-0002",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0004",
+      "related_ci_id": "CI-0129",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0005",
+      "related_ci_id": "CI-0102",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0005",
+      "related_ci_id": "CI-0164",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0006",
+      "related_ci_id": "CI-0069",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0007",
+      "related_ci_id": "CI-0038",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0008",
+      "related_ci_id": "CI-0171",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0008",
+      "related_ci_id": "CI-0023",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0008",
+      "related_ci_id": "CI-0189",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0009",
+      "related_ci_id": "CI-0004",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0009",
+      "related_ci_id": "CI-0143",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0010",
+      "related_ci_id": "CI-0070",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0010",
+      "related_ci_id": "CI-0009",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0010",
+      "related_ci_id": "CI-0124",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0011",
+      "related_ci_id": "CI-0045",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0013",
+      "related_ci_id": "CI-0033",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0014",
+      "related_ci_id": "CI-0067",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0015",
+      "related_ci_id": "CI-0101",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0015",
+      "related_ci_id": "CI-0030",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0016",
+      "related_ci_id": "CI-0116",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0016",
+      "related_ci_id": "CI-0091",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0016",
+      "related_ci_id": "CI-0095",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0017",
+      "related_ci_id": "CI-0162",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0017",
+      "related_ci_id": "CI-0037",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0018",
+      "related_ci_id": "CI-0157",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0018",
+      "related_ci_id": "CI-0032",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0018",
+      "related_ci_id": "CI-0176",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0019",
+      "related_ci_id": "CI-0186",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0019",
+      "related_ci_id": "CI-0152",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0019",
+      "related_ci_id": "CI-0145",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0020",
+      "related_ci_id": "CI-0109",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0020",
+      "related_ci_id": "CI-0008",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0020",
+      "related_ci_id": "CI-0176",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0021",
+      "related_ci_id": "CI-0143",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0021",
+      "related_ci_id": "CI-0008",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0021",
+      "related_ci_id": "CI-0092",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0022",
+      "related_ci_id": "CI-0178",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0022",
+      "related_ci_id": "CI-0147",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0022",
+      "related_ci_id": "CI-0196",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0024",
+      "related_ci_id": "CI-0045",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0026",
+      "related_ci_id": "CI-0044",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0026",
+      "related_ci_id": "CI-0176",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0027",
+      "related_ci_id": "CI-0068",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0028",
+      "related_ci_id": "CI-0109",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0028",
+      "related_ci_id": "CI-0060",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0028",
+      "related_ci_id": "CI-0081",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0029",
+      "related_ci_id": "CI-0193",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0029",
+      "related_ci_id": "CI-0088",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0029",
+      "related_ci_id": "CI-0184",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0030",
+      "related_ci_id": "CI-0027",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0031",
+      "related_ci_id": "CI-0095",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0031",
+      "related_ci_id": "CI-0136",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0031",
+      "related_ci_id": "CI-0164",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0032",
+      "related_ci_id": "CI-0094",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0032",
+      "related_ci_id": "CI-0084",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0032",
+      "related_ci_id": "CI-0166",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0033",
+      "related_ci_id": "CI-0097",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0034",
+      "related_ci_id": "CI-0090",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0034",
+      "related_ci_id": "CI-0113",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0034",
+      "related_ci_id": "CI-0045",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0036",
+      "related_ci_id": "CI-0180",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0036",
+      "related_ci_id": "CI-0102",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0036",
+      "related_ci_id": "CI-0161",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0038",
+      "related_ci_id": "CI-0060",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0038",
+      "related_ci_id": "CI-0055",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0039",
+      "related_ci_id": "CI-0177",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0039",
+      "related_ci_id": "CI-0027",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0040",
+      "related_ci_id": "CI-0082",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0040",
+      "related_ci_id": "CI-0120",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0040",
+      "related_ci_id": "CI-0187",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0041",
+      "related_ci_id": "CI-0117",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0041",
+      "related_ci_id": "CI-0135",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0042",
+      "related_ci_id": "CI-0185",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0042",
+      "related_ci_id": "CI-0004",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0042",
+      "related_ci_id": "CI-0197",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0043",
+      "related_ci_id": "CI-0094",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0043",
+      "related_ci_id": "CI-0119",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0043",
+      "related_ci_id": "CI-0035",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0047",
+      "related_ci_id": "CI-0061",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0048",
+      "related_ci_id": "CI-0029",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0048",
+      "related_ci_id": "CI-0123",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0048",
+      "related_ci_id": "CI-0116",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0049",
+      "related_ci_id": "CI-0069",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0049",
+      "related_ci_id": "CI-0116",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0049",
+      "related_ci_id": "CI-0160",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0051",
+      "related_ci_id": "CI-0193",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0051",
+      "related_ci_id": "CI-0169",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0051",
+      "related_ci_id": "CI-0032",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0052",
+      "related_ci_id": "CI-0116",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0052",
+      "related_ci_id": "CI-0098",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0052",
+      "related_ci_id": "CI-0165",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0053",
+      "related_ci_id": "CI-0105",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0053",
+      "related_ci_id": "CI-0145",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0053",
+      "related_ci_id": "CI-0011",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0054",
+      "related_ci_id": "CI-0100",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0055",
+      "related_ci_id": "CI-0068",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0055",
+      "related_ci_id": "CI-0157",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0055",
+      "related_ci_id": "CI-0006",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0057",
+      "related_ci_id": "CI-0143",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0057",
+      "related_ci_id": "CI-0045",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0058",
+      "related_ci_id": "CI-0104",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0058",
+      "related_ci_id": "CI-0044",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0058",
+      "related_ci_id": "CI-0066",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0060",
+      "related_ci_id": "CI-0146",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0061",
+      "related_ci_id": "CI-0075",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0062",
+      "related_ci_id": "CI-0192",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0062",
+      "related_ci_id": "CI-0041",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0062",
+      "related_ci_id": "CI-0141",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0064",
+      "related_ci_id": "CI-0161",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0064",
+      "related_ci_id": "CI-0029",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0068",
+      "related_ci_id": "CI-0114",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0068",
+      "related_ci_id": "CI-0051",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0068",
+      "related_ci_id": "CI-0146",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0070",
+      "related_ci_id": "CI-0034",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0070",
+      "related_ci_id": "CI-0103",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0070",
+      "related_ci_id": "CI-0095",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0072",
+      "related_ci_id": "CI-0175",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0074",
+      "related_ci_id": "CI-0044",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0075",
+      "related_ci_id": "CI-0014",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0076",
+      "related_ci_id": "CI-0096",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0076",
+      "related_ci_id": "CI-0068",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0077",
+      "related_ci_id": "CI-0190",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0078",
+      "related_ci_id": "CI-0009",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0078",
+      "related_ci_id": "CI-0127",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0079",
+      "related_ci_id": "CI-0115",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0079",
+      "related_ci_id": "CI-0166",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0080",
+      "related_ci_id": "CI-0181",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0080",
+      "related_ci_id": "CI-0111",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0082",
+      "related_ci_id": "CI-0173",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0083",
+      "related_ci_id": "CI-0023",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0083",
+      "related_ci_id": "CI-0097",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0083",
+      "related_ci_id": "CI-0117",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0084",
+      "related_ci_id": "CI-0191",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0085",
+      "related_ci_id": "CI-0194",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0085",
+      "related_ci_id": "CI-0024",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0085",
+      "related_ci_id": "CI-0148",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0087",
+      "related_ci_id": "CI-0163",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0088",
+      "related_ci_id": "CI-0046",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0089",
+      "related_ci_id": "CI-0137",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0089",
+      "related_ci_id": "CI-0118",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0092",
+      "related_ci_id": "CI-0007",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0092",
+      "related_ci_id": "CI-0096",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0092",
+      "related_ci_id": "CI-0187",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0095",
+      "related_ci_id": "CI-0140",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0095",
+      "related_ci_id": "CI-0124",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0096",
+      "related_ci_id": "CI-0009",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0096",
+      "related_ci_id": "CI-0123",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0096",
+      "related_ci_id": "CI-0120",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0097",
+      "related_ci_id": "CI-0174",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0097",
+      "related_ci_id": "CI-0116",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0097",
+      "related_ci_id": "CI-0158",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0099",
+      "related_ci_id": "CI-0168",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0099",
+      "related_ci_id": "CI-0078",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0100",
+      "related_ci_id": "CI-0021",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0101",
+      "related_ci_id": "CI-0033",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0102",
+      "related_ci_id": "CI-0187",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0103",
+      "related_ci_id": "CI-0063",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0103",
+      "related_ci_id": "CI-0198",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0104",
+      "related_ci_id": "CI-0082",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0104",
+      "related_ci_id": "CI-0061",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0105",
+      "related_ci_id": "CI-0189",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0105",
+      "related_ci_id": "CI-0001",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0105",
+      "related_ci_id": "CI-0182",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0106",
+      "related_ci_id": "CI-0133",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0107",
+      "related_ci_id": "CI-0165",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0107",
+      "related_ci_id": "CI-0120",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0109",
+      "related_ci_id": "CI-0088",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0110",
+      "related_ci_id": "CI-0121",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0111",
+      "related_ci_id": "CI-0075",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0112",
+      "related_ci_id": "CI-0095",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0112",
+      "related_ci_id": "CI-0176",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0115",
+      "related_ci_id": "CI-0022",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0117",
+      "related_ci_id": "CI-0126",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0117",
+      "related_ci_id": "CI-0108",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0117",
+      "related_ci_id": "CI-0048",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0118",
+      "related_ci_id": "CI-0097",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0119",
+      "related_ci_id": "CI-0176",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0119",
+      "related_ci_id": "CI-0113",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0119",
+      "related_ci_id": "CI-0047",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0120",
+      "related_ci_id": "CI-0008",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0120",
+      "related_ci_id": "CI-0125",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0122",
+      "related_ci_id": "CI-0183",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0124",
+      "related_ci_id": "CI-0090",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0124",
+      "related_ci_id": "CI-0185",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0125",
+      "related_ci_id": "CI-0043",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0125",
+      "related_ci_id": "CI-0081",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0125",
+      "related_ci_id": "CI-0007",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0127",
+      "related_ci_id": "CI-0030",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0127",
+      "related_ci_id": "CI-0191",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0127",
+      "related_ci_id": "CI-0175",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0128",
+      "related_ci_id": "CI-0186",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0128",
+      "related_ci_id": "CI-0159",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0129",
+      "related_ci_id": "CI-0019",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0130",
+      "related_ci_id": "CI-0117",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0130",
+      "related_ci_id": "CI-0080",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0130",
+      "related_ci_id": "CI-0168",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0131",
+      "related_ci_id": "CI-0001",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0131",
+      "related_ci_id": "CI-0023",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0131",
+      "related_ci_id": "CI-0021",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0132",
+      "related_ci_id": "CI-0034",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0132",
+      "related_ci_id": "CI-0011",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0133",
+      "related_ci_id": "CI-0190",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0133",
+      "related_ci_id": "CI-0107",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0134",
+      "related_ci_id": "CI-0174",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0134",
+      "related_ci_id": "CI-0049",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0134",
+      "related_ci_id": "CI-0133",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0135",
+      "related_ci_id": "CI-0173",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0136",
+      "related_ci_id": "CI-0084",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0136",
+      "related_ci_id": "CI-0151",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0138",
+      "related_ci_id": "CI-0049",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0139",
+      "related_ci_id": "CI-0063",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0141",
+      "related_ci_id": "CI-0076",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0141",
+      "related_ci_id": "CI-0058",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0141",
+      "related_ci_id": "CI-0001",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0142",
+      "related_ci_id": "CI-0044",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0143",
+      "related_ci_id": "CI-0131",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0143",
+      "related_ci_id": "CI-0177",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0144",
+      "related_ci_id": "CI-0010",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0144",
+      "related_ci_id": "CI-0134",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0144",
+      "related_ci_id": "CI-0007",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0145",
+      "related_ci_id": "CI-0161",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0145",
+      "related_ci_id": "CI-0120",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0145",
+      "related_ci_id": "CI-0142",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0146",
+      "related_ci_id": "CI-0062",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0146",
+      "related_ci_id": "CI-0044",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0147",
+      "related_ci_id": "CI-0056",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0147",
+      "related_ci_id": "CI-0110",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0150",
+      "related_ci_id": "CI-0161",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0151",
+      "related_ci_id": "CI-0085",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0151",
+      "related_ci_id": "CI-0019",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0152",
+      "related_ci_id": "CI-0144",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0152",
+      "related_ci_id": "CI-0112",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0154",
+      "related_ci_id": "CI-0074",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0154",
+      "related_ci_id": "CI-0179",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0157",
+      "related_ci_id": "CI-0133",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0157",
+      "related_ci_id": "CI-0187",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0158",
+      "related_ci_id": "CI-0193",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0158",
+      "related_ci_id": "CI-0111",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0158",
+      "related_ci_id": "CI-0028",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0159",
+      "related_ci_id": "CI-0051",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0161",
+      "related_ci_id": "CI-0179",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0162",
+      "related_ci_id": "CI-0019",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0162",
+      "related_ci_id": "CI-0199",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0164",
+      "related_ci_id": "CI-0075",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0164",
+      "related_ci_id": "CI-0048",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0164",
+      "related_ci_id": "CI-0013",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0165",
+      "related_ci_id": "CI-0113",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0166",
+      "related_ci_id": "CI-0053",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0167",
+      "related_ci_id": "CI-0130",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0167",
+      "related_ci_id": "CI-0155",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0167",
+      "related_ci_id": "CI-0098",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0168",
+      "related_ci_id": "CI-0008",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0168",
+      "related_ci_id": "CI-0093",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0168",
+      "related_ci_id": "CI-0094",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0169",
+      "related_ci_id": "CI-0156",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0169",
+      "related_ci_id": "CI-0157",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0169",
+      "related_ci_id": "CI-0018",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0170",
+      "related_ci_id": "CI-0145",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0173",
+      "related_ci_id": "CI-0023",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0174",
+      "related_ci_id": "CI-0154",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0175",
+      "related_ci_id": "CI-0093",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0176",
+      "related_ci_id": "CI-0014",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0176",
+      "related_ci_id": "CI-0071",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0177",
+      "related_ci_id": "CI-0100",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0178",
+      "related_ci_id": "CI-0052",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0179",
+      "related_ci_id": "CI-0125",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0180",
+      "related_ci_id": "CI-0147",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0181",
+      "related_ci_id": "CI-0084",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0181",
+      "related_ci_id": "CI-0052",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0182",
+      "related_ci_id": "CI-0020",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0182",
+      "related_ci_id": "CI-0023",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0182",
+      "related_ci_id": "CI-0099",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0183",
+      "related_ci_id": "CI-0149",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0183",
+      "related_ci_id": "CI-0119",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0185",
+      "related_ci_id": "CI-0012",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0185",
+      "related_ci_id": "CI-0180",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0186",
+      "related_ci_id": "CI-0155",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0186",
+      "related_ci_id": "CI-0187",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0188",
+      "related_ci_id": "CI-0083",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0189",
+      "related_ci_id": "CI-0195",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0189",
+      "related_ci_id": "CI-0012",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0190",
+      "related_ci_id": "CI-0107",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0191",
+      "related_ci_id": "CI-0029",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0192",
+      "related_ci_id": "CI-0101",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0192",
+      "related_ci_id": "CI-0016",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0193",
+      "related_ci_id": "CI-0179",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0193",
+      "related_ci_id": "CI-0014",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0193",
+      "related_ci_id": "CI-0155",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0194",
+      "related_ci_id": "CI-0047",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0197",
+      "related_ci_id": "CI-0082",
+      "relation_type": "connects_to"
+    },
+    {
+      "ci_id": "CI-0197",
+      "related_ci_id": "CI-0189",
+      "relation_type": "replicates_to"
+    },
+    {
+      "ci_id": "CI-0199",
+      "related_ci_id": "CI-0108",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0199",
+      "related_ci_id": "CI-0120",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0200",
+      "related_ci_id": "CI-0137",
+      "relation_type": "depends_on"
+    },
+    {
+      "ci_id": "CI-0200",
+      "related_ci_id": "CI-0096",
+      "relation_type": "hosts"
+    },
+    {
+      "ci_id": "CI-0200",
+      "related_ci_id": "CI-0166",
+      "relation_type": "hosts"
+    }
+  ]
+}

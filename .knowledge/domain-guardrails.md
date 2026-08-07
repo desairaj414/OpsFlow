@@ -1,7 +1,7 @@
 ---
 type: domain
 title: Domain — Guardrails & Bias Mitigation
-status: draft
+status: active
 updated: 2026-08-07
 related: [domain-agents.md, domain-workflows.md, schema-db.md]
 ---
@@ -31,7 +31,7 @@ Retrieved runbook text can be an action taken against production — a chunk tha
 7. Overlap only at section boundaries, carrying the heading forward.
 
 **Verification (three layers, build this):**
-- `scripts/assert_chunks.py` — **fails the build** if a chunk begins mid-step, a numbered list is split across chunks, a chunk lacks a heading path, or a code block is broken. Run at end of Phase 1 and again in Phase 5.
+- `scripts/assert_chunks.py` — **fails the build** if a chunk begins mid-step, a numbered list is split across chunks, a chunk lacks a heading path, or a code block is broken. Run at end of Phase 1 and again in Phase 5. **Built and passing 2026-08-07** (22 runbooks, 9 postmortems, trap case `RB-001.md` step 4 confirmed intact) — chunker itself lives in `backend/chunking.py`.
 - Chunk Inspector UI screen — show chunk boundaries on a real document (demotes to a static screenshot if Phase 4 runs long, never dropped entirely).
 - One deliberate trap runbook whose step 4 spans a page break — named test case, mention it in the walkthrough.
 
@@ -47,6 +47,17 @@ Retrieved runbook text can be an action taken against production — a chunk tha
 | Accent/speech-pattern (new, from voice D1) | ASR worse for non-native/atypical speech — accessibility feature becomes inaccessible | Command-scoped closed vocabulary (not free dictation); parsed intent shown for confirmation before executing; keyboard parity |
 | Image-context (new, from vision D1) | Modern dashboards extract cleanly; terminal dumps/legacy UIs extract poorly | Extraction confidence surfaced; mandatory human confirmation before a signal enters a workflow; low-confidence extraction marked unverified |
 | Negative-KB overcorrection (new, from D5) | A remediation that failed once in one context gets blanket-suppressed | Entries scoped to CI class + failure signature; shown as a caution with reason, never a silent filter |
+
+## Phase 2 prerequisites for Phase 3's verification agent — CONFIRMED IN PLACE (2026-08-07)
+- **Policy gate** — `backend/guardrails/policy_gate.py`, pure Python, 12 unit tests green, covers
+  freeze-window/prod-vs-non-prod/blast-radius/max-concurrent/approver-role/advisory-only-tuning.
+- **Blast radius** — `backend/guardrails/blast_radius.py`, BFS over CMDB adjacency, 9 unit tests
+  green against hand-built fixtures.
+- **Audit trail** — `backend/orchestrator/audit.py`, append-only enforced by a real SQLite trigger
+  (not just application discipline — a raw SQL UPDATE/DELETE is rejected by the DB itself).
+- **Scrubber** — `backend/guardrails/scrubber.py`, measured precision/recall in [domain-privacy.md](domain-privacy.md).
+The Fake Fix Detector itself (the two-signal alert-cleared + health-probe-recovered check) is NOT
+yet built — it belongs to the Verification agent, Phase 3, which can now assume all of the above exist.
 
 ## Do not re-decide
 These are resolved PRD decisions. Deviating (e.g. loosening the runbook-bounded action space, or

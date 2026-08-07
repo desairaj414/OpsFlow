@@ -1,14 +1,18 @@
 ---
 type: schema
 title: Database Schema (SQLite + Chroma)
-status: draft
+status: active
 updated: 2026-08-07
 related: [api-contract.md, prd-phase-1.md, domain-workflows.md]
 ---
 
 **Not specified verbatim in PRD_FINAL.md — this is the operational detail an execution session
-needs, derived from PRD §1.4/§2.4/§3.5/§3.6/§6/§7 without changing any product decision. Freeze
-this for real at the end of Phase 1 per PRD §0 working method, then flip `status: active`.**
+needs, derived from PRD §1.4/§2.4/§3.5/§3.6/§6/§7 without changing any product decision. Frozen
+2026-08-07 — the `cmdb_ci`/`cmdb_ci_ground_truth`/`cmdb_relationship` shapes below match what
+`backend/data_gen/cmdb.py` actually generates; `alerts` here is the table ingested alerts land in
+after normalisation, distinct from the raw heterogeneous shapes the Monitoring simulator serves
+(see `backend/data_gen/alerts.py` / `mcp_servers/simulators/monitoring.py`) — those two are not
+the same table and should not be conflated.**
 
 ## SQLite — transactional/state (PRD §3.5 storage split)
 - `cmdb_ci` — as-recorded CI state: id, name, type, owner, environment, criticality, patch_level, last_verified_at, relationships (adjacency table `cmdb_relationship(ci_id, related_ci_id, relation_type)`).

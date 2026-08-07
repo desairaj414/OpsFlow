@@ -1,0 +1,322 @@
+[
+  {
+    "id": "NEGKB-001",
+    "ci_class": "network-switch",
+    "failure_signature": "cert expiry mid-rollout",
+    "attempted_fix": "restarted the service",
+    "reason_failed": "root cause was upstream, restart only masked it temporarily",
+    "source_incident_id": "INC-2545"
+  },
+  {
+    "id": "NEGKB-002",
+    "ci_class": "app-server",
+    "failure_signature": "disk full",
+    "attempted_fix": "purged the queue",
+    "reason_failed": "root cause was upstream, restart only masked it temporarily",
+    "source_incident_id": "INC-4945"
+  },
+  {
+    "id": "NEGKB-003",
+    "ci_class": "app-server",
+    "failure_signature": "OOM kill loop",
+    "attempted_fix": "bounced the load balancer",
+    "reason_failed": "root cause was upstream, restart only masked it temporarily",
+    "source_incident_id": "INC-3215"
+  },
+  {
+    "id": "NEGKB-004",
+    "ci_class": "db-server",
+    "failure_signature": "disk full",
+    "attempted_fix": "purged the queue",
+    "reason_failed": "root cause was upstream, restart only masked it temporarily",
+    "source_incident_id": "INC-6699"
+  },
+  {
+    "id": "NEGKB-005",
+    "ci_class": "app-server",
+    "failure_signature": "OOM kill loop",
+    "attempted_fix": "cleared local cache",
+    "reason_failed": "rollback target itself carried the same defect",
+    "source_incident_id": "INC-3810"
+  },
+  {
+    "id": "NEGKB-006",
+    "ci_class": "message-queue",
+    "failure_signature": "OOM kill loop",
+    "attempted_fix": "restarted the service",
+    "reason_failed": "rollback target itself carried the same defect",
+    "source_incident_id": "INC-2159"
+  },
+  {
+    "id": "NEGKB-007",
+    "ci_class": "db-server",
+    "failure_signature": "connection pool exhaustion",
+    "attempted_fix": "increased connection pool size",
+    "reason_failed": "root cause was upstream, restart only masked it temporarily",
+    "source_incident_id": "INC-5751"
+  },
+  {
+    "id": "NEGKB-008",
+    "ci_class": "load-balancer",
+    "failure_signature": "disk full",
+    "attempted_fix": "increased connection pool size",
+    "reason_failed": "scaling did not address the actual bottleneck (DB connection limit, not CPU)",
+    "source_incident_id": "INC-1064"
+  },
+  {
+    "id": "NEGKB-009",
+    "ci_class": "network-switch",
+    "failure_signature": "connection pool exhaustion",
+    "attempted_fix": "rolled back last deploy",
+    "reason_failed": "config drift reintroduced by the next scheduled deploy",
+    "source_incident_id": "INC-3625"
+  },
+  {
+    "id": "NEGKB-010",
+    "ci_class": "storage-volume",
+    "failure_signature": "cascading timeout from upstream dependency",
+    "attempted_fix": "rolled back last deploy",
+    "reason_failed": "rollback target itself carried the same defect",
+    "source_incident_id": "INC-5027"
+  },
+  {
+    "id": "NEGKB-011",
+    "ci_class": "api-gateway",
+    "failure_signature": "queue backlog unbounded growth",
+    "attempted_fix": "bounced the load balancer",
+    "reason_failed": "config drift reintroduced by the next scheduled deploy",
+    "source_incident_id": "INC-8251"
+  },
+  {
+    "id": "NEGKB-012",
+    "ci_class": "web-server",
+    "failure_signature": "memory leak in worker process",
+    "attempted_fix": "bounced the load balancer",
+    "reason_failed": "rollback target itself carried the same defect",
+    "source_incident_id": "INC-4169"
+  },
+  {
+    "id": "NEGKB-013",
+    "ci_class": "web-server",
+    "failure_signature": "DNS resolution flapping",
+    "attempted_fix": "purged the queue",
+    "reason_failed": "config drift reintroduced by the next scheduled deploy",
+    "source_incident_id": "INC-1256"
+  },
+  {
+    "id": "NEGKB-014",
+    "ci_class": "web-server",
+    "failure_signature": "deadlock under load",
+    "attempted_fix": "purged the queue",
+    "reason_failed": "config drift reintroduced by the next scheduled deploy",
+    "source_incident_id": "INC-4670"
+  },
+  {
+    "id": "NEGKB-015",
+    "ci_class": "db-server",
+    "failure_signature": "config drift after patch",
+    "attempted_fix": "restarted the service",
+    "reason_failed": "scaling did not address the actual bottleneck (DB connection limit, not CPU)",
+    "source_incident_id": "INC-5591"
+  },
+  {
+    "id": "NEGKB-016",
+    "ci_class": "db-server",
+    "failure_signature": "connection pool exhaustion",
+    "attempted_fix": "restarted the service",
+    "reason_failed": "config drift reintroduced by the next scheduled deploy",
+    "source_incident_id": "INC-8450"
+  },
+  {
+    "id": "NEGKB-017",
+    "ci_class": "app-server",
+    "failure_signature": "deadlock under load",
+    "attempted_fix": "scaled out replica count",
+    "reason_failed": "scaling did not address the actual bottleneck (DB connection limit, not CPU)",
+    "source_incident_id": "INC-1749"
+  },
+  {
+    "id": "NEGKB-018",
+    "ci_class": "message-queue",
+    "failure_signature": "OOM kill loop",
+    "attempted_fix": "bounced the load balancer",
+    "reason_failed": "scaling did not address the actual bottleneck (DB connection limit, not CPU)",
+    "source_incident_id": "INC-2134"
+  },
+  {
+    "id": "NEGKB-019",
+    "ci_class": "network-switch",
+    "failure_signature": "deadlock under load",
+    "attempted_fix": "bounced the load balancer",
+    "reason_failed": "root cause was upstream, restart only masked it temporarily",
+    "source_incident_id": "INC-1712"
+  },
+  {
+    "id": "NEGKB-020",
+    "ci_class": "api-gateway",
+    "failure_signature": "OOM kill loop",
+    "attempted_fix": "scaled out replica count",
+    "reason_failed": "root cause was upstream, restart only masked it temporarily",
+    "source_incident_id": "INC-8111"
+  },
+  {
+    "id": "NEGKB-021",
+    "ci_class": "db-server",
+    "failure_signature": "OOM kill loop",
+    "attempted_fix": "bounced the load balancer",
+    "reason_failed": "fix addressed a symptom, underlying leak was in application code",
+    "source_incident_id": "INC-4247"
+  },
+  {
+    "id": "NEGKB-022",
+    "ci_class": "message-queue",
+    "failure_signature": "OOM kill loop",
+    "attempted_fix": "bounced the load balancer",
+    "reason_failed": "fix addressed a symptom, underlying leak was in application code",
+    "source_incident_id": "INC-5019"
+  },
+  {
+    "id": "NEGKB-023",
+    "ci_class": "db-server",
+    "failure_signature": "deadlock under load",
+    "attempted_fix": "bounced the load balancer",
+    "reason_failed": "config drift reintroduced by the next scheduled deploy",
+    "source_incident_id": "INC-7184"
+  },
+  {
+    "id": "NEGKB-024",
+    "ci_class": "load-balancer",
+    "failure_signature": "disk full",
+    "attempted_fix": "bounced the load balancer",
+    "reason_failed": "root cause was upstream, restart only masked it temporarily",
+    "source_incident_id": "INC-6653"
+  },
+  {
+    "id": "NEGKB-025",
+    "ci_class": "message-queue",
+    "failure_signature": "OOM kill loop",
+    "attempted_fix": "cleared local cache",
+    "reason_failed": "rollback target itself carried the same defect",
+    "source_incident_id": "INC-8305"
+  },
+  {
+    "id": "NEGKB-026",
+    "ci_class": "load-balancer",
+    "failure_signature": "connection pool exhaustion",
+    "attempted_fix": "bounced the load balancer",
+    "reason_failed": "config drift reintroduced by the next scheduled deploy",
+    "source_incident_id": "INC-7882"
+  },
+  {
+    "id": "NEGKB-027",
+    "ci_class": "db-server",
+    "failure_signature": "OOM kill loop",
+    "attempted_fix": "rotated the certificate",
+    "reason_failed": "config drift reintroduced by the next scheduled deploy",
+    "source_incident_id": "INC-8056"
+  },
+  {
+    "id": "NEGKB-028",
+    "ci_class": "message-queue",
+    "failure_signature": "cert expiry mid-rollout",
+    "attempted_fix": "cleared local cache",
+    "reason_failed": "fix addressed a symptom, underlying leak was in application code",
+    "source_incident_id": "INC-2729"
+  },
+  {
+    "id": "NEGKB-029",
+    "ci_class": "message-queue",
+    "failure_signature": "cert expiry mid-rollout",
+    "attempted_fix": "rotated the certificate",
+    "reason_failed": "scaling did not address the actual bottleneck (DB connection limit, not CPU)",
+    "source_incident_id": "INC-8777"
+  },
+  {
+    "id": "NEGKB-030",
+    "ci_class": "load-balancer",
+    "failure_signature": "cert expiry mid-rollout",
+    "attempted_fix": "cleared local cache",
+    "reason_failed": "root cause was upstream, restart only masked it temporarily",
+    "source_incident_id": "INC-2558"
+  },
+  {
+    "id": "NEGKB-031",
+    "ci_class": "load-balancer",
+    "failure_signature": "connection pool exhaustion",
+    "attempted_fix": "rolled back last deploy",
+    "reason_failed": "config drift reintroduced by the next scheduled deploy",
+    "source_incident_id": "INC-1683"
+  },
+  {
+    "id": "NEGKB-032",
+    "ci_class": "cache",
+    "failure_signature": "cascading timeout from upstream dependency",
+    "attempted_fix": "increased connection pool size",
+    "reason_failed": "rollback target itself carried the same defect",
+    "source_incident_id": "INC-7957"
+  },
+  {
+    "id": "NEGKB-033",
+    "ci_class": "message-queue",
+    "failure_signature": "OOM kill loop",
+    "attempted_fix": "scaled out replica count",
+    "reason_failed": "scaling did not address the actual bottleneck (DB connection limit, not CPU)",
+    "source_incident_id": "INC-8722"
+  },
+  {
+    "id": "NEGKB-034",
+    "ci_class": "web-server",
+    "failure_signature": "config drift after patch",
+    "attempted_fix": "scaled out replica count",
+    "reason_failed": "scaling did not address the actual bottleneck (DB connection limit, not CPU)",
+    "source_incident_id": "INC-2140"
+  },
+  {
+    "id": "NEGKB-035",
+    "ci_class": "storage-volume",
+    "failure_signature": "config drift after patch",
+    "attempted_fix": "cleared local cache",
+    "reason_failed": "root cause was upstream, restart only masked it temporarily",
+    "source_incident_id": "INC-4891"
+  },
+  {
+    "id": "NEGKB-036",
+    "ci_class": "db-server",
+    "failure_signature": "deadlock under load",
+    "attempted_fix": "bounced the load balancer",
+    "reason_failed": "root cause was upstream, restart only masked it temporarily",
+    "source_incident_id": "INC-4953"
+  },
+  {
+    "id": "NEGKB-037",
+    "ci_class": "web-server",
+    "failure_signature": "queue backlog unbounded growth",
+    "attempted_fix": "rolled back last deploy",
+    "reason_failed": "fix addressed a symptom, underlying leak was in application code",
+    "source_incident_id": "INC-5235"
+  },
+  {
+    "id": "NEGKB-038",
+    "ci_class": "db-server",
+    "failure_signature": "deadlock under load",
+    "attempted_fix": "cleared local cache",
+    "reason_failed": "scaling did not address the actual bottleneck (DB connection limit, not CPU)",
+    "source_incident_id": "INC-6395"
+  },
+  {
+    "id": "NEGKB-039",
+    "ci_class": "load-balancer",
+    "failure_signature": "deadlock under load",
+    "attempted_fix": "rolled back last deploy",
+    "reason_failed": "scaling did not address the actual bottleneck (DB connection limit, not CPU)",
+    "source_incident_id": "INC-5972"
+  },
+  {
+    "id": "NEGKB-040",
+    "ci_class": "db-server",
+    "failure_signature": "DNS resolution flapping",
+    "attempted_fix": "cleared local cache",
+    "reason_failed": "fix addressed a symptom, underlying leak was in application code",
+    "source_incident_id": "INC-3286"
+  }
+]

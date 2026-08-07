@@ -1,7 +1,7 @@
 ---
 type: phase
 title: "Phase 0 — Environment & Gateway Smoke Test"
-status: active
+status: done
 updated: 2026-08-07
 related: [env-network.md, models-routing.md, state-progress.md, prd-phase-1.md]
 ---
@@ -29,14 +29,14 @@ Owner: whichever team member is free first (infra/env role) — this phase is no
 None — this phase touches only the real gateway and real local Ollama. No simulated systems yet.
 
 ## Hard acceptance criteria (must be RE-VERIFIED, not just written, before Phase 1 starts)
-- [ ] `ollama list` output recorded in `PHASE0_FINDINGS.md`
-- [ ] All 7 handbook models confirmed reachable via the gateway, **including Whisper and Llama Vision explicitly**
-- [ ] SSL bypass + `TIKTOKEN_CACHE_DIR` fix confirmed working (not just present in code)
-- [ ] Latency + token cost per model recorded
-- [ ] `text-embedding-3-large` → Chroma round-trip confirmed working
-- [ ] Repo scaffold confirmed present and running (backend boots, frontend boots)
-- [ ] `PHASE0_FINDINGS.md` exists and is complete
-- [ ] Jira probe attempted within its 30-minute cap and its outcome recorded (success or abandoned)
+- [x] `ollama list` output recorded in `PHASE0_FINDINGS.md`
+- [x] All 7 handbook models confirmed reachable via the gateway, **including Whisper and Llama Vision explicitly** — 2 permanently-deprecated deployments (Llama Vision, DeepSeek V3) replaced with human-approved substitutes after real task-shaped testing; Phi-4-reasoning intermittent but non-blocking (smoke-test-only). See `PHASE0_FINDINGS.md`.
+- [x] SSL bypass + `TIKTOKEN_CACHE_DIR` fix confirmed working (not just present in code)
+- [x] Latency + token cost per model recorded
+- [x] `text-embedding-3-large` → Chroma round-trip confirmed working
+- [x] Repo scaffold confirmed present and running (backend boots, frontend boots) — re-verified live after this session's `requirements.txt`/`.env` changes
+- [x] `PHASE0_FINDINGS.md` exists and is complete
+- [x] Jira probe attempted within its 30-minute cap and its outcome recorded (network reachable; instance creation deferred to human — requires manual signup)
 
 ## CONTEXT CHECKPOINT — update on completion
 - [.knowledge/env-network.md](env-network.md) — fill in the smoke-test results table

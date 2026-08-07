@@ -22,6 +22,15 @@ def get_llm(model: str | None = None, temperature: float = 0.2) -> ChatOpenAI:
     )
 
 
+def extract_token_usage(response) -> int | None:
+    """Total token count from a ChatOpenAI response, if the gateway returned usage metadata.
+    Used by the Agent Trace Viewer (Phase 4) — None means genuinely not reported, not zero."""
+    usage = getattr(response, "usage_metadata", None)
+    if usage and usage.get("total_tokens") is not None:
+        return usage["total_tokens"]
+    return None
+
+
 def get_embeddings(model: str | None = None) -> OpenAIEmbeddings:
     """Return an OpenAIEmbeddings instance bound to the enterprise endpoint."""
     return OpenAIEmbeddings(

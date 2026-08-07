@@ -12,7 +12,8 @@ related: [errors-solved.md, prd-phase-0.md, models-routing.md]
 cd backend
 python -m venv venv && venv\Scripts\activate   # Windows
 pip install -r requirements.txt
-python smoke_test.py                            # run FIRST, every session start
+python smoke_test.py                            # fast default: HANDBOOK_MODELS (~4) + Whisper/Vision/embedding checks
+python smoke_test.py --full                     # slow: all 32 models in MODELS, only for a periodic full audit
 uvicorn main:app --reload --host 0.0.0.0 --port 8765   # NOT 8000/8001 — see errors-solved.md
 
 # Frontend
@@ -68,13 +69,18 @@ http_client = httpx.Client(verify=False)          # or httpx.AsyncClient(verify=
 - Backend: `http://localhost:8765` — **not 8000/8001**, see `errors-solved.md` (Windows reserves those ephemeral ranges)
 - `frontend/.env` → `VITE_API_BASE_URL` must match the backend port above.
 
-## Phase 0 smoke-test results (fill in as Phase 0 steps are verified)
+## Phase 0 smoke-test results (verified 2026-08-07, `python smoke_test.py`)
 | Check | Status | Notes |
 |---|---|---|
-| `ollama list` recorded | ☐ | |
-| All 7 handbook models reachable (incl. Whisper, Llama Vision — blocking) | ☐ | 24/32 broader sweep already PASS |
-| SSL bypass confirmed | ✅ | applied in config.py |
-| TIKTOKEN_CACHE_DIR confirmed | ✅ | `backend/token/` exists |
-| Latency/token cost per model recorded | ☐ | |
-| `text-embedding-3-large` → Chroma round-trip | ☐ | |
-| Jira `atlassian.net` reachability probe (optional, 30 min hard cap) | ☐ | |
+| `ollama list` recorded | ✅ | `devstral`, `qwen-2.5.1-coder-it`, `llama-3.2-3b-it`, `gemma-3-4b-it`, `deepseek-r1`, `gte-large` — all pre-installed, none pulled |
+| gpt-4o-mini | ✅ PASS | 1022ms |
+| DeepSeek V3 role (`genailab-maas-DeepSeek-V3-0324`) | ✅ PASS | Original deployment confirmed permanently gone (410). Human-approved substitute **`azure/genailab-maas-gpt-4.1-nano`** wired into `HANDBOOK_MODELS` — 1206ms, valid structured JSON on a realistic plan-drafting prompt. See models-routing.md. |
+| DeepSeek R1 | ✅ PASS | 824-1391ms across runs |
+| Phi-4-reasoning | ⚠ INTERMITTENT | PASS 3x early in session, then 404 DeploymentNotFound; rechecked 3x back-to-back: 404, 404, 200. Gateway flakiness, not a deprecation — non-blocking (smoke-test-only, unused in primary path). Re-check before Phase 0 formally closes. |
+| Whisper (`azure/genailab-maas-whisper`, real audio via `/audio/transcriptions`) | ✅ PASS | 1581ms, transcribed generated test tone |
+| Vision path (real image via `image_url`) | ✅ PASS | Original Llama Vision deployment confirmed permanently gone (404/410, rechecked). Human-approved substitute **`genailab-maas-gpt-4o`** wired into `smoke_test.py` (`VISION_MODEL`) — 1323ms, correctly identified test image color. See models-routing.md. |
+| `text-embedding-3-large` → Chroma round-trip | ✅ PASS | dim=3072, embed→store→query matched, 332ms |
+| SSL bypass confirmed | ✅ | applied in config.py, live-verified via all calls above |
+| TIKTOKEN_CACHE_DIR confirmed | ✅ | `backend/token/` exists, live-verified |
+| Latency/token cost per model recorded | ✅ | see rows above; full 32-model `--full` sweep separately hung on `gpt-5.1` (10+ min, ~0 CPU — proxy-level stall, not a real per-model timeout) and was killed; not worth re-running for the smoke test's purpose since HANDBOOK_MODELS already covers the required set |
+| Jira `atlassian.net` reachability probe (optional, 30 min hard cap) | ☐ | not yet attempted |

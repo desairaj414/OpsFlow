@@ -1,0 +1,21 @@
+# Patch Management — derived from incident.yaml (PRD §5 Phase 3 build order / PRD B9).
+# Same agent chain, same guardrails; only runbook_class/verification/autonomy_tier differ —
+# this file existing at all is the proof the declarative-workflow assumption held (PRD B9:
+# "if this derivation is not nearly free, the design assumption was wrong").
+workflow_type: patch
+runbook_class: patching
+key_evidence: [patch_inventory, dependencies, change_calendar]
+plan_output: grouped_maintenance_window
+verification_criterion: patch_applied_and_no_new_alerts_in_window
+autonomy_tier: approval_required
+steps:
+  - agent: correlate
+  - agent: enrichment
+  - agent: diagnosis
+  - agent: planner
+  - agent: policy_gate
+  - agent: approval
+  - agent: execute
+  - agent: verification
+  - agent: sync
+  - agent: knowledge

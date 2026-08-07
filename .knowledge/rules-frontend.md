@@ -22,12 +22,27 @@ one node must be self-contained for anyone working frontend-only.)
 Never render copy implying the system was fine-tuned. "AI proposed" / "human approved" / "system
 verified" badges (PRD §7) must never blur into implying model training occurred.
 
-## Stack note — unresolved conflict, flag, do not silently resolve
-PRD §0 specifies **Next.js + shadcn/ui**. The repo currently has a working **Vite/React + shadcn/ui +
-Tailwind** app (`frontend/`, see `App.jsx`, `Dashboard.jsx`, `AdminControl.jsx`, `ui/*`). This is a
-real conflict between a frozen product decision and existing working code — see KNOWN ISSUES in
-[state-progress.md](state-progress.md). Do not migrate frameworks or decide to keep Vite without the
-human explicitly saying so; this is not an operational detail this conversion is allowed to fill in.
+## Stack note — RESOLVED 2026-08-07
+Migrated to Next.js 16.3.0 (App Router, Tailwind v4, Turbopack) per PRD §0 in Phase 4. Old Vite app
+preserved at `frontend_vite_backup/` (rollback path, no git repo in this project). See
+[decisions-log.md](decisions-log.md) for the decision record and [state-progress.md](state-progress.md)
+for the migration detail.
+
+## Actual final component list (Phase 4, complete — CONTEXT CHECKPOINT)
+`frontend/src/components/{Sidebar,CockpitShell,OpsBoard,AgentTrace,IncidentWorkspace,ApprovalQueue,
+DriftQueue,AutonomyLadder,ChunkInspector,MetricsEval}.jsx` + `ui/{button,card,input,badge}.jsx`.
+Two deviations from the original plan (`prd-phase-4.md`'s atomic-step file list), both load-bearing:
+- **`CockpitShell` owns one shared `useWorkflowRun` instance** (a "golden-path bar": CI-scenario
+  dropdown + "Start incident"), passed as an `incident` prop to Agent Trace/Incident
+  Workspace/Approval Queue/Ops Board's image path, instead of each tab triggering its own separate
+  run. Not in the original per-tab-independent plan — added so a single incident is followably
+  consistent across tabs, which the acceptance criteria's "golden path... clickable start to
+  finish" needed.
+- **`Sidebar`'s push-to-talk is real**, not a stub: records via `MediaRecorder`, posts to
+  `POST /intake/voice`, shows the parsed intent + transcript on screen, and only `approve_x`/
+  `reject_x` are wired to an action (the other 4 closed-vocabulary intents are recognized and
+  shown honestly, not faked, since no incidents-list/scenario-library endpoint exists to act on
+  them with).
 
 ## UI structure to build toward (PRD §7 — cockpit, not chat-first)
 Centrepiece is the **Agent Trace Viewer**, not a results panel or a chat drawer — coordination must

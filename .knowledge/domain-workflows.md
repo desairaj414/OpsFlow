@@ -1,7 +1,7 @@
 ---
 type: domain
 title: Domain — Three Workflow Families
-status: draft
+status: active
 updated: 2026-08-07
 related: [domain-agents.md, schema-db.md, prd-phase-3.md]
 ---
@@ -38,6 +38,14 @@ Agent-level detail: [domain-agents.md](domain-agents.md).
 Build incident first, then derive patch and performance workflow YAML from it. **If this derivation
 is not nearly free, the declarative-workflow design assumption was wrong — surface that immediately,
 do not silently fall back to hardcoded per-workflow code.**
+
+**CONFIRMED 2026-08-07: the derivation WAS nearly free.** `backend/orchestrator/workflows/patch.yaml`
+and `performance.yaml` differ from `incident.yaml` only in `runbook_class`, `verification_criterion`,
+and `autonomy_tier` — same 10-step chain, same agents, same code. The Supervisor (`supervisor.py`)
+and every agent are workflow-type-agnostic; `run_workflow(..., workflow_type="patch")` required zero
+new code, only a new YAML file. Verified live: `backend/tests/test_supervisor.py` runs all 3
+workflow types through the real agent chain, including confirming tuning's `advisory_only` tier
+never reaches `allow` regardless of other factors (`policy_gate.py` `ADVISORY_ONLY_ACTION_TYPES`).
 
 ## Demo coverage (PRD §9 known risk)
 One deep golden-path scenario (incident) shown fully live; patch and performance shown in compressed

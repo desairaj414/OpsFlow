@@ -1,7 +1,7 @@
 ---
 type: reference
 title: Architecture Overview
-status: draft
+status: active
 updated: 2026-08-07
 related: [models-routing.md, api-contract.md, domain-agents.md, rules-backend.md]
 ---

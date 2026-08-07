@@ -1,0 +1,21 @@
+# Performance Tuning — derived from incident.yaml. Deliberately advisory-only: verification is a
+# sustained-window judgement, not a binary clear, and autonomy_tier never reaches auto-execute
+# regardless of confidence (see guardrails/policy_gate.py ADVISORY_ONLY_ACTION_TYPES — this is
+# enforced in code, not just here).
+workflow_type: performance
+runbook_class: tuning
+key_evidence: [metric_trend, query_stats, resource_history]
+plan_output: ranked_tuning_recommendations
+verification_criterion: sustained_metric_improvement_across_window
+autonomy_tier: advisory_only_never_auto_executes
+steps:
+  - agent: correlate
+  - agent: enrichment
+  - agent: diagnosis
+  - agent: planner
+  - agent: policy_gate
+  - agent: approval
+  - agent: execute
+  - agent: verification
+  - agent: sync
+  - agent: knowledge

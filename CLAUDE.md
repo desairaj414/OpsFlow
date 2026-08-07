@@ -6,14 +6,17 @@ this `.knowledge/` tree is its execution-ready conversion for an executing AI se
 
 ## Project
 - **Name:** my-hackathon-app — TCS AI Fridays S2, Cross-Stack Maintenance Control Plane
-- **Stack:** FastAPI (backend, async) + **PRD specifies Next.js**, repo currently has **Vite/React**
-  scaffolding already built — see KNOWN ISSUES in [state-progress.md](.knowledge/state-progress.md), this is unresolved, do not silently pick one
+- **Stack:** FastAPI (backend, async) + Next.js frontend (PRD spec). Repo currently has a working
+  **Vite/React** scaffold from before this decision; human confirmed 2026-08-07 to migrate to
+  Next.js (see [decisions-log.md](.knowledge/decisions-log.md)) — migration itself happens in
+  Phase 4, not yet done. Backend (Phases 0-3) is complete and stack-agnostic.
 - **LLM endpoint:** TCS GenAI Lab (OpenAI-compatible) gateway — `https://genailab.tcs.in/v1` — plus local Ollama SLMs
 - **Problem statement:** AI-Powered Multi-Agent Workflow Automation for IT Application Maintenance — see `PRD_FINAL.md`
 
 ## Read first, every session
 - [.knowledge/state-progress.md](.knowledge/state-progress.md) — live single source of truth. Read this before touching anything.
 - [.knowledge/decisions-log.md](.knowledge/decisions-log.md) — resolved decisions, do not re-litigate.
+- [.knowledge/state-progress-history.md](.knowledge/state-progress-history.md) — closed-phase/superseded-step detail (Phase 0-3, plus early Phase 4 atomic steps), split out whenever state-progress.md hit ~200 lines. Only open on demand, not every session.
 
 ## Standing rules (re-read on every coding step, not once)
 - [.knowledge/rules-backend.md](.knowledge/rules-backend.md) — commenting standard, module layout, honesty rule (backend)
@@ -43,6 +46,7 @@ this `.knowledge/` tree is its execution-ready conversion for an executing AI se
 - [.knowledge/prd-phase-7-final.md](.knowledge/prd-phase-7-final.md) — Freeze & Packaging (always run, hard stop)
 
 ## Reference / scaffolding
+- [.knowledge/glossary.md](.knowledge/glossary.md) — beginner's glossary of tech terms used across this tree
 - [.knowledge/env-network.md](.knowledge/env-network.md) — SSL bypass, TIKTOKEN_CACHE_DIR, Ollama, ports, `.env` keys, run commands
 - [.knowledge/citations.md](.knowledge/citations.md) — dataset/model provenance for the README
 - [.knowledge/extra-credit.md](.knowledge/extra-credit.md) — §8 backlog, INCLUDE/SKIP as decided

@@ -1,7 +1,7 @@
 ---
 type: domain
 title: Domain — Multimodal Intake (Voice + Vision)
-status: draft
+status: active
 updated: 2026-08-07
 related: [api-contract.md, models-routing.md, domain-privacy.md, prd-phase-3.md]
 ---
@@ -38,6 +38,15 @@ survives into the diagnosis.
 
 ## Both paths are additive
 Alert trigger stays primary (clause C3). Voice and image are additional entry points, never replacements.
+
+## Implemented 2026-08-07
+- Voice: `backend/intake/voice_path.py` + `voice_intent.py` (Phase 2). Real Whisper call, scrub
+  runs before intent parsing (tested). **No real recorded speech sample exists in this repo** —
+  see PRD §6.1 test-data requirement below, still owed before Phase 5.
+- Vision: `backend/intake/vision_path.py`, gpt-4o (Llama Vision substitute, models-routing.md).
+  Real extraction tested against a synthetic error-dialog screenshot with genuine readable text.
+- Bridge into a real workflow: `backend/orchestrator/intake_adapter.py` — enforces the
+  confirmation gate in code (an unconfirmed signal is rejected, tested), not just as a UI convention.
 
 ## Bias created by this feature (must be raised unprompted, see [domain-guardrails.md](domain-guardrails.md))
 Accent/speech-pattern bias (voice) and image-context bias (vision) — mitigations listed in

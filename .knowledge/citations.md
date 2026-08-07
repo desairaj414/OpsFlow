@@ -1,7 +1,7 @@
 ---
 type: reference
 title: Citations & Provenance
-status: draft
+status: active
 updated: 2026-08-07
 related: [prd-phase-1.md, domain-privacy.md]
 ---
@@ -20,16 +20,16 @@ shape is modelled on publicly documented field structures and contains no real/c
 ## Datasets to cite (fill in generator script + date as each is built in Phase 1)
 | Dataset | Format | Volume | Generator script | Generated |
 |---|---|---|---|---|
-| CMDB (as-recorded) | JSON→SQLite | ~200 CIs | TBD Phase 1 | — |
-| CMDB ground truth (differs ~35%) | JSON | same | TBD Phase 1 | — |
-| Alert stream | JSON | ~500 | TBD Phase 1 | — |
-| Metric series (incl. slow-degradation curves) | CSV | per CI | TBD Phase 1 | — |
-| Ticket history (incident/change/tuning) | CSV/JSON | 400-600 | TBD Phase 1 | — |
-| Failed-remediation records (seeds Negative KB) | JSON | ~40 | TBD Phase 1 | — |
-| Runbooks (remediation/patching/tuning) | Markdown + 2-3 PDF | 18-22 | TBD Phase 1 | — |
-| Postmortems | Markdown | 8-10 | TBD Phase 1 | — |
-| Change calendar | JSON | — | TBD Phase 1 | — |
-| Patch inventory | CSV | — | TBD Phase 1 | — |
+| CMDB (as-recorded) | JSON→SQLite | 200 CIs, 300 relationships | `backend/data_gen/cmdb.py` | 2026-08-07 |
+| CMDB ground truth (differs ~35%) | JSON | 200, 70 diverged (35%) | `backend/data_gen/cmdb.py` | 2026-08-07 |
+| Alert stream (Prometheus/SNMP/APM shapes) | JSON | 500 | `backend/data_gen/alerts.py` | 2026-08-07 |
+| Metric series (incl. slow-degradation curves) | CSV | 40 CIs (10 degradation) | `backend/data_gen/metrics.py` | 2026-08-07 |
+| Ticket history (incident/change/tuning) | CSV | 500 | `backend/data_gen/tickets.py` | 2026-08-07 |
+| Failed-remediation records (seeds Negative KB) | JSON | 40 | `backend/data_gen/cmdb.py` | 2026-08-07 |
+| Runbooks (remediation/patching/tuning) | Markdown (PDF subset deferred, see state-progress.md MOCKED) | 22 (9/7/6) | `backend/data_gen/runbooks.py` | 2026-08-07 |
+| Postmortems | Markdown | 9 | `backend/data_gen/runbooks.py` | 2026-08-07 |
+| Change calendar | JSON | 25 windows | `backend/data_gen/tickets.py` | 2026-08-07 |
+| Patch inventory | CSV | 200 (1/CI) | `backend/data_gen/tickets.py` | 2026-08-07 |
 | Voice samples (incl. ≥2 noisy/accented) | WAV/MP3 | 8-10 | TBD Phase 3/5 | — |
 | Error screenshots (incl. 1 low-quality, 1 with visible token) | PNG | 8-10 | TBD Phase 3/5 | — |
 
@@ -37,10 +37,10 @@ shape is modelled on publicly documented field structures and contains no real/c
 | Handbook model | Actual `.env` model id | Used for |
 |---|---|---|
 | gpt-4o-mini | `azure/genailab-maas-gpt-4o-mini` | Narrative summarisation, ticket drafting, self-check |
-| DeepSeek V3 | `genailab-maas-DeepSeek-V3-0324` | Remediation/tuning plan drafting |
+| ~~DeepSeek V3~~ → gpt-4.1-nano (substitute, 2026-08-07) | `azure/genailab-maas-gpt-4.1-nano` | Remediation/tuning plan drafting — original deployment permanently deprecated, see models-routing.md |
 | DeepSeek R1 | `azure_ai/genailab-maas-DeepSeek-R1` | Root-cause hypothesis generation & ranking |
-| Llama Vision | `azure_ai/genailab-maas-Llama-3.2-90B-Vision-Instruct` | Screenshot/error-image extraction (D1) |
-| Phi | `azure_ai/genailab-maas-Phi-4-reasoning` | Smoke-tested per handbook; unused in primary path |
+| ~~Llama Vision~~ → gpt-4o (substitute, 2026-08-07) | `genailab-maas-gpt-4o` | Screenshot/error-image extraction (D1) — original deployment permanently deprecated, see models-routing.md |
+| Phi | `azure_ai/genailab-maas-Phi-4-reasoning` | Smoke-tested per handbook; unused in primary path; intermittent gateway reachability, see state-progress.md |
 | Whisper | `azure/genailab-maas-whisper` (alt: `azure/gpt-realtime-whisper`) | Voice command transcription (D1) |
 | text-embedding-3-large | `azure/genailab-maas-text-embedding-3-large` | Chroma embeddings (runbooks, postmortems, history, Negative KB) |
 | Local SLM(s) | via Ollama, `ollama list` output — fill in Phase 0 | PII/name detection on free text, offline demo fallback |
