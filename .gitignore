@@ -1,0 +1,33 @@
+# --- Secrets & environment ---
+.env
+.env.*
+!.env.example
+
+# --- Python ---
+__pycache__/
+*.pyc
+venv/
+.venv/
+*.egg-info/
+
+# --- Node / frontend ---
+node_modules/
+dist/
+build/
+.vite/
+
+# --- Data / caches ---
+data/*.db
+*.log
+
+# --- OS/editor ---
+.DS_Store
+.vscode/*
+!.vscode/settings.json
+
+# --- Explicitly KEEP (do not ignore) ---
+!.knowledge/
+!CLAUDE.md
+!PRD_DRAFT.md
+!PRD_FINAL.md
+!token/
