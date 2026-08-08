@@ -6,8 +6,10 @@ import { useEffect, useRef, useState } from "react";
 // browser EventSource cannot set an Authorization header.
 export function useAlertStream({ apiBase, token, maxAlerts = 50 }) {
   const [alerts, setAlerts] = useState([]);
+  const [totalReceived, setTotalReceived] = useState(0);
   const [connectionStatus, setConnectionStatus] = useState("connecting");
   const sourceRef = useRef(null);
+  const seenIdsRef = useRef(new Set());
 
   useEffect(() => {
     if (!token) return;
@@ -18,15 +20,23 @@ export function useAlertStream({ apiBase, token, maxAlerts = 50 }) {
     source.onopen = () => setConnectionStatus("live");
     source.onerror = () => setConnectionStatus("disconnected");
     source.onmessage = (event) => {
-      const alert = JSON.parse(event.data);
+      const raw = JSON.parse(event.data);
       // A fresh EventSource (e.g. reconnecting because "view as" or login just reissued the JWT,
       // so `token` changed) replays the backend's catch-up backlog from scratch — dedupe by id so
       // that reconnect doesn't duplicate already-seen alerts (and their React keys) in the feed.
-      setAlerts((prev) => (prev.some((a) => a.id === alert.id) ? prev : [alert, ...prev].slice(0, maxAlerts)));
+      if (seenIdsRef.current.has(raw.id)) return;
+      seenIdsRef.current.add(raw.id);
+      // `received_at` on the raw alert is the dataset's seeded historical timestamp (used for real
+      // correlation math server-side) — not when THIS browser tab actually saw it arrive. The Ops
+      // Board displays elapsed time since arrival, so stamp that separately here, once, at first
+      // sight, rather than re-deriving it from a stale field on every render.
+      const alert = { ...raw, stream_seen_at: Date.now() };
+      setTotalReceived((n) => n + 1);
+      setAlerts((prev) => [alert, ...prev].slice(0, maxAlerts));
     };
 
     return () => source.close();
   }, [apiBase, token, maxAlerts]);
 
-  return { alerts, connectionStatus };
+  return { alerts, totalReceived, connectionStatus };
 }

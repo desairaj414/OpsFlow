@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { AGENT_DISPLAY_NAMES, AGENT_PIPELINE_ORDER, summarizeResult } from "@/lib/agentSummary";
 
@@ -117,6 +118,7 @@ export default function Tickets({ apiBase, token, tickets, refetchTickets, onOpe
   const [expandedId, setExpandedId] = useState(null);
   const [workflowType, setWorkflowType] = useState("");
   const [system, setSystem] = useState("");
+  const [search, setSearch] = useState("");
   const [lastSyncedAt, setLastSyncedAt] = useState(null);
   const [syncing, setSyncing] = useState(false);
   const [error, setError] = useState("");
@@ -148,7 +150,16 @@ export default function Tickets({ apiBase, token, tickets, refetchTickets, onOpe
     }
   }
 
-  const filtered = tickets.filter((t) => (!workflowType || t.workflow_type === workflowType) && (!system || t.system === system));
+  const searchTerm = search.trim().toLowerCase();
+  const filtered = tickets.filter(
+    (t) =>
+      (!workflowType || t.workflow_type === workflowType) &&
+      (!system || t.system === system) &&
+      (!searchTerm ||
+        t.external_id?.toLowerCase().includes(searchTerm) ||
+        t.linked_incident_id?.toLowerCase().includes(searchTerm) ||
+        t.cmdb_ci?.toLowerCase().includes(searchTerm))
+  );
 
   return (
     <div className="space-y-3">
@@ -164,6 +175,12 @@ export default function Tickets({ apiBase, token, tickets, refetchTickets, onOpe
         <span className="text-xs text-muted-foreground">Last synced: {lastSyncedAt ? formatWhen(lastSyncedAt) : "never"}</span>
       </div>
       {error && <p className="text-sm text-red-500">{error}</p>}
+      <Input
+        placeholder="Search by ticket or incident number…"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        className="max-w-sm"
+      />
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
         <FilterPills options={SYSTEM_FILTERS} value={system} onChange={setSystem} />
         <FilterPills options={WORKFLOW_TYPE_FILTERS} value={workflowType} onChange={setWorkflowType} />
@@ -174,14 +191,14 @@ export default function Tickets({ apiBase, token, tickets, refetchTickets, onOpe
             <div className="flex items-start justify-between gap-2">
               <button className="min-w-0 flex-1 text-left" onClick={() => setExpandedId(expandedId === t.id ? null : t.id)}>
                 <div className="flex items-center justify-between gap-2">
-                  <span className="font-medium">{t.cmdb_ci}</span>
+                  <span className="font-medium">{t.external_id}</span>
                   <span className={cn("shrink-0 rounded-full px-2 py-0.5 text-xs", TICKET_STATUS_STYLE[t.status_normalized])}>
                     {TICKET_STATUS_LABEL[t.status_normalized]}
                   </span>
                 </div>
                 <p className="mt-1 truncate text-xs text-muted-foreground">{t.summary}</p>
                 <p className="mt-0.5 text-xs text-muted-foreground">
-                  {SYSTEM_LABEL[t.system] || t.system} ticket {t.external_id} · {t.workflow_type} · {formatWhen(t.created_at)}
+                  {SYSTEM_LABEL[t.system] || t.system} · {t.cmdb_ci} · {t.workflow_type} · {formatWhen(t.created_at)}
                 </p>
               </button>
               <Button size="sm" variant="outline" className="shrink-0" onClick={() => onOpenTicket(t)}>

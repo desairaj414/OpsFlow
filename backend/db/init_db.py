@@ -1,7 +1,9 @@
 """Creates the SQLite DB from schema.sql and populates the tables that have Phase 1 generated
-data (cmdb_ci, cmdb_relationship, cmdb_ci_ground_truth, alerts, negative_kb_entries, runbooks).
-Everything else (incidents, evidence, hypotheses, plans, approvals, ...) is created empty — those
-fill in at runtime once agents exist (Phase 3+), not from static generated data.
+data (cmdb_ci, cmdb_relationship, cmdb_ci_ground_truth, alerts, negative_kb_entries, runbooks),
+plus local_tickets' large ServiceNow+Jira historical backlog (pre-session data — see
+populate_local_tickets_bulk). Everything else (incidents, evidence, hypotheses, plans, approvals,
+...) is created empty — those fill in at runtime once agents exist (Phase 3+), not from static
+generated data.
 
     python db/init_db.py         # (re)creates data/app.db
     python db/init_db.py --test  # also runs population + row-count self-checks
@@ -175,6 +177,55 @@ def populate_change_calendar(conn: sqlite3.Connection) -> None:
     )
 
 
+SYSTEM_LABEL = {"itsm": "ServiceNow", "tracker": "Jira"}
+
+
+def populate_local_tickets_bulk(conn: sqlite3.Connection) -> None:
+    """Seeds local_tickets with a large historical backlog across BOTH systems — ServiceNow
+    ('itsm') and Jira ('tracker') — from data/local_tickets_seed.json
+    (data_gen/local_tickets_bulk.py, 2000 rows per system, evenly split across
+    incident/patch/performance). Historical/pre-session data, deliberately decoupled from
+    tickets.csv (which feeds the real gateway-embedded ticket_history Chroma collection — scaling
+    that to thousands of rows would mean thousands of real embedding calls for data whose only job
+    is populating the Tickets tab). Without this, system='tracker' rows in particular were
+    permanently absent on a fresh DB: no live code path ever creates one (main.py's
+    _persist_ticket_snapshot deliberately only writes 'itsm' rows from a real run — an
+    alert-driven diagnosis raises exactly one ServiceNow ticket, never also a Jira issue, see its
+    own comment). trace_snapshot's placeholder carries the ticket's own display fields (ci_id,
+    external_id, summary, priority, dates) alongside the empty trace — CockpitShell's openTicket()
+    only ever passes trace_snapshot through to Incident Workspace, discarding the outer ticket row,
+    so without this the historical-ticket view IncidentWorkspace.jsx renders for status="historical"
+    would have nothing real to show either. See errors-solved.md: originally shipped with a bare
+    placeholder, which rendered as six empty "not reached" cards on every one of these 4000
+    tickets — technically not broken, but read as broken."""
+    path = os.path.join(DATA_DIR, "local_tickets_seed.json")
+    with open(path, encoding="utf-8") as f:
+        rows = json.load(f)
+    now = datetime.now(timezone.utc).isoformat()
+    conn.executemany(
+        "INSERT INTO local_tickets (system, external_id, cmdb_ci, workflow_type, status_raw, status_normalized, "
+        "priority, summary, opened_at, closed_at, linked_incident_id, trace_snapshot, created_at) "
+        "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        [
+            (
+                r["system"], r["external_id"], r["cmdb_ci"], r["workflow_type"], r["status_raw"], r["status_normalized"],
+                r["priority"], r["summary"], r["opened_at"], r["closed_at"], None,
+                json.dumps({
+                    "incident_id": None, "modality": "alert", "workflow_type": r["workflow_type"], "status": "historical",
+                    "ci_id": r["cmdb_ci"], "external_id": r["external_id"], "system": r["system"],
+                    "summary": r["summary"], "priority": r["priority"], "status_label": r["status_normalized"],
+                    "opened_at": r["opened_at"], "closed_at": r["closed_at"],
+                    "reason": f"Imported {SYSTEM_LABEL[r['system']]} backlog item — pre-dates this session, "
+                              "never run through the agent chain.",
+                    "verification_status": None, "trace": [], "agent_card": None,
+                }),
+                now,
+            )
+            for r in rows
+        ],
+    )
+
+
 def main() -> None:
     os.makedirs(DATA_DIR, exist_ok=True)
     if os.path.exists(DB_PATH):
@@ -193,6 +244,7 @@ def main() -> None:
         populate_integration_settings(conn)
         populate_patch_inventory(conn)
         populate_change_calendar(conn)
+        populate_local_tickets_bulk(conn)
         conn.commit()
     finally:
         conn.close()
@@ -218,7 +270,7 @@ if __name__ == "__main__":
     assert counts["cmdb_relationship"] > 0
     assert counts["cmdb_ci_ground_truth"] == 200
     assert counts["alerts"] == 500
-    assert counts["negative_kb_entries"] == 40
+    assert counts["negative_kb_entries"] == 500  # fixed seed, data_gen/negative_kb.py
     assert counts["runbooks"] == 22
     assert counts["pii_ground_truth"] == 31
     assert counts["scenarios"] == 6  # Phase 5 step 1: SCEN-01..06 (non-edge-case); step 2 adds edge cases on top
@@ -227,8 +279,9 @@ if __name__ == "__main__":
     assert counts["patch_inventory"] == 153  # fixed seed, data_gen/patch_inventory.py
     assert counts["change_calendar"] == 12  # fixed seed, data_gen/patch_inventory.py
     assert counts["autonomy_ladder"] == counts["runbooks"]  # one starting-tier row per runbook, no live writer beyond seed
+    assert counts["local_tickets"] == 4000  # 2000 itsm + 2000 tracker, fixed seed, data_gen/local_tickets_bulk.py
     empty_expected = ["incidents", "evidence", "hypotheses", "plans", "approvals", "verification_results",
-                       "audit_log", "model_call_cache", "local_tickets"]
+                       "audit_log", "model_call_cache"]
     assert all(counts[t] == 0 for t in empty_expected), "a table meant to be runtime-only has pre-seeded rows"
     print(f"\nSELF-TEST PASSED: all {len(counts)} tables created, populated tables have correct volumes, runtime-only tables correctly empty.")
     print("\nDemo login credentials (username / password):")

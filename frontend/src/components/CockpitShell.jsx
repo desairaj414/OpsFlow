@@ -41,7 +41,12 @@ function IncidentStatusBar({ incident }) {
   return (
     <div className="flex shrink-0 flex-wrap items-center gap-3 border-b border-border bg-secondary/40 px-4 py-2 text-sm">
       {incident.loading && <span className="text-xs text-muted-foreground">Running…</span>}
-      {incident.run && (
+      {incident.run && incident.run.status === "historical" && (
+        <span className="text-xs text-muted-foreground">
+          {incident.run.external_id} — historical ticket, not a live run
+        </span>
+      )}
+      {incident.run && incident.run.status !== "historical" && (
         <span className="text-xs text-muted-foreground">
           {incident.run.incident_id} — {incident.run.status}
           {incident.run.verification_status ? ` (${incident.run.verification_status})` : ""} ·
@@ -84,7 +89,7 @@ export default function CockpitShell({ token, onTokenChange, apiBase, username, 
 
   const [activeTab, setActiveTab] = useState(visibleTabs[0]);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
-  const { alerts, connectionStatus } = useAlertStream({ apiBase, token });
+  const { alerts, totalReceived, connectionStatus } = useAlertStream({ apiBase, token });
   const incident = useWorkflowRun({ apiBase, token });
   const { tickets, refetch: refetchTickets } = useTickets(apiBase, token);
   const { notifications } = useAutoTriage({ alerts, tickets, incident, refetchTickets });
@@ -127,7 +132,7 @@ export default function CockpitShell({ token, onTokenChange, apiBase, username, 
           <div className="flex items-center gap-3">
             <LogoMark size={26} />
             <div>
-              <h1 className="text-base font-semibold leading-tight">Verascope</h1>
+              <h1 className="text-base font-semibold leading-tight">OpsFlow</h1>
               <p className="text-xs text-muted-foreground leading-tight">AI-verified operations console</p>
             </div>
           </div>
@@ -175,6 +180,7 @@ export default function CockpitShell({ token, onTokenChange, apiBase, username, 
               apiBase={apiBase}
               token={token}
               alerts={alerts}
+              totalReceived={totalReceived}
               connectionStatus={connectionStatus}
               incident={incident}
               tickets={tickets}

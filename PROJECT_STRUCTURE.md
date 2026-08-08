@@ -1,4 +1,4 @@
-# Verascope — Project & Folder Structure
+# OpsFlow — Project & Folder Structure
 
 A guide to what every folder is for. Paths are relative to `my-hackathon-app/`.
 
@@ -95,7 +95,7 @@ backend/
 └── tests/                          ← pytest suite, one file per module above (98+ tests)
 ```
 
-## `frontend/` — the Verascope cockpit (Next.js)
+## `frontend/` — the OpsFlow cockpit (Next.js)
 
 ```
 frontend/src/

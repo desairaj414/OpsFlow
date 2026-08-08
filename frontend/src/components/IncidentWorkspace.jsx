@@ -474,6 +474,62 @@ function ApprovalSection({ apiBase, token, incident, canDecide }) {
   );
 }
 
+const SYSTEM_LABEL = { itsm: "ServiceNow", tracker: "Jira" };
+
+// A bulk-seeded historical ticket (system-of-record backlog that pre-dates this session — see
+// db/init_db.py's populate_local_tickets_bulk) was never run through the agent chain, so it has no
+// evidence/hypotheses/plan/verification to show. Rendering the normal pipeline view for one of
+// these produced six "not reached" cards and nothing else — technically accurate, but reads as a
+// broken page, not an empty-but-honest one. This is the dedicated, honest view for that case: the
+// real ticket fields that DO exist, and a plain explanation of why there's no agent trace.
+function HistoricalTicketCard({ run }) {
+  return (
+    <Card>
+      <CardHeader>
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-base">
+            {SYSTEM_LABEL[run.system] || run.system} ticket {run.external_id}
+          </CardTitle>
+          <Badge variant="system-verified" />
+        </div>
+      </CardHeader>
+      <CardContent className="space-y-3 text-sm">
+        <p className="rounded-md border border-dashed border-border p-2 text-xs text-muted-foreground">
+          {run.reason || "Historical ticket — pre-dates this session, never run through the agent chain."} This
+          is browsable ticket history, not a live incident — there's no evidence, diagnosis, or plan
+          to show because the agent chain never touched it.
+        </p>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <div>
+            <p className="text-xs text-muted-foreground">Configuration item</p>
+            <p className="font-mono text-xs">{run.ci_id || "—"}</p>
+          </div>
+          <div>
+            <p className="text-xs text-muted-foreground">Priority</p>
+            <p>{run.priority || "—"}</p>
+          </div>
+          <div>
+            <p className="text-xs text-muted-foreground">Status</p>
+            <p>{run.status_label || "—"}</p>
+          </div>
+          <div>
+            <p className="text-xs text-muted-foreground">Opened</p>
+            <p className="text-xs">{run.opened_at ? new Date(run.opened_at).toLocaleString() : "—"}</p>
+          </div>
+          <div>
+            <p className="text-xs text-muted-foreground">Closed</p>
+            <p className="text-xs">{run.closed_at ? new Date(run.closed_at).toLocaleString() : "still open"}</p>
+          </div>
+        </div>
+        <div>
+          <p className="text-xs text-muted-foreground">Summary</p>
+          <p>{run.summary || "—"}</p>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
 // Unified Incident Record (PRD §7): evidence w/ citations, ranked hypotheses, plan w/ blast
 // radius + Negative-KB caution, linked systems. Reads the shared `incident` run from
 // CockpitShell — same real run data the Agent Trace Viewer shows, organized as a case file.
@@ -488,6 +544,14 @@ export default function IncidentWorkspace({ incident, apiBase, token, identity }
         No active incident — click "Diagnose" on an alert group in Ops Board (or open one from the
         notification bell / Ticket History) to build the record from a real run.
       </p>
+    );
+  }
+
+  if (run?.status === "historical") {
+    return (
+      <div className="space-y-4">
+        <HistoricalTicketCard run={run} />
+      </div>
     );
   }
 

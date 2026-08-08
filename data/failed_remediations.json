@@ -1,322 +1,4002 @@
 [
   {
     "id": "NEGKB-001",
-    "ci_class": "sharepoint-document-library",
-    "failure_signature": "access denied on SharePoint site collection",
-    "attempted_fix": "restarted the OneDrive sync client",
-    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
-    "source_incident_id": "INC-2770"
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-1943"
   },
   {
     "id": "NEGKB-002",
-    "ci_class": "power-automate-gateway",
-    "failure_signature": "Conditional Access policy blocking sign-in",
-    "attempted_fix": "restarted the OneDrive sync client",
-    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
-    "source_incident_id": "INC-3669"
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-8682"
   },
   {
     "id": "NEGKB-003",
-    "ci_class": "sharepoint-document-library",
+    "ci_class": "onedrive-sync-cache",
     "failure_signature": "Conditional Access policy blocking sign-in",
-    "attempted_fix": "restarted the Exchange Online transport queue",
+    "attempted_fix": "cleared the Teams client cache",
     "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
-    "source_incident_id": "INC-8789"
+    "source_incident_id": "INC-9803"
   },
   {
     "id": "NEGKB-004",
-    "ci_class": "azure-ad-connect-sync",
-    "failure_signature": "Dataverse API throttling (429)",
-    "attempted_fix": "added the user to the Conditional Access exclusion group",
-    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
-    "source_incident_id": "INC-1843"
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Dataverse plugin execution timeout",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-2483"
   },
   {
     "id": "NEGKB-005",
-    "ci_class": "power-platform-environment",
-    "failure_signature": "Conditional Access policy blocking sign-in",
-    "attempted_fix": "requested a Dataverse capacity add-on",
-    "reason_failed": "the exclusion group itself was scoped incorrectly",
-    "source_incident_id": "INC-5027"
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-7967"
   },
   {
     "id": "NEGKB-006",
-    "ci_class": "power-automate-gateway",
-    "failure_signature": "Power BI dataset refresh failure",
-    "attempted_fix": "cleared the Teams client cache",
-    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
-    "source_incident_id": "INC-8251"
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Teams channel message delivery delayed",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-7766"
   },
   {
     "id": "NEGKB-007",
-    "ci_class": "sharepoint-site",
-    "failure_signature": "Azure AD Connect sync interruption",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "SharePoint search index stale",
     "attempted_fix": "cleared the Teams client cache",
     "reason_failed": "the exclusion group itself was scoped incorrectly",
-    "source_incident_id": "INC-4169"
+    "source_incident_id": "INC-8099"
   },
   {
     "id": "NEGKB-008",
-    "ci_class": "sharepoint-site",
+    "ci_class": "dataverse-instance",
     "failure_signature": "Teams meeting audio/video degraded",
     "attempted_fix": "restarted the Exchange Online transport queue",
     "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
-    "source_incident_id": "INC-1256"
+    "source_incident_id": "INC-4540"
   },
   {
     "id": "NEGKB-009",
-    "ci_class": "sharepoint-site",
-    "failure_signature": "SharePoint document library storage quota exceeded",
-    "attempted_fix": "restarted the Exchange Online transport queue",
-    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Teams channel message delivery delayed",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
     "source_incident_id": "INC-4670"
   },
   {
     "id": "NEGKB-010",
     "ci_class": "dataverse-instance",
-    "failure_signature": "Exchange Online mail delivery delayed",
-    "attempted_fix": "re-granted site permissions",
-    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
-    "source_incident_id": "INC-5591"
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-2135"
   },
   {
     "id": "NEGKB-011",
-    "ci_class": "dataverse-instance",
-    "failure_signature": "OneDrive sync stuck / not syncing",
-    "attempted_fix": "re-granted site permissions",
-    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
-    "source_incident_id": "INC-8450"
+    "ci_class": "sharepoint-site",
+    "failure_signature": "SharePoint search index stale",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-2336"
   },
   {
     "id": "NEGKB-012",
-    "ci_class": "power-platform-environment",
-    "failure_signature": "SharePoint document library storage quota exceeded",
-    "attempted_fix": "restarted the OneDrive sync client",
-    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
-    "source_incident_id": "INC-1749"
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Azure AD Connect sync interruption",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-7732"
   },
   {
     "id": "NEGKB-013",
     "ci_class": "teams-notification-queue",
-    "failure_signature": "access denied on SharePoint site collection",
-    "attempted_fix": "cleared the Teams client cache",
-    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
-    "source_incident_id": "INC-2134"
+    "failure_signature": "Teams channel message delivery delayed",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-6012"
   },
   {
     "id": "NEGKB-014",
-    "ci_class": "azure-ad-connect-sync",
-    "failure_signature": "SharePoint document library storage quota exceeded",
-    "attempted_fix": "cleared the Teams client cache",
-    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
-    "source_incident_id": "INC-1712"
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-3348"
   },
   {
     "id": "NEGKB-015",
-    "ci_class": "power-automate-gateway",
-    "failure_signature": "access denied on SharePoint site collection",
-    "attempted_fix": "restarted the OneDrive sync client",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "cleared the Teams client cache",
     "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
-    "source_incident_id": "INC-8111"
+    "source_incident_id": "INC-4784"
   },
   {
     "id": "NEGKB-016",
     "ci_class": "dataverse-instance",
-    "failure_signature": "access denied on SharePoint site collection",
-    "attempted_fix": "cleared the Teams client cache",
-    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
-    "source_incident_id": "INC-4247"
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-2201"
   },
   {
     "id": "NEGKB-017",
-    "ci_class": "teams-notification-queue",
-    "failure_signature": "access denied on SharePoint site collection",
-    "attempted_fix": "cleared the Teams client cache",
-    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
-    "source_incident_id": "INC-5019"
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Azure AD Connect sync interruption",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-9402"
   },
   {
     "id": "NEGKB-018",
-    "ci_class": "dataverse-instance",
-    "failure_signature": "SharePoint document library storage quota exceeded",
-    "attempted_fix": "cleared the Teams client cache",
-    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
-    "source_incident_id": "INC-7184"
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Teams channel message delivery delayed",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-7675"
   },
   {
     "id": "NEGKB-019",
-    "ci_class": "exchange-online-connector",
-    "failure_signature": "Power Automate flow run failures (throttled)",
-    "attempted_fix": "cleared the Teams client cache",
-    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
-    "source_incident_id": "INC-6653"
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-4383"
   },
   {
     "id": "NEGKB-020",
-    "ci_class": "teams-notification-queue",
-    "failure_signature": "access denied on SharePoint site collection",
-    "attempted_fix": "increased the connector throttling limit",
-    "reason_failed": "the exclusion group itself was scoped incorrectly",
-    "source_incident_id": "INC-8305"
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-9505"
   },
   {
     "id": "NEGKB-021",
-    "ci_class": "exchange-online-connector",
-    "failure_signature": "OneDrive sync stuck / not syncing",
-    "attempted_fix": "cleared the Teams client cache",
-    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
-    "source_incident_id": "INC-7882"
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-3383"
   },
   {
     "id": "NEGKB-022",
-    "ci_class": "dataverse-instance",
-    "failure_signature": "access denied on SharePoint site collection",
-    "attempted_fix": "requested additional SharePoint storage quota",
-    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
-    "source_incident_id": "INC-8056"
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "OneDrive sync stuck / not syncing",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-5645"
   },
   {
     "id": "NEGKB-023",
-    "ci_class": "teams-notification-queue",
-    "failure_signature": "Dataverse API throttling (429)",
-    "attempted_fix": "increased the connector throttling limit",
-    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
-    "source_incident_id": "INC-2729"
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "OneDrive sync stuck / not syncing",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-2861"
   },
   {
     "id": "NEGKB-024",
-    "ci_class": "teams-notification-queue",
-    "failure_signature": "Dataverse API throttling (429)",
-    "attempted_fix": "requested additional SharePoint storage quota",
-    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
-    "source_incident_id": "INC-8777"
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Teams channel message delivery delayed",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-8442"
   },
   {
     "id": "NEGKB-025",
-    "ci_class": "exchange-online-connector",
-    "failure_signature": "Dataverse API throttling (429)",
-    "attempted_fix": "increased the connector throttling limit",
-    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
-    "source_incident_id": "INC-2558"
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-9988"
   },
   {
     "id": "NEGKB-026",
-    "ci_class": "exchange-online-connector",
+    "ci_class": "azure-ad-connect-sync",
     "failure_signature": "OneDrive sync stuck / not syncing",
-    "attempted_fix": "requested a Dataverse capacity add-on",
-    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
-    "source_incident_id": "INC-1683"
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-9155"
   },
   {
     "id": "NEGKB-027",
     "ci_class": "onedrive-sync-cache",
-    "failure_signature": "Conditional Access policy blocking sign-in",
-    "attempted_fix": "added the user to the Conditional Access exclusion group",
-    "reason_failed": "the exclusion group itself was scoped incorrectly",
-    "source_incident_id": "INC-7957"
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-4537"
   },
   {
     "id": "NEGKB-028",
-    "ci_class": "teams-notification-queue",
-    "failure_signature": "access denied on SharePoint site collection",
-    "attempted_fix": "restarted the OneDrive sync client",
-    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
-    "source_incident_id": "INC-8722"
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Teams channel message delivery delayed",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-3146"
   },
   {
     "id": "NEGKB-029",
-    "ci_class": "sharepoint-site",
-    "failure_signature": "Exchange Online mail delivery delayed",
-    "attempted_fix": "restarted the OneDrive sync client",
-    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
-    "source_incident_id": "INC-2140"
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Azure AD Connect sync interruption",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-3906"
   },
   {
     "id": "NEGKB-030",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-2736"
+  },
+  {
+    "id": "NEGKB-031",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "SharePoint search index stale",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-2641"
+  },
+  {
+    "id": "NEGKB-032",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-7176"
+  },
+  {
+    "id": "NEGKB-033",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-4465"
+  },
+  {
+    "id": "NEGKB-034",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "SharePoint search index stale",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-5263"
+  },
+  {
+    "id": "NEGKB-035",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-3406"
+  },
+  {
+    "id": "NEGKB-036",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-7914"
+  },
+  {
+    "id": "NEGKB-037",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-7818"
+  },
+  {
+    "id": "NEGKB-038",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "access denied on SharePoint site collection",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-7465"
+  },
+  {
+    "id": "NEGKB-039",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Conditional Access policy blocking sign-in",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-1303"
+  },
+  {
+    "id": "NEGKB-040",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "OneDrive sync stuck / not syncing",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-8066"
+  },
+  {
+    "id": "NEGKB-041",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-7597"
+  },
+  {
+    "id": "NEGKB-042",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Conditional Access policy blocking sign-in",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-2432"
+  },
+  {
+    "id": "NEGKB-043",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Conditional Access policy blocking sign-in",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-6131"
+  },
+  {
+    "id": "NEGKB-044",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-5526"
+  },
+  {
+    "id": "NEGKB-045",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Conditional Access policy blocking sign-in",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-7008"
+  },
+  {
+    "id": "NEGKB-046",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "access denied on SharePoint site collection",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-2787"
+  },
+  {
+    "id": "NEGKB-047",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "Teams channel message delivery delayed",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-5511"
+  },
+  {
+    "id": "NEGKB-048",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-9490"
+  },
+  {
+    "id": "NEGKB-049",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Azure AD Connect sync interruption",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-9642"
+  },
+  {
+    "id": "NEGKB-050",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-4014"
+  },
+  {
+    "id": "NEGKB-051",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-9184"
+  },
+  {
+    "id": "NEGKB-052",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "OneDrive sync stuck / not syncing",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-6839"
+  },
+  {
+    "id": "NEGKB-053",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-9559"
+  },
+  {
+    "id": "NEGKB-054",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-1577"
+  },
+  {
+    "id": "NEGKB-055",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-4729"
+  },
+  {
+    "id": "NEGKB-056",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-3814"
+  },
+  {
+    "id": "NEGKB-057",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Dataverse plugin execution timeout",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-7376"
+  },
+  {
+    "id": "NEGKB-058",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "OneDrive sync stuck / not syncing",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-8734"
+  },
+  {
+    "id": "NEGKB-059",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Teams channel message delivery delayed",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-2141"
+  },
+  {
+    "id": "NEGKB-060",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Conditional Access policy blocking sign-in",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-9944"
+  },
+  {
+    "id": "NEGKB-061",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Conditional Access policy blocking sign-in",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-3957"
+  },
+  {
+    "id": "NEGKB-062",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "SharePoint search index stale",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-2685"
+  },
+  {
+    "id": "NEGKB-063",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-6712"
+  },
+  {
+    "id": "NEGKB-064",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Conditional Access policy blocking sign-in",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-4583"
+  },
+  {
+    "id": "NEGKB-065",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-3425"
+  },
+  {
+    "id": "NEGKB-066",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "Conditional Access policy blocking sign-in",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-4172"
+  },
+  {
+    "id": "NEGKB-067",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "Conditional Access policy blocking sign-in",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-5765"
+  },
+  {
+    "id": "NEGKB-068",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Azure AD Connect sync interruption",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-2169"
+  },
+  {
+    "id": "NEGKB-069",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Azure AD Connect sync interruption",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-9423"
+  },
+  {
+    "id": "NEGKB-070",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Dataverse plugin execution timeout",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-9516"
+  },
+  {
+    "id": "NEGKB-071",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "OneDrive sync stuck / not syncing",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-1334"
+  },
+  {
+    "id": "NEGKB-072",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-7459"
+  },
+  {
+    "id": "NEGKB-073",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-2298"
+  },
+  {
+    "id": "NEGKB-074",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-8890"
+  },
+  {
+    "id": "NEGKB-075",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-4367"
+  },
+  {
+    "id": "NEGKB-076",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-7713"
+  },
+  {
+    "id": "NEGKB-077",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Dataverse API throttling (429)",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-3725"
+  },
+  {
+    "id": "NEGKB-078",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "Dataverse API throttling (429)",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-4582"
+  },
+  {
+    "id": "NEGKB-079",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-7838"
+  },
+  {
+    "id": "NEGKB-080",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Azure AD Connect sync interruption",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-9030"
+  },
+  {
+    "id": "NEGKB-081",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Conditional Access policy blocking sign-in",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-2637"
+  },
+  {
+    "id": "NEGKB-082",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-5840"
+  },
+  {
+    "id": "NEGKB-083",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "OneDrive sync stuck / not syncing",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-9839"
+  },
+  {
+    "id": "NEGKB-084",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "SharePoint search index stale",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-4859"
+  },
+  {
+    "id": "NEGKB-085",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "access denied on SharePoint site collection",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-4515"
+  },
+  {
+    "id": "NEGKB-086",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-8421"
+  },
+  {
+    "id": "NEGKB-087",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-8302"
+  },
+  {
+    "id": "NEGKB-088",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-4831"
+  },
+  {
+    "id": "NEGKB-089",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Azure AD Connect sync interruption",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-6026"
+  },
+  {
+    "id": "NEGKB-090",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-5212"
+  },
+  {
+    "id": "NEGKB-091",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Azure AD Connect sync interruption",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-6435"
+  },
+  {
+    "id": "NEGKB-092",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Dataverse plugin execution timeout",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-2515"
+  },
+  {
+    "id": "NEGKB-093",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Conditional Access policy blocking sign-in",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-1917"
+  },
+  {
+    "id": "NEGKB-094",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-6337"
+  },
+  {
+    "id": "NEGKB-095",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-9279"
+  },
+  {
+    "id": "NEGKB-096",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "access denied on SharePoint site collection",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-8820"
+  },
+  {
+    "id": "NEGKB-097",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-4457"
+  },
+  {
+    "id": "NEGKB-098",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-2351"
+  },
+  {
+    "id": "NEGKB-099",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-1380"
+  },
+  {
+    "id": "NEGKB-100",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Dataverse plugin execution timeout",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-7245"
+  },
+  {
+    "id": "NEGKB-101",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Dataverse plugin execution timeout",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-3381"
+  },
+  {
+    "id": "NEGKB-102",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-5648"
+  },
+  {
+    "id": "NEGKB-103",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-3902"
+  },
+  {
+    "id": "NEGKB-104",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-9124"
+  },
+  {
+    "id": "NEGKB-105",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-4374"
+  },
+  {
+    "id": "NEGKB-106",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-2458"
+  },
+  {
+    "id": "NEGKB-107",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-3757"
+  },
+  {
+    "id": "NEGKB-108",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-2442"
+  },
+  {
+    "id": "NEGKB-109",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-4290"
+  },
+  {
+    "id": "NEGKB-110",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Azure AD Connect sync interruption",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-3156"
+  },
+  {
+    "id": "NEGKB-111",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "OneDrive sync stuck / not syncing",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-5963"
+  },
+  {
+    "id": "NEGKB-112",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Dataverse plugin execution timeout",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-3241"
+  },
+  {
+    "id": "NEGKB-113",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-7159"
+  },
+  {
+    "id": "NEGKB-114",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-2748"
+  },
+  {
+    "id": "NEGKB-115",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-4193"
+  },
+  {
+    "id": "NEGKB-116",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-9780"
+  },
+  {
+    "id": "NEGKB-117",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-1070"
+  },
+  {
+    "id": "NEGKB-118",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-4370"
+  },
+  {
+    "id": "NEGKB-119",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Azure AD Connect sync interruption",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-5691"
+  },
+  {
+    "id": "NEGKB-120",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Dataverse plugin execution timeout",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-2198"
+  },
+  {
+    "id": "NEGKB-121",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Dataverse API throttling (429)",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-5913"
+  },
+  {
+    "id": "NEGKB-122",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-2564"
+  },
+  {
+    "id": "NEGKB-123",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-1294"
+  },
+  {
+    "id": "NEGKB-124",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-2963"
+  },
+  {
+    "id": "NEGKB-125",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-8923"
+  },
+  {
+    "id": "NEGKB-126",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Teams channel message delivery delayed",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-7724"
+  },
+  {
+    "id": "NEGKB-127",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Conditional Access policy blocking sign-in",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-5753"
+  },
+  {
+    "id": "NEGKB-128",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "OneDrive sync stuck / not syncing",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-4777"
+  },
+  {
+    "id": "NEGKB-129",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Teams channel message delivery delayed",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-6553"
+  },
+  {
+    "id": "NEGKB-130",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-9716"
+  },
+  {
+    "id": "NEGKB-131",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-3319"
+  },
+  {
+    "id": "NEGKB-132",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-4077"
+  },
+  {
+    "id": "NEGKB-133",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "OneDrive sync stuck / not syncing",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-6906"
+  },
+  {
+    "id": "NEGKB-134",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Dataverse API throttling (429)",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-9164"
+  },
+  {
+    "id": "NEGKB-135",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-1900"
+  },
+  {
+    "id": "NEGKB-136",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Teams channel message delivery delayed",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-5624"
+  },
+  {
+    "id": "NEGKB-137",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-6127"
+  },
+  {
+    "id": "NEGKB-138",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-7561"
+  },
+  {
+    "id": "NEGKB-139",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Dataverse API throttling (429)",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-7998"
+  },
+  {
+    "id": "NEGKB-140",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-8749"
+  },
+  {
+    "id": "NEGKB-141",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Dataverse plugin execution timeout",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-8622"
+  },
+  {
+    "id": "NEGKB-142",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Azure AD Connect sync interruption",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-5355"
+  },
+  {
+    "id": "NEGKB-143",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Dataverse plugin execution timeout",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-3806"
+  },
+  {
+    "id": "NEGKB-144",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-2957"
+  },
+  {
+    "id": "NEGKB-145",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "Conditional Access policy blocking sign-in",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-4484"
+  },
+  {
+    "id": "NEGKB-146",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-8403"
+  },
+  {
+    "id": "NEGKB-147",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Dataverse API throttling (429)",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-6566"
+  },
+  {
+    "id": "NEGKB-148",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "SharePoint search index stale",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-7887"
+  },
+  {
+    "id": "NEGKB-149",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Conditional Access policy blocking sign-in",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-1930"
+  },
+  {
+    "id": "NEGKB-150",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-3344"
+  },
+  {
+    "id": "NEGKB-151",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-3619"
+  },
+  {
+    "id": "NEGKB-152",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-5340"
+  },
+  {
+    "id": "NEGKB-153",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "SharePoint search index stale",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-8600"
+  },
+  {
+    "id": "NEGKB-154",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-4828"
+  },
+  {
+    "id": "NEGKB-155",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "Dataverse plugin execution timeout",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-7620"
+  },
+  {
+    "id": "NEGKB-156",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "SharePoint search index stale",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-2105"
+  },
+  {
+    "id": "NEGKB-157",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-1407"
+  },
+  {
+    "id": "NEGKB-158",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-8658"
+  },
+  {
+    "id": "NEGKB-159",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "access denied on SharePoint site collection",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-9511"
+  },
+  {
+    "id": "NEGKB-160",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "OneDrive sync stuck / not syncing",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-8881"
+  },
+  {
+    "id": "NEGKB-161",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "OneDrive sync stuck / not syncing",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-9845"
+  },
+  {
+    "id": "NEGKB-162",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "access denied on SharePoint site collection",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-2724"
+  },
+  {
+    "id": "NEGKB-163",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "SharePoint search index stale",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-1184"
+  },
+  {
+    "id": "NEGKB-164",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "access denied on SharePoint site collection",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-7133"
+  },
+  {
+    "id": "NEGKB-165",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Teams channel message delivery delayed",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-9799"
+  },
+  {
+    "id": "NEGKB-166",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-4255"
+  },
+  {
+    "id": "NEGKB-167",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "Conditional Access policy blocking sign-in",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-1058"
+  },
+  {
+    "id": "NEGKB-168",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-5609"
+  },
+  {
+    "id": "NEGKB-169",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-3606"
+  },
+  {
+    "id": "NEGKB-170",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "OneDrive sync stuck / not syncing",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-2045"
+  },
+  {
+    "id": "NEGKB-171",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "OneDrive sync stuck / not syncing",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-9173"
+  },
+  {
+    "id": "NEGKB-172",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Dataverse API throttling (429)",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-6534"
+  },
+  {
+    "id": "NEGKB-173",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-3851"
+  },
+  {
+    "id": "NEGKB-174",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Azure AD Connect sync interruption",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-4601"
+  },
+  {
+    "id": "NEGKB-175",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-6852"
+  },
+  {
+    "id": "NEGKB-176",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-8408"
+  },
+  {
+    "id": "NEGKB-177",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-7945"
+  },
+  {
+    "id": "NEGKB-178",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-4320"
+  },
+  {
+    "id": "NEGKB-179",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Dataverse API throttling (429)",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-7686"
+  },
+  {
+    "id": "NEGKB-180",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-9944"
+  },
+  {
+    "id": "NEGKB-181",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-6289"
+  },
+  {
+    "id": "NEGKB-182",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Dataverse plugin execution timeout",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-4239"
+  },
+  {
+    "id": "NEGKB-183",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Teams channel message delivery delayed",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-6880"
+  },
+  {
+    "id": "NEGKB-184",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-4845"
+  },
+  {
+    "id": "NEGKB-185",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-5330"
+  },
+  {
+    "id": "NEGKB-186",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Conditional Access policy blocking sign-in",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-9099"
+  },
+  {
+    "id": "NEGKB-187",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-1485"
+  },
+  {
+    "id": "NEGKB-188",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "Teams channel message delivery delayed",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-4086"
+  },
+  {
+    "id": "NEGKB-189",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Azure AD Connect sync interruption",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-1325"
+  },
+  {
+    "id": "NEGKB-190",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "OneDrive sync stuck / not syncing",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-9683"
+  },
+  {
+    "id": "NEGKB-191",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-8469"
+  },
+  {
+    "id": "NEGKB-192",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Dataverse API throttling (429)",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-9544"
+  },
+  {
+    "id": "NEGKB-193",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "Azure AD Connect sync interruption",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-9222"
+  },
+  {
+    "id": "NEGKB-194",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Conditional Access policy blocking sign-in",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-5464"
+  },
+  {
+    "id": "NEGKB-195",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-3011"
+  },
+  {
+    "id": "NEGKB-196",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Teams channel message delivery delayed",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-8828"
+  },
+  {
+    "id": "NEGKB-197",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "access denied on SharePoint site collection",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-7046"
+  },
+  {
+    "id": "NEGKB-198",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Azure AD Connect sync interruption",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-4023"
+  },
+  {
+    "id": "NEGKB-199",
     "ci_class": "sharepoint-document-library",
     "failure_signature": "Exchange Online mail delivery delayed",
     "attempted_fix": "increased the connector throttling limit",
     "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
-    "source_incident_id": "INC-4891"
+    "source_incident_id": "INC-5254"
   },
   {
-    "id": "NEGKB-031",
-    "ci_class": "dataverse-instance",
+    "id": "NEGKB-200",
+    "ci_class": "sharepoint-site",
     "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-3410"
+  },
+  {
+    "id": "NEGKB-201",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "Teams meeting audio/video degraded",
     "attempted_fix": "cleared the Teams client cache",
     "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
-    "source_incident_id": "INC-4953"
+    "source_incident_id": "INC-1977"
   },
   {
-    "id": "NEGKB-032",
-    "ci_class": "sharepoint-site",
-    "failure_signature": "Power BI dataset refresh failure",
-    "attempted_fix": "requested a Dataverse capacity add-on",
-    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
-    "source_incident_id": "INC-5235"
+    "id": "NEGKB-202",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-9107"
   },
   {
-    "id": "NEGKB-033",
+    "id": "NEGKB-203",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-3329"
+  },
+  {
+    "id": "NEGKB-204",
     "ci_class": "dataverse-instance",
-    "failure_signature": "SharePoint document library storage quota exceeded",
-    "attempted_fix": "increased the connector throttling limit",
-    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
-    "source_incident_id": "INC-6395"
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-6017"
   },
   {
-    "id": "NEGKB-034",
+    "id": "NEGKB-205",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Teams channel message delivery delayed",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-1058"
+  },
+  {
+    "id": "NEGKB-206",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-2496"
+  },
+  {
+    "id": "NEGKB-207",
     "ci_class": "exchange-online-connector",
     "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-2494"
+  },
+  {
+    "id": "NEGKB-208",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "SharePoint search index stale",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-1173"
+  },
+  {
+    "id": "NEGKB-209",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-2214"
+  },
+  {
+    "id": "NEGKB-210",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-8261"
+  },
+  {
+    "id": "NEGKB-211",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Conditional Access policy blocking sign-in",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-6879"
+  },
+  {
+    "id": "NEGKB-212",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Azure AD Connect sync interruption",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-2458"
+  },
+  {
+    "id": "NEGKB-213",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Dataverse API throttling (429)",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-6062"
+  },
+  {
+    "id": "NEGKB-214",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Teams channel message delivery delayed",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-5061"
+  },
+  {
+    "id": "NEGKB-215",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "access denied on SharePoint site collection",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-2393"
+  },
+  {
+    "id": "NEGKB-216",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Teams channel message delivery delayed",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-1434"
+  },
+  {
+    "id": "NEGKB-217",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "SharePoint search index stale",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-9096"
+  },
+  {
+    "id": "NEGKB-218",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-6761"
+  },
+  {
+    "id": "NEGKB-219",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-9315"
+  },
+  {
+    "id": "NEGKB-220",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-5042"
+  },
+  {
+    "id": "NEGKB-221",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Conditional Access policy blocking sign-in",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-1225"
+  },
+  {
+    "id": "NEGKB-222",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "SharePoint search index stale",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-3720"
+  },
+  {
+    "id": "NEGKB-223",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-9173"
+  },
+  {
+    "id": "NEGKB-224",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-6948"
+  },
+  {
+    "id": "NEGKB-225",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-1637"
+  },
+  {
+    "id": "NEGKB-226",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "Azure AD Connect sync interruption",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-6556"
+  },
+  {
+    "id": "NEGKB-227",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-2693"
+  },
+  {
+    "id": "NEGKB-228",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-2518"
+  },
+  {
+    "id": "NEGKB-229",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Conditional Access policy blocking sign-in",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-9911"
+  },
+  {
+    "id": "NEGKB-230",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "access denied on SharePoint site collection",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-2696"
+  },
+  {
+    "id": "NEGKB-231",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Conditional Access policy blocking sign-in",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-7487"
+  },
+  {
+    "id": "NEGKB-232",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Conditional Access policy blocking sign-in",
     "attempted_fix": "requested a Dataverse capacity add-on",
     "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
-    "source_incident_id": "INC-5972"
+    "source_incident_id": "INC-7102"
   },
   {
-    "id": "NEGKB-035",
+    "id": "NEGKB-233",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-2210"
+  },
+  {
+    "id": "NEGKB-234",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Azure AD Connect sync interruption",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-7631"
+  },
+  {
+    "id": "NEGKB-235",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Dataverse API throttling (429)",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-1726"
+  },
+  {
+    "id": "NEGKB-236",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-5305"
+  },
+  {
+    "id": "NEGKB-237",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-5292"
+  },
+  {
+    "id": "NEGKB-238",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-9092"
+  },
+  {
+    "id": "NEGKB-239",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-3454"
+  },
+  {
+    "id": "NEGKB-240",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-5460"
+  },
+  {
+    "id": "NEGKB-241",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-2327"
+  },
+  {
+    "id": "NEGKB-242",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Azure AD Connect sync interruption",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-3706"
+  },
+  {
+    "id": "NEGKB-243",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "access denied on SharePoint site collection",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-6328"
+  },
+  {
+    "id": "NEGKB-244",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-9891"
+  },
+  {
+    "id": "NEGKB-245",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Dataverse plugin execution timeout",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-3443"
+  },
+  {
+    "id": "NEGKB-246",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "SharePoint search index stale",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-9255"
+  },
+  {
+    "id": "NEGKB-247",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Teams channel message delivery delayed",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-8845"
+  },
+  {
+    "id": "NEGKB-248",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-4894"
+  },
+  {
+    "id": "NEGKB-249",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-3066"
+  },
+  {
+    "id": "NEGKB-250",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "OneDrive sync stuck / not syncing",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-5414"
+  },
+  {
+    "id": "NEGKB-251",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-3960"
+  },
+  {
+    "id": "NEGKB-252",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "SharePoint search index stale",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-8589"
+  },
+  {
+    "id": "NEGKB-253",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-3783"
+  },
+  {
+    "id": "NEGKB-254",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Azure AD Connect sync interruption",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-9967"
+  },
+  {
+    "id": "NEGKB-255",
     "ci_class": "dataverse-instance",
+    "failure_signature": "Dataverse plugin execution timeout",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-6229"
+  },
+  {
+    "id": "NEGKB-256",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "SharePoint search index stale",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-3401"
+  },
+  {
+    "id": "NEGKB-257",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-5079"
+  },
+  {
+    "id": "NEGKB-258",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-9461"
+  },
+  {
+    "id": "NEGKB-259",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-1334"
+  },
+  {
+    "id": "NEGKB-260",
+    "ci_class": "power-automate-gateway",
     "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-2067"
+  },
+  {
+    "id": "NEGKB-261",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-9121"
+  },
+  {
+    "id": "NEGKB-262",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "SharePoint search index stale",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-4332"
+  },
+  {
+    "id": "NEGKB-263",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Dataverse plugin execution timeout",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-6991"
+  },
+  {
+    "id": "NEGKB-264",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-9442"
+  },
+  {
+    "id": "NEGKB-265",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Azure AD Connect sync interruption",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-2118"
+  },
+  {
+    "id": "NEGKB-266",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-9798"
+  },
+  {
+    "id": "NEGKB-267",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "access denied on SharePoint site collection",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-1881"
+  },
+  {
+    "id": "NEGKB-268",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-6771"
+  },
+  {
+    "id": "NEGKB-269",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-2400"
+  },
+  {
+    "id": "NEGKB-270",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-8841"
+  },
+  {
+    "id": "NEGKB-271",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-7736"
+  },
+  {
+    "id": "NEGKB-272",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-5172"
+  },
+  {
+    "id": "NEGKB-273",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Dataverse API throttling (429)",
     "attempted_fix": "increased the connector throttling limit",
     "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
-    "source_incident_id": "INC-3286"
+    "source_incident_id": "INC-3302"
   },
   {
-    "id": "NEGKB-036",
+    "id": "NEGKB-274",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Dataverse plugin execution timeout",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-6406"
+  },
+  {
+    "id": "NEGKB-275",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-5969"
+  },
+  {
+    "id": "NEGKB-276",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-7319"
+  },
+  {
+    "id": "NEGKB-277",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-6581"
+  },
+  {
+    "id": "NEGKB-278",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-8921"
+  },
+  {
+    "id": "NEGKB-279",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "SharePoint search index stale",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-2987"
+  },
+  {
+    "id": "NEGKB-280",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-5964"
+  },
+  {
+    "id": "NEGKB-281",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-1051"
+  },
+  {
+    "id": "NEGKB-282",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-9962"
+  },
+  {
+    "id": "NEGKB-283",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "Teams channel message delivery delayed",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-3533"
+  },
+  {
+    "id": "NEGKB-284",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Teams channel message delivery delayed",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-5053"
+  },
+  {
+    "id": "NEGKB-285",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "Conditional Access policy blocking sign-in",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-2147"
+  },
+  {
+    "id": "NEGKB-286",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "access denied on SharePoint site collection",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-8368"
+  },
+  {
+    "id": "NEGKB-287",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "OneDrive sync stuck / not syncing",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-3395"
+  },
+  {
+    "id": "NEGKB-288",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-1089"
+  },
+  {
+    "id": "NEGKB-289",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-6071"
+  },
+  {
+    "id": "NEGKB-290",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "SharePoint search index stale",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-4156"
+  },
+  {
+    "id": "NEGKB-291",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "Conditional Access policy blocking sign-in",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-3653"
+  },
+  {
+    "id": "NEGKB-292",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Dataverse plugin execution timeout",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-5247"
+  },
+  {
+    "id": "NEGKB-293",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-9563"
+  },
+  {
+    "id": "NEGKB-294",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-1525"
+  },
+  {
+    "id": "NEGKB-295",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-3377"
+  },
+  {
+    "id": "NEGKB-296",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-2788"
+  },
+  {
+    "id": "NEGKB-297",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Dataverse API throttling (429)",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-5252"
+  },
+  {
+    "id": "NEGKB-298",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-2914"
+  },
+  {
+    "id": "NEGKB-299",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-6778"
+  },
+  {
+    "id": "NEGKB-300",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-6915"
+  },
+  {
+    "id": "NEGKB-301",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Dataverse API throttling (429)",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-3357"
+  },
+  {
+    "id": "NEGKB-302",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-8781"
+  },
+  {
+    "id": "NEGKB-303",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-7827"
+  },
+  {
+    "id": "NEGKB-304",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Dataverse plugin execution timeout",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-4079"
+  },
+  {
+    "id": "NEGKB-305",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-1483"
+  },
+  {
+    "id": "NEGKB-306",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-4247"
+  },
+  {
+    "id": "NEGKB-307",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Teams channel message delivery delayed",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-3471"
+  },
+  {
+    "id": "NEGKB-308",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-2544"
+  },
+  {
+    "id": "NEGKB-309",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Dataverse API throttling (429)",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-6505"
+  },
+  {
+    "id": "NEGKB-310",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Azure AD Connect sync interruption",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-8316"
+  },
+  {
+    "id": "NEGKB-311",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-6147"
+  },
+  {
+    "id": "NEGKB-312",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-3501"
+  },
+  {
+    "id": "NEGKB-313",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-8318"
+  },
+  {
+    "id": "NEGKB-314",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-5712"
+  },
+  {
+    "id": "NEGKB-315",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-4640"
+  },
+  {
+    "id": "NEGKB-316",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Dataverse API throttling (429)",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-8492"
+  },
+  {
+    "id": "NEGKB-317",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "OneDrive sync stuck / not syncing",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-9499"
+  },
+  {
+    "id": "NEGKB-318",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Dataverse API throttling (429)",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-2635"
+  },
+  {
+    "id": "NEGKB-319",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "SharePoint search index stale",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-8936"
+  },
+  {
+    "id": "NEGKB-320",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Conditional Access policy blocking sign-in",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-8631"
+  },
+  {
+    "id": "NEGKB-321",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "access denied on SharePoint site collection",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-2677"
+  },
+  {
+    "id": "NEGKB-322",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Teams channel message delivery delayed",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-6217"
+  },
+  {
+    "id": "NEGKB-323",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-7158"
+  },
+  {
+    "id": "NEGKB-324",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-9603"
+  },
+  {
+    "id": "NEGKB-325",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "OneDrive sync stuck / not syncing",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-7000"
+  },
+  {
+    "id": "NEGKB-326",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-7450"
+  },
+  {
+    "id": "NEGKB-327",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-3219"
+  },
+  {
+    "id": "NEGKB-328",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "SharePoint search index stale",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-2713"
+  },
+  {
+    "id": "NEGKB-329",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-9483"
+  },
+  {
+    "id": "NEGKB-330",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Conditional Access policy blocking sign-in",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-8844"
+  },
+  {
+    "id": "NEGKB-331",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-5357"
+  },
+  {
+    "id": "NEGKB-332",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-1798"
+  },
+  {
+    "id": "NEGKB-333",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Teams channel message delivery delayed",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-2992"
+  },
+  {
+    "id": "NEGKB-334",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "OneDrive sync stuck / not syncing",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-7639"
+  },
+  {
+    "id": "NEGKB-335",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-8492"
+  },
+  {
+    "id": "NEGKB-336",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-1655"
+  },
+  {
+    "id": "NEGKB-337",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-8640"
+  },
+  {
+    "id": "NEGKB-338",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-1356"
+  },
+  {
+    "id": "NEGKB-339",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "access denied on SharePoint site collection",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-3860"
+  },
+  {
+    "id": "NEGKB-340",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-3757"
+  },
+  {
+    "id": "NEGKB-341",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Azure AD Connect sync interruption",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-4602"
+  },
+  {
+    "id": "NEGKB-342",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Dataverse API throttling (429)",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-8087"
+  },
+  {
+    "id": "NEGKB-343",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Dataverse API throttling (429)",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-3008"
+  },
+  {
+    "id": "NEGKB-344",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Dataverse plugin execution timeout",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-2817"
+  },
+  {
+    "id": "NEGKB-345",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Dataverse plugin execution timeout",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-1467"
+  },
+  {
+    "id": "NEGKB-346",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "SharePoint search index stale",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-5352"
+  },
+  {
+    "id": "NEGKB-347",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-1700"
+  },
+  {
+    "id": "NEGKB-348",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Dataverse API throttling (429)",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-4487"
+  },
+  {
+    "id": "NEGKB-349",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-4993"
+  },
+  {
+    "id": "NEGKB-350",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "SharePoint search index stale",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-3774"
+  },
+  {
+    "id": "NEGKB-351",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Teams channel message delivery delayed",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-1832"
+  },
+  {
+    "id": "NEGKB-352",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-5311"
+  },
+  {
+    "id": "NEGKB-353",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-1563"
+  },
+  {
+    "id": "NEGKB-354",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-6456"
+  },
+  {
+    "id": "NEGKB-355",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Teams channel message delivery delayed",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-6084"
+  },
+  {
+    "id": "NEGKB-356",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-4295"
+  },
+  {
+    "id": "NEGKB-357",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-7151"
+  },
+  {
+    "id": "NEGKB-358",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-3237"
+  },
+  {
+    "id": "NEGKB-359",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Teams channel message delivery delayed",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-2532"
+  },
+  {
+    "id": "NEGKB-360",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-4519"
+  },
+  {
+    "id": "NEGKB-361",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Dataverse plugin execution timeout",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-3891"
+  },
+  {
+    "id": "NEGKB-362",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-8511"
+  },
+  {
+    "id": "NEGKB-363",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "OneDrive sync stuck / not syncing",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-8345"
+  },
+  {
+    "id": "NEGKB-364",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Conditional Access policy blocking sign-in",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-3463"
+  },
+  {
+    "id": "NEGKB-365",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "OneDrive sync stuck / not syncing",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-9949"
+  },
+  {
+    "id": "NEGKB-366",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-1550"
+  },
+  {
+    "id": "NEGKB-367",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-8640"
+  },
+  {
+    "id": "NEGKB-368",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "OneDrive sync stuck / not syncing",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-8415"
+  },
+  {
+    "id": "NEGKB-369",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-2236"
+  },
+  {
+    "id": "NEGKB-370",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Dataverse plugin execution timeout",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-5958"
+  },
+  {
+    "id": "NEGKB-371",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-4081"
+  },
+  {
+    "id": "NEGKB-372",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-6853"
+  },
+  {
+    "id": "NEGKB-373",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "SharePoint search index stale",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-4982"
+  },
+  {
+    "id": "NEGKB-374",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Teams channel message delivery delayed",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-6237"
+  },
+  {
+    "id": "NEGKB-375",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-7469"
+  },
+  {
+    "id": "NEGKB-376",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "access denied on SharePoint site collection",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-4362"
+  },
+  {
+    "id": "NEGKB-377",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "SharePoint search index stale",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-6284"
+  },
+  {
+    "id": "NEGKB-378",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "OneDrive sync stuck / not syncing",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-2767"
+  },
+  {
+    "id": "NEGKB-379",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-8736"
+  },
+  {
+    "id": "NEGKB-380",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-5741"
+  },
+  {
+    "id": "NEGKB-381",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Azure AD Connect sync interruption",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-7973"
+  },
+  {
+    "id": "NEGKB-382",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Conditional Access policy blocking sign-in",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-2355"
+  },
+  {
+    "id": "NEGKB-383",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "Teams channel message delivery delayed",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-9042"
+  },
+  {
+    "id": "NEGKB-384",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-3981"
+  },
+  {
+    "id": "NEGKB-385",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-8168"
+  },
+  {
+    "id": "NEGKB-386",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-4682"
+  },
+  {
+    "id": "NEGKB-387",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "access denied on SharePoint site collection",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-9857"
+  },
+  {
+    "id": "NEGKB-388",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Dataverse plugin execution timeout",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-2620"
+  },
+  {
+    "id": "NEGKB-389",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Azure AD Connect sync interruption",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-1471"
+  },
+  {
+    "id": "NEGKB-390",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Dataverse API throttling (429)",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-6160"
+  },
+  {
+    "id": "NEGKB-391",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Teams channel message delivery delayed",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-1429"
+  },
+  {
+    "id": "NEGKB-392",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-7993"
+  },
+  {
+    "id": "NEGKB-393",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-8818"
+  },
+  {
+    "id": "NEGKB-394",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "SharePoint search index stale",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-8366"
+  },
+  {
+    "id": "NEGKB-395",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-9961"
+  },
+  {
+    "id": "NEGKB-396",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Dataverse plugin execution timeout",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-1018"
+  },
+  {
+    "id": "NEGKB-397",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Conditional Access policy blocking sign-in",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-5145"
+  },
+  {
+    "id": "NEGKB-398",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Dataverse API throttling (429)",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-1211"
+  },
+  {
+    "id": "NEGKB-399",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "SharePoint search index stale",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-9503"
+  },
+  {
+    "id": "NEGKB-400",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "OneDrive sync stuck / not syncing",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-4115"
+  },
+  {
+    "id": "NEGKB-401",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "OneDrive sync stuck / not syncing",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-4312"
+  },
+  {
+    "id": "NEGKB-402",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Azure AD Connect sync interruption",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-3235"
+  },
+  {
+    "id": "NEGKB-403",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Dataverse API throttling (429)",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-3525"
+  },
+  {
+    "id": "NEGKB-404",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Dataverse plugin execution timeout",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-8563"
+  },
+  {
+    "id": "NEGKB-405",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "Teams channel message delivery delayed",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-1302"
+  },
+  {
+    "id": "NEGKB-406",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Dataverse plugin execution timeout",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-3802"
+  },
+  {
+    "id": "NEGKB-407",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-3110"
+  },
+  {
+    "id": "NEGKB-408",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "access denied on SharePoint site collection",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-1442"
+  },
+  {
+    "id": "NEGKB-409",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Teams channel message delivery delayed",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-8618"
+  },
+  {
+    "id": "NEGKB-410",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "OneDrive sync stuck / not syncing",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-4930"
+  },
+  {
+    "id": "NEGKB-411",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Dataverse API throttling (429)",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-5222"
+  },
+  {
+    "id": "NEGKB-412",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Azure AD Connect sync interruption",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-3030"
+  },
+  {
+    "id": "NEGKB-413",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-6401"
+  },
+  {
+    "id": "NEGKB-414",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "Conditional Access policy blocking sign-in",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-2464"
+  },
+  {
+    "id": "NEGKB-415",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-5717"
+  },
+  {
+    "id": "NEGKB-416",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "SharePoint search index stale",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-2816"
+  },
+  {
+    "id": "NEGKB-417",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "OneDrive sync stuck / not syncing",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-8918"
+  },
+  {
+    "id": "NEGKB-418",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-7606"
+  },
+  {
+    "id": "NEGKB-419",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-4188"
+  },
+  {
+    "id": "NEGKB-420",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-4134"
+  },
+  {
+    "id": "NEGKB-421",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "access denied on SharePoint site collection",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-5893"
+  },
+  {
+    "id": "NEGKB-422",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-1776"
+  },
+  {
+    "id": "NEGKB-423",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "SharePoint search index stale",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-2796"
+  },
+  {
+    "id": "NEGKB-424",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Power BI dataset refresh failure",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-9316"
+  },
+  {
+    "id": "NEGKB-425",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-8405"
+  },
+  {
+    "id": "NEGKB-426",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "access denied on SharePoint site collection",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-6945"
+  },
+  {
+    "id": "NEGKB-427",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-5511"
+  },
+  {
+    "id": "NEGKB-428",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "Conditional Access policy blocking sign-in",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-4742"
+  },
+  {
+    "id": "NEGKB-429",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Dataverse API throttling (429)",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-4903"
+  },
+  {
+    "id": "NEGKB-430",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-9792"
+  },
+  {
+    "id": "NEGKB-431",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-6913"
+  },
+  {
+    "id": "NEGKB-432",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-9171"
+  },
+  {
+    "id": "NEGKB-433",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-7391"
+  },
+  {
+    "id": "NEGKB-434",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-2545"
+  },
+  {
+    "id": "NEGKB-435",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-9500"
+  },
+  {
+    "id": "NEGKB-436",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Azure AD Connect sync interruption",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-4325"
+  },
+  {
+    "id": "NEGKB-437",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-2422"
+  },
+  {
+    "id": "NEGKB-438",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-2504"
+  },
+  {
+    "id": "NEGKB-439",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "access denied on SharePoint site collection",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-1757"
+  },
+  {
+    "id": "NEGKB-440",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "SharePoint search index stale",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-6931"
+  },
+  {
+    "id": "NEGKB-441",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Conditional Access policy blocking sign-in",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-9792"
+  },
+  {
+    "id": "NEGKB-442",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-7412"
+  },
+  {
+    "id": "NEGKB-443",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-2807"
+  },
+  {
+    "id": "NEGKB-444",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "SharePoint search index stale",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-8008"
+  },
+  {
+    "id": "NEGKB-445",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-1839"
+  },
+  {
+    "id": "NEGKB-446",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-3977"
+  },
+  {
+    "id": "NEGKB-447",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Conditional Access policy blocking sign-in",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-6186"
+  },
+  {
+    "id": "NEGKB-448",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "SharePoint search index stale",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-5743"
+  },
+  {
+    "id": "NEGKB-449",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-4846"
+  },
+  {
+    "id": "NEGKB-450",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "OneDrive sync stuck / not syncing",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-4599"
+  },
+  {
+    "id": "NEGKB-451",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-7429"
+  },
+  {
+    "id": "NEGKB-452",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "OneDrive sync stuck / not syncing",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-3056"
+  },
+  {
+    "id": "NEGKB-453",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "OneDrive sync stuck / not syncing",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-1427"
+  },
+  {
+    "id": "NEGKB-454",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Dataverse API throttling (429)",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-9095"
+  },
+  {
+    "id": "NEGKB-455",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-6539"
+  },
+  {
+    "id": "NEGKB-456",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-7413"
+  },
+  {
+    "id": "NEGKB-457",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-4471"
+  },
+  {
+    "id": "NEGKB-458",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-8338"
+  },
+  {
+    "id": "NEGKB-459",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "SharePoint search index stale",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-6145"
+  },
+  {
+    "id": "NEGKB-460",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Azure AD Connect sync interruption",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-4277"
+  },
+  {
+    "id": "NEGKB-461",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Dataverse plugin execution timeout",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-6971"
+  },
+  {
+    "id": "NEGKB-462",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Dataverse API throttling (429)",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-2693"
+  },
+  {
+    "id": "NEGKB-463",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "access denied on SharePoint site collection",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-3235"
+  },
+  {
+    "id": "NEGKB-464",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "SharePoint document library storage quota exceeded",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-7421"
+  },
+  {
+    "id": "NEGKB-465",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-3834"
+  },
+  {
+    "id": "NEGKB-466",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-2290"
+  },
+  {
+    "id": "NEGKB-467",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-8727"
+  },
+  {
+    "id": "NEGKB-468",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Conditional Access policy blocking sign-in",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-1039"
+  },
+  {
+    "id": "NEGKB-469",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "Dataverse plugin execution timeout",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-3404"
+  },
+  {
+    "id": "NEGKB-470",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-6419"
+  },
+  {
+    "id": "NEGKB-471",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "OneDrive sync stuck / not syncing",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-2452"
+  },
+  {
+    "id": "NEGKB-472",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-7803"
+  },
+  {
+    "id": "NEGKB-473",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-2826"
+  },
+  {
+    "id": "NEGKB-474",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "OneDrive sync stuck / not syncing",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-5821"
+  },
+  {
+    "id": "NEGKB-475",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "access denied on SharePoint site collection",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-6613"
+  },
+  {
+    "id": "NEGKB-476",
     "ci_class": "sharepoint-site",
     "failure_signature": "Conditional Access policy blocking sign-in",
     "attempted_fix": "cleared the Teams client cache",
-    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
-    "source_incident_id": "INC-4460"
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-9793"
   },
   {
-    "id": "NEGKB-037",
+    "id": "NEGKB-477",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-5730"
+  },
+  {
+    "id": "NEGKB-478",
+    "ci_class": "dataverse-instance",
+    "failure_signature": "access denied on SharePoint site collection",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-7922"
+  },
+  {
+    "id": "NEGKB-479",
+    "ci_class": "onedrive-sync-cache",
+    "failure_signature": "Azure AD Connect sync interruption",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-3076"
+  },
+  {
+    "id": "NEGKB-480",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-7397"
+  },
+  {
+    "id": "NEGKB-481",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "SharePoint search index stale",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-8294"
+  },
+  {
+    "id": "NEGKB-482",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Azure AD Connect sync interruption",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-7587"
+  },
+  {
+    "id": "NEGKB-483",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Exchange Online mail delivery delayed",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-5004"
+  },
+  {
+    "id": "NEGKB-484",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Conditional Access policy blocking sign-in",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-4126"
+  },
+  {
+    "id": "NEGKB-485",
+    "ci_class": "power-platform-environment",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "requested additional SharePoint storage quota",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-8718"
+  },
+  {
+    "id": "NEGKB-486",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "Azure AD Connect sync interruption",
+    "attempted_fix": "re-granted site permissions",
+    "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
+    "source_incident_id": "INC-2291"
+  },
+  {
+    "id": "NEGKB-487",
     "ci_class": "teams-notification-queue",
     "failure_signature": "Power BI dataset refresh failure",
-    "attempted_fix": "requested additional SharePoint storage quota",
-    "reason_failed": "the exclusion group itself was scoped incorrectly",
-    "source_incident_id": "INC-6573"
-  },
-  {
-    "id": "NEGKB-038",
-    "ci_class": "sharepoint-document-library",
-    "failure_signature": "access denied on SharePoint site collection",
-    "attempted_fix": "requested additional SharePoint storage quota",
+    "attempted_fix": "added the user to the Conditional Access exclusion group",
     "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
-    "source_incident_id": "INC-6712"
+    "source_incident_id": "INC-5553"
   },
   {
-    "id": "NEGKB-039",
+    "id": "NEGKB-488",
     "ci_class": "sharepoint-site",
-    "failure_signature": "Azure AD Connect sync interruption",
-    "attempted_fix": "requested additional SharePoint storage quota",
-    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
-    "source_incident_id": "INC-8783"
-  },
-  {
-    "id": "NEGKB-040",
-    "ci_class": "sharepoint-site",
-    "failure_signature": "Power BI dataset refresh failure",
+    "failure_signature": "Dataverse API throttling (429)",
     "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "the throttling limit increase did not address the actual API call volume spike",
+    "source_incident_id": "INC-2783"
+  },
+  {
+    "id": "NEGKB-489",
+    "ci_class": "sharepoint-document-library",
+    "failure_signature": "SharePoint search index stale",
+    "attempted_fix": "restarted the OneDrive sync client",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-4505"
+  },
+  {
+    "id": "NEGKB-490",
+    "ci_class": "power-automate-gateway",
+    "failure_signature": "Azure AD Connect sync interruption",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the exclusion group itself was scoped incorrectly",
+    "source_incident_id": "INC-7217"
+  },
+  {
+    "id": "NEGKB-491",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Dataverse plugin execution timeout",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-1732"
+  },
+  {
+    "id": "NEGKB-492",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Teams channel message delivery delayed",
+    "attempted_fix": "cleared the Teams client cache",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-6080"
+  },
+  {
+    "id": "NEGKB-493",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Teams meeting audio/video degraded",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-3486"
+  },
+  {
+    "id": "NEGKB-494",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Power Apps canvas app failing to load",
+    "attempted_fix": "restarted the Exchange Online transport queue",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-7453"
+  },
+  {
+    "id": "NEGKB-495",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "Teams channel message delivery delayed",
+    "attempted_fix": "requested a Dataverse capacity add-on",
     "reason_failed": "the Conditional Access policy was reapplied by the next sync cycle",
-    "source_incident_id": "INC-1719"
+    "source_incident_id": "INC-7707"
+  },
+  {
+    "id": "NEGKB-496",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "access denied on SharePoint site collection",
+    "attempted_fix": "rebuilt the SharePoint search index",
+    "reason_failed": "the underlying quota policy was tenant-level, not site-level",
+    "source_incident_id": "INC-8490"
+  },
+  {
+    "id": "NEGKB-497",
+    "ci_class": "exchange-online-connector",
+    "failure_signature": "Power Automate flow run failures (throttled)",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "root cause was a broken permission-inheritance chain, not a simple access grant",
+    "source_incident_id": "INC-8793"
+  },
+  {
+    "id": "NEGKB-498",
+    "ci_class": "sharepoint-site",
+    "failure_signature": "Teams channel message delivery delayed",
+    "attempted_fix": "recycled the Power Automate connection",
+    "reason_failed": "the index rebuild completed but the crawl schedule was never re-enabled",
+    "source_incident_id": "INC-4379"
+  },
+  {
+    "id": "NEGKB-499",
+    "ci_class": "teams-notification-queue",
+    "failure_signature": "access denied on SharePoint site collection",
+    "attempted_fix": "requested a Dataverse capacity add-on",
+    "reason_failed": "fix addressed a symptom, underlying license assignment was still missing",
+    "source_incident_id": "INC-8859"
+  },
+  {
+    "id": "NEGKB-500",
+    "ci_class": "azure-ad-connect-sync",
+    "failure_signature": "OneDrive sync stuck / not syncing",
+    "attempted_fix": "increased the connector throttling limit",
+    "reason_failed": "the timeout was caused by a downstream dependency, not the plugin itself",
+    "source_incident_id": "INC-4079"
   }
 ]

@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Verascope",
+  title: "OpsFlow",
   description: "AI-verified IT operations console",
 };
 

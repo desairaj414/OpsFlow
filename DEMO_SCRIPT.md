@@ -1,4 +1,4 @@
-# Verascope — Jury Pitch & Demo Script
+# OpsFlow — Jury Pitch & Demo Script
 
 ---
 
@@ -6,7 +6,7 @@
 
 > "IT maintenance teams patch, tune, and fix incidents by hand, across tools that don't talk to
 > each other — the monitoring stack, the ticketing system, and the CMDB all disagree, and the same
-> incident gets re-diagnosed from scratch every time. Verascope is a supervised team of AI agents
+> incident gets re-diagnosed from scratch every time. OpsFlow is a supervised team of AI agents
 > that turns that manual relay race into one auditable pipeline: an alert — or a voice note, or a
 > screenshot — comes in, gets correlated, enriched with real evidence, diagnosed with a citation
 > for every claim, planned from an approved runbook only, gated by deterministic policy rules,

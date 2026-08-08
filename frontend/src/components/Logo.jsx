@@ -1,9 +1,9 @@
-// Verascope's mark: a scope/reticle — two concentric rings and a center dot, the instrument that
+// OpsFlow's mark: a scope/reticle — two concentric rings and a center dot, the instrument that
 // brings a true signal into focus out of noise. That's literally the product's job (500 raw alerts
 // -> one verified root cause; "alert cleared" -> a fix confirmed to actually hold), so the mark
 // isn't decoration, it's the thesis. Gradient runs signal-teal -> a cooler blue for depth.
 export function LogoMark({ size = 28, className }) {
-  const id = "verascope-logo-gradient";
+  const id = "opsflow-logo-gradient";
   return (
     <svg width={size} height={size} viewBox="0 0 32 32" fill="none" className={className} aria-hidden="true">
       <defs>
@@ -23,7 +23,7 @@ export function Wordmark({ markSize = 22, textClassName = "text-base font-semibo
   return (
     <div className={`flex items-center gap-2 ${className || ""}`}>
       <LogoMark size={markSize} />
-      <span className={textClassName}>Verascope</span>
+      <span className={textClassName}>OpsFlow</span>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-# Verascope — Architecture (Final, as-built)
+# OpsFlow — Architecture (Final, as-built)
 
 > **AI-verified operations console** for IT application maintenance.
 > Built for TCS AI Fridays Season 2 — Regional Round.
@@ -17,7 +17,7 @@ IT maintenance teams repeat three classes of work forever — **patching**, **pe
 **incident resolution** — by hand, across tools that don't talk to each other: the monitoring stack
 knows something's wrong, the ticketing system holds the human conversation, the CMDB is supposed to
 know what's deployed and what depends on what, and the three don't agree. The same incident gets
-diagnosed from scratch by a different engineer every time. Verascope is a coordinated team of AI
+diagnosed from scratch by a different engineer every time. OpsFlow is a coordinated team of AI
 agents — each owning one narrow step, handing off under supervision — that turns that manual relay
 race into a repeatable, auditable workflow: **signal received → ticket closed, CMDB updated,
 knowledge captured.**
@@ -28,7 +28,7 @@ knowledge captured.**
 
 ```
 ┌──────────────────────────────────────────────────────────────────────┐
-│ PRESENTATION        Next.js + shadcn/ui cockpit ("Verascope")        │
+│ PRESENTATION        Next.js + shadcn/ui cockpit ("OpsFlow")        │
 │                      Overview · Ops Board · Tickets · Incident       │
 │                      Workspace · Autonomy Ladder + floating chat     │
 ├──────────────────────────────────────────────────────────────────────┤
@@ -182,7 +182,7 @@ Full schema: `.knowledge/schema-db.md`.
 
 ---
 
-## 9. Frontend — Verascope cockpit
+## 9. Frontend — OpsFlow cockpit
 
 Next.js + shadcn/ui. Role-gated (server-enforced, not cosmetic): **Ops Engineer**, **Approver**,
 **Admin** — all three share the same 5 main tabs (Overview, Ops Board, Tickets, Incident Workspace,

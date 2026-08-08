@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* Verascope token system — light, card-based, data-forward. "Signal" (a deep ocean-teal, not the
+/* OpsFlow token system — light, card-based, data-forward. "Signal" (a deep ocean-teal, not the
    generic AI-dashboard neon-cyan) is the one brand color: it appears in the logo, primary actions,
    the active-nav state, and the "system-verified" badge — one hue carrying one meaning throughout
    the product ("the system vouches for this"), not decoration. Chart-mark pairs validated for

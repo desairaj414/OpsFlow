@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 // Backend's `_alert_event_stream` (main.py) sends the first 20 backlog rows as an immediate
-// catch-up burst, then live-tails one at a time every 10s — this mirrors that burst size so "new"
+// catch-up burst, then live-tails one at a time every 5s — this mirrors that burst size so "new"
 // here means genuinely newly-arrived, not the initial page-load replay.
 const INITIAL_BACKLOG_SIZE = 20;
 const MAX_NOTIFICATIONS = 20;
@@ -31,7 +31,12 @@ export function useAutoTriage({ alerts, tickets, incident, refetchTickets }) {
 
   useEffect(() => {
     if (alerts.length === 0) return;
-    const ticketedCis = new Set(tickets.map((t) => t.cmdb_ci));
+    // linked_incident_id is only ever set by a real workflow run — bulk-seeded historical backlog
+    // (db/init_db.py's populate_local_tickets_bulk) leaves it null on purpose, since those rows
+    // were never actually run through the agent chain. Without this filter, every CI's several
+    // historical tickets made ticketedCis contain nearly every CI, so newly-arrived alerts were
+    // silently skipped here — auto-triage looked idle even though nothing had actually diagnosed them.
+    const ticketedCis = new Set(tickets.filter((t) => t.linked_incident_id).map((t) => t.cmdb_ci));
     const queuedCis = new Set(queueRef.current.map((q) => q.ciId));
 
     // `alerts` is newest-first (useAlertStream prepends) — walk oldest-to-newest so arrival order

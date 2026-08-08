@@ -97,7 +97,7 @@ export default function Home() {
         <RingWatermark />
         <div className="relative mx-auto w-full max-w-sm md:mx-0">
           <LogoMark size={40} />
-          <h1 className="mt-5 text-3xl font-semibold leading-tight text-foreground">Verascope</h1>
+          <h1 className="mt-5 text-3xl font-semibold leading-tight text-foreground">OpsFlow</h1>
           <p className="mt-1 text-sm text-muted-foreground">AI-verified operations console</p>
           <p className="mt-6 max-w-xs text-sm leading-relaxed text-muted-foreground">
             Every incident correlated, diagnosed, and resolved by an auditable AI agent chain — with

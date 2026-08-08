@@ -1,4 +1,4 @@
-# Verascope
+# OpsFlow
 
 **AI-verified operations console for IT application maintenance.**
 
@@ -19,7 +19,7 @@ Built for **TCS AI Fridays Season 2 — Regional Round**
 - A **FastAPI backend** running a 9-step supervised agent chain (Correlate → Enrich → Diagnose →
   Plan → Gate → Approve → Execute → Verify → Sync → Knowledge) over three workflow types
   (incident / patch / performance).
-- A **Next.js frontend** ("the Verascope cockpit") — a role-based ops console with a live alert
+- A **Next.js frontend** ("the OpsFlow cockpit") — a role-based ops console with a live alert
   feed, an incident workspace, a full agent-trace viewer, and a floating chat assistant that
   accepts text, voice, and screenshot uploads.
 - **No real third-party systems.** "ServiceNow" and "Jira" panels you'll see are FastAPI
@@ -121,7 +121,7 @@ copy .env.local.example .env.local
 npm.cmd run dev
 ```
 
-Open **http://localhost:3000** — you should land on the Verascope login screen.
+Open **http://localhost:3000** — you should land on the OpsFlow login screen.
 
 ---
 

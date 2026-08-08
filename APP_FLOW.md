@@ -1,4 +1,4 @@
-# Verascope — App & Data Flow
+# OpsFlow — App & Data Flow
 
 How data actually moves through the system, end to end, for each entry point. Pairs with
 `ARCHITECTURE.md` (the "what") — this is the "where does the data go" doc.

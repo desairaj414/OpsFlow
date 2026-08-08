@@ -1,4 +1,4 @@
-# Verascope — Requirements & Setup Reference
+# OpsFlow — Requirements & Setup Reference
 
 Detailed companion to `README.md`'s quick start. Read this if the quick start didn't work, if you
 need the exact dependency list before installing anything, or if you're setting this up on a
@@ -119,7 +119,7 @@ npm.cmd install
 copy .env.local.example .env.local
 npm.cmd run dev
 ```
-Confirm: `http://localhost:3000` shows the Verascope login screen, and the browser console has no
+Confirm: `http://localhost:3000` shows the OpsFlow login screen, and the browser console has no
 red CORS errors.
 
 ### 3.3 Run the backend test suite (optional, confirms everything wired correctly)

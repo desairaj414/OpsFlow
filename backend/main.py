@@ -327,11 +327,11 @@ async def _alert_event_stream():
         yield f"data: {json.dumps(alert)}\n\n"
         await asyncio.sleep(0.15)
 
-    # Live tail: one alert every 10s, not a burst — this is meant to read as live monitoring
+    # Live tail: one alert every 5s, not a burst — this is meant to read as live monitoring
     # arriving at a human-watchable pace, not a firehose replay of the remaining backlog. Was
     # up to 20 alerts every 3s, which blew through the rest of the 500-alert seed file in under
     # two minutes and made both the feed and auto-triage (useAutoTriage.js) fire far faster than
-    # anyone could reasonably watch.
+    # anyone could reasonably watch; 10s (a later revision) read as too slow for a live demo.
     while True:
         conn = sqlite3.connect(DB_PATH)
         try:
@@ -342,7 +342,7 @@ async def _alert_event_stream():
             last_id = alert["id"]
             yield f"data: {json.dumps(alert)}\n\n"
         yield ": keep-alive\n\n"
-        await asyncio.sleep(10)
+        await asyncio.sleep(5)
 
 
 @app.get("/alerts/stream")
@@ -485,19 +485,41 @@ async def _persist_ticket_snapshot(incident_id: str, ci: dict, workflow_type: st
 
     conn = sqlite3.connect(DB_PATH)
     try:
-        # ServiceNow-only, deliberately: an alert-driven diagnosis raises exactly one ticket, in
-        # ITSM — not also a Jira-shaped tracker issue. A prior version additionally created a
-        # tracker issue for performance-tuning work, which meant "Ticket History"/Tickets could
-        # show a Jira entry for something that was never touched via Jira, confusing given nothing
-        # in this app's alert flow talks to Jira. `mcp_servers/tracker_mcp.py` and its simulator
-        # are unaffected/still real — just not auto-invoked from this path anymore.
-        conn.execute(
-            "INSERT INTO local_tickets (system, external_id, cmdb_ci, workflow_type, status_raw, status_normalized, "
-            "priority, summary, opened_at, closed_at, linked_incident_id, trace_snapshot, created_at) "
-            "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
-            ("itsm", sys_id, ci["id"], workflow_type, ticket["state"], status_normalized, ticket["priority"],
-             ticket["short_description"], ticket["opened_at"], ticket["closed_at"], incident_id, trace_json, now),
-        )
+        # Approving a plan has no checkpointing to resume (see IncidentWorkspace.jsx's
+        # ApprovalSection) — the frontend re-triggers a completely fresh /workflows/run for the
+        # same CI instead, which lands here a second time with a new incident_id. Left as a plain
+        # INSERT, that second call orphaned a duplicate: the original ticket stayed stuck at
+        # needs_approval forever (nothing ever revisits it) while the real outcome showed up as an
+        # unrelated-looking second row. Since 'needs_approval' is exclusively a live-run status —
+        # never present in bulk-seeded historical data — a CI with a row still sitting at
+        # needs_approval right now is (in the normal Ops Board flow, which hides Diagnose once a
+        # CI already has an open ticket) almost certainly this same approval's own pending ticket.
+        # Update that row in place instead of inserting an orphan. Matched on cmdb_ci alone (not
+        # also workflow_type) because the approval re-run doesn't currently preserve the original
+        # plan's workflow_type. Narrow edge case this doesn't cover: a second, genuinely unrelated
+        # diagnosis kicked off for the same CI (outside the normal UI guard, e.g. directly via API)
+        # while an earlier one is still pending — rare enough not to be worth more machinery here.
+        pending = conn.execute(
+            "SELECT id FROM local_tickets WHERE cmdb_ci = ? AND status_normalized = 'needs_approval' "
+            "ORDER BY id DESC LIMIT 1",
+            (ci["id"],),
+        ).fetchone()
+        if pending:
+            conn.execute(
+                "UPDATE local_tickets SET system = ?, external_id = ?, workflow_type = ?, status_raw = ?, "
+                "status_normalized = ?, priority = ?, summary = ?, closed_at = ?, linked_incident_id = ?, "
+                "trace_snapshot = ? WHERE id = ?",
+                ("itsm", sys_id, workflow_type, ticket["state"], status_normalized, ticket["priority"],
+                 ticket["short_description"], ticket["closed_at"], incident_id, trace_json, pending[0]),
+            )
+        else:
+            conn.execute(
+                "INSERT INTO local_tickets (system, external_id, cmdb_ci, workflow_type, status_raw, status_normalized, "
+                "priority, summary, opened_at, closed_at, linked_incident_id, trace_snapshot, created_at) "
+                "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                ("itsm", sys_id, ci["id"], workflow_type, ticket["state"], status_normalized, ticket["priority"],
+                 ticket["short_description"], ticket["opened_at"], ticket["closed_at"], incident_id, trace_json, now),
+            )
         conn.commit()
     finally:
         conn.close()
@@ -606,6 +628,46 @@ def get_ticket(ticket_id: int, current_user: str = Depends(get_current_user)):
     return ticket
 
 
+# ---------------- Pending patches (Ops Board "Pending Patches" — the patch workflow's own entry
+# point, parallel to the alert feed's "Diagnose" for incident/performance) ----------------
+@app.get("/patches/pending")
+def list_pending_patches(ci_id: str | None = None, current_user: str = Depends(get_current_user)):
+    query = (
+        "SELECT patch_inventory.id, patch_inventory.ci_id, cmdb_ci.display_name, patch_inventory.vendor, "
+        "patch_inventory.title, patch_inventory.severity, patch_inventory.cve_ids, patch_inventory.released_at, "
+        "patch_inventory.sla_days, patch_inventory.status "
+        "FROM patch_inventory LEFT JOIN cmdb_ci ON cmdb_ci.id = patch_inventory.ci_id "
+        "WHERE patch_inventory.status = 'pending'"
+    )
+    params: list[str] = []
+    if ci_id:
+        query += " AND patch_inventory.ci_id = ?"
+        params.append(ci_id)
+    # Worst severity first, then oldest release first — the two things that would actually drive
+    # which CI a human patches first (SLA pressure isn't a stored column, severity is its proxy).
+    query += (
+        " ORDER BY CASE patch_inventory.severity "
+        "WHEN 'critical' THEN 0 WHEN 'high' THEN 1 WHEN 'medium' THEN 2 ELSE 3 END, "
+        "patch_inventory.released_at ASC"
+    )
+
+    conn = sqlite3.connect(DB_PATH)
+    try:
+        rows = conn.execute(query, params).fetchall()
+    finally:
+        conn.close()
+    return {
+        "patches": [
+            {
+                "id": r[0], "ci_id": r[1], "ci_display_name": r[2], "vendor": r[3], "title": r[4],
+                "severity": r[5], "cve_ids": json.loads(r[6]) if r[6] else [], "released_at": r[7],
+                "sla_days": r[8], "status": r[9],
+            }
+            for r in rows
+        ]
+    }
+
+
 # ---------------- Integration settings (future real ServiceNow/Jira instance — inert until set) ----------------
 class IntegrationSettingsRequest(BaseModel):
     servicenow_instance_url: str | None = None
@@ -674,7 +736,7 @@ def sync_tickets(current_user: str = Depends(get_current_user)):
 CHAT_MODEL = "azure/genailab-maas-gpt-4.1-nano"  # same fast/cheap structured-JSON model Planner uses
 
 APP_HELP_CONTEXT = """
-Verascope is an AI-verified IT operations console for a Microsoft 365 / Power Platform estate
+OpsFlow is an AI-verified IT operations console for a Microsoft 365 / Power Platform estate
 (SharePoint, OneDrive, Power Platform, Teams, Exchange, Dataverse, Azure AD).
 
 Main tabs:
@@ -874,7 +936,7 @@ async def _chat_handle_decision(target_ref: str | None, decision: str, reason: s
 
 async def _chat_app_help(question: str) -> str:
     llm = get_llm(model=CHAT_MODEL, temperature=0)
-    prompt = f"""You are a help assistant embedded in the Verascope IT-ops console. Answer ONLY
+    prompt = f"""You are a help assistant embedded in the OpsFlow IT-ops console. Answer ONLY
 using the facts below about THIS app. If the question isn't covered by these facts, say plainly
 that you don't have that information rather than guessing — never answer general IT/ServiceNow/
 Jira questions unrelated to this specific app. Keep the answer to 2-4 sentences.
