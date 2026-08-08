@@ -25,6 +25,12 @@ def _get_chroma_client():
 
 
 def _embed(text: str) -> list[float]:
+    # Deliberately NO offline fallback here (unlike api_client.get_llm/get_embeddings): every
+    # existing Chroma collection (runbooks/postmortems/ticket_history) is already indexed with the
+    # enterprise embedding model's 3072-dim vectors. A query-time-only fallback to Ollama's 1024-dim
+    # gte-large would raise Chroma's InvalidDimensionException on every query, not degrade gracefully
+    # — confirmed by testing directly. A real offline embedding fallback here would need a fully
+    # separate, Ollama-indexed collection, not a same-collection swap; out of scope for now.
     resp = _http_client.post(
         f"{config.BASE_URL}/embeddings",
         json={"model": config.DEFAULT_EMBED_MODEL, "input": text},

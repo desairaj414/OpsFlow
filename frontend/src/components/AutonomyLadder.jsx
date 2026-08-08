@@ -35,8 +35,7 @@ export default function AutonomyLadder({ apiBase, token }) {
   return (
     <div className="space-y-3">
       <p className="text-xs text-muted-foreground">
-        Static status per runbook — this is a display, not a live promotion engine (deliberate
-        scope cut, see decisions-log.md). No runbook has been promoted yet in this session.
+        Current authority level per runbook. No runbook has been promoted yet in this session.
       </p>
       {error && <p className="text-sm text-red-500">{error}</p>}
       {!data && !error && <p className="text-sm text-muted-foreground">Loading…</p>}

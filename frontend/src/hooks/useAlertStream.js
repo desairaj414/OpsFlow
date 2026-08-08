@@ -19,7 +19,10 @@ export function useAlertStream({ apiBase, token, maxAlerts = 50 }) {
     source.onerror = () => setConnectionStatus("disconnected");
     source.onmessage = (event) => {
       const alert = JSON.parse(event.data);
-      setAlerts((prev) => [alert, ...prev].slice(0, maxAlerts));
+      // A fresh EventSource (e.g. reconnecting because "view as" or login just reissued the JWT,
+      // so `token` changed) replays the backend's catch-up backlog from scratch — dedupe by id so
+      // that reconnect doesn't duplicate already-seen alerts (and their React keys) in the feed.
+      setAlerts((prev) => (prev.some((a) => a.id === alert.id) ? prev : [alert, ...prev].slice(0, maxAlerts)));
     };
 
     return () => source.close();

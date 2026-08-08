@@ -90,3 +90,14 @@ def test_patch_workflow_runs_through_planner_with_patching_runbook_class():
     planner_result = next((r for r in outcome["trace"] if r.agent_name == "planner"), None)
     if planner_result:
         assert planner_result.turns_used >= 1
+        # STABLE_LOW_BR_CI_ID (CI-0059) is a guaranteed-coverage CI in data_gen/patch_inventory.py
+        # — the intelligent-scheduling maintenance window must be computed for a real patch run.
+        window = planner_result.result.get("maintenance_window")
+        assert window is not None
+        assert window["ci_id"] == STABLE_LOW_BR_CI_ID
+        assert window["proposed_window"] is not None
+    enrichment_result = next((r for r in outcome["trace"] if r.agent_name == "enrichment"), None)
+    if enrichment_result:
+        source_types = {e["source_type"] for e in enrichment_result.result["evidence"]}
+        assert "patch_inventory" in source_types
+        assert "change_calendar" in source_types

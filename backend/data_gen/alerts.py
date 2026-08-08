@@ -91,6 +91,7 @@ def generate_alerts(cis: list[dict]) -> list[dict]:
             "category": category,
             "severity": severity,
             "received_at": ts,
+            "summary": summary,
             "raw_payload": raw,
         })
     return alerts
@@ -117,4 +118,5 @@ if __name__ == "__main__":
     assert sources == {"prometheus", "snmp", "apm"}, f"missing a shape: {sources}"
     ci_ids = {ci["id"] for ci in _load_cis()}
     assert all(a["ci_id"] in ci_ids for a in alerts), "alert references a CI not in cmdb.json"
+    assert all(a.get("summary") for a in alerts), "alert missing a human-readable summary"
     print("\nSELF-TEST PASSED: volume, shape variety, and CI references all valid.")

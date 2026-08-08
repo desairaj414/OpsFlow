@@ -4,53 +4,11 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { summarizeResult } from "@/lib/agentSummary";
 
 // LLM-calling agents produce unverified proposals; the deterministic ones (no LLM call, rule-based
 // or measurement-based) are a system check, not a model guess — that's the line the badge draws.
 const LLM_AGENTS = new Set(["diagnosis", "planner"]);
-
-// Turns each agent's raw `result` payload into the plain-language line a juror actually wants —
-// "what did this agent conclude", not just the metadata around the call. One case per agent_name
-// because each agent's result shape is genuinely different (api-contract.md SpecialistResult.result
-// is agent-specific by design); no shared shape to generalize over.
-function summarizeResult(entry) {
-  const r = entry.result || {};
-  switch (entry.agent_name) {
-    case "enrichment": {
-      const count = r.evidence?.length ?? 0;
-      if (!count) return "No evidence found for this CI — nothing to hand off to Diagnosis.";
-      const sources = [...new Set(r.evidence.map((e) => e.source_type))].join(", ");
-      return `Gathered ${count} piece${count === 1 ? "" : "s"} of evidence (${sources}) to hand to Diagnosis.`;
-    }
-    case "diagnosis": {
-      const top = r.hypotheses?.[0];
-      if (!top) return "Could not form a supportable hypothesis from the evidence gathered.";
-      return `Top hypothesis (${(top.confidence * 100).toFixed(0)}% confidence): "${top.text}"`;
-    }
-    case "planner": {
-      const steps = r.steps?.length ?? 0;
-      if (!steps) return "No applicable runbook found — no plan could be drafted.";
-      const gate = r.policy_gate_result?.decision;
-      const gateNote = gate ? ` · Policy Gate: ${gate}` : "";
-      return `Drafted a ${steps}-step plan from runbook ${r.runbook_id || "?"}${gateNote}.`;
-    }
-    case "verification": {
-      const cleared = r.alert_cleared ? "alert cleared" : "alert still firing";
-      const probe = r.health_probe_recovered ? "health probe recovered" : "health probe not recovered";
-      return `${cleared}, ${probe} → verdict: ${r.status}.`;
-    }
-    case "sync": {
-      const state = r.ticket?.state === "2" ? "left open" : "closed";
-      return `Ticket ${r.ticket?.sys_id ?? "?"} ${state}; CMDB update proposed.`;
-    }
-    case "knowledge": {
-      if (r.negative_kb_entry) return "Fix did not hold — recorded to the Negative KB so it isn't retried blindly.";
-      return "Resolution verified — no failure pattern to record.";
-    }
-    default:
-      return null;
-  }
-}
 
 function HandoffCard({ entry }) {
   const summary = summarizeResult(entry);
@@ -83,8 +41,8 @@ function HandoffCard({ entry }) {
 }
 
 // Agent Trace Viewer (PRD §7 centrepiece): handoffs, model, tokens, latency, transport (in-process
-// vs A2A), modality, viewable Agent Card. Reads the shared `incident` run from CockpitShell — the
-// golden-path bar's "Start incident" is what triggers a run, not a button in this tab.
+// vs A2A), modality, viewable Agent Card. Reads the shared `incident` run from CockpitShell — Ops
+// Board's "Diagnose" (or an auto-diagnosed alert, or the notification bell) is what triggers a run.
 export default function AgentTrace({ incident }) {
   const { run, loading, error } = incident;
   const [showCard, setShowCard] = useState(false);
@@ -92,9 +50,9 @@ export default function AgentTrace({ incident }) {
   if (!run && !loading && !error) {
     return (
       <p className="text-sm text-muted-foreground">
-        No active incident — use the golden-path bar above ("Start incident") to trigger a real
-        run through the actual agent chain (Enrichment → Diagnosis (A2A) → Planner → Verification
-        → Sync → Knowledge).
+        No active incident — diagnose an alert in Ops Board to trigger a real run through the
+        actual agent chain (Enrichment → Diagnosis (A2A) → Planner → Verification → Sync →
+        Knowledge).
       </p>
     );
   }

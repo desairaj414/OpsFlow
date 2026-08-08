@@ -83,6 +83,9 @@ def chunk_postmortem(path: str) -> list[Chunk]:
             chunk_id=f"{pm_id}-{heading.lower().replace(' ', '_')}",
             content=f"{heading}: {content}",
             heading_path=f"{pm_id} › {heading}",
-            metadata={"postmortem_id": pm_id},
+            # Passes through any other frontmatter key (e.g. doc_type/topic on a Knowledge Base
+            # article) so callers can tag freeform content without this function knowing about every
+            # possible tag — postmortem_id always wins over a same-named frontmatter key.
+            metadata={**frontmatter, "postmortem_id": pm_id},
         ))
     return chunks

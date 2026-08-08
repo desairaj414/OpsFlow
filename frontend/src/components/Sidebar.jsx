@@ -1,216 +1,241 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { Mic, Radio, Settings, PlayCircle, ScrollText, UploadCloud } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Radio, Settings, PlayCircle, ScrollText, Users, BookOpen, PanelLeftClose, PanelLeftOpen, Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { cn, findTraceEntry } from "@/lib/utils";
-
-const ROLES = ["Ops Engineer", "Approver", "Admin"];
+import { Modal } from "@/components/ui/modal";
+import { cn } from "@/lib/utils";
+import { ROLE_LABELS, canSeePanel } from "@/lib/roles";
+import { useTheme } from "@/hooks/useTheme";
+import ScenarioLauncherPanel from "@/components/panels/ScenarioLauncherPanel.jsx";
+import AuditLogPanel from "@/components/panels/AuditLogPanel.jsx";
+import ModelThresholdConfigPanel from "@/components/panels/ModelThresholdConfigPanel.jsx";
+import UserManagementPanel from "@/components/panels/UserManagementPanel.jsx";
+import KnowledgeBasePanel from "@/components/ChunkInspector.jsx";
 
 const NAV_ITEMS = [
-  { key: "ingestion", label: "Ingestion / Admin", icon: UploadCloud },
-  { key: "config", label: "Model & Threshold Config", icon: Settings },
-  { key: "scenarios", label: "Scenario Launcher", icon: PlayCircle },
-  { key: "audit", label: "Audit Log", icon: ScrollText },
+  { key: "users", label: "User Management", icon: Users, Panel: UserManagementPanel },
+  { key: "config", label: "Model & Threshold Config", icon: Settings, Panel: ModelThresholdConfigPanel },
+  { key: "scenarios", label: "Scenario Launcher", icon: PlayCircle, Panel: ScenarioLauncherPanel },
+  { key: "audit", label: "Audit Log", icon: ScrollText, Panel: AuditLogPanel },
+  // Reference/admin content (browse chunks, upload runbooks/articles) — not needed on every
+  // screen the way Ops Board/Incident Workspace are, so it lives here now instead of a main tab.
+  { key: "knowledge", label: "Knowledge Base", icon: BookOpen, Panel: KnowledgeBasePanel },
 ];
 
-// Every one of the 6 closed-vocabulary voice intents (backend/intake/voice_intent.py) gets an
-// honest outcome here — only approve_x/reject_x are actually wired to an action. The other 4 are
-// recognized and shown, not silently ignored, but this build has no incidents-list/scenario-library
-// endpoint to act on them with.
-const ACTIONABLE_INTENTS = new Set(["approve_x", "reject_x"]);
+// Push-to-talk used to live here (PRD §7's original voice modality). Moved into the floating
+// ChatWidget's mic button by explicit request — one conversational surface instead of two, and it
+// gets the assistant's fuller natural-language handling (not just the closed-vocabulary intent
+// parser) for free. See ChatWidget.jsx and decisions-log.md's newest entry.
 
-// Global push-to-talk (PRD §7): records via the browser mic, transcribes+parses through the real
-// backend pipeline (Whisper -> scrub -> closed-vocabulary intent parser), and requires an explicit
-// on-screen confirmation before any side-effecting intent commits — never fires on a raw transcript.
-function PushToTalk({ apiBase, token, incident }) {
-  const [recording, setRecording] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [signal, setSignal] = useState(null);
+// Admin-only "View as" — scoped impersonation for demo/testing, NOT a self-service role picker
+// (real auth: your role is fixed to your account from POST /auth/login; only an already-
+// authenticated Admin can borrow another role, via the equally real POST /auth/view-as, which
+// signs a new token that still honestly carries who's really logged in via real_* claims).
+function ViewAsControl({ apiBase, token, onTokenChange, identity }) {
+  const [users, setUsers] = useState([]);
+  const [switching, setSwitching] = useState(false);
   const [error, setError] = useState("");
-  const [committed, setCommitted] = useState(null); // "approved" | "rejected"
-  const recorderRef = useRef(null);
 
-  async function startRecording() {
+  const isViewingAs = Boolean(identity.realUsername);
+  const canUseViewAs = identity.role === "admin" || isViewingAs;
+
+  useEffect(() => {
+    if (!canUseViewAs || isViewingAs) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch(`${apiBase}/users`, { headers: { Authorization: `Bearer ${token}` } });
+        if (res.ok && !cancelled) setUsers(await res.json());
+      } catch {
+        // Convenience picker, not load-bearing — silently leave it empty on failure.
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [apiBase, token, canUseViewAs, isViewingAs]);
+
+  async function viewAs(userId) {
+    if (!userId) return;
+    setSwitching(true);
     setError("");
-    setSignal(null);
-    setCommitted(null);
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const mimeType = MediaRecorder.isTypeSupported("audio/webm") ? "audio/webm" : "";
-      const recorder = new MediaRecorder(stream, mimeType ? { mimeType } : undefined);
-      const chunks = [];
-      recorder.ondataavailable = (e) => chunks.push(e.data);
-      recorder.onstop = async () => {
-        stream.getTracks().forEach((t) => t.stop());
-        const blob = new Blob(chunks, { type: recorder.mimeType || "audio/webm" });
-        await submitVoice(blob);
-      };
-      recorder.start();
-      recorderRef.current = recorder;
-      setRecording(true);
-    } catch (err) {
-      setError(`Microphone access failed: ${err.message}`);
-    }
-  }
-
-  function stopRecording() {
-    recorderRef.current?.stop();
-    setRecording(false);
-  }
-
-  async function submitVoice(blob) {
-    setLoading(true);
-    try {
-      const ext = blob.type.includes("webm") ? "webm" : blob.type.includes("ogg") ? "ogg" : "wav";
-      const form = new FormData();
-      form.append("file", blob, `voice.${ext}`);
-      const res = await fetch(`${apiBase}/intake/voice`, {
+      const res = await fetch(`${apiBase}/auth/view-as`, {
         method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
-        body: form,
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ user_id: userId }),
       });
       if (!res.ok) throw new Error(`Request failed (${res.status})`);
-      setSignal(await res.json());
+      onTokenChange((await res.json()).access_token);
     } catch (err) {
       setError(err.message);
     } finally {
-      setLoading(false);
+      setSwitching(false);
     }
   }
 
-  const run = incident.run;
-  const targetId = signal?.candidate_alert_refs?.[0];
-  const targetMatchesPending = run?.status === "pending_approval" && targetId === run.incident_id;
-
-  async function commit() {
-    if (!targetMatchesPending) return;
-    const decision = signal.parsed_intent === "approve_x" ? "approve" : "reject";
-    // MaintenanceSignal doesn't carry the reject intent's captured "reason" group separately
-    // (voice_path.py only lifts ci_id/target_id into the signal) — the full transcript already
-    // contains it verbatim for a "reject X with reason Y" command, so use that, not a fabricated field.
-    const reason = `voice-${decision}d: "${signal.extracted_text}"`;
+  async function stopViewingAs() {
+    setSwitching(true);
+    setError("");
     try {
-      const res = await fetch(`${apiBase}/workflows/decision`, {
+      const res = await fetch(`${apiBase}/auth/stop-view-as`, {
         method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ incident_id: run.incident_id, decision, reason }),
+        headers: { Authorization: `Bearer ${token}` },
       });
       if (!res.ok) throw new Error(`Request failed (${res.status})`);
-      setCommitted(decision === "approve" ? "approved" : "rejected");
-      if (decision === "approve") {
-        const enrichment = findTraceEntry(run.trace, "enrichment");
-        const ciId = enrichment?.result?.evidence?.[0]?.artifact_id;
-        if (ciId) await incident.triggerRun(ciId, "incident", true);
-      }
+      onTokenChange((await res.json()).access_token);
     } catch (err) {
       setError(err.message);
+    } finally {
+      setSwitching(false);
     }
+  }
+
+  if (!canUseViewAs) return null;
+
+  if (isViewingAs) {
+    return (
+      <div className="rounded-md border border-accent/40 bg-accent-soft p-3">
+        <p className="text-xs text-foreground">
+          Viewing as <span className="font-medium">{identity.displayName}</span> ({ROLE_LABELS[identity.role]})
+        </p>
+        <Button size="sm" variant="outline" className="mt-2 w-full" onClick={stopViewingAs} disabled={switching}>
+          Return to {identity.realDisplayName}
+        </Button>
+        {error && <p className="mt-1 text-xs text-red-500">{error}</p>}
+      </div>
+    );
   }
 
   return (
-    <div className="space-y-2">
-      <Button
-        variant="outline"
-        className="w-full justify-start gap-2"
-        onClick={recording ? stopRecording : startRecording}
-        disabled={loading}
+    <div>
+      <label className="mb-1 block text-xs font-medium text-muted-foreground">View as (admin only)</label>
+      <select
+        className="w-full rounded-md border border-border bg-background px-2 py-2 text-sm focus:border-accent focus:outline-none"
+        value=""
+        onChange={(e) => viewAs(e.target.value)}
+        disabled={switching}
       >
-        <Mic className={cn("h-4 w-4", recording && "text-red-500")} />
-        {recording ? "Stop recording" : loading ? "Transcribing…" : "Push to talk"}
-      </Button>
-      {error && <p className="text-xs text-red-500">{error}</p>}
-      {signal && (
-        <div className="space-y-1 rounded-md border border-border p-2 text-xs">
-          <p>
-            Heard: <span className="italic">&quot;{signal.extracted_text}&quot;</span>
-          </p>
-          <p>
-            Parsed intent: <span className="font-mono">{signal.parsed_intent}</span>
-          </p>
-          {!committed && ACTIONABLE_INTENTS.has(signal.parsed_intent) && (
-            targetMatchesPending ? (
-              <Button size="sm" onClick={commit}>
-                Confirm {signal.parsed_intent === "approve_x" ? "approval" : "rejection"}
-              </Button>
-            ) : (
-              <p className="text-red-500">
-                Target ({targetId ?? "none"}) doesn&apos;t match a pending incident — not acting on it.
-              </p>
-            )
-          )}
-          {!committed && signal.parsed_intent !== "unrecognized" && !ACTIONABLE_INTENTS.has(signal.parsed_intent) && (
-            <p className="text-muted-foreground">
-              Recognized, but not wired to an action in this build (no incidents-list/scenario-library endpoint yet).
-            </p>
-          )}
-          {!committed && signal.parsed_intent === "unrecognized" && (
-            <p className="text-red-500">Not recognized as one of the 6 supported commands.</p>
-          )}
-          {committed && <p className="text-green-600">Committed: {committed}.</p>}
-        </div>
-      )}
+        <option value="">Choose a user to preview their view…</option>
+        {users
+          .filter((u) => u.username !== identity.username)
+          .map((u) => (
+            <option key={u.id} value={u.id}>
+              {u.display_name} — {ROLE_LABELS[u.role] || u.role}
+            </option>
+          ))}
+      </select>
+      {error && <p className="mt-1 text-xs text-red-500">{error}</p>}
     </div>
   );
 }
 
-// Sidebar shell for the cockpit: role switcher, real push-to-talk, and nav into the admin-ish
-// side panels. Panel content behind each nav item is built in later steps.
-export default function Sidebar({ role, onRoleChange, connectionStatus, apiBase, token, incident }) {
+// Sidebar shell: admin-only view-as control and role-gated admin panels.
+// Collapsed by default (icon rail) — expand via the toggle button. Nav items open their panel in a
+// Modal (works identically collapsed or expanded) rather than the old inline expansion, which got
+// cramped inside a 256px-wide sidebar.
+export default function Sidebar({ collapsed, onToggleCollapsed, identity, connectionStatus, apiBase, token, onTokenChange, incident }) {
+  const { theme, toggleTheme } = useTheme();
   const [activePanel, setActivePanel] = useState(null);
+  const visibleNavItems = NAV_ITEMS.filter((item) => canSeePanel(identity.role, item.key));
+  const activeItem = visibleNavItems.find((n) => n.key === activePanel);
+  const ActivePanelComponent = activeItem?.Panel;
+
+  const navButtons = (iconOnly) =>
+    visibleNavItems.map(({ key, label, icon: Icon }) => (
+      <button
+        key={key}
+        onClick={() => setActivePanel(key)}
+        title={label}
+        className={cn(
+          iconOnly
+            ? "rounded-md p-2 text-muted-foreground hover:bg-secondary hover:text-foreground"
+            : "flex items-center gap-2 rounded-md px-3 py-2 text-left text-sm text-muted-foreground hover:bg-secondary hover:text-foreground"
+        )}
+      >
+        <Icon className={iconOnly ? "h-5 w-5" : "h-4 w-4"} />
+        {!iconOnly && label}
+      </button>
+    ));
+
+  const modal = ActivePanelComponent && (
+    <Modal
+      open={Boolean(activePanel)}
+      onClose={() => setActivePanel(null)}
+      title={activeItem.label}
+      className={activePanel === "knowledge" ? "max-w-3xl" : undefined}
+    >
+      <ActivePanelComponent apiBase={apiBase} token={token} incident={incident} identity={identity} />
+    </Modal>
+  );
+
+  if (collapsed) {
+    return (
+      <>
+        <aside className="flex w-14 shrink-0 flex-col items-center gap-3 border-r border-border bg-card py-4">
+          <button
+            onClick={onToggleCollapsed}
+            title="Expand sidebar"
+            className="rounded-md p-2 text-muted-foreground hover:bg-secondary hover:text-foreground"
+          >
+            <PanelLeftOpen className="h-5 w-5" />
+          </button>
+          <Radio className={cn("h-4 w-4", connectionStatus === "live" ? "text-green-600" : "text-red-500")} />
+          {navButtons(true)}
+          <button
+            onClick={toggleTheme}
+            title={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
+            className="mt-auto rounded-md p-2 text-muted-foreground hover:bg-secondary hover:text-foreground"
+          >
+            {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+          </button>
+        </aside>
+        {modal}
+      </>
+    );
+  }
 
   return (
-    <aside className="flex w-64 shrink-0 flex-col gap-6 overflow-y-auto border-r border-border bg-card p-4">
-      <div>
-        <label className="mb-1 block text-xs font-medium text-muted-foreground">Role</label>
-        <select
-          className="w-full rounded-md border border-border bg-background px-2 py-2 text-sm focus:border-accent focus:outline-none"
-          value={role}
-          onChange={(e) => onRoleChange(e.target.value)}
-        >
-          {ROLES.map((r) => (
-            <option key={r} value={r}>
-              {r}
-            </option>
-          ))}
-        </select>
-      </div>
+    <>
+      <aside className="flex w-64 shrink-0 flex-col gap-6 overflow-y-auto border-r border-border bg-card p-4">
+        <div className="flex items-center justify-between">
+          <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Console</span>
+          <div className="flex items-center gap-1">
+            <button
+              onClick={toggleTheme}
+              title={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
+              className="rounded-md p-1.5 text-muted-foreground hover:bg-secondary hover:text-foreground"
+            >
+              {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            </button>
+            <button
+              onClick={onToggleCollapsed}
+              title="Collapse sidebar"
+              className="rounded-md p-1.5 text-muted-foreground hover:bg-secondary hover:text-foreground"
+            >
+              <PanelLeftClose className="h-4 w-4" />
+            </button>
+          </div>
+        </div>
 
-      <div className="flex items-center gap-2 rounded-md border border-border bg-secondary/50 p-3">
-        <Radio
-          className={cn(
-            "h-4 w-4",
-            connectionStatus === "live" ? "text-green-600" : "text-red-500"
+        <ViewAsControl apiBase={apiBase} token={token} onTokenChange={onTokenChange} identity={identity} />
+
+        <div className="flex items-center gap-2 rounded-md border border-border bg-secondary/50 p-3">
+          <Radio className={cn("h-4 w-4", connectionStatus === "live" ? "text-green-600" : "text-red-500")} />
+          <span className="text-xs text-muted-foreground">
+            Live feed: {connectionStatus === "live" ? "connected" : connectionStatus}
+          </span>
+        </div>
+
+        <nav className="flex flex-col gap-1">
+          {navButtons(false)}
+          {visibleNavItems.length === 0 && (
+            <p className="px-3 py-2 text-xs text-muted-foreground">No admin panels available for this role.</p>
           )}
-        />
-        <span className="text-xs text-muted-foreground">
-          Live feed: {connectionStatus === "live" ? "connected" : connectionStatus}
-        </span>
-      </div>
-
-      <PushToTalk apiBase={apiBase} token={token} incident={incident} />
-
-      <nav className="flex flex-col gap-1">
-        {NAV_ITEMS.map(({ key, label, icon: Icon }) => (
-          <button
-            key={key}
-            onClick={() => setActivePanel(activePanel === key ? null : key)}
-            className={cn(
-              "flex items-center gap-2 rounded-md border-l-2 border-transparent px-3 py-2 text-left text-sm text-muted-foreground hover:bg-secondary hover:text-foreground",
-              activePanel === key && "border-accent bg-accent-soft font-medium text-foreground"
-            )}
-          >
-            <Icon className="h-4 w-4" />
-            {label}
-          </button>
-        ))}
-      </nav>
-
-      {activePanel && (
-        <p className="rounded-md border border-dashed border-border p-3 text-xs text-muted-foreground">
-          {NAV_ITEMS.find((n) => n.key === activePanel)?.label} panel not yet built.
-        </p>
-      )}
-    </aside>
+        </nav>
+      </aside>
+      {modal}
+    </>
   );
 }

@@ -114,3 +114,149 @@ turns up a reason one should change, stop and tell the human; do not edit this l
   `gpt-4o-mini` (already used for 3 other roles) rather than consolidating further. Wired into
   `backend/.env` `HANDBOOK_MODELS`, re-verified end-to-end via `smoke_test.py`.
 - **Date:** 2026-08-07
+
+- **Decision:** Re-theme the entire simulated domain (all 200 CIs, alerts, runbooks) from generic
+  IT infrastructure (web-server/db-server/load-balancer/...) to Microsoft 365 & Power Platform
+  business services (SharePoint, OneDrive, Power Platform, Teams, Exchange Online, Dataverse, Azure
+  AD) — done as a mechanical relabelling of `data_gen`'s fixed-length seeded pools, not a data
+  regeneration, so every CI's environment/criticality/blast-radius/relationships and every alert's
+  ci_id/category/severity mapping stayed identical to pre-pivot (verified by spot-check + the full
+  84/84 backend suite). Alongside this: per-tab plain-language explainer copy and a Microsoft-
+  admin-center-styled visual redesign (navy header, azure accent tokens, underline tab nav).
+- **Alternatives considered:** re-theme only the hero/demo-path CIs and leave the ~190 background
+  CIs generic; a neutral (non-Microsoft-branded) enterprise SaaS visual style instead of the
+  admin-center direction.
+- **Rationale:** Human's explicit call, made off the original phase plan (between Phase 4 close and
+  Phase 5 start) — the generic IT-infra framing and undocumented tab purposes read as too technical
+  for a jury audience. Full-domain re-theme chosen over hero-only so a juror clicking anywhere in
+  Ops Board/Drift Queue/etc. sees the same theme, not just the scripted golden path. See
+  `state-progress.md` LAST VERIFIED STEP for the full implementation record.
+- **Date:** 2026-08-07
+
+- **Decision:** SUPERSEDES the PRD §4.3 "No real authentication" call above (originally: "zero
+  marginal credit, real cost... Role switcher is simulated identity"). Implement real
+  authentication: a `users` table (replaces `profiles`) with per-account salted PBKDF2-HMAC-SHA256
+  password hashes (stdlib `hashlib`, no new dependency), `POST /auth/login` actually validates
+  username+password and rejects bad credentials with 401, and each account has one fixed role (no
+  more self-service role-picking at login or in the Sidebar). Admin retains a scoped, audited
+  "View as" impersonation control (admin-only) for demo/testing, rather than the old free-for-all
+  profile switcher any logged-in user could use to grant themselves Approver/Admin.
+- **Alternatives considered:** keep the original mock/simulated-identity design and only fix the
+  login page's copy to explain the separate role-picker step; a full third-party auth provider
+  (OAuth/SSO) — rejected as disproportionate scope for a hackathon prototype with no real user base.
+- **Rationale:** Human explicitly requested real authentication for "the fully fledged app" after
+  the mock-login + free role-switcher combination read as confusing and, on reflection, insecure
+  (any authenticated session could self-elevate to Admin). PBKDF2 via stdlib chosen over
+  bcrypt/passlib specifically to avoid a new pip dependency in an environment where package
+  installs have repeatedly hit corporate-proxy SSL friction (see `env-network.md`).
+- **Date:** 2026-08-07
+
+- **Decision:** SUPERSEDES the Microsoft-admin-center visual direction chosen just above. Full
+  rebrand off Microsoft entirely (no logo, no product name, no "Microsoft 365" wording in chrome —
+  the human judged even the admin-center-styled version too close to implying a Microsoft product)
+  to a new original identity: **product name "Verascope"** ("vera" + "scope" — an instrument for
+  seeing a true signal through noise, which is literally what correlation+diagnosis+verification
+  do), a new logo (scope-ring mark: two concentric rings + center dot, teal→blue gradient SVG, no
+  external asset), and a light-by-default, card-based token system (`--signal` teal `#0D9488` as
+  the one brand hue, reused for the logo, primary actions, and the "system-verified" badge). New
+  **Overview dashboard** (KPI tiles + bar/gauge/donut charts, all backed by existing real endpoints
+  — `/metrics/summary`, `/cmdb/drift`, `/autonomy-ladder`, `/audit-log`) replaces Ops Board as the
+  default landing tab for every role. Sidebar admin panels now open in a modal (dependency-free,
+  built in-repo) instead of expanding inline in the 256px sidebar. A light/dark theme toggle was
+  added afterward (Sidebar, both collapsed/expanded) — light is the true default (no
+  `prefers-color-scheme` auto-detection; explicit `data-theme` + localStorage only), dark kept
+  as the original token values, unchanged.
+- **Alternatives considered:** keep the Microsoft-admin-center-styled theme from the prior decision
+  and only swap the literal 4-square logo glyph for a generic one; auto-detect dark mode from OS
+  preference (rejected per this session's explicit ask — light must be the default regardless of
+  system setting, dark opt-in only).
+- **Rationale:** Human's explicit call: "we can't use that Microsoft branding as our app name," plus
+  a supplied reference dashboard image setting the structural direction (light, card-based, colorful
+  KPI icon chips, grouped sidebar, gauge/donut charts) and an explicit request to use the
+  `frontend-design` skill for the identity work and the `dataviz` skill for the new charts. The
+  `dataviz` skill's colorblind-safety validator caught a real issue during this pass — red/green
+  (the obvious first choice for an approvals-vs-rejections chart) fails the deutan separation check,
+  so charts use a consistent teal/amber pairing instead.
+- **Date:** 2026-08-07
+
+- **Decision:** Human-directed pass (before Phase 5 resumes): make Ops Board readable to a
+  first-time user, wire alerts to a local ITSM/Jira-shaped ticket lifecycle with click-to-diagnose,
+  merge Runbook + Knowledge Base into one tab, fold Metrics & Eval into Overview. Staged as 4 steps,
+  each human-verified before the next. Step 1 (readability) done — see state-progress.md. Key calls
+  locked in for steps 2-4: (a) **click-to-diagnose per alert/cluster + one bounded "Run all
+  untriaged" button**, not full auto-trigger on every SSE alert — avoids uncontrolled LLM spend and a
+  concurrent-run architecture change; (b) **ticket + trace snapshot persisted to a new local
+  `local_tickets` SQLite table**, additive only — does not touch the frozen `supervisor.py`/
+  `sync.py`/`itsm_mcp.py` contracts that already create/update a real ServiceNow-shaped ticket per
+  run; (c) new dummy Knowledge Base articles (Teams/SharePoint/Power Automate/Power Apps/Azure AD)
+  chunked into the existing `"runbooks"` Chroma collection tagged `doc_type`, not a second collection;
+  (d) `MetricsEval.jsx` deleted once its remaining stats (stopped-before-completion, negative-KB-
+  seeded, scenario-eval-status) are folded into `Overview.jsx`.
+- **Alternatives considered:** full auto-trigger on every incoming alert (rejected — uncontrolled
+  concurrent LLM spend); a full normalized incident-history schema using the still-empty
+  `evidence`/`hypotheses`/`plans` tables (rejected for this pass — a JSON trace-snapshot column is
+  the lower-scope option that still satisfies "show me how a past alert was solved"); reworking the
+  tested `itsm.py`/`tracker.py` simulators to persist directly (rejected — additive new table is
+  lower-risk than touching frozen/tested code).
+- **Rationale:** Human's explicit call after reviewing Ops Board's raw-payload-first display and
+  asking "who looks at the app for the first time" — confirmed via AskUserQuestion on trigger model,
+  history depth, and sequencing before any code was written (plan file, human-approved).
+- **Date:** 2026-08-07
+
+- **Decision:** Implemented the offline Ollama fallback for chat models that models-routing.md had
+  already specified (PRD §3.2: "Offline fallback for demo resilience... must still run if the
+  gateway dies mid-demo") but that had never actually been wired into code — `api_client.get_llm()`
+  now transparently falls back to local `llama-3.2-3b-it` via LangChain's `.with_fallbacks()` on any
+  enterprise-gateway failure. Deliberately did NOT wire an embeddings fallback into the live
+  retrieval path (`orchestrator/retrieval.py`'s `_embed()`) — tested and confirmed it would raise
+  Chroma's `InvalidDimensionException` on every query (existing collections are indexed at the
+  enterprise model's 3072 dims; Ollama's `gte-large` is 1024), a worse failure than no fallback.
+- **Alternatives considered:** `deepseek-r1` as the fallback chat model (semantically closer to the
+  primary DeepSeek R1) — rejected after testing: 60s+ for a trivial reply and its `<think>` preamble
+  breaks the agents' JSON parsing. `qwen-2.5.1-coder-it` — rejected, timed out at 60s with no
+  response. A same-collection embeddings fallback — rejected after confirming the dimension-mismatch
+  crash directly.
+- **Rationale:** Human hit "Failed to fetch" on Ops Board's "Diagnose" button during a total TCS
+  gateway outage and asked "can we use a model that works" — this was already the documented,
+  PRD-mandated design, just never implemented; closing the gap, not a new decision. Chose
+  `llama-3.2-3b-it` over the semantically-closer `deepseek-r1` on the same evidence-based standard
+  the project has used for every prior model substitution (test candidates against a realistic
+  prompt for THIS role, not just reachability).
+- **Date:** 2026-08-07
+
+- **Decision:** Removed the demo-only "Start incident" CI-picker bar entirely (not kept as an
+  admin/dev shortcut) now that real alerts drive diagnosis. New alerts arriving live now
+  auto-trigger diagnosis, bounded to genuinely new arrivals (not the ~420 existing backlog, which
+  stays a manual "Run all untriaged" action) — a notification bell in the header surfaces them.
+- **Alternatives considered:** keeping the CI-picker bar as an admin-only "quick test" shortcut for
+  demoing the 3 golden-path scenarios on demand — rejected, human's call. Auto-diagnosing the entire
+  backlog too, with no manual step anywhere — rejected as uncontrolled LLM spend with no pacing.
+- **Rationale:** Confirmed via AskUserQuestion — both the recommended options. This also surfaced a
+  real bug (see the async-fix entry directly below): running diagnosis continuously in the background
+  demonstrated how badly `llm.invoke()`'s event-loop blocking degrades the app, which a one-off
+  manual click had never made obvious.
+- **Date:** 2026-08-08
+
+- **Decision:** REVERSES the §4.0 "cut scoped chat drawer" decision above — added a floating
+  assistant (`ChatWidget.jsx`, `POST /chat`) and moved push-to-talk voice into its mic button,
+  removing the Sidebar's standalone push-to-talk entirely.
+- **Alternatives considered:** freeform LLM-generated SQL against `app.db` for the "ask about my
+  tickets" capability (rejected — real injection/correctness risk, and the one part of this app
+  that would let a model execute unconstrained code, breaking the pattern every other AI-touching
+  component here follows); keeping push-to-talk in the Sidebar as a second, separate voice surface
+  alongside the new chat mic (rejected, human's explicit call — one conversational surface, not two).
+- **Rationale:** Human's explicit ask, for product-interactivity/enterprise-readiness reasons. The
+  original decision's stated reason (PRD §2.2: a chat assistant is "a single-turn advisor with no
+  hands and no memory of your estate... will confidently answer even with no evidence," which is
+  why voice was chosen as the sole conversational modality instead) was surfaced back to the human
+  before building, since reversing it undoes an explicit, argued PRD position — confirmed via
+  AskUserQuestion, then built to preserve exactly the properties that argument relied on rather
+  than becoming the thing it warned against: ticket/incident answers come from a real deterministic
+  DB query (the LLM only extracts filters — same "LLM proposes, code executes" split as Diagnosis/
+  Planner, never freeform SQL or fabricated numbers); approve/reject reuses the exact same audited,
+  reason-required, role-gated `/workflows/decision` path Incident Workspace's own approval section
+  uses, not a shortcut; app-help answers are grounded in a fixed description of this app only, told
+  explicitly not to answer general IT/ServiceNow/Jira questions outside that scope. Voice input
+  transcribes through the same real Whisper+scrubber pipeline as before (`/intake/voice`), then the
+  transcript is handled as an ordinary chat message — one pipeline, not two parsers.
+- **Date:** 2026-08-08

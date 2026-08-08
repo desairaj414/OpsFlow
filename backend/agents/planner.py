@@ -10,8 +10,10 @@ import os
 from datetime import datetime, timezone
 
 import api_client
+import mcp_servers.patch_mcp as patch_mcp
 from guardrails.blast_radius import compute_blast_radius
 from guardrails.policy_gate import PolicyContext, PolicyRequest, evaluate_policy
+from guardrails.scheduling import propose_maintenance_window
 from orchestrator.contracts import SpecialistResult
 from orchestrator.limits import TERMINATION_CAP_EXCEEDED, TurnCapExceeded, TurnTracker
 from orchestrator.retrieval import query_collection
@@ -73,7 +75,12 @@ async def run_planner(incident_id: str, ci: dict, runbook_class: str, hypothesis
             valid_chunk_ids = {c["id"] for c in chunks}
             tracker.use_turn()
             llm = api_client.get_llm(model=PLANNER_MODEL, temperature=0)
-            response = llm.invoke(_build_prompt(hypothesis, chunks))
+            # .ainvoke(), not .invoke() — this is an async def handler; a sync call here blocks
+            # uvicorn's single-threaded event loop for the whole gateway round-trip, stalling every
+            # other request the backend is serving (SSE stream, unrelated fetches) until it returns.
+            # Real, demonstrated impact once auto-triage started running diagnosis continuously in
+            # the background — see errors-solved.md.
+            response = await llm.ainvoke(_build_prompt(hypothesis, chunks))
             plan = _parse_and_filter_steps(response.content, valid_chunk_ids)
             cited_artifact_ids = sorted({s["cites_runbook_step"] for s in plan["steps"]})
             termination_reason = "plan_drafted" if plan["steps"] else "no_valid_runbook_found"
@@ -91,6 +98,20 @@ async def run_planner(incident_id: str, ci: dict, runbook_class: str, hypothesis
     )
     plan["blast_radius"] = blast_radius
     plan["policy_gate_result"] = {"decision": policy_result.decision, "triggered_rules": policy_result.triggered_rules, "reasons": policy_result.reasons}
+
+    # Patch Management's plan_output (domain-workflows.md parity table: "Grouped maintenance
+    # window") — deterministic rule engine (guardrails/scheduling.py), computed the same way
+    # blast_radius/policy_gate_result are: AFTER the LLM drafts the plan, never delegated to it.
+    if runbook_class == "patching":
+        try:
+            patches_resp = await patch_mcp.get_pending_patches(ci_id=ci["id"])
+            calendar_resp = await patch_mcp.get_change_calendar(scope=ci["environment"])
+            plan["maintenance_window"] = propose_maintenance_window(
+                ci_id=ci["id"], environment=ci["environment"],
+                pending_patches=patches_resp["patches"], change_calendar=calendar_resp["blackouts"],
+            )
+        except Exception:
+            plan["maintenance_window"] = None  # patch-source simulator unavailable — degrade, don't crash the chain
 
     return SpecialistResult(
         agent_name="planner", incident_id=incident_id,

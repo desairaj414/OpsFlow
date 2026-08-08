@@ -4,6 +4,7 @@ retrieval is not a reasoning task (arch-overview.md routing principle) — no LL
 """
 import mcp_servers.cmdb_mcp as cmdb_mcp
 import mcp_servers.monitoring_mcp as monitoring_mcp
+import mcp_servers.patch_mcp as patch_mcp
 from orchestrator.contracts import SpecialistResult
 from orchestrator.limits import TERMINATION_CAP_EXCEEDED, TurnCapExceeded, TurnTracker
 from orchestrator.retrieval import query_collection
@@ -23,7 +24,7 @@ def _trend_summary(series: list[dict]) -> str | None:
     return f"stable: memory {start_mem:.0f}%->{end_mem:.0f}%, latency {start_lat:.0f}ms->{end_lat:.0f}ms"
 
 
-async def run_enrichment(incident_id: str, ci_id: str, alerts: list[dict]) -> SpecialistResult:
+async def run_enrichment(incident_id: str, ci_id: str, alerts: list[dict], workflow_type: str = "incident") -> SpecialistResult:
     tracker = TurnTracker("enrichment")
     evidence: list[dict] = []
     cited_artifact_ids: list[str] = []
@@ -47,11 +48,45 @@ async def run_enrichment(incident_id: str, ci_id: str, alerts: list[dict]) -> Sp
                 "confidence": 1.0,
             })
 
+        # Patch Management's key_evidence (orchestrator/workflows/patch.yaml, domain-workflows.md
+        # parity table): pending patches + change-calendar blackouts for this CI, via the same
+        # simulated-system MCP pattern as CMDB/monitoring above. Folded into turn 1's budget (not a
+        # new tracker.use_turn()) since it's the same "facts about this CI" phase as CI+relationships.
+        if workflow_type == "patch":
+            try:
+                patch_resp = await patch_mcp.get_pending_patches(ci_id=ci_id)
+                pending = patch_resp["patches"]
+                if pending:
+                    artifact_id = f"PATCHINV-{ci_id}"
+                    evidence.append({
+                        "artifact_id": artifact_id, "source_type": "patch_inventory",
+                        "extract": f"{len(pending)} pending patch(es): " + ", ".join(f"{p['id']} ({p['severity']})" for p in pending[:5]),
+                        "confidence": 1.0,
+                    })
+                    cited_artifact_ids.append(artifact_id)
+
+                calendar_resp = await patch_mcp.get_change_calendar(scope=ci["environment"])
+                blackouts = calendar_resp["blackouts"]
+                if blackouts:
+                    artifact_id = f"CHANGECAL-{ci_id}"
+                    evidence.append({
+                        "artifact_id": artifact_id, "source_type": "change_calendar",
+                        "extract": f"{len(blackouts)} blackout window(s) apply: " + ", ".join(f"{w['id']} ({w['reason']})" for w in blackouts[:5]),
+                        "confidence": 1.0,
+                    })
+                    cited_artifact_ids.append(artifact_id)
+            except Exception:
+                pass  # patch-source simulator unavailable — enrichment degrades gracefully, doesn't crash the chain
+
         for alert in alerts:
             cited_artifact_ids.append(alert["id"])
+            # Prefer the plain-language summary (data_gen/alerts.py) over the raw vendor payload —
+            # this extract is both what a human reads in Incident Workspace AND what Diagnosis
+            # actually reasons over, so a cleaner input helps the model as much as the reader.
+            summary = alert.get("summary") or str(alert["raw_payload"])[:_EXTRACT_MAX_CHARS]
             evidence.append({
                 "artifact_id": alert["id"], "source_type": "alert",
-                "extract": f"[{alert['source']}/{alert['category']}/{alert['severity']}] {str(alert['raw_payload'])[:_EXTRACT_MAX_CHARS]}",
+                "extract": f"{summary} ({alert['severity']} severity, via {alert['source']})",
                 "confidence": 1.0,
             })
 

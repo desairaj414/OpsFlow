@@ -1,45 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Sidebar from "@/components/Sidebar.jsx";
+import Overview from "@/components/Overview.jsx";
+import { LogoMark } from "@/components/Logo.jsx";
 import OpsBoard from "@/components/OpsBoard.jsx";
-import AgentTrace from "@/components/AgentTrace.jsx";
+import Tickets from "@/components/Tickets.jsx";
 import IncidentWorkspace from "@/components/IncidentWorkspace.jsx";
-import ApprovalQueue from "@/components/ApprovalQueue.jsx";
 import DriftQueue from "@/components/DriftQueue.jsx";
 import AutonomyLadder from "@/components/AutonomyLadder.jsx";
-import ChunkInspector from "@/components/ChunkInspector.jsx";
-import MetricsEval from "@/components/MetricsEval.jsx";
+import NotificationBell from "@/components/NotificationBell.jsx";
+import ChatWidget from "@/components/ChatWidget.jsx";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn, decodeJwtPayload } from "@/lib/utils";
 import { TAB_INFO } from "@/lib/tabInfo";
+import { TAB_PERMISSIONS, ROLE_LABELS } from "@/lib/roles";
 import { useAlertStream } from "@/hooks/useAlertStream";
 import { useWorkflowRun } from "@/hooks/useWorkflowRun";
+import { useTickets } from "@/hooks/useTickets";
+import { useAutoTriage } from "@/hooks/useAutoTriage";
 
-const TABS = [
-  "Ops Board",
-  "Incident Workspace",
-  "Agent Trace",
-  "Approval Queue",
-  "Drift Queue",
-  "Autonomy Ladder",
-  "Chunk Inspector",
-  "Metrics & Eval",
-];
-
-const DEMO_SCENARIOS = [
-  { ciId: "CI-0059", label: "Clean fix (auto-completes)" },
-  { ciId: "CI-0006", label: "Needs approval (prod)" },
-  { ciId: "CI-0121", label: "Fake fix caught (degraded)" },
-];
-
-function PlaceholderTab({ name }) {
-  return (
-    <p className="rounded-md border border-dashed border-border p-6 text-sm text-muted-foreground">
-      {name} — not yet built (see prd-phase-4.md atomic steps).
-    </p>
-  );
-}
+const TABS = ["Overview", "Ops Board", "Tickets", "Incident Workspace", "Drift Queue", "Autonomy Ladder"];
 
 function TabInfoBanner({ tab }) {
   const info = TAB_INFO[tab];
@@ -52,25 +33,14 @@ function TabInfoBanner({ tab }) {
   );
 }
 
-function GoldenPathBar({ scenario, setScenario, incident, onStart }) {
+// Read-only status strip — the old version also had the "Start incident" demo CI picker, removed
+// now that real alerts (Diagnose / auto-triage) are the one real way to start a run. Only renders
+// once something is actually happening, rather than taking up a permanent row for nothing.
+function IncidentStatusBar({ incident }) {
+  if (!incident.run && !incident.loading && !incident.error) return null;
   return (
     <div className="flex shrink-0 flex-wrap items-center gap-3 border-b border-border bg-secondary/40 px-4 py-2 text-sm">
-      <span className="text-xs font-medium text-muted-foreground">Active incident:</span>
-      <select
-        className="rounded-md border border-border bg-background px-2 py-1 text-xs"
-        value={scenario.ciId}
-        onChange={(e) => setScenario(DEMO_SCENARIOS.find((s) => s.ciId === e.target.value))}
-        disabled={incident.loading}
-      >
-        {DEMO_SCENARIOS.map((s) => (
-          <option key={s.ciId} value={s.ciId}>
-            {s.ciId} — {s.label}
-          </option>
-        ))}
-      </select>
-      <Button size="sm" onClick={onStart} disabled={incident.loading}>
-        {incident.loading ? "Running…" : "Start incident"}
-      </Button>
+      {incident.loading && <span className="text-xs text-muted-foreground">Running…</span>}
       {incident.run && (
         <span className="text-xs text-muted-foreground">
           {incident.run.incident_id} — {incident.run.status}
@@ -80,7 +50,7 @@ function GoldenPathBar({ scenario, setScenario, incident, onStart }) {
       )}
       {incident.error && <span className="text-xs text-red-500">{incident.error}</span>}
       <span className="ml-auto text-xs text-muted-foreground">
-        Shared across Incident Workspace / Agent Trace / Approval Queue — same run, different views.
+        Open Incident Workspace for the full record, including the Agent Trace.
       </span>
     </div>
   );
@@ -89,60 +59,98 @@ function GoldenPathBar({ scenario, setScenario, incident, onStart }) {
 // Cockpit layout: sidebar + a shared "active incident" (golden path) + tabbed workspace. One
 // workflow-run hook lives here and is passed to every tab that shows a run, so starting an
 // incident on one tab is visible consistently on the others (as far as the no-checkpointing
-// architecture allows — see ApprovalQueue.jsx for the "approve re-runs, doesn't resume" limitation).
-export default function CockpitShell({ token, apiBase, username, onLogout }) {
-  const [role, setRole] = useState("Ops Engineer");
-  const [activeTab, setActiveTab] = useState(TABS[0]);
-  const [scenario, setScenario] = useState(DEMO_SCENARIOS[0]);
+// architecture allows — see IncidentWorkspace.jsx's ApprovalSection for the "approve re-runs, doesn't resume" limitation).
+export default function CockpitShell({ token, onTokenChange, apiBase, username, onLogout }) {
+  // The active role is decoded from the JWT itself — real POST /auth/login sets it from the
+  // authenticated account's own role; POST /auth/view-as (admin-only, Sidebar) can temporarily
+  // overlay a different role for demo/testing, carrying real_* claims so the UI can show an honest
+  // "viewing as" banner rather than silently pretending the admin IS the other user.
+  const identity = useMemo(() => {
+    const payload = decodeJwtPayload(token) || {};
+    return {
+      username: payload.sub || null,
+      role: payload.role || "ops_engineer",
+      displayName: payload.display_name || null,
+      realUsername: payload.real_username || null,
+      realRole: payload.real_role || null,
+      realDisplayName: payload.real_display_name || null,
+    };
+  }, [token]);
+
+  const visibleTabs = useMemo(
+    () => TABS.filter((tab) => (TAB_PERMISSIONS[identity.role] || []).includes(tab)),
+    [identity.role]
+  );
+
+  const [activeTab, setActiveTab] = useState(visibleTabs[0]);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
   const { alerts, connectionStatus } = useAlertStream({ apiBase, token });
   const incident = useWorkflowRun({ apiBase, token });
+  const { tickets, refetch: refetchTickets } = useTickets(apiBase, token);
+  const { notifications } = useAutoTriage({ alerts, tickets, incident, refetchTickets });
 
-  function startIncident() {
-    // auto_approve=false so the full journey (including a possible pending_approval stop) is
-    // visible — Approval Queue is what moves it forward from there, not this button.
-    incident.triggerRun(scenario.ciId, "incident", false);
+  // If an admin's "view as" hides the currently-active tab, fall back to the first tab that role
+  // can still see rather than rendering a tab the role no longer has permission for.
+  useEffect(() => {
+    if (!visibleTabs.includes(activeTab)) setActiveTab(visibleTabs[0]);
+  }, [visibleTabs, activeTab]);
+
+  // Shared by Ops Board's Ticket History / correlated-candidate status pills and the notification
+  // bell — jump to Incident Workspace showing exactly that run, not just "the latest one".
+  function openIncident(runOrTraceSnapshot) {
+    incident.setRun(runOrTraceSnapshot);
+    setActiveTab("Incident Workspace");
+  }
+
+  async function openTicket(ticket) {
+    const res = await fetch(`${apiBase}/tickets/${ticket.id}`, { headers: { Authorization: `Bearer ${token}` } });
+    if (!res.ok) return;
+    const detail = await res.json();
+    openIncident(detail.trace_snapshot);
   }
 
   return (
     <div className="flex h-screen overflow-hidden">
       <Sidebar
-        role={role}
-        onRoleChange={setRole}
+        collapsed={sidebarCollapsed}
+        onToggleCollapsed={() => setSidebarCollapsed((v) => !v)}
+        identity={identity}
         connectionStatus={connectionStatus}
         apiBase={apiBase}
         token={token}
+        onTokenChange={onTokenChange}
         incident={incident}
       />
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex shrink-0 items-center justify-between bg-header px-6 py-3 text-header-foreground">
+        <header className="flex shrink-0 items-center justify-between border-b border-border bg-header px-6 py-3 text-header-foreground">
           <div className="flex items-center gap-3">
-            <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true" className="shrink-0">
-              <rect x="0" y="0" width="10" height="10" fill="#f25022" />
-              <rect x="12" y="0" width="10" height="10" fill="#7fba00" />
-              <rect x="0" y="12" width="10" height="10" fill="#00a4ef" />
-              <rect x="12" y="12" width="10" height="10" fill="#ffb900" />
-            </svg>
+            <LogoMark size={26} />
             <div>
-              <h1 className="text-base font-semibold leading-tight">Maintenance Control Plane</h1>
-              <p className="text-xs text-header-foreground/60 leading-tight">Microsoft 365 &amp; Power Platform estate</p>
+              <h1 className="text-base font-semibold leading-tight">Verascope</h1>
+              <p className="text-xs text-muted-foreground leading-tight">AI-verified operations console</p>
             </div>
           </div>
           <div className="flex items-center gap-3 text-sm text-header-foreground/80">
-            <span>{username}</span>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={onLogout}
-              className="border-header-foreground/25 bg-transparent text-header-foreground hover:bg-header-foreground/10"
-            >
+            {identity.realUsername ? (
+              <span className="rounded-md border border-accent/40 bg-accent-soft px-2 py-1 text-xs text-foreground">
+                {identity.realDisplayName} viewing as <span className="font-medium">{identity.displayName}</span> ({ROLE_LABELS[identity.role]})
+              </span>
+            ) : (
+              <span>
+                {identity.displayName || username}
+                <span className="text-muted-foreground"> · {ROLE_LABELS[identity.role]}</span>
+              </span>
+            )}
+            <NotificationBell notifications={notifications} onOpenNotification={(n) => openIncident(n.run)} />
+            <Button variant="outline" size="sm" onClick={onLogout}>
               Log out
             </Button>
           </div>
         </header>
 
         <nav className="flex shrink-0 gap-1 overflow-x-auto border-b border-border bg-card px-4">
-          {TABS.map((tab) => (
+          {visibleTabs.map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -157,10 +165,11 @@ export default function CockpitShell({ token, apiBase, username, onLogout }) {
           ))}
         </nav>
 
-        <GoldenPathBar scenario={scenario} setScenario={setScenario} incident={incident} onStart={startIncident} />
+        <IncidentStatusBar incident={incident} />
 
         <main className="min-w-0 flex-1 overflow-y-auto p-6">
           <TabInfoBanner tab={activeTab} />
+          {activeTab === "Overview" && <Overview apiBase={apiBase} token={token} />}
           {activeTab === "Ops Board" && (
             <OpsBoard
               apiBase={apiBase}
@@ -168,21 +177,23 @@ export default function CockpitShell({ token, apiBase, username, onLogout }) {
               alerts={alerts}
               connectionStatus={connectionStatus}
               incident={incident}
+              tickets={tickets}
+              refetchTickets={refetchTickets}
+              onOpenTicket={openTicket}
             />
           )}
-          {activeTab === "Incident Workspace" && <IncidentWorkspace incident={incident} />}
-          {activeTab === "Agent Trace" && <AgentTrace incident={incident} />}
-          {activeTab === "Approval Queue" && <ApprovalQueue apiBase={apiBase} token={token} incident={incident} />}
+          {activeTab === "Tickets" && (
+            <Tickets apiBase={apiBase} token={token} tickets={tickets} refetchTickets={refetchTickets} onOpenTicket={openTicket} />
+          )}
+          {activeTab === "Incident Workspace" && (
+            <IncidentWorkspace incident={incident} apiBase={apiBase} token={token} identity={identity} />
+          )}
           {activeTab === "Drift Queue" && <DriftQueue apiBase={apiBase} token={token} />}
           {activeTab === "Autonomy Ladder" && <AutonomyLadder apiBase={apiBase} token={token} />}
-          {activeTab === "Chunk Inspector" && <ChunkInspector apiBase={apiBase} token={token} />}
-          {activeTab === "Metrics & Eval" && <MetricsEval apiBase={apiBase} token={token} />}
-          {![
-            "Ops Board", "Incident Workspace", "Agent Trace", "Approval Queue", "Drift Queue",
-            "Autonomy Ladder", "Chunk Inspector", "Metrics & Eval",
-          ].includes(activeTab) && <PlaceholderTab name={activeTab} />}
         </main>
       </div>
+
+      <ChatWidget apiBase={apiBase} token={token} incident={incident} onOpenIncident={openIncident} onOpenTicket={openTicket} />
     </div>
   );
 }

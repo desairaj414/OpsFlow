@@ -23,7 +23,7 @@ From PRD §3.2, mapped to actual `.env` model ids (see `backend/.env` → `MODEL
 | Root-cause hypothesis generation & ranking | DeepSeek R1 | `azure_ai/genailab-maas-DeepSeek-R1` | Only step genuinely needing multi-step reasoning over conflicting evidence |
 | Remediation / tuning plan drafting from runbooks | ~~DeepSeek V3~~ **gpt-4.1-nano** (substitute, 2026-08-07) | ~~`genailab-maas-DeepSeek-V3-0324`~~ → `azure/genailab-maas-gpt-4.1-nano` | Original deployment confirmed permanently gone (410); gpt-4.1-nano was fastest + reliably valid JSON of the tested candidates, and OpenAI's cheapest tier (matches "cheaper than R1" intent) — see decisions-log.md |
 | Self-check / critique of the plan before the gate | gpt-4o-mini or local SLM | `azure/genailab-maas-gpt-4o-mini` | Verification gaps are a top failure category |
-| Offline fallback for demo resilience | Local Ollama SLM | see `ollama list` | Must still run if the gateway dies mid-demo |
+| Offline fallback for demo resilience | Local Ollama SLM — **`llama-3.2-3b-it`** (chat, implemented 2026-08-07) | `backend/api_client.py`'s `get_llm()`, `http://localhost:11434/v1` | Must still run if the gateway dies mid-demo — chat only; embeddings fallback deliberately NOT wired into the live retrieval path, see below |
 | Smoke-tested, unused in primary path | Phi ⚠ intermittent, see below | `azure_ai/genailab-maas-Phi-4-reasoning` | Handbook requires the smoke test; six of seven models genuinely used is the talking point |
 
 ## Rehearsed trade-offs (PRD §3.3) — see also [arch-overview.md](arch-overview.md)
@@ -57,6 +57,34 @@ substitute a different model without recording why.
   **`azure/genailab-maas-gpt-4.1-nano`**: fastest (1814ms) with valid JSON, and OpenAI's cheapest
   tier (matches the "cheaper than R1" intent behind V3's original placement). `backend/.env`
   `HANDBOOK_MODELS` updated to use it.
+
+## Offline fallback implementation (2026-08-07)
+`backend/api_client.py`'s `get_llm()` now wraps the enterprise `ChatOpenAI` with LangChain's
+`.with_fallbacks([...])` — on any exception (verified against a real total-outage: the gateway's
+container app returning a raw 404 HTML page), it transparently retries against local Ollama.
+Tested 3 local candidates against a realistic structured-JSON diagnosis prompt (citing artifact IDs,
+same shape `agents/diagnosis.py` actually sends): `deepseek-r1` (semantically the "right" choice —
+same family/reasoning style as the primary DeepSeek R1 — but 60s+ for a trivial reply and its
+`<think>...</think>` preamble breaks the agents' `json.loads()` parsing), `qwen-2.5.1-coder-it`
+(timed out at 60s, never returned), `llama-3.2-3b-it` (28.4s, clean valid JSON citing the correct
+artifact IDs, no preamble). **Picked `llama-3.2-3b-it`** — fast and format-compliant beats
+"semantically closer but unusable" for a fallback whose entire point is still returning *something*
+usable. `get_embeddings()` got the same treatment (hand-rolled, since `OpenAIEmbeddings` isn't a
+Runnable and has no `.with_fallbacks()`) but is **not wired into any live retrieval path** —
+`orchestrator/retrieval.py`'s `_embed()` (the function Planner/`/chunks`/uploads actually call)
+deliberately has NO fallback: every Chroma collection is already indexed with the enterprise model's
+3072-dim vectors, and a query-time-only fallback to `gte-large`'s 1024-dim vectors raises Chroma's
+`InvalidDimensionException` on every query — confirmed by direct test, a strictly worse failure mode
+than no fallback at all. A real embeddings fallback would need a fully separate, Ollama-indexed
+collection, not a same-collection swap.
+Primary timeout deliberately generous (`timeout=45`, `max_retries=1`) — R1's legitimate "tens of
+seconds" latency on a healthy gateway means a short timeout would falsely trigger the fallback on
+normal slow-but-working calls, not just real outages.
+**Live-verified end to end**: a real "Diagnose" click through the Ops Board UI (gateway happened to
+recover mid-session) produced a real `pending_approval` result and a real persisted ticket — the
+fallback path itself was exercised via a direct `api_client.get_llm()` call while the gateway was
+still down (46.8s to `PONG` via Ollama), not yet via a full failed-diagnosis UI click, since the
+gateway kept flipping states faster than that could be arranged.
 
 ## INTERMITTENT (not a deprecation — do not substitute)
 - **`azure_ai/genailab-maas-Phi-4-reasoning`** — 2026-08-07: passed 3 times earlier in the session,

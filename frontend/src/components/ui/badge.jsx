@@ -1,14 +1,15 @@
 import { cn } from "@/lib/utils";
 
 // Three-badge system (PRD §7, rules-frontend.md honesty rule): nothing AI-generated may share the
-// visual register of verified fact. Exactly three variants, deliberately distinct colors —
-// "ai-proposed" (unverified model output), "human-approved" (a person signed off), "system-verified"
-// (deterministic check, not a model guess and not a human either).
+// visual register of verified fact. Exactly three variants, deliberately distinct colors, drawn
+// from the brand's reserved status tokens (globals.css) rather than raw Tailwind palette utilities
+// — "system-verified" deliberately uses the brand's signal teal (the same hue as the logo and
+// primary actions), so "the system vouches for this" reads as one consistent meaning app-wide.
 const VARIANTS = {
-  "ai-proposed": "bg-violet-600/10 text-violet-700 border-violet-600/30 dark:text-violet-300",
-  "human-approved": "bg-green-600/10 text-green-700 border-green-600/30 dark:text-green-300",
-  "human-rejected": "bg-red-600/10 text-red-700 border-red-600/30 dark:text-red-300",
-  "system-verified": "bg-blue-600/10 text-blue-700 border-blue-600/30 dark:text-blue-300",
+  "ai-proposed": "bg-status-ai/10 text-status-ai border-status-ai/30",
+  "human-approved": "bg-status-good/10 text-status-good border-status-good/30",
+  "human-rejected": "bg-status-critical/10 text-status-critical border-status-critical/30",
+  "system-verified": "bg-accent-soft text-primary border-primary/30",
 };
 
 const LABELS = {

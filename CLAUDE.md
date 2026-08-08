@@ -24,6 +24,7 @@ this `.knowledge/` tree is its execution-ready conversion for an executing AI se
 
 ## Architecture & contracts
 - [.knowledge/arch-overview.md](.knowledge/arch-overview.md) — tier diagram, routing principle, orchestration shape, protocol layer
+- [.knowledge/architecture-as-built.md](.knowledge/architecture-as-built.md) — as-implemented agent-by-agent breakdown (LLM/SLM/RAG/deterministic, per step) + every Overview-tab metric's exact computation
 - [.knowledge/schema-db.md](.knowledge/schema-db.md) — SQLite + Chroma schema
 - [.knowledge/api-contract.md](.knowledge/api-contract.md) — canonical `MaintenanceSignal`, MCP tool contracts, A2A Agent Card
 - [.knowledge/models-routing.md](.knowledge/models-routing.md) — model routing table, trade-offs, actual `.env` model-id mapping

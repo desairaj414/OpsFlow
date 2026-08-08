@@ -1,0 +1,2080 @@
+[
+  {
+    "id": "PATCH-0001",
+    "ci_id": "CI-0001",
+    "vendor": "Adobe",
+    "title": "Adobe security update for sharepoint-site",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-71432"
+    ],
+    "released_at": "2026-07-24T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0002",
+    "ci_id": "CI-0001",
+    "vendor": "Cisco",
+    "title": "Microsoft security update for sharepoint-site",
+    "severity": "low",
+    "cve_ids": [],
+    "released_at": "2026-07-06T20:24:28.408399+00:00",
+    "sla_days": 60,
+    "depends_on_patch_ids": [
+      "PATCH-0001"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0003",
+    "ci_id": "CI-0001",
+    "vendor": "Cisco",
+    "title": "Red Hat security update for sharepoint-site",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-07-23T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [
+      "PATCH-0002"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0004",
+    "ci_id": "CI-0003",
+    "vendor": "Red Hat",
+    "title": "Adobe security update for sharepoint-site",
+    "severity": "low",
+    "cve_ids": [],
+    "released_at": "2026-07-05T20:24:28.408399+00:00",
+    "sla_days": 60,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0005",
+    "ci_id": "CI-0004",
+    "vendor": "Red Hat",
+    "title": "Microsoft security update for teams-notification-queue",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-52443"
+    ],
+    "released_at": "2026-07-20T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0006",
+    "ci_id": "CI-0004",
+    "vendor": "Red Hat",
+    "title": "Oracle security update for teams-notification-queue",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-32516"
+    ],
+    "released_at": "2026-07-17T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [
+      "PATCH-0005"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0007",
+    "ci_id": "CI-0004",
+    "vendor": "Adobe",
+    "title": "Red Hat security update for teams-notification-queue",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-07-13T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0008",
+    "ci_id": "CI-0012",
+    "vendor": "Oracle",
+    "title": "Microsoft security update for sharepoint-document-library",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-07-12T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0009",
+    "ci_id": "CI-0012",
+    "vendor": "Cisco",
+    "title": "Microsoft security update for sharepoint-document-library",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-06-24T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [
+      "PATCH-0008"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0010",
+    "ci_id": "CI-0012",
+    "vendor": "Adobe",
+    "title": "Microsoft security update for sharepoint-document-library",
+    "severity": "low",
+    "cve_ids": [],
+    "released_at": "2026-07-12T20:24:28.408399+00:00",
+    "sla_days": 60,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0011",
+    "ci_id": "CI-0013",
+    "vendor": "VMware",
+    "title": "Oracle security update for dataverse-instance",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-07-26T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0012",
+    "ci_id": "CI-0013",
+    "vendor": "Adobe",
+    "title": "Oracle security update for dataverse-instance",
+    "severity": "low",
+    "cve_ids": [],
+    "released_at": "2026-07-28T20:24:28.408399+00:00",
+    "sla_days": 60,
+    "depends_on_patch_ids": [
+      "PATCH-0011"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0013",
+    "ci_id": "CI-0013",
+    "vendor": "Microsoft",
+    "title": "Microsoft security update for dataverse-instance",
+    "severity": "low",
+    "cve_ids": [],
+    "released_at": "2026-07-02T20:24:28.408399+00:00",
+    "sla_days": 60,
+    "depends_on_patch_ids": [
+      "PATCH-0012"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0014",
+    "ci_id": "CI-0016",
+    "vendor": "Adobe",
+    "title": "Cisco security update for azure-ad-connect-sync",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-67134"
+    ],
+    "released_at": "2026-06-24T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0015",
+    "ci_id": "CI-0016",
+    "vendor": "Microsoft",
+    "title": "VMware security update for azure-ad-connect-sync",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-10923"
+    ],
+    "released_at": "2026-07-02T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [
+      "PATCH-0014"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0016",
+    "ci_id": "CI-0016",
+    "vendor": "VMware",
+    "title": "Cisco security update for azure-ad-connect-sync",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-07-02T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [
+      "PATCH-0015"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0017",
+    "ci_id": "CI-0027",
+    "vendor": "Microsoft",
+    "title": "Cisco security update for dataverse-instance",
+    "severity": "low",
+    "cve_ids": [],
+    "released_at": "2026-07-19T20:24:28.408399+00:00",
+    "sla_days": 60,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0018",
+    "ci_id": "CI-0028",
+    "vendor": "Red Hat",
+    "title": "VMware security update for power-platform-environment",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-69596"
+    ],
+    "released_at": "2026-08-02T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0019",
+    "ci_id": "CI-0029",
+    "vendor": "Red Hat",
+    "title": "Microsoft security update for exchange-online-connector",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-99925"
+    ],
+    "released_at": "2026-08-04T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0020",
+    "ci_id": "CI-0029",
+    "vendor": "Oracle",
+    "title": "Red Hat security update for exchange-online-connector",
+    "severity": "low",
+    "cve_ids": [],
+    "released_at": "2026-06-25T20:24:28.408399+00:00",
+    "sla_days": 60,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0021",
+    "ci_id": "CI-0031",
+    "vendor": "Adobe",
+    "title": "Cisco security update for teams-notification-queue",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-12675"
+    ],
+    "released_at": "2026-07-03T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0022",
+    "ci_id": "CI-0031",
+    "vendor": "Adobe",
+    "title": "Cisco security update for teams-notification-queue",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-64962"
+    ],
+    "released_at": "2026-07-25T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0023",
+    "ci_id": "CI-0031",
+    "vendor": "Cisco",
+    "title": "Microsoft security update for teams-notification-queue",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-66397"
+    ],
+    "released_at": "2026-08-01T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0024",
+    "ci_id": "CI-0033",
+    "vendor": "Red Hat",
+    "title": "Red Hat security update for azure-ad-connect-sync",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-07-11T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0025",
+    "ci_id": "CI-0033",
+    "vendor": "Microsoft",
+    "title": "Oracle security update for azure-ad-connect-sync",
+    "severity": "low",
+    "cve_ids": [],
+    "released_at": "2026-06-28T20:24:28.408399+00:00",
+    "sla_days": 60,
+    "depends_on_patch_ids": [
+      "PATCH-0024"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0026",
+    "ci_id": "CI-0034",
+    "vendor": "Oracle",
+    "title": "Adobe security update for sharepoint-document-library",
+    "severity": "low",
+    "cve_ids": [],
+    "released_at": "2026-07-11T20:24:28.408399+00:00",
+    "sla_days": 60,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0027",
+    "ci_id": "CI-0034",
+    "vendor": "Cisco",
+    "title": "Adobe security update for sharepoint-document-library",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-36455"
+    ],
+    "released_at": "2026-07-25T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0028",
+    "ci_id": "CI-0035",
+    "vendor": "VMware",
+    "title": "Oracle security update for onedrive-sync-cache",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-75543"
+    ],
+    "released_at": "2026-07-24T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0029",
+    "ci_id": "CI-0035",
+    "vendor": "Microsoft",
+    "title": "Red Hat security update for onedrive-sync-cache",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-64750"
+    ],
+    "released_at": "2026-07-11T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [
+      "PATCH-0028"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0030",
+    "ci_id": "CI-0035",
+    "vendor": "Red Hat",
+    "title": "Red Hat security update for onedrive-sync-cache",
+    "severity": "low",
+    "cve_ids": [],
+    "released_at": "2026-07-17T20:24:28.408399+00:00",
+    "sla_days": 60,
+    "depends_on_patch_ids": [
+      "PATCH-0029"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0031",
+    "ci_id": "CI-0037",
+    "vendor": "Red Hat",
+    "title": "Red Hat security update for onedrive-sync-cache",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-07-31T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0032",
+    "ci_id": "CI-0037",
+    "vendor": "VMware",
+    "title": "Cisco security update for onedrive-sync-cache",
+    "severity": "low",
+    "cve_ids": [],
+    "released_at": "2026-07-24T20:24:28.408399+00:00",
+    "sla_days": 60,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0033",
+    "ci_id": "CI-0037",
+    "vendor": "Red Hat",
+    "title": "Adobe security update for onedrive-sync-cache",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-06-26T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [
+      "PATCH-0032"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0034",
+    "ci_id": "CI-0039",
+    "vendor": "Cisco",
+    "title": "Red Hat security update for sharepoint-document-library",
+    "severity": "low",
+    "cve_ids": [],
+    "released_at": "2026-06-23T20:24:28.408399+00:00",
+    "sla_days": 60,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0035",
+    "ci_id": "CI-0039",
+    "vendor": "Microsoft",
+    "title": "Microsoft security update for sharepoint-document-library",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-40127"
+    ],
+    "released_at": "2026-06-30T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [
+      "PATCH-0034"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0036",
+    "ci_id": "CI-0040",
+    "vendor": "Oracle",
+    "title": "Adobe security update for teams-notification-queue",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-07-14T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0037",
+    "ci_id": "CI-0042",
+    "vendor": "Oracle",
+    "title": "Oracle security update for exchange-online-connector",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-07-25T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0038",
+    "ci_id": "CI-0042",
+    "vendor": "Red Hat",
+    "title": "Microsoft security update for exchange-online-connector",
+    "severity": "low",
+    "cve_ids": [],
+    "released_at": "2026-07-28T20:24:28.408399+00:00",
+    "sla_days": 60,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0039",
+    "ci_id": "CI-0047",
+    "vendor": "Oracle",
+    "title": "Cisco security update for sharepoint-document-library",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-08-01T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0040",
+    "ci_id": "CI-0048",
+    "vendor": "Cisco",
+    "title": "VMware security update for sharepoint-document-library",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-07-20T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0041",
+    "ci_id": "CI-0049",
+    "vendor": "Microsoft",
+    "title": "Adobe security update for sharepoint-site",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-53483"
+    ],
+    "released_at": "2026-07-20T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0042",
+    "ci_id": "CI-0049",
+    "vendor": "VMware",
+    "title": "Oracle security update for sharepoint-site",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-06-26T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0043",
+    "ci_id": "CI-0054",
+    "vendor": "Adobe",
+    "title": "Microsoft security update for sharepoint-document-library",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-24663"
+    ],
+    "released_at": "2026-07-13T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0044",
+    "ci_id": "CI-0057",
+    "vendor": "Cisco",
+    "title": "Cisco security update for power-automate-gateway",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-07-19T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0045",
+    "ci_id": "CI-0057",
+    "vendor": "VMware",
+    "title": "Red Hat security update for power-automate-gateway",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-07-12T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0046",
+    "ci_id": "CI-0057",
+    "vendor": "Oracle",
+    "title": "Microsoft security update for power-automate-gateway",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-73854"
+    ],
+    "released_at": "2026-07-05T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0047",
+    "ci_id": "CI-0058",
+    "vendor": "Adobe",
+    "title": "Red Hat security update for power-automate-gateway",
+    "severity": "low",
+    "cve_ids": [],
+    "released_at": "2026-07-24T20:24:28.408399+00:00",
+    "sla_days": 60,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0048",
+    "ci_id": "CI-0058",
+    "vendor": "Microsoft",
+    "title": "VMware security update for power-automate-gateway",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-14156"
+    ],
+    "released_at": "2026-07-24T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0049",
+    "ci_id": "CI-0059",
+    "vendor": "Cisco",
+    "title": "VMware security update for exchange-online-connector",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-91963"
+    ],
+    "released_at": "2026-06-30T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0050",
+    "ci_id": "CI-0060",
+    "vendor": "Microsoft",
+    "title": "VMware security update for power-automate-gateway",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-15633"
+    ],
+    "released_at": "2026-06-29T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0051",
+    "ci_id": "CI-0060",
+    "vendor": "Oracle",
+    "title": "Red Hat security update for power-automate-gateway",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-67094"
+    ],
+    "released_at": "2026-07-09T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0052",
+    "ci_id": "CI-0060",
+    "vendor": "Oracle",
+    "title": "Cisco security update for power-automate-gateway",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-54109"
+    ],
+    "released_at": "2026-07-07T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [
+      "PATCH-0051"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0053",
+    "ci_id": "CI-0061",
+    "vendor": "Adobe",
+    "title": "Oracle security update for power-platform-environment",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-33223"
+    ],
+    "released_at": "2026-07-08T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0054",
+    "ci_id": "CI-0061",
+    "vendor": "Oracle",
+    "title": "Cisco security update for power-platform-environment",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-65876"
+    ],
+    "released_at": "2026-07-05T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [
+      "PATCH-0053"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0055",
+    "ci_id": "CI-0063",
+    "vendor": "Microsoft",
+    "title": "Red Hat security update for sharepoint-site",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-13212"
+    ],
+    "released_at": "2026-07-24T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0056",
+    "ci_id": "CI-0063",
+    "vendor": "Oracle",
+    "title": "Microsoft security update for sharepoint-site",
+    "severity": "low",
+    "cve_ids": [],
+    "released_at": "2026-08-01T20:24:28.408399+00:00",
+    "sla_days": 60,
+    "depends_on_patch_ids": [
+      "PATCH-0055"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0057",
+    "ci_id": "CI-0063",
+    "vendor": "VMware",
+    "title": "Microsoft security update for sharepoint-site",
+    "severity": "low",
+    "cve_ids": [],
+    "released_at": "2026-07-27T20:24:28.408399+00:00",
+    "sla_days": 60,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0058",
+    "ci_id": "CI-0066",
+    "vendor": "Red Hat",
+    "title": "Adobe security update for azure-ad-connect-sync",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-08-01T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0059",
+    "ci_id": "CI-0067",
+    "vendor": "Cisco",
+    "title": "Cisco security update for exchange-online-connector",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-30151"
+    ],
+    "released_at": "2026-06-24T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0060",
+    "ci_id": "CI-0067",
+    "vendor": "Cisco",
+    "title": "Cisco security update for exchange-online-connector",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-49706"
+    ],
+    "released_at": "2026-07-29T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [
+      "PATCH-0059"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0061",
+    "ci_id": "CI-0076",
+    "vendor": "Adobe",
+    "title": "Red Hat security update for dataverse-instance",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-26028"
+    ],
+    "released_at": "2026-07-12T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0062",
+    "ci_id": "CI-0079",
+    "vendor": "Red Hat",
+    "title": "VMware security update for teams-notification-queue",
+    "severity": "low",
+    "cve_ids": [],
+    "released_at": "2026-07-01T20:24:28.408399+00:00",
+    "sla_days": 60,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0063",
+    "ci_id": "CI-0084",
+    "vendor": "Oracle",
+    "title": "Adobe security update for power-automate-gateway",
+    "severity": "low",
+    "cve_ids": [],
+    "released_at": "2026-07-05T20:24:28.408399+00:00",
+    "sla_days": 60,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0064",
+    "ci_id": "CI-0085",
+    "vendor": "Red Hat",
+    "title": "Red Hat security update for power-platform-environment",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-31678"
+    ],
+    "released_at": "2026-07-02T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0065",
+    "ci_id": "CI-0085",
+    "vendor": "Oracle",
+    "title": "Red Hat security update for power-platform-environment",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-54516"
+    ],
+    "released_at": "2026-07-06T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [
+      "PATCH-0064"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0066",
+    "ci_id": "CI-0088",
+    "vendor": "Microsoft",
+    "title": "Adobe security update for dataverse-instance",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-07-14T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0067",
+    "ci_id": "CI-0091",
+    "vendor": "Adobe",
+    "title": "Red Hat security update for azure-ad-connect-sync",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-07-11T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0068",
+    "ci_id": "CI-0091",
+    "vendor": "Cisco",
+    "title": "Microsoft security update for azure-ad-connect-sync",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-08-02T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [
+      "PATCH-0067"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0069",
+    "ci_id": "CI-0095",
+    "vendor": "VMware",
+    "title": "Microsoft security update for power-platform-environment",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-06-28T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0070",
+    "ci_id": "CI-0095",
+    "vendor": "VMware",
+    "title": "VMware security update for power-platform-environment",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-47382"
+    ],
+    "released_at": "2026-07-26T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0071",
+    "ci_id": "CI-0095",
+    "vendor": "Oracle",
+    "title": "Microsoft security update for power-platform-environment",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-07-26T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [
+      "PATCH-0070"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0072",
+    "ci_id": "CI-0099",
+    "vendor": "Oracle",
+    "title": "Adobe security update for dataverse-instance",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-65683"
+    ],
+    "released_at": "2026-07-21T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0073",
+    "ci_id": "CI-0099",
+    "vendor": "Adobe",
+    "title": "Microsoft security update for dataverse-instance",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-25709"
+    ],
+    "released_at": "2026-08-01T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0074",
+    "ci_id": "CI-0099",
+    "vendor": "Oracle",
+    "title": "VMware security update for dataverse-instance",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-62762"
+    ],
+    "released_at": "2026-08-03T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [
+      "PATCH-0073"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0075",
+    "ci_id": "CI-0103",
+    "vendor": "VMware",
+    "title": "Red Hat security update for onedrive-sync-cache",
+    "severity": "low",
+    "cve_ids": [],
+    "released_at": "2026-06-23T20:24:28.408399+00:00",
+    "sla_days": 60,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0076",
+    "ci_id": "CI-0106",
+    "vendor": "Adobe",
+    "title": "Red Hat security update for sharepoint-site",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-48029"
+    ],
+    "released_at": "2026-07-22T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0077",
+    "ci_id": "CI-0113",
+    "vendor": "Microsoft",
+    "title": "Adobe security update for power-automate-gateway",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-86977"
+    ],
+    "released_at": "2026-06-24T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0078",
+    "ci_id": "CI-0113",
+    "vendor": "Cisco",
+    "title": "Oracle security update for power-automate-gateway",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-58911"
+    ],
+    "released_at": "2026-07-05T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0079",
+    "ci_id": "CI-0116",
+    "vendor": "Cisco",
+    "title": "Cisco security update for exchange-online-connector",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-63375"
+    ],
+    "released_at": "2026-07-03T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0080",
+    "ci_id": "CI-0116",
+    "vendor": "Cisco",
+    "title": "Red Hat security update for exchange-online-connector",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-66299"
+    ],
+    "released_at": "2026-06-30T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [
+      "PATCH-0079"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0081",
+    "ci_id": "CI-0121",
+    "vendor": "Red Hat",
+    "title": "Oracle security update for onedrive-sync-cache",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-34516"
+    ],
+    "released_at": "2026-08-06T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0082",
+    "ci_id": "CI-0121",
+    "vendor": "Adobe",
+    "title": "Microsoft security update for onedrive-sync-cache",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-06-25T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0083",
+    "ci_id": "CI-0121",
+    "vendor": "Microsoft",
+    "title": "Adobe security update for onedrive-sync-cache",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-06-27T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [
+      "PATCH-0082"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0084",
+    "ci_id": "CI-0126",
+    "vendor": "Adobe",
+    "title": "Microsoft security update for dataverse-instance",
+    "severity": "low",
+    "cve_ids": [],
+    "released_at": "2026-08-03T20:24:28.408399+00:00",
+    "sla_days": 60,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0085",
+    "ci_id": "CI-0126",
+    "vendor": "Adobe",
+    "title": "Oracle security update for dataverse-instance",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-83371"
+    ],
+    "released_at": "2026-07-19T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0086",
+    "ci_id": "CI-0129",
+    "vendor": "Cisco",
+    "title": "VMware security update for teams-notification-queue",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-94040"
+    ],
+    "released_at": "2026-07-01T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0087",
+    "ci_id": "CI-0129",
+    "vendor": "VMware",
+    "title": "Cisco security update for teams-notification-queue",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-07-12T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [
+      "PATCH-0086"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0088",
+    "ci_id": "CI-0129",
+    "vendor": "Adobe",
+    "title": "Oracle security update for teams-notification-queue",
+    "severity": "low",
+    "cve_ids": [],
+    "released_at": "2026-07-26T20:24:28.408399+00:00",
+    "sla_days": 60,
+    "depends_on_patch_ids": [
+      "PATCH-0087"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0089",
+    "ci_id": "CI-0134",
+    "vendor": "Oracle",
+    "title": "Oracle security update for onedrive-sync-cache",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-63742"
+    ],
+    "released_at": "2026-07-11T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0090",
+    "ci_id": "CI-0134",
+    "vendor": "Oracle",
+    "title": "Red Hat security update for onedrive-sync-cache",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-45361"
+    ],
+    "released_at": "2026-07-26T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0091",
+    "ci_id": "CI-0134",
+    "vendor": "Cisco",
+    "title": "VMware security update for onedrive-sync-cache",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-06-29T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [
+      "PATCH-0090"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0092",
+    "ci_id": "CI-0135",
+    "vendor": "VMware",
+    "title": "Microsoft security update for sharepoint-document-library",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-69263"
+    ],
+    "released_at": "2026-07-27T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0093",
+    "ci_id": "CI-0135",
+    "vendor": "Cisco",
+    "title": "Oracle security update for sharepoint-document-library",
+    "severity": "low",
+    "cve_ids": [],
+    "released_at": "2026-07-30T20:24:28.408399+00:00",
+    "sla_days": 60,
+    "depends_on_patch_ids": [
+      "PATCH-0092"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0094",
+    "ci_id": "CI-0135",
+    "vendor": "Microsoft",
+    "title": "Oracle security update for sharepoint-document-library",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-69230"
+    ],
+    "released_at": "2026-06-27T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0095",
+    "ci_id": "CI-0137",
+    "vendor": "Cisco",
+    "title": "Red Hat security update for sharepoint-site",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-54530"
+    ],
+    "released_at": "2026-07-24T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0096",
+    "ci_id": "CI-0137",
+    "vendor": "Oracle",
+    "title": "Adobe security update for sharepoint-site",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-06-30T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0097",
+    "ci_id": "CI-0138",
+    "vendor": "Microsoft",
+    "title": "Oracle security update for power-platform-environment",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-42242"
+    ],
+    "released_at": "2026-08-03T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0098",
+    "ci_id": "CI-0140",
+    "vendor": "Adobe",
+    "title": "Oracle security update for sharepoint-document-library",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-06-26T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0099",
+    "ci_id": "CI-0143",
+    "vendor": "Adobe",
+    "title": "VMware security update for azure-ad-connect-sync",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-07-13T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0100",
+    "ci_id": "CI-0145",
+    "vendor": "Cisco",
+    "title": "Red Hat security update for sharepoint-site",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-78031"
+    ],
+    "released_at": "2026-06-29T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0101",
+    "ci_id": "CI-0145",
+    "vendor": "VMware",
+    "title": "Red Hat security update for sharepoint-site",
+    "severity": "low",
+    "cve_ids": [],
+    "released_at": "2026-06-28T20:24:28.408399+00:00",
+    "sla_days": 60,
+    "depends_on_patch_ids": [
+      "PATCH-0100"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0102",
+    "ci_id": "CI-0145",
+    "vendor": "Cisco",
+    "title": "Red Hat security update for sharepoint-site",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-91508"
+    ],
+    "released_at": "2026-07-01T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [
+      "PATCH-0101"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0103",
+    "ci_id": "CI-0146",
+    "vendor": "VMware",
+    "title": "Oracle security update for teams-notification-queue",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-57899"
+    ],
+    "released_at": "2026-07-18T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0104",
+    "ci_id": "CI-0146",
+    "vendor": "Microsoft",
+    "title": "Cisco security update for teams-notification-queue",
+    "severity": "low",
+    "cve_ids": [],
+    "released_at": "2026-07-29T20:24:28.408399+00:00",
+    "sla_days": 60,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0105",
+    "ci_id": "CI-0149",
+    "vendor": "Microsoft",
+    "title": "Oracle security update for power-platform-environment",
+    "severity": "low",
+    "cve_ids": [],
+    "released_at": "2026-07-14T20:24:28.408399+00:00",
+    "sla_days": 60,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0106",
+    "ci_id": "CI-0153",
+    "vendor": "Red Hat",
+    "title": "Cisco security update for sharepoint-document-library",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-71267"
+    ],
+    "released_at": "2026-07-07T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0107",
+    "ci_id": "CI-0155",
+    "vendor": "VMware",
+    "title": "Microsoft security update for power-automate-gateway",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-76258"
+    ],
+    "released_at": "2026-08-05T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0108",
+    "ci_id": "CI-0155",
+    "vendor": "Oracle",
+    "title": "Red Hat security update for power-automate-gateway",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-92284"
+    ],
+    "released_at": "2026-07-04T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0109",
+    "ci_id": "CI-0155",
+    "vendor": "Oracle",
+    "title": "Red Hat security update for power-automate-gateway",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-77732"
+    ],
+    "released_at": "2026-06-26T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [
+      "PATCH-0108"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0110",
+    "ci_id": "CI-0159",
+    "vendor": "Red Hat",
+    "title": "Red Hat security update for power-automate-gateway",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-06-28T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0111",
+    "ci_id": "CI-0161",
+    "vendor": "Microsoft",
+    "title": "Adobe security update for power-platform-environment",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-07-24T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0112",
+    "ci_id": "CI-0166",
+    "vendor": "Microsoft",
+    "title": "Microsoft security update for dataverse-instance",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-13277"
+    ],
+    "released_at": "2026-07-14T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0113",
+    "ci_id": "CI-0166",
+    "vendor": "Oracle",
+    "title": "Microsoft security update for dataverse-instance",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-58768"
+    ],
+    "released_at": "2026-06-25T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0114",
+    "ci_id": "CI-0166",
+    "vendor": "Microsoft",
+    "title": "Adobe security update for dataverse-instance",
+    "severity": "low",
+    "cve_ids": [],
+    "released_at": "2026-07-23T20:24:28.408399+00:00",
+    "sla_days": 60,
+    "depends_on_patch_ids": [
+      "PATCH-0113"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0115",
+    "ci_id": "CI-0169",
+    "vendor": "Oracle",
+    "title": "Cisco security update for dataverse-instance",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-08-01T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0116",
+    "ci_id": "CI-0169",
+    "vendor": "Cisco",
+    "title": "Cisco security update for dataverse-instance",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-87804"
+    ],
+    "released_at": "2026-07-26T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [
+      "PATCH-0115"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0117",
+    "ci_id": "CI-0169",
+    "vendor": "VMware",
+    "title": "Cisco security update for dataverse-instance",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-06-24T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0118",
+    "ci_id": "CI-0174",
+    "vendor": "Red Hat",
+    "title": "Adobe security update for sharepoint-document-library",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-15735"
+    ],
+    "released_at": "2026-08-04T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0119",
+    "ci_id": "CI-0174",
+    "vendor": "Adobe",
+    "title": "Oracle security update for sharepoint-document-library",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-30975"
+    ],
+    "released_at": "2026-07-29T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0120",
+    "ci_id": "CI-0174",
+    "vendor": "Adobe",
+    "title": "Cisco security update for sharepoint-document-library",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-71336"
+    ],
+    "released_at": "2026-07-25T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0121",
+    "ci_id": "CI-0175",
+    "vendor": "Red Hat",
+    "title": "Adobe security update for sharepoint-document-library",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-08-04T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0122",
+    "ci_id": "CI-0175",
+    "vendor": "VMware",
+    "title": "Oracle security update for sharepoint-document-library",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-07-08T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [
+      "PATCH-0121"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0123",
+    "ci_id": "CI-0175",
+    "vendor": "Cisco",
+    "title": "Microsoft security update for sharepoint-document-library",
+    "severity": "low",
+    "cve_ids": [],
+    "released_at": "2026-07-25T20:24:28.408399+00:00",
+    "sla_days": 60,
+    "depends_on_patch_ids": [
+      "PATCH-0122"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0124",
+    "ci_id": "CI-0177",
+    "vendor": "VMware",
+    "title": "Oracle security update for dataverse-instance",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-73227"
+    ],
+    "released_at": "2026-07-25T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0125",
+    "ci_id": "CI-0177",
+    "vendor": "VMware",
+    "title": "Oracle security update for dataverse-instance",
+    "severity": "low",
+    "cve_ids": [],
+    "released_at": "2026-07-16T20:24:28.408399+00:00",
+    "sla_days": 60,
+    "depends_on_patch_ids": [
+      "PATCH-0124"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0126",
+    "ci_id": "CI-0177",
+    "vendor": "Cisco",
+    "title": "VMware security update for dataverse-instance",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-07-15T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [
+      "PATCH-0125"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0127",
+    "ci_id": "CI-0178",
+    "vendor": "Adobe",
+    "title": "Red Hat security update for sharepoint-document-library",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-86459"
+    ],
+    "released_at": "2026-07-27T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0128",
+    "ci_id": "CI-0179",
+    "vendor": "Oracle",
+    "title": "Cisco security update for azure-ad-connect-sync",
+    "severity": "low",
+    "cve_ids": [],
+    "released_at": "2026-06-28T20:24:28.408399+00:00",
+    "sla_days": 60,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0129",
+    "ci_id": "CI-0179",
+    "vendor": "Red Hat",
+    "title": "Adobe security update for azure-ad-connect-sync",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-81553"
+    ],
+    "released_at": "2026-07-24T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0130",
+    "ci_id": "CI-0179",
+    "vendor": "Cisco",
+    "title": "Oracle security update for azure-ad-connect-sync",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-07-22T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [
+      "PATCH-0129"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0131",
+    "ci_id": "CI-0183",
+    "vendor": "Adobe",
+    "title": "Adobe security update for power-automate-gateway",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-07-12T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0132",
+    "ci_id": "CI-0183",
+    "vendor": "VMware",
+    "title": "Cisco security update for power-automate-gateway",
+    "severity": "low",
+    "cve_ids": [],
+    "released_at": "2026-06-27T20:24:28.408399+00:00",
+    "sla_days": 60,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0133",
+    "ci_id": "CI-0183",
+    "vendor": "Adobe",
+    "title": "Red Hat security update for power-automate-gateway",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-12622"
+    ],
+    "released_at": "2026-07-01T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [
+      "PATCH-0132"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0134",
+    "ci_id": "CI-0184",
+    "vendor": "Cisco",
+    "title": "VMware security update for sharepoint-document-library",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-07-12T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0135",
+    "ci_id": "CI-0184",
+    "vendor": "VMware",
+    "title": "Oracle security update for sharepoint-document-library",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-78661"
+    ],
+    "released_at": "2026-07-30T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [
+      "PATCH-0134"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0136",
+    "ci_id": "CI-0186",
+    "vendor": "Microsoft",
+    "title": "Cisco security update for azure-ad-connect-sync",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-08-05T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0137",
+    "ci_id": "CI-0186",
+    "vendor": "Cisco",
+    "title": "Cisco security update for azure-ad-connect-sync",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-84856"
+    ],
+    "released_at": "2026-07-22T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [
+      "PATCH-0136"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0138",
+    "ci_id": "CI-0187",
+    "vendor": "Red Hat",
+    "title": "Cisco security update for power-automate-gateway",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-59711"
+    ],
+    "released_at": "2026-07-04T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0139",
+    "ci_id": "CI-0187",
+    "vendor": "Red Hat",
+    "title": "Microsoft security update for power-automate-gateway",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-93761"
+    ],
+    "released_at": "2026-07-16T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0140",
+    "ci_id": "CI-0189",
+    "vendor": "VMware",
+    "title": "Adobe security update for teams-notification-queue",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-15717"
+    ],
+    "released_at": "2026-07-26T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0141",
+    "ci_id": "CI-0189",
+    "vendor": "Red Hat",
+    "title": "VMware security update for teams-notification-queue",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-07-19T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0142",
+    "ci_id": "CI-0192",
+    "vendor": "Oracle",
+    "title": "Red Hat security update for exchange-online-connector",
+    "severity": "low",
+    "cve_ids": [],
+    "released_at": "2026-08-02T20:24:28.408399+00:00",
+    "sla_days": 60,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0143",
+    "ci_id": "CI-0192",
+    "vendor": "Adobe",
+    "title": "Oracle security update for exchange-online-connector",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-39250"
+    ],
+    "released_at": "2026-07-20T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0144",
+    "ci_id": "CI-0192",
+    "vendor": "Microsoft",
+    "title": "Red Hat security update for exchange-online-connector",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-07-30T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [
+      "PATCH-0143"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0145",
+    "ci_id": "CI-0194",
+    "vendor": "Red Hat",
+    "title": "Microsoft security update for exchange-online-connector",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-33665"
+    ],
+    "released_at": "2026-07-07T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0146",
+    "ci_id": "CI-0194",
+    "vendor": "Cisco",
+    "title": "Oracle security update for exchange-online-connector",
+    "severity": "low",
+    "cve_ids": [],
+    "released_at": "2026-07-14T20:24:28.408399+00:00",
+    "sla_days": 60,
+    "depends_on_patch_ids": [
+      "PATCH-0145"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0147",
+    "ci_id": "CI-0194",
+    "vendor": "Microsoft",
+    "title": "Cisco security update for exchange-online-connector",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-10656"
+    ],
+    "released_at": "2026-07-07T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [
+      "PATCH-0146"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0148",
+    "ci_id": "CI-0198",
+    "vendor": "Cisco",
+    "title": "Cisco security update for sharepoint-site",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-07-28T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0149",
+    "ci_id": "CI-0198",
+    "vendor": "Cisco",
+    "title": "VMware security update for sharepoint-site",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-21370"
+    ],
+    "released_at": "2026-08-05T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [
+      "PATCH-0148"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0150",
+    "ci_id": "CI-0199",
+    "vendor": "Red Hat",
+    "title": "VMware security update for teams-notification-queue",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-73333"
+    ],
+    "released_at": "2026-07-06T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0151",
+    "ci_id": "CI-0199",
+    "vendor": "Adobe",
+    "title": "Oracle security update for teams-notification-queue",
+    "severity": "high",
+    "cve_ids": [
+      "CVE-2026-62968"
+    ],
+    "released_at": "2026-07-01T20:24:28.408399+00:00",
+    "sla_days": 14,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0152",
+    "ci_id": "CI-0199",
+    "vendor": "VMware",
+    "title": "VMware security update for teams-notification-queue",
+    "severity": "medium",
+    "cve_ids": [],
+    "released_at": "2026-07-22T20:24:28.408399+00:00",
+    "sla_days": 30,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  },
+  {
+    "id": "PATCH-0153",
+    "ci_id": "CI-0200",
+    "vendor": "Adobe",
+    "title": "Cisco security update for power-platform-environment",
+    "severity": "critical",
+    "cve_ids": [
+      "CVE-2026-54651"
+    ],
+    "released_at": "2026-07-08T20:24:28.408399+00:00",
+    "sla_days": 7,
+    "depends_on_patch_ids": [],
+    "status": "pending"
+  }
+]

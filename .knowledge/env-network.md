@@ -68,6 +68,10 @@ http_client = httpx.Client(verify=False)          # or httpx.AsyncClient(verify=
 - Frontend: `http://localhost:3000`
 - Backend: `http://localhost:8765` — **not 8000/8001**, see `errors-solved.md` (Windows reserves those ephemeral ranges)
 - `frontend/.env` → `VITE_API_BASE_URL` must match the backend port above.
+- MCP simulator default ports (production mode; the app itself wires all of these in-process via
+  `orchestrator/mcp_wiring.py`, so these only matter if a simulator is run standalone):
+  Monitoring 9001, ITSM 9002, Tracker 9003, CMDB 9004, **Patch Source 9005** (added for Patch
+  Management, `mcp_servers/simulators/patch_source.py`).
 
 ## Phase 0 smoke-test results (verified 2026-08-07, `python smoke_test.py`)
 | Check | Status | Notes |

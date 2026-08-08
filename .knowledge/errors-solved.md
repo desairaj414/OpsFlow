@@ -15,6 +15,62 @@ related: [env-network.md, state-progress.md]
 ## Log
 <!-- Append new entries above this line, newest first -->
 
+- **Symptom:** After adding a background "auto-diagnose newly-arrived alerts" watcher, an unrelated
+  `fetch()` from the SAME browser tab (clicking "Open" on a ticket, `GET /tickets/{id}`) hung
+  indefinitely — no response, no error, no timeout — even though the exact same endpoint answered
+  a plain `curl` instantly. Confirmed with a raw `page.evaluate(() => fetch(...))` bypassing all app
+  code: still hung. Not a frontend bug.
+  **Root cause:** `agents/diagnosis.py` and `agents/planner.py` called `llm.invoke()` (synchronous)
+  inside `async def` handlers — this blocks uvicorn's single-threaded event loop for the ENTIRE
+  gateway round-trip (DeepSeek R1: "tens of seconds" even on a healthy gateway). While one request
+  was mid-diagnosis, the backend genuinely could not service ANY other request, including totally
+  unrelated ones, until that call returned. This was already flagged as a known architectural issue
+  (see the offline-fallback entry in state-progress.md) but only became demonstrably serious once
+  auto-triage started running real diagnosis calls continuously in the background — previously the
+  blocking window was one-off (a single manual "Diagnose" click); now it recurs constantly.
+  **Fix:** `llm.invoke(...)` → `await llm.ainvoke(...)` in both files — `ChatOpenAI` (and the
+  `.with_fallbacks(...)`-wrapped runnable from the offline-fallback work) both support native async,
+  no other code needed to change. Confirmed the hang is gone with the same raw-fetch test, and
+  `tests/{test_diagnosis,test_planner,test_supervisor}.py` (14 tests) still pass.
+  **Files touched:** `backend/agents/diagnosis.py`, `backend/agents/planner.py`.
+
+- **Symptom:** `agents/planner.py`'s `where={"class": runbook_class}` Chroma query intermittently
+  raised `RuntimeError: Cannot return the results in a contigious 2D array. Probably ef or M is too
+  small` — non-reproducible in isolation at first (looked like gateway flakiness), then reproduced
+  consistently for `tuning`/`performance`/`patching` runbook classes after the Knowledge Base tab's
+  20 new chunks were added to the same collection.
+  **Root cause:** the `"runbooks"` Chroma collection was created with no `hnsw:search_ef` metadata,
+  so hnswlib used its small default. A `where`-filtered query first collects every candidate id
+  matching the filter (here, every chunk from every runbook of that class), then asks hnswlib for
+  `k` = that candidate count — once the collection grew past ~68 matching candidates for some
+  classes, `k` exceeded the default `search_ef`, which hnswlib can't satisfy.
+  **Fix:** `collection.modify(metadata={"hnsw:search_ef": 500})` on the existing collection (query-
+  time param, changeable without re-indexing); baked `metadata={"hnsw:search_ef": 500}` into every
+  `get_or_create_collection("runbooks", ...)` call site so a future from-scratch rebuild doesn't
+  reintroduce it.
+  **Files touched:** `backend/db/load_chroma.py`, `backend/main.py` (both `get_or_create_collection`
+  calls).
+
+- **Symptom:** After editing `main.py` and restarting `uvicorn`, `curl`/browser requests kept
+  returning the OLD pre-edit behavior (missing new response fields) even though the new `uvicorn`
+  process logged "Application startup complete." with no errors.
+  **Root cause:** A stale backend process from an earlier session was already bound to port 8765.
+  The new `uvicorn` invocation silently failed to bind (`[WinError 10048] only one usage of each
+  socket address...`) and exited, while the old process kept serving unedited code on the same port.
+  **Fix:** `netstat -ano | grep ":8765"` to find the real LISTENING pid, kill it, then start `uvicorn`
+  fresh. Always confirm the *new* process is the one actually bound before trusting a "no errors"
+  restart, especially on Windows.
+  **Files touched:** none (operational, not a code bug).
+
+- **Symptom:** `GET /alerts/stream` (SSE) returned an incomplete/truncated response
+  (`ERR_INCOMPLETE_CHUNKED_ENCODING` in the browser console) instead of the live alert feed.
+  **Root cause:** A new `LEFT JOIN cmdb_ci ON cmdb_ci.id = alerts.ci_id` added an `id` column to the
+  `SELECT` without qualifying it — both `alerts` and `cmdb_ci` have an `id` column, so SQLite raised
+  `ambiguous column name: id` inside the async generator, killing the stream mid-response.
+  **Fix:** qualify as `alerts.id` in the column list whenever a query joins two tables that both have
+  an `id` column.
+  **Files touched:** `backend/main.py` (`_fetch_alerts_after`).
+
 - **Symptom:** `POST /intake/confirm` returned HTTP 400 with a cryptic message: `Expecting ','
   delimiter: line 1 column 175 (char 174)` — looked like a client-input validation failure but the
   same request succeeded on immediate retry.

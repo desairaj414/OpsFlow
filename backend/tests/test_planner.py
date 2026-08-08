@@ -3,9 +3,12 @@ scoped to the workflow's runbook class (runbook-bounded action space)."""
 import asyncio
 
 from agents.planner import _parse_and_filter_steps, run_planner
+from orchestrator.mcp_wiring import wire_all_in_process
 
 SAMPLE_CI = {"id": "CI-0009", "type": "db-server", "environment": "staging", "criticality": "P3"}
 SAMPLE_HYPOTHESIS = {"text": "db-server memory exhaustion causing connection refusal", "confidence": 0.7, "cited_artifact_ids": ["CI-0009"]}
+# CI-0059 is a guaranteed-coverage CI in data_gen/patch_inventory.py — always has pending patches.
+PATCH_CI = {"id": "CI-0059", "type": "sharepoint-site", "environment": "prod", "criticality": "P3"}
 
 
 def test_planner_drafts_bounded_plan_against_real_gateway():
@@ -41,3 +44,19 @@ def test_step_bounded_to_retrieved_chunks_keeps_valid_citation():
     raw = '{"runbook_id": "RB-001", "steps": [{"step_no": 1, "action": "real step", "cites_runbook_step": "RB-001-step1"}]}'
     result = _parse_and_filter_steps(raw, {"RB-001-step1", "RB-001-step2"})
     assert len(result["steps"]) == 1
+
+
+def test_patching_runbook_class_computes_maintenance_window():
+    wire_all_in_process()
+    result = asyncio.run(run_planner(incident_id="INC-TEST-PLAN-3", ci=PATCH_CI, runbook_class="patching", hypothesis=SAMPLE_HYPOTHESIS))
+    window = result.result.get("maintenance_window")
+    assert window is not None, "CI-0059 always has pending patches (guaranteed-coverage), maintenance_window must be computed"
+    assert window["ci_id"] == "CI-0059"
+    assert len(window["grouped_patches"]) >= 1
+    assert window["proposed_window"] is not None
+    assert "sla_at_risk" in window
+
+
+def test_non_patching_runbook_class_has_no_maintenance_window():
+    result = asyncio.run(run_planner(incident_id="INC-TEST-PLAN-4", ci=SAMPLE_CI, runbook_class="remediation", hypothesis=SAMPLE_HYPOTHESIS))
+    assert "maintenance_window" not in result.result

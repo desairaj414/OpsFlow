@@ -1,25 +1,25 @@
 // Plain-language framing for each cockpit tab, written for a jury/business audience rather than
 // an operator who already knows the architecture — every tab in the PRD's §7 list gets one here.
 export const TAB_INFO = {
+  Overview: {
+    tagline: "The headline view",
+    description:
+      "Session-wide health at a glance: how many incidents ran, how many the system verified were actually fixed, how much noise correlation cut through, and where the configuration records have drifted from the truth.",
+  },
   "Ops Board": {
     tagline: "Where problems arrive",
     description:
-      "The live queue of incoming alerts across the Microsoft 365 estate (SharePoint, OneDrive, Power Platform, Teams, Exchange, Dataverse). An operator sees a problem here first, or reports one directly by voice or a screenshot.",
+      "The live queue of incoming alerts across the SaaS & automation estate (SharePoint, OneDrive, Power Platform, Teams, Exchange, Dataverse). An operator sees a problem here first, or reports one directly by voice or a screenshot.",
+  },
+  Tickets: {
+    tagline: "The ServiceNow / Jira system of record",
+    description:
+      "Every ticket this session's diagnoses have raised — in ServiceNow, since that's the one system alerts are ticketed in — browsed the way you'd browse a real ITSM instance. No live instance is connected in this build — \"Pull latest\" honestly re-reads local records instead of reaching out anywhere, and shows when it last did.",
   },
   "Incident Workspace": {
     tagline: "One incident, start to finish",
     description:
-      "The single end-to-end view of one incident: what was reported, what evidence the system gathered, what the AI diagnosed, and what it's proposing to do — all before anything actually runs.",
-  },
-  "Agent Trace": {
-    tagline: "How the AI got its answer",
-    description:
-      "A transparency panel over every AI hand-off in this incident — which model ran, how confident it was, and what it actually concluded — so a claim can be checked, not just trusted.",
-  },
-  "Approval Queue": {
-    tagline: "The human checkpoint",
-    description:
-      "Where a person reviews and approves or rejects an AI-proposed action before it executes. This is the control point that keeps a human in the loop for anything above the system's current autonomy threshold.",
+      "The single end-to-end view of one incident: what was reported, what evidence the system gathered, what the AI diagnosed, and what it's proposing to do. If it needs a human decision before running, that approve/reject step lives right here too.",
   },
   "Drift Queue": {
     tagline: "Is our records system telling the truth?",
@@ -30,15 +30,5 @@ export const TAB_INFO = {
     tagline: "How much trust has the AI earned",
     description:
       "Shows how much independent authority the AI currently holds per action type and environment — from 'always ask a human' up to 'auto-execute' — so nothing runs beyond what has been explicitly authorized.",
-  },
-  "Chunk Inspector": {
-    tagline: "Proof the AI isn't making things up",
-    description:
-      "A look under the hood at how runbook documents were split into retrievable pieces for the AI to cite from, so its recommendations are grounded in real documentation rather than invented.",
-  },
-  "Metrics & Eval": {
-    tagline: "Is the system actually working",
-    description:
-      "The health of the system itself: how often incidents were genuinely resolved versus just had their symptoms masked, how well answers cite real evidence, and other trust metrics across every run so far.",
   },
 };

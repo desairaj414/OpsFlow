@@ -1,66 +1,63 @@
 @import "tailwindcss";
 
-/* Microsoft-365-admin-center-inspired token layer: deep azure primary, light neutral canvas,
-   a dedicated navy header/sidebar-accent pair so the shell reads as an enterprise console rather
-   than a generic dashboard template. */
+/* Verascope token system — light, card-based, data-forward. "Signal" (a deep ocean-teal, not the
+   generic AI-dashboard neon-cyan) is the one brand color: it appears in the logo, primary actions,
+   the active-nav state, and the "system-verified" badge — one hue carrying one meaning throughout
+   the product ("the system vouches for this"), not decoration. Chart-mark pairs validated for
+   colorblind-safety (dataviz skill's validate_palette.js) before use. */
 :root {
-  --background: 210 20% 97%;
-  --foreground: 220 25% 12%;
-  --card: 0 0% 100%;
-  --card-foreground: 220 25% 12%;
-  --primary: 206 100% 32%;
+  --background: 210 29% 97%;    /* paper #F6F8FA */
+  --foreground: 222 47% 11%;    /* ink #0F172A */
+  --card: 0 0% 100%;            /* surface #FFFFFF */
+  --card-foreground: 222 47% 11%;
+  --primary: 175 84% 32%;       /* signal #0D9488 */
   --primary-foreground: 0 0% 100%;
-  --secondary: 210 24% 94%;
-  --secondary-foreground: 220 20% 20%;
-  --muted: 210 20% 95%;
-  --muted-foreground: 215 15% 42%;
-  --border: 214 20% 87%;
-  --radius: 0.5rem;
+  --secondary: 210 25% 95%;
+  --secondary-foreground: 222 30% 20%;
+  --muted: 210 25% 95%;
+  --muted-foreground: 215 16% 47%; /* #64748B */
+  --border: 214 32% 91%;        /* line #E2E8F0 */
+  --radius: 0.75rem;
 
-  /* Chrome-only tokens: the header bar and the sidebar's active-nav accent, not used for content. */
-  --header: 213 60% 15%;
-  --header-foreground: 210 30% 96%;
-  --accent: 206 100% 40%;
-  --accent-soft: 206 90% 95%;
+  /* Chrome tokens: header/sidebar are light now (no dark navy bar) — header = card, kept as a
+     distinct token only so components that reference it don't need touching if that ever changes. */
+  --header: 0 0% 100%;
+  --header-foreground: 222 47% 11%;
+  --accent: 175 84% 32%;        /* same hue as primary — one signal color, one meaning */
+  --accent-soft: 171 41% 93%;   /* signal-soft #E6F4F3 */
+
+  /* Status palette (dataviz skill: reserved, never reused for "series N") */
+  --status-good: 142 76% 36%;    /* #16A34A */
+  --status-warning: 32 95% 44%;  /* #D97706 */
+  --status-critical: 0 74% 51%;  /* #DC2626 */
+  --status-ai: 252 96% 67%;      /* #7C5CFC */
 }
 
 :root[data-theme="dark"] {
-  --background: 220 22% 9%;
-  --foreground: 210 25% 94%;
-  --card: 220 20% 12%;
-  --card-foreground: 210 25% 94%;
-  --primary: 206 90% 58%;
-  --primary-foreground: 220 25% 10%;
-  --secondary: 220 16% 17%;
+  --background: 222 40% 8%;
+  --foreground: 210 30% 94%;
+  --card: 222 32% 12%;
+  --card-foreground: 210 30% 94%;
+  --primary: 172 70% 45%;
+  --primary-foreground: 222 40% 8%;
+  --secondary: 222 24% 16%;
   --secondary-foreground: 210 20% 90%;
-  --muted: 220 16% 16%;
-  --muted-foreground: 215 12% 65%;
-  --border: 220 14% 22%;
-  --header: 220 25% 7%;
-  --header-foreground: 210 25% 92%;
-  --accent: 206 90% 58%;
-  --accent-soft: 206 40% 20%;
+  --muted: 222 24% 16%;
+  --muted-foreground: 215 14% 65%;
+  --border: 222 20% 20%;
+  --header: 222 32% 12%;
+  --header-foreground: 210 30% 94%;
+  --accent: 172 70% 45%;
+  --accent-soft: 172 40% 18%;
+  --status-good: 142 60% 45%;
+  --status-warning: 32 85% 55%;
+  --status-critical: 0 65% 58%;
+  --status-ai: 252 85% 74%;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --background: 220 22% 9%;
-    --foreground: 210 25% 94%;
-    --card: 220 20% 12%;
-    --card-foreground: 210 25% 94%;
-    --primary: 206 90% 58%;
-    --primary-foreground: 220 25% 10%;
-    --secondary: 220 16% 17%;
-    --secondary-foreground: 210 20% 90%;
-    --muted: 220 16% 16%;
-    --muted-foreground: 215 12% 65%;
-    --border: 220 14% 22%;
-    --header: 220 25% 7%;
-    --header-foreground: 210 25% 92%;
-    --accent: 206 90% 58%;
-    --accent-soft: 206 40% 20%;
-  }
-}
+/* Deliberately NO `@media (prefers-color-scheme: dark)` block — light is the true default
+   regardless of OS setting. Dark only activates via the explicit `data-theme="dark"` toggle
+   (Sidebar's ThemeToggle, lib/theme.js), never silently from a system preference. */
 
 @theme inline {
   --color-background: hsl(var(--background));
@@ -78,10 +75,46 @@
   --color-header-foreground: hsl(var(--header-foreground));
   --color-accent: hsl(var(--accent));
   --color-accent-soft: hsl(var(--accent-soft));
+  --color-status-good: hsl(var(--status-good));
+  --color-status-warning: hsl(var(--status-warning));
+  --color-status-critical: hsl(var(--status-critical));
+  --color-status-ai: hsl(var(--status-ai));
   --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 0.25rem);
+  /* layout.js loads Geist/Geist Mono via next/font but never wired them into a font-family before
+     this rebrand — a geometric sans is exactly the "modern, technical, restrained" character the
+     brand plan calls for, not a decorative flourish. */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
 }
 
 body {
   background: hsl(var(--background));
   color: hsl(var(--foreground));
+  font-family: var(--font-sans);
+}
+
+/* Scrollbars follow the same explicit data-theme toggle as everything else above — light default,
+   dark only via :root[data-theme="dark"], never a system-preference media query. */
+:root[data-theme="dark"] {
+  scrollbar-color: hsl(var(--border)) hsl(var(--background));
+}
+
+:root[data-theme="dark"] ::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+:root[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+
+:root[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--border));
+  border-radius: 999px;
+  border: 3px solid hsl(var(--background));
+}
+
+:root[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background-color: hsl(var(--muted-foreground));
 }

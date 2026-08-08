@@ -4,6 +4,7 @@
 CREATE TABLE IF NOT EXISTS cmdb_ci (
     id TEXT PRIMARY KEY,
     name TEXT NOT NULL,
+    display_name TEXT NOT NULL DEFAULT '',
     type TEXT NOT NULL,
     owner TEXT NOT NULL,
     environment TEXT NOT NULL,
@@ -35,7 +36,11 @@ CREATE TABLE IF NOT EXISTS alerts (
     source TEXT NOT NULL,
     raw_payload TEXT NOT NULL,
     received_at TEXT NOT NULL,
-    modality TEXT NOT NULL DEFAULT 'http'
+    modality TEXT NOT NULL DEFAULT 'http',
+    ci_id TEXT,
+    category TEXT,
+    severity TEXT,
+    summary TEXT
 );
 
 CREATE TABLE IF NOT EXISTS incidents (
@@ -157,9 +162,84 @@ CREATE TABLE IF NOT EXISTS model_call_cache (
     model TEXT NOT NULL
 );
 
+-- Real authenticated accounts (decisions-log.md: real-auth decision supersedes the original "no
+-- real authentication" PRD call). password_hash is PBKDF2-HMAC-SHA256, salted (auth_utils.py) —
+-- never a plaintext password. Role is one of ops_engineer|approver|admin — mapped to
+-- guardrails/policy_gate.py's actor_role vocabulary (operator|sre_lead|change_manager) in main.py,
+-- not stored here, so the policy gate's frozen/tested vocabulary never has to change.
+CREATE TABLE IF NOT EXISTS users (
+    id TEXT PRIMARY KEY,
+    username TEXT NOT NULL UNIQUE,
+    password_hash TEXT NOT NULL,
+    display_name TEXT NOT NULL,
+    role TEXT NOT NULL,
+    created_at TEXT NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS pii_ground_truth (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     source_ref TEXT NOT NULL,
     item_type TEXT NOT NULL,
     location TEXT NOT NULL
+);
+
+-- Local record of the ServiceNow/Jira-shaped tickets the (simulated) ITSM/Tracker systems already
+-- create per workflow run (supervisor.py/sync.py, untouched by this table — purely additive).
+-- Schema-compatible in spirit with a real instance (external_id/system/status mirror the real
+-- vendor shapes in mcp_servers/simulators/{itsm,tracker}.py) so a future real-instance swap doesn't
+-- need a redesign. trace_snapshot lets a past alert's diagnosis/plan/verification be reopened
+-- without re-running the agent chain (decisions-log.md: no checkpointing exists, so this is a
+-- point-in-time snapshot, not a resumable state).
+CREATE TABLE IF NOT EXISTS local_tickets (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    system TEXT NOT NULL,              -- 'itsm' | 'tracker'
+    external_id TEXT NOT NULL,         -- sys_id (itsm) or issue key (tracker)
+    cmdb_ci TEXT NOT NULL,
+    workflow_type TEXT NOT NULL,
+    status_raw TEXT NOT NULL,          -- the vendor-shaped state/status as recorded by the simulator
+    status_normalized TEXT NOT NULL,   -- 'open' | 'in_progress' | 'resolved' — for the UI
+    priority TEXT,
+    summary TEXT NOT NULL,
+    opened_at TEXT NOT NULL,
+    closed_at TEXT,
+    linked_incident_id TEXT,
+    trace_snapshot TEXT NOT NULL,      -- JSON: the run's full trace (same shape /workflows/run returns)
+    created_at TEXT NOT NULL
+);
+
+-- Where a future real ServiceNow/Jira instance would be pointed at — single row, stays null until
+-- one exists. Never functional in this build (decisions-log.md); UI shows it as "local simulated
+-- data, not yet connected" until instance_url is set by an admin.
+CREATE TABLE IF NOT EXISTS integration_settings (
+    id INTEGER PRIMARY KEY CHECK (id = 1),
+    servicenow_instance_url TEXT,
+    jira_instance_url TEXT,
+    last_synced_at TEXT
+);
+
+-- Patch Management (PRD row 816 / clause C6, data_gen/patch_inventory.py): pending patches per CI
+-- as (simulated) vendor patch sites would report them. depends_on_patch_ids is a JSON array of
+-- other patch ids (same ci_id) that must apply first — the scheduling rule engine
+-- (guardrails/scheduling.py) reads this for dependency-aware grouping.
+CREATE TABLE IF NOT EXISTS patch_inventory (
+    id TEXT PRIMARY KEY,
+    ci_id TEXT NOT NULL REFERENCES cmdb_ci(id),
+    vendor TEXT NOT NULL,
+    title TEXT NOT NULL,
+    severity TEXT NOT NULL,
+    cve_ids TEXT,
+    released_at TEXT NOT NULL,
+    sla_days INTEGER NOT NULL,
+    depends_on_patch_ids TEXT,
+    status TEXT NOT NULL DEFAULT 'pending'
+);
+
+-- Blackout/freeze windows the scheduling rule engine must route maintenance windows around.
+-- scope is 'global' | an environment name ('prod'|'staging'|'dev') | a specific ci_id.
+CREATE TABLE IF NOT EXISTS change_calendar (
+    id TEXT PRIMARY KEY,
+    scope TEXT NOT NULL,
+    starts_at TEXT NOT NULL,
+    ends_at TEXT NOT NULL,
+    reason TEXT NOT NULL
 );

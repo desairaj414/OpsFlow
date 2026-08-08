@@ -14,6 +14,31 @@ MAX_CONCURRENT_CHANGES_PROD = 3
 APPROVER_ROLES = {"sre_lead", "change_manager"}
 ADVISORY_ONLY_ACTION_TYPES = {"tuning"}  # never auto-executes, per domain-workflows.md parity table
 
+# Runtime-editable copy of the 3 numeric thresholds above, for the admin-only Model & Threshold
+# Config panel (main.py GET/POST /config/thresholds). evaluate_policy reads from this dict, not the
+# module constants directly, so an admin change takes effect immediately for subsequent runs in
+# this process — deliberately NOT persisted across a restart (in-memory only, stated as such in the
+# API response), same "live status, no persistence" simplification already used for autonomy_ladder.
+_current_thresholds = {
+    "blast_radius_approval_threshold": BLAST_RADIUS_APPROVAL_THRESHOLD,
+    "blast_radius_block_threshold": BLAST_RADIUS_BLOCK_THRESHOLD,
+    "max_concurrent_changes_prod": MAX_CONCURRENT_CHANGES_PROD,
+}
+
+
+def get_thresholds() -> dict:
+    return dict(_current_thresholds)
+
+
+def set_thresholds(**overrides: int) -> dict:
+    for key, value in overrides.items():
+        if value is None:
+            continue
+        if key not in _current_thresholds:
+            raise ValueError(f"unknown threshold: {key}")
+        _current_thresholds[key] = value
+    return dict(_current_thresholds)
+
 
 @dataclass
 class PolicyRequest:
@@ -63,19 +88,20 @@ def evaluate_policy(request: PolicyRequest, context: PolicyContext) -> PolicyRes
         triggered.append("FREEZE_WINDOW")
         reasons.append(f"{request.environment} is in a change-freeze window at {request.requested_at}")
 
-    if request.blast_radius_count > BLAST_RADIUS_BLOCK_THRESHOLD:
+    thresholds = _current_thresholds
+    if request.blast_radius_count > thresholds["blast_radius_block_threshold"]:
         blocked = True
         triggered.append("BLAST_RADIUS_BLOCK")
-        reasons.append(f"blast radius {request.blast_radius_count} exceeds hard block threshold {BLAST_RADIUS_BLOCK_THRESHOLD}")
-    elif request.blast_radius_count > BLAST_RADIUS_APPROVAL_THRESHOLD:
+        reasons.append(f"blast radius {request.blast_radius_count} exceeds hard block threshold {thresholds['blast_radius_block_threshold']}")
+    elif request.blast_radius_count > thresholds["blast_radius_approval_threshold"]:
         needs_approval = True
         triggered.append("BLAST_RADIUS_APPROVAL")
-        reasons.append(f"blast radius {request.blast_radius_count} exceeds approval threshold {BLAST_RADIUS_APPROVAL_THRESHOLD}")
+        reasons.append(f"blast radius {request.blast_radius_count} exceeds approval threshold {thresholds['blast_radius_approval_threshold']}")
 
-    if request.environment == "prod" and context.active_changes_in_environment >= MAX_CONCURRENT_CHANGES_PROD:
+    if request.environment == "prod" and context.active_changes_in_environment >= thresholds["max_concurrent_changes_prod"]:
         blocked = True
         triggered.append("MAX_CONCURRENT_CHANGES")
-        reasons.append(f"{context.active_changes_in_environment} concurrent prod changes already active (limit {MAX_CONCURRENT_CHANGES_PROD})")
+        reasons.append(f"{context.active_changes_in_environment} concurrent prod changes already active (limit {thresholds['max_concurrent_changes_prod']})")
 
     if request.action_type in ADVISORY_ONLY_ACTION_TYPES:
         needs_approval = True

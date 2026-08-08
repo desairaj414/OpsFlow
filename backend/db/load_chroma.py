@@ -35,6 +35,7 @@ DATA_DIR = os.path.join(REPO_ROOT, "data")
 CHROMA_DIR = os.path.join(DATA_DIR, "chroma_db")
 RUNBOOKS_DIR = os.path.join(DATA_DIR, "runbooks")
 POSTMORTEMS_DIR = os.path.join(DATA_DIR, "postmortems")
+KNOWLEDGE_BASE_DIR = os.path.join(DATA_DIR, "knowledge_base")
 
 BASE_URL = os.getenv("BASE_URL", "https://genailab.tcs.in/v1").rstrip("/")
 API_KEY = os.getenv("API_KEY", "")
@@ -66,6 +67,25 @@ def build_runbook_chunks() -> list[chunking.Chunk]:
     for fname in sorted(os.listdir(RUNBOOKS_DIR)):
         if fname.endswith(".md"):
             chunks.extend(chunking.chunk_runbook(os.path.join(RUNBOOKS_DIR, fname)))
+    for c in chunks:
+        c.metadata["doc_type"] = "runbook"
+    return chunks
+
+
+def build_knowledge_base_chunks() -> list[chunking.Chunk]:
+    """Reference articles (Teams/SharePoint/Power Automate/Power Apps/Azure AD) — chunked with
+    chunk_postmortem (heading-based, the right fit for freeform reference text vs. chunk_runbook's
+    numbered-step structure) and upserted into the SAME "runbooks" Chroma collection as the actual
+    runbooks, tagged doc_type=kb_article. Deliberately no `class` metadata (remediation/patching/
+    tuning) — agents/planner.py's retrieval filters on `where={"class": runbook_class}`, so these
+    reference-only chunks are naturally invisible to plan-drafting and can never be cited as an
+    executable runbook step."""
+    if not os.path.isdir(KNOWLEDGE_BASE_DIR):
+        return []
+    chunks = []
+    for fname in sorted(os.listdir(KNOWLEDGE_BASE_DIR)):
+        if fname.endswith(".md"):
+            chunks.extend(chunking.chunk_postmortem(os.path.join(KNOWLEDGE_BASE_DIR, fname)))
     return chunks
 
 
@@ -93,14 +113,22 @@ def main() -> None:
 
     with httpx.Client(verify=False) as http_client:
         rb_chunks = build_runbook_chunks()
-        rb_coll = chroma_client.get_or_create_collection("runbooks")
+        kb_chunks = build_knowledge_base_chunks()
+        all_chunks = rb_chunks + kb_chunks
+        # hnsw:search_ef default (10) is too small once a filtered query's candidate pool (e.g.
+        # where={"class": "remediation"} across every matching runbook) exceeds it — hnswlib then
+        # raises "Cannot return the results in a contigious 2D array. Probably ef or M is too small"
+        # instead of just returning fewer results. 500 covers this collection's full size with room
+        # to grow. Only takes effect on first creation — a `.modify()` is needed if the collection
+        # already exists (see errors-solved.md).
+        rb_coll = chroma_client.get_or_create_collection("runbooks", metadata={"hnsw:search_ef": 500})
         rb_coll.upsert(
-            ids=[c.chunk_id for c in rb_chunks],
-            embeddings=embed_all(http_client, [c.content for c in rb_chunks]),
-            documents=[c.content for c in rb_chunks],
-            metadatas=[{**c.metadata, "heading_path": c.heading_path} for c in rb_chunks],
+            ids=[c.chunk_id for c in all_chunks],
+            embeddings=embed_all(http_client, [c.content for c in all_chunks]),
+            documents=[c.content for c in all_chunks],
+            metadatas=[{**c.metadata, "heading_path": c.heading_path} for c in all_chunks],
         )
-        print(f"runbooks collection: {len(rb_chunks)} chunks embedded")
+        print(f"runbooks collection: {len(rb_chunks)} runbook chunks + {len(kb_chunks)} knowledge base chunks embedded")
 
         pm_chunks = build_postmortem_chunks()
         pm_coll = chroma_client.get_or_create_collection("postmortems")
@@ -134,6 +162,11 @@ if __name__ == "__main__":
         got = rb_coll.get(where={"is_trap_case": "true"})
         assert len(got["ids"]) >= 1, "trap runbook chunks not retrievable by metadata filter"
         print(f"PASS: runbooks collection has {rb_coll.count()} chunks, trap case retrievable by metadata filter")
+
+        kb_got = rb_coll.get(where={"doc_type": "kb_article"})
+        assert len(kb_got["ids"]) >= 5, f"expected >=5 knowledge base chunks, got {len(kb_got['ids'])}"
+        assert all("class" not in md for md in kb_got["metadatas"]), "a kb_article chunk has a `class` field — it would leak into Planner's runbook_class retrieval filter"
+        print(f"PASS: {len(kb_got['ids'])} knowledge base chunks present, correctly invisible to Planner's class filter")
 
         pm_coll = chroma_client.get_collection("postmortems")
         assert pm_coll.count() > 0

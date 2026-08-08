@@ -82,7 +82,7 @@ async def run_workflow(
         write_audit_entry(conn, actor="supervisor", action="correlate", target_artifact=incident_id,
                            evidence_ids=[a["id"] for a in alerts], input_modality="alert")
 
-        enrichment_result = await _timed(run_enrichment(incident_id, ci["id"], alerts))
+        enrichment_result = await _timed(run_enrichment(incident_id, ci["id"], alerts, workflow_type=workflow_type))
         trace.append(enrichment_result)
         write_audit_entry(conn, actor="agent:enrichment", action="gather_evidence", target_artifact=incident_id,
                            evidence_ids=enrichment_result.cited_artifact_ids)

@@ -36,15 +36,21 @@ real Supervisor workflow run (enforces `requires_human_confirmation is False` be
 tested that an unconfirmed signal is rejected, not just documented as a rule).
 
 ## MCP tool contracts — one server per simulated system (PRD §3.5/§3.8)
-Each of Monitoring / ITSM / Tracker / CMDB exposes typed tools over MCP, not bespoke HTTP.
-**Implemented and verified 2026-08-07** — `backend/mcp_servers/{monitoring,itsm,tracker,cmdb}_mcp.py`
-wrap `backend/mcp_servers/simulators/{monitoring,itsm,tracker,cmdb}.py` (ports 9001-9004) exactly
-as specified below, self-tested end to end via `--test` (ASGI in-process, no real port needed):
+Each of Monitoring / ITSM / Tracker / CMDB / Patch Source exposes typed tools over MCP, not bespoke
+HTTP. **Implemented and verified 2026-08-07** —
+`backend/mcp_servers/{monitoring,itsm,tracker,cmdb,patch}_mcp.py` wrap
+`backend/mcp_servers/simulators/{monitoring,itsm,tracker,cmdb,patch_source}.py` (ports 9001-9005)
+exactly as specified below, self-tested end to end via `--test` (ASGI in-process, no real port needed):
 - **Monitoring:** `list_alerts`, `get_metric_series(ci_id)`.
 - **ITSM:** `create_ticket`, `update_ticket`, `add_work_note`, `get_ticket(sys_id)`.
 - **Tracker:** `create_issue`, `link_issue`, `transition_issue`, `get_issue`.
 - **CMDB:** `get_ci(id)`, `get_relationships(ci_id)`, `propose_ci_update` (records a proposal only —
   never mutates the CI directly; human approval step still TBD, not yet built).
+- **Patch Source** (port 9005, added for Patch Management/PRD C6): `get_pending_patches(ci_id)`,
+  `get_change_calendar(scope)` — `scope` is `"global"` | an environment name | a specific `ci_id`,
+  server-side always includes `global` windows alongside the requested scope. Backs
+  Enrichment's `patch_inventory`/`change_calendar` evidence and Planner's `maintenance_window`
+  (`guardrails/scheduling.py`, deterministic rule engine, no LLM — see domain-workflows.md).
 
 ## A2A — one handoff, real signed Agent Card (PRD §3.8, cuttable per decisions-log.md)
 **IMPLEMENTED 2026-08-07** — Supervisor→Diagnosis, see [domain-agents.md](domain-agents.md) for
@@ -95,9 +101,11 @@ breaking; re-ran the full diagnosis/planner/supervisor test suite (14/14) after 
   `{"total_alerts","total_clusters","noise_reduction_ratio","candidates":[{"cluster_id","topology_group","category","alert_count","alert_ids","representative_summary"}]}`.
 - **`POST /workflows/run`** (header JWT). Body `{"ci_id","workflow_type","auto_approve"}`. Triggers a
   real Supervisor run and returns
-  `{"incident_id","modality","status","reason","verification_status","trace":[SpecialistResult + "model_used"],"agent_card"}`
+  `{"incident_id","modality","workflow_type","status","reason","verification_status","trace":[SpecialistResult + "model_used"],"agent_card"}`
   — `model_used` is joined in from `audit_log` per handoff (not on `SpecialistResult` itself);
-  `modality` is `"alert"` for this endpoint (added Phase 4 acceptance-criteria closure).
+  `modality` is `"alert"` for this endpoint (added Phase 4 acceptance-criteria closure);
+  `workflow_type` echoes the request (added for Patch Management's frontend Maintenance Planner
+  panel, which only renders when `workflow_type === "patch"`).
   Response shape built by the shared `_format_workflow_outcome()` helper in `main.py`.
 - **`POST /workflows/decision`** (header JWT). Body `{"incident_id","decision":"approve"|"reject","reason"}`.
   Records a human decision to `audit_log` (`human_approve_plan`/`human_reject_plan`, reason in

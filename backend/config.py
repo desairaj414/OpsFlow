@@ -36,6 +36,13 @@ MODELS: list[str] = [m.strip() for m in os.getenv("MODELS", "").split(",") if m.
 DEFAULT_CHAT_MODEL: str = os.getenv("DEFAULT_CHAT_MODEL", MODELS[0] if MODELS else "")
 DEFAULT_EMBED_MODEL: str = os.getenv("DEFAULT_EMBED_MODEL", "")
 
+# --- Offline fallback for demo resilience (models-routing.md: "Must still run if the gateway dies
+# mid-demo", PRD §3.2) — a local Ollama SLM, only ever invoked when the TCS gateway call itself
+# fails. Ollama's OpenAI-compatible server (`ollama serve`, always running per env-network.md).
+OLLAMA_BASE_URL: str = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434/v1")
+OLLAMA_FALLBACK_CHAT_MODEL: str = os.getenv("OLLAMA_FALLBACK_CHAT_MODEL", "llama-3.2-3b-it")
+OLLAMA_FALLBACK_EMBED_MODEL: str = os.getenv("OLLAMA_FALLBACK_EMBED_MODEL", "gte-large")
+
 # --- CORS ---
 FRONTEND_ORIGIN: str = os.getenv("FRONTEND_ORIGIN", "http://localhost:3000")
 

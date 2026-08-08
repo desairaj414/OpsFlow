@@ -64,7 +64,10 @@ async def run_diagnosis(incident_id: str, evidence: list[dict]) -> SpecialistRes
     try:
         while True:
             tracker.use_turn()
-            response = llm.invoke(prompt)
+            # .ainvoke(), not .invoke() — see planner.py's identical comment. This is the single
+            # slowest call in the chain (DeepSeek R1, "tens of seconds"), so it's also the one whose
+            # blocking hurts most.
+            response = await llm.ainvoke(prompt)
             try:
                 hypotheses = _parse_and_filter(response.content, valid_ids)
                 termination_reason = "hypotheses_generated" if hypotheses else "no_valid_hypotheses"

@@ -31,6 +31,8 @@ the same table and should not be conflated.**
 - `scenarios` — id, name, workflow_type, is_edge_case (bool), fixture_path — the Scenario Library, doubles as the test suite (PRD §6.1/§5 Phase 5).
 - `model_call_cache` — hash(prompt_version, scrubbed_input) → response, tokens, latency, model — see [arch-overview.md](arch-overview.md) caching strategy.
 - `pii_ground_truth` — planted sensitive items + location, for computing scrubber precision/recall (PRD §6.2).
+- `patch_inventory` — id, ci_id, vendor, title, severity, cve_ids, released_at, sla_days, depends_on_patch_ids (JSON array, same ci_id), status. Simulated vendor patch feed (`data_gen/patch_inventory.py`, served via `mcp_servers/patch_mcp.py`/`simulators/patch_source.py`, port 9005) — PRD row 816.
+- `change_calendar` — id, scope (`global`|environment name|a specific ci_id), starts_at, ends_at, reason. Blackout/freeze windows the scheduling rule engine (`guardrails/scheduling.py`) routes maintenance windows around (PRD C6).
 
 ## Chroma — vector/RAG (PRD §3.5)
 - Collection `runbooks` — chunked per the structural rules in [domain-guardrails.md](domain-guardrails.md) §chunking, metadata includes heading path (`Runbook 14 › Rollback › Step 3`).
