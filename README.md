@@ -1,2 +1,207 @@
-# my-hackathon-app
+# Verascope
 
+**AI-verified operations console for IT application maintenance.**
+
+A supervised team of AI agents that turns patching, performance tuning, and incident resolution
+into one repeatable, auditable workflow — from "an alert (or voice note, or screenshot) came in"
+to "ticket closed, CMDB updated, and a verified fix, not just an assumed one."
+
+Built for **TCS AI Fridays Season 2 — Regional Round**
+(*Problem statement: AI-Powered Multi-Agent Workflow Automation for IT Application Maintenance*).
+
+> New to this repo? Read this file top to bottom once — it gets you from a fresh clone to a
+> running app. Everything else you might want is linked from [§7 Learn more](#7-learn-more) below.
+
+---
+
+## 1. What this actually is
+
+- A **FastAPI backend** running a 9-step supervised agent chain (Correlate → Enrich → Diagnose →
+  Plan → Gate → Approve → Execute → Verify → Sync → Knowledge) over three workflow types
+  (incident / patch / performance).
+- A **Next.js frontend** ("the Verascope cockpit") — a role-based ops console with a live alert
+  feed, an incident workspace, a full agent-trace viewer, and a floating chat assistant that
+  accepts text, voice, and screenshot uploads.
+- **No real third-party systems.** "ServiceNow" and "Jira" panels you'll see are FastAPI
+  simulators this project wrote itself — every model call goes to the TCS GenAI Lab gateway or a
+  local Ollama model, never to an outside vendor.
+- **100% synthetic data** — generated with a fixed seed, provenance-tracked in `data/PROVENANCE.md`.
+
+Full architecture, data flow, demo script, and folder-by-folder guide: see [§7](#7-learn-more).
+
+---
+
+## 2. Prerequisites — exact versions that are known to work
+
+| Tool | Version | Notes |
+|---|---|---|
+| **Python** | 3.12.x (this project was built/tested on 3.12.8) | 3.11 likely works too; avoid 3.13 until you've confirmed `chromadb`/`langchain` compatibility yourself |
+| **Node.js** | **20.9 or newer** (20.x LTS or 22.x LTS recommended) | Next.js 16 refuses to install below this — you'll get an `EBADENGINE` error otherwise |
+| **npm** | ships with Node | On Windows PowerShell, use `npm.cmd`, not `npm` (see [Troubleshooting](#troubleshooting)) |
+| **Ollama** | any recent version | Must already have `llama-3.2-3b-it` and `gte-large` pulled — used for the PII scrubber and the offline fallback. Run `ollama list` to check; **do not download new models on an event/restricted network** |
+| **Git** | any recent version | Only needed if you're cloning rather than copying the folder |
+| **A TCS GenAI Lab gateway API key** | — | Issued per-event; without it the app still runs, but every LLM step will fall back to local Ollama (slower, and the scrubber-only model isn't a substitute for the reasoning/planning models) |
+
+**OS note:** this project was built and is documented for **Windows** (PowerShell). Mac/Linux
+should work with the equivalent shell commands, but the corporate-proxy SSL workarounds baked
+into `backend/config.py` are a no-op (not harmful) if you don't need them.
+
+---
+
+## 3. Get the code
+
+```powershell
+git clone <this-repo-url> my-hackathon-app
+cd my-hackathon-app
+```
+(If you already have the folder — e.g. it was shared as a zip — just `cd` into it; skip cloning.)
+
+---
+
+## 4. Backend setup
+
+```powershell
+cd backend
+
+# 1. Create and activate a virtual environment
+python -m venv venv
+venv\Scripts\activate
+
+# 2. Install dependencies (pinned versions — see backend/requirements.txt)
+pip install -r requirements.txt
+
+# 3. Configure environment variables
+copy .env.example .env
+# now open backend\.env and fill in BASE_URL / API_KEY (your gateway credentials) —
+# see backend/.env.example for what every key means and a working default shape
+
+# 4. Build the SQLite database (only needed once, or after data/app.db is deleted)
+python db\init_db.py
+
+# 5. Build the Chroma vector store (runbooks/postmortems/tickets — needs a working gateway
+#    connection, since it calls the real embedding model)
+python db\load_chroma.py
+
+# 6. (Optional but recommended first time) confirm the gateway + Ollama + models all actually work
+python smoke_test.py
+
+# 7. Run the API server
+uvicorn main:app --reload --host 0.0.0.0 --port 8765
+```
+
+Leave this terminal running. You should see `Application startup complete.` and no errors.
+Verify it's alive: open **http://localhost:8765/health** in a browser — expect a `200 OK` JSON
+response.
+
+> **Port 8765, not 8000/8001.** Windows silently blocks binds to those ports on some machines
+> (Hyper-V/WSL reserved ranges) — see [Troubleshooting](#troubleshooting).
+
+### If steps 4/5 are already done for you
+If `data/app.db` and `data/chroma_db/` already exist and look populated (e.g. you received this
+project pre-built, not a fresh clone), you can skip steps 4-5 and go straight to step 7. Re-run
+`db/init_db.py`/`db/load_chroma.py` any time you want a clean, from-scratch database.
+
+---
+
+## 5. Frontend setup
+
+Open a **second** terminal (leave the backend running in the first one):
+
+```powershell
+cd frontend
+
+# 1. Install dependencies
+npm.cmd install
+
+# 2. Configure environment variables
+copy .env.local.example .env.local
+# defaults to http://localhost:8765 — only change this if your backend runs on a different port
+
+# 3. Run the dev server
+npm.cmd run dev
+```
+
+Open **http://localhost:3000** — you should land on the Verascope login screen.
+
+---
+
+## 6. Log in and confirm it works
+
+Three demo accounts are seeded automatically by `db/init_db.py` (one per role):
+
+| Username | Password | Role |
+|---|---|---|
+| `alex.chen` | `OpsEngineer!123` | Ops Engineer |
+| `priya.sharma` | `Approver!123` | Approver |
+| `admin` | `Admin!123` | Admin |
+
+Log in as `admin` first — it can see every panel (Users, Config, Scenarios, Audit Log, Knowledge
+Base) in the sidebar, useful for verifying the whole stack came up correctly. You should see:
+- The **Overview** tab with real (non-zero, if any runs have happened) or zero-but-not-erroring
+  metric tiles.
+- The **Ops Board** tab showing a live-updating connection indicator (SSE feed from the backend).
+- The **Autonomy Ladder** tab listing runbooks (confirms both the DB and the seed data loaded).
+
+If all three render without errors, the full stack is working end to end.
+
+### Try one real workflow run
+Sidebar → **Scenarios** panel (Admin/Approver) → launch `SCEN-01` (a clean, auto-approved incident
+resolution). It should reach `verified_resolved` within roughly the time it takes DeepSeek R1 to
+respond (can be 10-40+ seconds on a busy gateway — this is expected, not a hang). See
+`DEMO_SCRIPT.md` for the full scenario list and what each one demonstrates.
+
+---
+
+## 7. Learn more
+
+This README gets you running. For everything else:
+
+| Doc | What's in it |
+|---|---|
+| [`ARCHITECTURE.md`](ARCHITECTURE.md) | System design: tiers, the 9-step agent chain, models used, guardrails, protocols, storage |
+| [`APP_FLOW.md`](APP_FLOW.md) | End-to-end data flow, sequence diagrams, where every UI number comes from |
+| [`DEMO_SCRIPT.md`](DEMO_SCRIPT.md) | Jury pitch, use-case story, live demo click-path, all 6 scenario fixtures explained |
+| [`PROJECT_STRUCTURE.md`](PROJECT_STRUCTURE.md) | Folder-by-folder / file-by-file guide to the whole codebase |
+| [`SETUP.md`](SETUP.md) | This README's detailed companion — full environment variable reference, troubleshooting appendix, verification checklist |
+| [`PRD_FINAL.md`](PRD_FINAL.md) | The frozen product requirements this build satisfies (long — reference, not required reading) |
+| [`.knowledge/`](.knowledge/) | The build's own engineering log (architecture-as-built detail, decisions, phase-by-phase history) — useful if you're extending the code, not needed to just run it |
+
+---
+
+## Troubleshooting
+
+The most common first-run issues, and their fixes:
+
+- **`pip install` fails with a `ResolutionImpossible` / numpy conflict** — you're likely on a
+  Python version where `langchain==0.3.7` and a newer `numpy` can't co-exist. Use Python 3.12 and
+  the exact `requirements.txt` as pinned; don't upgrade individual packages by hand.
+- **Backend won't bind / silently exits, no errors** — something is already listening on port
+  8765 from a previous run. Find and stop it (`netstat -ano | findstr :8765` on Windows, then
+  `taskkill /PID <pid> /F`), then restart `uvicorn`.
+- **`npm install` / `npm run dev` fails with a PowerShell script-execution error** — use `npm.cmd`
+  instead of `npm` in PowerShell.
+- **Frontend loads but every API call fails / CORS errors in the console** — check that
+  `frontend/.env.local`'s `NEXT_PUBLIC_API_BASE_URL` and `backend/.env`'s `FRONTEND_ORIGIN`
+  actually point at each other's real host/port.
+- **`uvicorn` crashes on `python-multipart`** — already pinned in `requirements.txt`; if you edited
+  it, this is why login and file-upload routes break.
+- **Diagnose/Plan steps take a long time or seem to hang** — DeepSeek R1 genuinely takes tens of
+  seconds on a busy gateway; this is expected latency on one step, not a bug. If the gateway is
+  fully unreachable, the app should still complete via the local Ollama fallback (slower).
+- **`ollama` fallback errors** — run `ollama list` and confirm `llama-3.2-3b-it` and `gte-large`
+  are present; if not, get them from whoever manages the lab machine rather than pulling new
+  models on a restricted network.
+
+For anything not listed here, `.knowledge/errors-solved.md` has a longer, more detailed log of
+every real error hit while building this project and exactly how it was fixed.
+
+---
+
+## A note on data & privacy
+
+Every dataset in `data/` (alerts, tickets, CMDB, runbooks, postmortems) is synthetic — generated
+by this project's own scripts, never scraped or copied from a real system. Where the demo shows
+"planted" personal data or secrets (names, phone numbers, connection strings, API keys), it exists
+specifically to prove the PII/secret scrubber works, and is tracked in
+`data/pii_ground_truth.json` for that purpose. See `.knowledge/domain-privacy.md` for the full
+rationale.

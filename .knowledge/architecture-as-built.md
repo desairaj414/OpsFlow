@@ -134,6 +134,21 @@ Overview.jsx fetches 4 endpoints on load: `GET /metrics/summary`, `GET /cmdb/dri
 load**, from real SQLite `audit_log`/`negative_kb_entries`/`cmdb_ci*`/`autonomy_ladder` rows and
 the real `data/alerts.json` dataset — nothing on this tab is a canned/mocked number.
 
+### CMDB drift, explained plainly (feeds "CMDB drift rate" + "CMDB accuracy" below)
+Two datasets, generated identical, then deliberately pulled apart: `data/cmdb.json` (→ `cmdb_ci`
+table) is the **"recorded"** value (what the CMDB officially says); `data/cmdb_ground_truth.json`
+(→ `cmdb_ci_ground_truth`) is the **"actual"** value (what you'd find if you actually checked the
+real system). At generation time (`data_gen/cmdb.py`, fixed seed), **35% of the 200 CIs** (~70) each
+get **exactly one** of `patch_level`/`criticality`/`environment`/`owner` changed to something else
+— e.g. CI-0056 recorded as `patch_level "4.20.4"` but ground-truth `"6.13.7"`, everything else about
+it identical. `GET /cmdb/drift` compares 6 fields per CI (those 4, plus `name`/`last_verified_at`,
+which never actually diverge in this dataset) — any mismatch flags that CI "drifted."
+`drift_rate = drifted_count / total_cis` (e.g. 70/200 = 35%); the accuracy donut is the same split
+shown as counts. **This never changes during a live session** — confirmed the Sync agent's
+`propose_ci_update` deliberately does NOT mutate the CI record (logs a pending proposal only, a
+documented human-approval gate with no "apply" step built yet), so resolving incidents doesn't
+shift these numbers. It's a static snapshot of CMDB messiness, not a live metric.
+
 ### Top KPI row (7 tiles)
 | Tile | Source | Computation |
 |---|---|---|
@@ -163,7 +178,7 @@ the real `data/alerts.json` dataset — nothing on this tab is a canned/mocked n
 | Card | Source | Computation |
 |---|---|---|
 | **Recent activity** | `GET /audit-log?limit=6` | Last 6 rows from `audit_log`, newest first. Server-side role-gated to approver/admin (`require_role`); an ops_engineer sees "Sign in as Approver or Admin..." instead, since the endpoint 403s and the frontend maps that to `entries: null`. |
-| **Most-trusted runbooks** | `GET /autonomy-ladder`, top 5 by `verified_resolution_count` | Joins `autonomy_ladder` + `runbooks` tables. **Important**: `verified_resolution_count` is seeded once at DB init and never incremented at runtime anywhere in the codebase (confirmed — no agent or endpoint writes to `autonomy_ladder`) — this card reflects **static seed data**, not live promotions during the session, consistent with the Autonomy Ladder tab's own "no runbook has been promoted yet in this session" framing. |
+| **Most-trusted runbooks** | `GET /autonomy-ladder`, top 5 by `verified_resolution_count` | Joins `autonomy_ladder` + `runbooks` tables. `db/init_db.py::populate_autonomy_ladder()` seeds one row per runbook at `current_tier='suggest_only'`, `verified_resolution_count=0` (added 2026-08-08 — the table previously had zero seed rows and no writer at all, so this card and the Autonomy Ladder tab were permanently blank; not a bug, just never seeded). `verified_resolution_count`/`current_tier` still have no runtime writer anywhere — this card reflects **static seed data**, not live promotions during the session, consistent with the Autonomy Ladder tab's own "no runbook has been promoted yet in this session" framing. |
 
 ## Quick reference — LLM vs SLM vs classical ML vs deterministic, by step
 | Step | Uses |

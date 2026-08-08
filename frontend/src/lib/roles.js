@@ -18,9 +18,9 @@ export const ROLE_LABELS = {
 // the same component in a Modal instead, since it only ever makes sense in the context of one
 // incident (the tab always just read the same shared `run` Incident Workspace already shows).
 export const TAB_PERMISSIONS = {
-  ops_engineer: ["Overview", "Ops Board", "Tickets", "Incident Workspace", "Drift Queue", "Autonomy Ladder"],
-  approver: ["Overview", "Ops Board", "Tickets", "Incident Workspace", "Drift Queue", "Autonomy Ladder"],
-  admin: ["Overview", "Ops Board", "Tickets", "Incident Workspace", "Drift Queue", "Autonomy Ladder"],
+  ops_engineer: ["Overview", "Ops Board", "Tickets", "Incident Workspace", "Autonomy Ladder"],
+  approver: ["Overview", "Ops Board", "Tickets", "Incident Workspace", "Autonomy Ladder"],
+  admin: ["Overview", "Ops Board", "Tickets", "Incident Workspace", "Autonomy Ladder"],
 };
 
 // Which Sidebar panel(s) each role sees. Knowledge Base moved here from a main tab — it's

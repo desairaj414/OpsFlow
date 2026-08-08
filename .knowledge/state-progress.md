@@ -46,45 +46,11 @@ self-verified/live-verified at the time, both superseded (in file-touch terms, n
 Demo-readiness pass below, which further edited `Tickets.jsx`, `Sidebar.jsx`, and
 `ChunkInspector.jsx`. Confirmation status for both is still open, not resolved by archiving.
 
-## LAST VERIFIED STEP (self-verified, awaiting human confirmation) — Floating assistant (chatbot),
-## reversing the documented "no chatbot" decision; push-to-talk merged into it
-Human asked for a floating chat assistant (bottom-right icon, popup) that can answer real questions
-about ticket/incident data via an AI-built filter, answer basic app questions, approve/reject a
-pending incident, and take voice input — replacing the Sidebar's push-to-talk entirely. Flagged
-before building: this reverses `decisions-log.md`'s "cut scoped chat drawer" call and PRD §2.2's
-explicit "vs. a general chat assistant" differentiation argument (no hands, no memory, "confidently
-answers with no evidence"). Confirmed via AskUserQuestion (all 3 recommended options): build it to
-keep those same properties rather than become what they warned against.
-**Backend** (`POST /chat`, replacing the original scaffold's trivial `/chat` example stub that just
-forwarded a message to an LLM with zero grounding — same shape as the thing PRD §2.2 argued
-against): one classification LLM call (`azure/genailab-maas-gpt-4.1-nano`, same model Planner uses)
-turns the message into `{intent, filters/target_ref/reason/help_topic}`; everything after that is
-deterministic. `query_tickets` runs a real parameterized SQL query against `local_tickets` and
-formats the reply from the real rows — the LLM never sees or reports a number it didn't get from
-the DB. `approve_incident`/`reject_incident` resolves a real pending-approval row by external_id/
-incident_id, requires a role check (approver/admin) and a non-empty reason exactly like
-`/workflows/decision`, writes the identical `human_{decision}_plan` audit entry, and (on approve)
-re-runs the same CI with `auto_approve=True` the same way `IncidentWorkspace.jsx`'s
-`ApprovalSection` does. `app_help` answers only from a fixed `APP_HELP_CONTEXT` block describing
-this app's own tabs/panels/ID-scheme/workflow-types/agent-chain, explicitly told not to answer
-general IT/ServiceNow/Jira questions outside that.
-**Frontend**: new `ChatWidget.jsx` (floating button + popup, mounted globally in `CockpitShell.jsx`
-so it's available on every tab) — text input, mic button, message list; an "approved" reply with a
-real `new_run` updates the shared `incident` state (same as any other approval path) and offers an
-"Open Incident Workspace" link. Mic reuses the real `/intake/voice` Whisper+scrub pipeline —
-`signal.extracted_text` (already scrubbed) is simply sent as a normal chat message, one pipeline
-instead of two parsers. Sidebar's `PushToTalk` component, its `ACTIONABLE_INTENTS` set, and the
-`Mic`/`findTraceEntry`/`useRef` imports it alone needed are all removed.
-**Docs**: `decisions-log.md` gained a new entry explicitly reversing the "cut scoped chat drawer"
-decision, recording the reasoning and what was preserved.
-**Verified**: `npm run build` clean; full backend suite 97/98 (1 pre-existing transient LLM-JSON
-flake, confirmed passing in isolation, unrelated file); direct API tests — `query_tickets` returns
-real counts/IDs, `approve_incident` without a reason asks for one and takes no action, with a reason
-it records the exact audit entry (confirmed via `/audit-log`) and returns a real re-run outcome,
-`app_help` answers correctly from the grounded context, off-topic messages fall through to the
-honest "I can answer X/Y/Z" fallback rather than improvising. Live Playwright pass: floating button
-present, Sidebar confirmed free of "Push to talk", a real conversation (ticket count question +
-app-help question) rendered correctly with real data in both replies.
+## LAST VERIFIED STEP (superseded) — Floating assistant (chatbot), reversing the documented "no
+## chatbot" decision; push-to-talk merged into it
+Moved to [state-progress-history.md](state-progress-history.md) for space — self-verified/
+live-verified at the time, confirmation status still open, not resolved by archiving. Foundational
+context for the chat/image work in the Demo-readiness pass directly below.
 
 ## LAST VERIFIED STEP (self-verified, awaiting human confirmation) — Demo-readiness pass: dev-text
 ## sweep, dark scrollbar, Sidebar panel consolidation, chat ticket table, image intake moved to chat
@@ -167,6 +133,38 @@ chat" correctly reset to the greeting.
 **Answered inline, not a code change**: human asked what the three Model & Threshold Config policy
 numbers mean (blast radius approval/block thresholds, max concurrent prod changes) — explained via
 `guardrails/policy_gate.py`'s actual gating logic, no doc file changed.
+
+## LAST VERIFIED STEP (self-verified, awaiting human confirmation) — Drift Queue hidden; Autonomy
+## Ladder seeded (was permanently empty, not a bug)
+Human asked to hide Drift Queue (not deemed demo-ready) and asked whether Autonomy Ladder's empty
+table was an error. Investigated: it wasn't an error — `autonomy_ladder` had **zero rows and no
+writer anywhere in the codebase** (confirmed via grep, `db/init_db.py`'s own self-test explicitly
+asserted it must be empty after seeding). This meant both the Autonomy Ladder tab AND Overview's
+"Most-trusted runbooks" card (same table) were permanently blank, not "static but populated" as
+previously assumed when writing `architecture-as-built.md`. Asked which fix the human wanted; chose
+seeding one starting-tier row per runbook.
+**Drift Queue hidden**: removed from `roles.js`'s `TAB_PERMISSIONS` (all 3 roles) and
+`CockpitShell.jsx`'s `TABS` array only — `DriftQueue.jsx` and its route logic untouched, so
+restoring it later is a one-line revert, not a rebuild.
+**Autonomy Ladder seeded**: new `populate_autonomy_ladder()` in `db/init_db.py` — one row per
+runbook (`current_tier='suggest_only'`, `verified_resolution_count=0`, `last_promoted_at=NULL`),
+wired into `main()` after `populate_runbooks`. Self-test's `empty_expected` list corrected (removed
+`autonomy_ladder`, since it's no longer meant to be empty) and a new assertion added
+(`counts["autonomy_ladder"] == counts["runbooks"]`). Applied to the **live** `data/app.db` via a
+targeted call to just `populate_autonomy_ladder()` on the existing connection — deliberately did
+NOT run `init_db.py`'s full `main()`, which drops and rebuilds the whole DB file and would have
+wiped this session's real `audit_log`/`local_tickets`/every workflow run so far. Confirmed
+untouched afterward (audit_log still had 1315 rows). Still genuinely static after this fix —
+`current_tier`/`verified_resolution_count` still have no runtime writer anywhere; seeding the
+starting state is not the same as building the (deliberately out-of-scope, PRD §4.0) live
+promotion engine.
+**Docs**: `architecture-as-built.md`'s "Most-trusted runbooks" row corrected (was: "static seed
+data, not live promotions" — now accurate; before this fix it should have said "no seed data at
+all, permanently empty").
+**Verified**: `npm run build` clean; full backend suite 98/98 (170s); live Playwright pass —
+Drift Queue absent from nav for all 3 roles, Autonomy Ladder tab shows all 22 runbooks at "Suggest
+only"/0 verified, Overview's "Most-trusted runbooks" card now populated; direct DB query confirmed
+seed applied without disturbing existing session rows.
 
 ## NEXT STEP
 Human confirmation still open on this pass, the ServiceNow/Approval-Queue pass, the Agent-Trace/

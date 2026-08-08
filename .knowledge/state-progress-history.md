@@ -61,6 +61,23 @@ shows "Approval Queue", Ops Board shows both filter rows, a real advisory-only s
 shows the red "Needs approval" section inline with working Approve/Reject; direct API check confirms
 a real performance-workflow run now persists only an `itsm` ticket, zero `tracker` rows.
 
+## LAST VERIFIED STEP (superseded) — Floating assistant (chatbot), reversing the documented "no
+## chatbot" decision; push-to-talk merged into it
+Human asked for a floating chat assistant (bottom-right icon, popup) answering real questions about
+ticket/incident data via an AI-built filter, basic app questions, approve/reject a pending incident,
+and voice input — replacing Sidebar's push-to-talk entirely. Flagged before building: this reverses
+`decisions-log.md`'s "cut scoped chat drawer" call and PRD §2.2's "vs. a general chat assistant"
+differentiation argument; confirmed via AskUserQuestion to build it so as to keep those same
+properties (grounded, real audit trail, no fabrication) rather than become what they warned against.
+`POST /chat` (`main.py`): one classification LLM call (`gpt-4.1-nano`) turns the message into
+`{intent, filters/target_ref/reason/help_topic}`; everything after is deterministic —
+`query_tickets` runs a real parameterized SQL query, `approve_incident`/`reject_incident` reuses the
+exact same audited, role-gated, reason-required path `/workflows/decision` uses. `ChatWidget.jsx`:
+floating button + popup, mic reuses the real `/intake/voice` pipeline. Sidebar's old `PushToTalk`
+component removed.
+**Verified**: `npm run build` clean; backend suite 97/98 (1 unrelated pre-existing flake); direct API
+tests on all 4 intents; live Playwright pass with a real conversation.
+
 ## LAST VERIFIED STEP (superseded) — Agent Trace and Knowledge Base moved off the main tab bar
 Human asks: Agent Trace doesn't need its own tab — a button that expands it in a popup is enough
 (it only ever showed the same shared `run` Incident Workspace already displays). Knowledge Base

@@ -20,7 +20,7 @@ import { useWorkflowRun } from "@/hooks/useWorkflowRun";
 import { useTickets } from "@/hooks/useTickets";
 import { useAutoTriage } from "@/hooks/useAutoTriage";
 
-const TABS = ["Overview", "Ops Board", "Tickets", "Incident Workspace", "Drift Queue", "Autonomy Ladder"];
+const TABS = ["Overview", "Ops Board", "Tickets", "Incident Workspace", "Autonomy Ladder"];
 
 function TabInfoBanner({ tab }) {
   const info = TAB_INFO[tab];

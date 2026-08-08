@@ -137,6 +137,19 @@ def populate_runbooks(conn: sqlite3.Connection) -> None:
     conn.executemany("INSERT OR REPLACE INTO runbooks (id, class, declared_human_step_count, content_ref) VALUES (?,?,?,?)", rows)
 
 
+def populate_autonomy_ladder(conn: sqlite3.Connection) -> None:
+    """One row per runbook, all starting at the base tier with zero verified resolutions — without
+    this the Autonomy Ladder tab and Overview's "Most-trusted runbooks" card have nothing to read
+    (the table has no other writer; there is no live promotion engine, PRD §4.0 scope cut). Seeding
+    the starting state is not the same as building promotion logic — `current_tier`/
+    `verified_resolution_count` still never change at runtime."""
+    runbook_ids = [r[0] for r in conn.execute("SELECT id FROM runbooks").fetchall()]
+    conn.executemany(
+        "INSERT OR REPLACE INTO autonomy_ladder (runbook_id, current_tier, verified_resolution_count, last_promoted_at) VALUES (?, 'suggest_only', 0, NULL)",
+        [(rb_id,) for rb_id in runbook_ids],
+    )
+
+
 def populate_integration_settings(conn: sqlite3.Connection) -> None:
     """Single row, all null until an admin sets a real instance URL (GET/POST /config/integrations)
     — seeded here purely so the endpoint always has a row to read/update, never a functional sync."""
@@ -173,6 +186,7 @@ def main() -> None:
         populate_alerts(conn)
         populate_negative_kb(conn)
         populate_runbooks(conn)
+        populate_autonomy_ladder(conn)
         populate_pii_ground_truth(conn)
         populate_scenarios(conn)
         populate_users(conn)
@@ -212,8 +226,9 @@ if __name__ == "__main__":
     assert counts["integration_settings"] == 1  # single seeded row, all null until a real instance is set
     assert counts["patch_inventory"] == 153  # fixed seed, data_gen/patch_inventory.py
     assert counts["change_calendar"] == 12  # fixed seed, data_gen/patch_inventory.py
+    assert counts["autonomy_ladder"] == counts["runbooks"]  # one starting-tier row per runbook, no live writer beyond seed
     empty_expected = ["incidents", "evidence", "hypotheses", "plans", "approvals", "verification_results",
-                       "audit_log", "autonomy_ladder", "model_call_cache", "local_tickets"]
+                       "audit_log", "model_call_cache", "local_tickets"]
     assert all(counts[t] == 0 for t in empty_expected), "a table meant to be runtime-only has pre-seeded rows"
     print(f"\nSELF-TEST PASSED: all {len(counts)} tables created, populated tables have correct volumes, runtime-only tables correctly empty.")
     print("\nDemo login credentials (username / password):")
