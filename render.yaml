@@ -11,6 +11,13 @@ services:
       python db/load_chroma.py
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
     envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+        # Render defaults to its newest available Python (3.14 as of writing) when this isn't set,
+        # which has no prebuilt wheel for pydantic-core==2.23.4 — pip falls back to compiling it
+        # from source via Rust/maturin, which fails on Render's build sandbox (read-only Cargo
+        # cache). Pinned to match backend/venv's locally-tested version (3.11.7). backend/runtime.txt
+        # sets the same pin as a second signal Render's Python-runtime detection reads.
       - key: DEFAULT_PROVIDER
         value: gemini
       - key: TCS_NETWORK
