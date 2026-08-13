@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { apiFetch } from "@/lib/api.js";
 
 // Shared trigger for real workflow runs — used across Ops Board/Agent Trace/Incident Workspace
 // (including its approval section) so a run started in one tab shows up consistently in the
@@ -22,12 +23,16 @@ export function useWorkflowRun({ apiBase, token }) {
     if (!silent) setLoading(true);
     setError("");
     try {
-      const res = await fetch(`${apiBase}/workflows/run`, {
+      const res = await apiFetch(apiBase, "/workflows/run", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        headers: { "Content-Type": "application/json" },
+        token,
         body: JSON.stringify({ ci_id: ciId, workflow_type: workflowType, auto_approve: autoApprove }),
       });
-      if (!res.ok) throw new Error(`Request failed (${res.status})`);
+      if (!res.ok) {
+        const detail = await res.json().catch(() => ({}));
+        throw new Error(detail.detail || `Request failed (${res.status})`);
+      }
       const data = await res.json();
       if (!silent) setRun(data);
       return data;
@@ -45,9 +50,10 @@ export function useWorkflowRun({ apiBase, token }) {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch(`${apiBase}/intake/confirm`, {
+      const res = await apiFetch(apiBase, "/intake/confirm", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        headers: { "Content-Type": "application/json" },
+        token,
         body: JSON.stringify({ signal, workflow_type: workflowType }),
       });
       if (!res.ok) {

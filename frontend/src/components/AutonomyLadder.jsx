@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { apiFetch } from "@/lib/api.js";
 
 const TIER_LABELS = {
   suggest_only: "Suggest only",
@@ -16,7 +17,7 @@ export default function AutonomyLadder({ apiBase, token }) {
 
   useEffect(() => {
     let cancelled = false;
-    fetch(`${apiBase}/autonomy-ladder`, { headers: { Authorization: `Bearer ${token}` } })
+    apiFetch(apiBase, "/autonomy-ladder", { token })
       .then((res) => {
         if (!res.ok) throw new Error(`Request failed (${res.status})`);
         return res.json();

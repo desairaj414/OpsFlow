@@ -1,8 +1,10 @@
-"""Llama Vision image intake path: image -> extraction -> scrub -> MaintenanceSignal, cited
-thereafter as IMG-nnn so provenance survives into diagnosis (domain-multimodal-intake.md). Uses
-gpt-4o — the human-approved substitute for the permanently-deprecated Llama Vision deployment
-(models-routing.md "CONFIRMED UNREACHABLE", decisions-log.md). Confirmation-before-action is
-unconditional here: every image signal requires human confirmation before entering a workflow.
+"""Vision image intake path: image -> extraction -> scrub -> MaintenanceSignal, cited thereafter
+as IMG-nnn so provenance survives into diagnosis (domain-multimodal-intake.md). Confirmation-
+before-action is unconditional here: every image signal requires human confirmation before
+entering a workflow.
+
+Extraction is bound to whichever provider is active on the current request (provider_context.py)
+— every provider in the registry supports vision (providers.py), unlike voice transcription.
 """
 import base64
 import json
@@ -10,15 +12,17 @@ import re
 import uuid
 from datetime import datetime, timezone
 
-import config  # noqa: F401  sets TIKTOKEN_CACHE_DIR + SSL bypass as a side effect
+import config  # noqa: F401  sets TIKTOKEN_CACHE_DIR + TCS_NETWORK-gated SSL bypass as a side effect
 import httpx
 
+import providers
 from guardrails.scrubber import scrub
 from orchestrator.contracts import MaintenanceSignal
+from provider_context import get_active_api_key, get_active_provider
 
-VISION_MODEL = "genailab-maas-gpt-4o"  # Llama Vision substitute, see models-routing.md
 _CI_REF_PATTERN = re.compile(r"\bCI-\d{4,}\b")
-_http_client = httpx.Client(verify=False)
+_verified_client = httpx.Client(verify=True)
+_unverified_client = httpx.Client(verify=False)
 
 _EXTRACTION_PROMPT = (
     "You are analyzing a screenshot for an IT incident (error dialog, stack trace, or monitoring "
@@ -29,10 +33,13 @@ _EXTRACTION_PROMPT = (
 
 
 def _extract(image_b64: str, mime_type: str = "image/png") -> dict:
-    resp = _http_client.post(
-        f"{config.BASE_URL}/chat/completions",
+    provider_name = get_active_provider()
+    provider_cfg = providers.PROVIDERS[provider_name]
+    http_client = _unverified_client if provider_cfg["needs_ssl_bypass"] else _verified_client
+    resp = http_client.post(
+        f"{provider_cfg['base_url'].rstrip('/')}/chat/completions",
         json={
-            "model": VISION_MODEL,
+            "model": provider_cfg["roles"]["vision"],
             "messages": [{
                 "role": "user",
                 "content": [
@@ -42,8 +49,8 @@ def _extract(image_b64: str, mime_type: str = "image/png") -> dict:
             }],
             "max_tokens": 300,
         },
-        headers={"Authorization": f"Bearer {config.API_KEY}"},
-        timeout=30,
+        headers={"Authorization": f"Bearer {providers.api_key_for(provider_name, get_active_api_key())}"},
+        timeout=45,  # live-tested 2026-08-11: Gemini vision can take close to 30s under load
     )
     resp.raise_for_status()
     content = resp.json()["choices"][0]["message"]["content"].strip()

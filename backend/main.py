@@ -1,23 +1,8 @@
-# MUST be first — before any langchain/tiktoken import.
+# MUST be first — before any langchain/tiktoken import. config.py sets TIKTOKEN_CACHE_DIR and the
+# TCS-network-only SSL bypass (gated behind TCS_NETWORK, see config.py) as import-time side effects
+# — this used to be duplicated here unconditionally; now there is exactly one copy of this logic.
 import os
-os.environ["TIKTOKEN_CACHE_DIR"] = "./token"
-
-# Corporate proxy MITM certs break tiktoken's internal downloader (uses `requests`) too — bypass globally.
-import ssl
-import requests
-import urllib3
-
-ssl._create_default_https_context = ssl._create_unverified_context
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-_orig_request = requests.Session.request
-
-
-def _unverified_request(self, *args, **kwargs):
-    kwargs["verify"] = False
-    return _orig_request(self, *args, **kwargs)
-
-
-requests.Session.request = _unverified_request
+import config  # noqa: E402
 
 import asyncio
 import json
@@ -33,8 +18,9 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 from pydantic import BaseModel, Field
 
-import config
 import mcp_servers.itsm_mcp as itsm_mcp
+import provider_context
+import providers
 from a2a.client import fetch_agent_card
 from api_client import get_llm
 from correlation.cluster import _load_alerts, _load_cis_and_relationships, build_topology_groups, correlate_alerts
@@ -419,6 +405,25 @@ class WorkflowRunRequest(BaseModel):
     auto_approve: bool = False
 
 
+# ---------------- Instant Demo mode: pregenerated, zero-live-call output ----------------
+# See backend/scripts/pregenerate_demo_outputs.py — runs the real pipeline once (real Gemini key)
+# against the 6 named scenarios plus a voice/image PII-scrubbing sample, so a visitor in Instant
+# Demo mode gets a real, previously-verified result with no live model call at all.
+_DEMO_OUTPUTS_PATH = os.path.join(os.path.dirname(DB_PATH), "demo_outputs.json")
+_demo_outputs_cache: dict | None = None
+
+
+def _load_demo_outputs() -> dict:
+    global _demo_outputs_cache
+    if _demo_outputs_cache is None:
+        try:
+            with open(_DEMO_OUTPUTS_PATH, encoding="utf-8") as f:
+                _demo_outputs_cache = json.load(f)
+        except FileNotFoundError:
+            _demo_outputs_cache = {}
+    return _demo_outputs_cache
+
+
 async def _format_workflow_outcome(incident_id: str, outcome: dict, modality: str, workflow_type: str = "incident") -> dict:
     """Shared response shape for every path that produces a workflow outcome (direct CI trigger,
     or a confirmed voice/image signal via intake_adapter) — joins model_used in from audit_log
@@ -526,7 +531,23 @@ async def _persist_ticket_snapshot(incident_id: str, ci: dict, workflow_type: st
 
 
 @app.post("/workflows/run")
-async def workflows_run(req: WorkflowRunRequest, identity: Identity = Depends(get_current_identity)):
+async def workflows_run(
+    req: WorkflowRunRequest,
+    identity: Identity = Depends(get_current_identity),
+    provider_ctx: provider_context.ProviderContext = Depends(provider_context.get_provider_context),
+):
+    if provider_ctx.is_instant_demo:
+        # Keyed by ci_id+workflow_type, not ci_id alone — SCEN-01 (incident) and SCEN-04 (patch)
+        # both target CI-0059, so ci_id alone would collide between two different scenarios.
+        demo = _load_demo_outputs().get(f"{req.ci_id}:{req.workflow_type}")
+        if demo is None:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Instant Demo only covers the pre-generated scenarios — {req.ci_id} ({req.workflow_type}) "
+                       "isn't one of them. Switch to Bring Your Own Key or Free Demo Key mode for live, ad-hoc diagnosis.",
+            )
+        return demo
+
     wire_all_in_process()
     cis, _relationships = _load_cis_and_relationships()
     ci = next((c for c in cis if c["id"] == req.ci_id), None)
@@ -733,7 +754,11 @@ def sync_tickets(current_user: str = Depends(get_current_user)):
 # reason-required, role-gated path as Incident Workspace's own ApprovalSection, never a shortcut;
 # (3) app-help answers are grounded in a fixed description of this app only, told explicitly not to
 # answer general IT/ServiceNow/Jira questions outside that.
-CHAT_MODEL = "azure/genailab-maas-gpt-4.1-nano"  # same fast/cheap structured-JSON model Planner uses
+#
+# Both chat LLM calls below go through api_client.get_llm()'s role dispatch (providers.py) rather
+# than a literal model constant, same as every other agent — intent classification uses "structured"
+# (must return valid JSON, same intent the old CHAT_MODEL constant served), app-help uses "default"
+# (a free-text answer, not JSON).
 
 APP_HELP_CONTEXT = """
 OpsFlow is an AI-verified IT operations console for a Microsoft 365 / Power Platform estate
@@ -799,7 +824,7 @@ def _chat_json_parse(raw: str) -> dict:
 
 
 async def _classify_chat_intent(message: str, history: list[dict]) -> dict:
-    llm = get_llm(model=CHAT_MODEL, temperature=0)
+    llm = get_llm(role="structured", temperature=0)
     history_block = "\n".join(f"{h.get('role', 'user')}: {h.get('content', '')}" for h in history[-6:])
     prompt = f"""Classify this message from a user of an IT-operations console into ONE intent and
 extract its parameters. Respond with ONLY valid JSON (no markdown fences), this exact shape:
@@ -935,7 +960,7 @@ async def _chat_handle_decision(target_ref: str | None, decision: str, reason: s
 
 
 async def _chat_app_help(question: str) -> str:
-    llm = get_llm(model=CHAT_MODEL, temperature=0)
+    llm = get_llm(role="default", temperature=0)
     prompt = f"""You are a help assistant embedded in the OpsFlow IT-ops console. Answer ONLY
 using the facts below about THIS app. If the question isn't covered by these facts, say plainly
 that you don't have that information rather than guessing — never answer general IT/ServiceNow/
@@ -950,7 +975,18 @@ Question: {question}
 
 
 @app.post("/chat")
-async def chat(req: ChatRequest, identity: Identity = Depends(get_current_identity)):
+async def chat(
+    req: ChatRequest,
+    identity: Identity = Depends(get_current_identity),
+    provider_ctx: provider_context.ProviderContext = Depends(provider_context.get_provider_context),
+):
+    if provider_ctx.is_instant_demo:
+        return {
+            "reply": "Instant Demo replays 6 pre-generated scenarios (see the Scenarios panel) with no live "
+                     "model calls — live chat needs Bring Your Own Key or Free Demo Key mode.",
+            "action": None,
+        }
+
     wire_all_in_process()
     classification = await _classify_chat_intent(req.message, req.history)
     intent = classification.get("intent", "unrecognized")
@@ -1158,15 +1194,39 @@ def metrics_summary(current_user: str = Depends(get_current_user)):
 
 
 # ---------------- Multimodal intake (voice + image) — real Whisper/gpt-4o, confirmation-gated ----------------
+_INSTANT_DEMO_INTAKE_MESSAGE = (
+    "Instant Demo has no live model calls, so voice/image intake isn't available in this mode — "
+    "switch to Bring Your Own Key or Free Demo Key mode, or try the pre-generated voice/image "
+    "samples in the Scenarios panel."
+)
+
+
 @app.post("/intake/voice")
-async def intake_voice(file: UploadFile = File(...), current_user: str = Depends(get_current_user)):
+async def intake_voice(
+    file: UploadFile = File(...),
+    current_user: str = Depends(get_current_user),
+    provider_ctx: provider_context.ProviderContext = Depends(provider_context.get_provider_context),
+):
+    if provider_ctx.is_instant_demo:
+        raise HTTPException(status_code=400, detail=_INSTANT_DEMO_INTAKE_MESSAGE)
+    if not providers.PROVIDERS[provider_ctx.provider]["supports_transcription"]:
+        raise HTTPException(
+            status_code=400,
+            detail=f"{providers.PROVIDERS[provider_ctx.provider]['label']} does not support voice transcription — switch provider.",
+        )
     audio_bytes = await file.read()
     signal = run_voice_intake(audio_bytes, filename=file.filename or "voice.wav")
     return signal.model_dump()
 
 
 @app.post("/intake/image")
-async def intake_image(file: UploadFile = File(...), current_user: str = Depends(get_current_user)):
+async def intake_image(
+    file: UploadFile = File(...),
+    current_user: str = Depends(get_current_user),
+    provider_ctx: provider_context.ProviderContext = Depends(provider_context.get_provider_context),
+):
+    if provider_ctx.is_instant_demo:
+        raise HTTPException(status_code=400, detail=_INSTANT_DEMO_INTAKE_MESSAGE)
     image_bytes = await file.read()
     mime_type = file.content_type or "image/png"
     signal = run_vision_intake(image_bytes, mime_type=mime_type)
@@ -1176,6 +1236,18 @@ async def intake_image(file: UploadFile = File(...), current_user: str = Depends
 class IntakeConfirmRequest(BaseModel):
     signal: dict
     workflow_type: str = "incident"
+
+
+@app.get("/demo/pii-sample")
+def demo_pii_sample(current_user: str = Depends(get_current_user)):
+    """The one PII-scrubbing demo fixture in data/demo_outputs.json (built by
+    scripts/pregenerate_demo_outputs.py) — a real MaintenanceSignal from the unmodified vision-intake
+    pipeline, so Instant Demo mode can show the scrubber actually redacting a name/email without any
+    live model call. Available in every mode, not just Instant Demo — it's just most relevant there."""
+    sample = _load_demo_outputs().get("image_pii_demo")
+    if sample is None:
+        raise HTTPException(status_code=404, detail="Demo outputs not generated yet — run scripts/pregenerate_demo_outputs.py.")
+    return sample
 
 
 @app.get("/audit-log")
@@ -1223,19 +1295,29 @@ def list_scenarios(current_user: str = Depends(get_current_user)):
 
 
 # ---------------- Model & Threshold Config (admin-only) ----------------
-# Read-only display of per-role model routing (models-routing.md) — hand-maintained here rather
-# than introspected from each agent module's constant, since making that LIVE-editable would touch
+# Read-only display of per-role model routing (models-routing.md) — reflects whichever provider is
+# active on this request (providers.py's role map), not a hand-maintained TCS-only constant, since
+# the routing table now genuinely differs per provider. Still not LIVE-editable — that would touch
 # frozen/tested agent contracts (backend/agents/*.py). Thresholds below ARE genuinely live-editable.
-MODEL_ROUTING_DISPLAY = {
-    "diagnosis": "azure_ai/genailab-maas-DeepSeek-R1",
-    "planner": "azure/genailab-maas-gpt-4.1-nano",
-    "vision_intake": "genailab-maas-gpt-4o",
-    "voice_intake": "azure/genailab-maas-whisper",
-}
+def _model_routing_display(provider_name: str) -> dict:
+    if provider_name == provider_context.INSTANT_DEMO:
+        return {"note": "Instant Demo replays pre-generated output — no live model calls are made."}
+    provider_cfg = providers.PROVIDERS[provider_name]
+    display = {
+        "provider": provider_cfg["label"],
+        "diagnosis": provider_cfg["roles"]["reasoning"],
+        "planner": provider_cfg["roles"]["structured"],
+        "vision_intake": provider_cfg["roles"]["vision"] if provider_cfg["vision"] else "not supported by this provider",
+    }
+    display["voice_intake"] = provider_cfg.get("whisper_model", "not supported by this provider") if provider_cfg["supports_transcription"] else "not supported by this provider"
+    return display
 
 
 @app.get("/config/thresholds")
-def get_config_thresholds(identity: Identity = Depends(get_current_identity)):
+def get_config_thresholds(
+    identity: Identity = Depends(get_current_identity),
+    provider_ctx: provider_context.ProviderContext = Depends(provider_context.get_provider_context),
+):
     require_role(identity, {"admin"})
     from guardrails.policy_gate import ADVISORY_ONLY_ACTION_TYPES, APPROVER_ROLES, get_thresholds
 
@@ -1243,7 +1325,7 @@ def get_config_thresholds(identity: Identity = Depends(get_current_identity)):
         "thresholds": get_thresholds(),
         "approver_roles": sorted(APPROVER_ROLES),
         "advisory_only_action_types": sorted(ADVISORY_ONLY_ACTION_TYPES),
-        "model_routing": MODEL_ROUTING_DISPLAY,
+        "model_routing": _model_routing_display(provider_ctx.provider),
         "model_routing_editable": False,
         "note": "Model routing is read-only in this build — live-editing it would touch frozen, tested "
                 "agent modules. Thresholds are live-editable and apply immediately to subsequent runs "

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { apiFetch } from "@/lib/api.js";
 
 // Model & Threshold Config (admin-only). Policy thresholds are genuinely live-editable — they're
 // read by guardrails/policy_gate.py's evaluate_policy() on every call, so a save here changes
@@ -23,7 +24,7 @@ export default function ModelThresholdConfigPanel({ apiBase, token }) {
 
   async function load() {
     try {
-      const res = await fetch(`${apiBase}/config/thresholds`, { headers: { Authorization: `Bearer ${token}` } });
+      const res = await apiFetch(apiBase, "/config/thresholds", { token });
       if (!res.ok) throw new Error(res.status === 403 ? "Admin role required." : `Request failed (${res.status})`);
       const data = await res.json();
       setConfig(data);
@@ -34,7 +35,7 @@ export default function ModelThresholdConfigPanel({ apiBase, token }) {
   }
 
   async function loadIntegrations() {
-    const res = await fetch(`${apiBase}/config/integrations`, { headers: { Authorization: `Bearer ${token}` } });
+    const res = await apiFetch(apiBase, "/config/integrations", { token });
     if (!res.ok) return;
     const data = await res.json();
     setIntegrations(data);
@@ -51,9 +52,10 @@ export default function ModelThresholdConfigPanel({ apiBase, token }) {
     setSavingIntegrations(true);
     setSavedIntegrations(false);
     try {
-      const res = await fetch(`${apiBase}/config/integrations`, {
+      const res = await apiFetch(apiBase, "/config/integrations", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        headers: { "Content-Type": "application/json" },
+        token,
         body: JSON.stringify({
           servicenow_instance_url: integrationsForm.servicenow_instance_url || null,
           jira_instance_url: integrationsForm.jira_instance_url || null,
@@ -73,9 +75,10 @@ export default function ModelThresholdConfigPanel({ apiBase, token }) {
     setSaving(true);
     setSaved(false);
     try {
-      const res = await fetch(`${apiBase}/config/thresholds`, {
+      const res = await apiFetch(apiBase, "/config/thresholds", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        headers: { "Content-Type": "application/json" },
+        token,
         body: JSON.stringify(form),
       });
       if (!res.ok) throw new Error(`Request failed (${res.status})`);

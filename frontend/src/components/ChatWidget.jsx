@@ -4,6 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import { MessageCircle, X, Mic, Send, ImagePlus, RotateCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { apiFetch } from "@/lib/api.js";
+import { canUseVoice } from "@/lib/providers.js";
+import { getProviderMode, INSTANT_DEMO_EXPLANATION } from "@/lib/providerMode.js";
 
 const TICKET_STATUS_LABEL = {
   resolved: "Resolved",
@@ -72,12 +75,18 @@ export default function ChatWidget({ apiBase, token, incident, onOpenIncident, o
   const recorderRef = useRef(null);
   const listRef = useRef(null);
   const imageInputRef = useRef(null);
+  // Read once per mount, not per render — the mode only ever changes via a fresh login (page.js
+  // reload), never mid-session, so there's no need for this to be reactive state.
+  const [mode] = useState(getProviderMode);
+  const isInstantDemo = mode.mode === "instant_demo";
+  const voiceAvailable = canUseVoice(mode);
 
   useEffect(() => {
     if (listRef.current) listRef.current.scrollTop = listRef.current.scrollHeight;
   }, [messages, open]);
 
   async function sendMessage(text) {
+    if (isInstantDemo) return;
     const trimmed = text.trim();
     if (!trimmed || sending) return;
     setError("");
@@ -86,9 +95,10 @@ export default function ChatWidget({ apiBase, token, incident, onOpenIncident, o
     setInput("");
     setSending(true);
     try {
-      const res = await fetch(`${apiBase}/chat`, {
+      const res = await apiFetch(apiBase, "/chat", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        headers: { "Content-Type": "application/json" },
+        token,
         body: JSON.stringify({ message: trimmed, history }),
       });
       if (!res.ok) throw new Error(`Request failed (${res.status})`);
@@ -139,9 +149,9 @@ export default function ChatWidget({ apiBase, token, incident, onOpenIncident, o
       const ext = blob.type.includes("webm") ? "webm" : blob.type.includes("ogg") ? "ogg" : "wav";
       const form = new FormData();
       form.append("file", blob, `voice.${ext}`);
-      const res = await fetch(`${apiBase}/intake/voice`, {
+      const res = await apiFetch(apiBase, "/intake/voice", {
         method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
+        token,
         body: form,
       });
       if (!res.ok) throw new Error(`Request failed (${res.status})`);
@@ -168,9 +178,9 @@ export default function ChatWidget({ apiBase, token, incident, onOpenIncident, o
     try {
       const form = new FormData();
       form.append("file", file);
-      const res = await fetch(`${apiBase}/intake/image`, {
+      const res = await apiFetch(apiBase, "/intake/image", {
         method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
+        token,
         body: form,
       });
       if (!res.ok) throw new Error(`Request failed (${res.status})`);
@@ -273,6 +283,9 @@ export default function ChatWidget({ apiBase, token, incident, onOpenIncident, o
           </div>
 
           <div className="shrink-0 border-t border-border p-2">
+            {isInstantDemo ? (
+              <p className="px-1 py-2 text-xs leading-relaxed text-muted-foreground">{INSTANT_DEMO_EXPLANATION}</p>
+            ) : (
             <div className="flex items-center gap-1.5">
               <input
                 ref={imageInputRef}
@@ -293,17 +306,19 @@ export default function ChatWidget({ apiBase, token, incident, onOpenIncident, o
               >
                 <ImagePlus className="h-4 w-4" />
               </button>
-              <button
-                onClick={recording ? stopRecording : startRecording}
-                disabled={transcribing}
-                title={recording ? "Stop recording" : "Speak"}
-                className={cn(
-                  "shrink-0 rounded-md p-2 hover:bg-secondary",
-                  recording ? "text-red-500" : "text-muted-foreground"
-                )}
-              >
-                <Mic className="h-4 w-4" />
-              </button>
+              {voiceAvailable && (
+                <button
+                  onClick={recording ? stopRecording : startRecording}
+                  disabled={transcribing}
+                  title={recording ? "Stop recording" : "Speak"}
+                  className={cn(
+                    "shrink-0 rounded-md p-2 hover:bg-secondary",
+                    recording ? "text-red-500" : "text-muted-foreground"
+                  )}
+                >
+                  <Mic className="h-4 w-4" />
+                </button>
+              )}
               <input
                 className="min-w-0 flex-1 rounded-md border border-border bg-background px-2 py-2 text-sm focus:border-accent focus:outline-none"
                 placeholder={recording ? "Recording…" : transcribing ? "Transcribing…" : "Ask a question…"}
@@ -321,6 +336,13 @@ export default function ChatWidget({ apiBase, token, incident, onOpenIncident, o
                 <Send className="h-4 w-4" />
               </button>
             </div>
+            )}
+            {!isInstantDemo && !voiceAvailable && (
+              <p className="mt-1 px-1 text-[11px] text-muted-foreground">
+                Voice intake isn&apos;t available on {mode.provider} — switch to a provider that supports transcription (e.g. TCS) to use it.
+              </p>
+            )}
+            {!isInstantDemo && (
             <p className="mt-1 px-1 text-[11px] text-muted-foreground">
               No screenshot handy?{" "}
               <a href="/sample-incident-screenshot.png" download className="underline">
@@ -328,6 +350,7 @@ export default function ChatWidget({ apiBase, token, incident, onOpenIncident, o
               </a>{" "}
               citing CI-0056.
             </p>
+            )}
           </div>
         </div>
       )}

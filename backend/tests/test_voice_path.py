@@ -4,12 +4,22 @@ pipeline don't crash and produce a valid MaintenanceSignal, and (2) unit tests p
 scrub-then-parse ordering doesn't corrupt intent-critical tokens (the part that matters for
 correctness, independent of what a specific audio sample happens to transcribe to).
 """
+import pytest
+
+import providers
 from guardrails.scrubber import scrub
 from intake.voice_intent import INTENT_APPROVE, INTENT_UNRECOGNIZED, parse_voice_intent
 from intake.voice_path import run_voice_intake
 from smoke_test import _generate_test_wav
 
+_active_provider_supports_transcription = providers.PROVIDERS[providers.DEFAULT_PROVIDER]["supports_transcription"]
 
+
+@pytest.mark.skipif(
+    not _active_provider_supports_transcription,
+    reason=f"DEFAULT_PROVIDER={providers.DEFAULT_PROVIDER!r} has no transcription endpoint (providers.py) — "
+           "run with DEFAULT_PROVIDER=tcs and a real TCS_NETWORK/API_KEY to exercise this.",
+)
 def test_voice_intake_produces_valid_signal_against_real_whisper_call():
     signal = run_voice_intake(_generate_test_wav())
     assert signal.modality == "voice"

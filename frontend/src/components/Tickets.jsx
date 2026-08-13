@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { AGENT_DISPLAY_NAMES, AGENT_PIPELINE_ORDER, summarizeResult } from "@/lib/agentSummary";
+import { apiFetch } from "@/lib/api.js";
 
 const TICKET_STATUS_STYLE = {
   resolved: "bg-status-good/10 text-status-good",
@@ -76,7 +77,7 @@ function TicketDetail({ apiBase, token, ticketId }) {
 
   useEffect(() => {
     let cancelled = false;
-    fetch(`${apiBase}/tickets/${ticketId}`, { headers: { Authorization: `Bearer ${token}` } })
+    apiFetch(apiBase, `/tickets/${ticketId}`, { token })
       .then((res) => (res.ok ? res.json() : Promise.reject(new Error(`Request failed (${res.status})`))))
       .then((json) => !cancelled && setDetail(json))
       .catch((err) => !cancelled && setError(err.message));
@@ -125,7 +126,7 @@ export default function Tickets({ apiBase, token, tickets, refetchTickets, onOpe
 
   useEffect(() => {
     let cancelled = false;
-    fetch(`${apiBase}/config/integrations`, { headers: { Authorization: `Bearer ${token}` } })
+    apiFetch(apiBase, "/config/integrations", { token })
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => !cancelled && data && setLastSyncedAt(data.last_synced_at))
       .catch(() => {});
@@ -138,7 +139,7 @@ export default function Tickets({ apiBase, token, tickets, refetchTickets, onOpe
     setSyncing(true);
     setError("");
     try {
-      const res = await fetch(`${apiBase}/tickets/sync`, { method: "POST", headers: { Authorization: `Bearer ${token}` } });
+      const res = await apiFetch(apiBase, "/tickets/sync", { method: "POST", token });
       if (!res.ok) throw new Error(`Request failed (${res.status})`);
       const data = await res.json();
       setLastSyncedAt(data.synced_at);

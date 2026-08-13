@@ -12,6 +12,7 @@ import AuditLogPanel from "@/components/panels/AuditLogPanel.jsx";
 import ModelThresholdConfigPanel from "@/components/panels/ModelThresholdConfigPanel.jsx";
 import UserManagementPanel from "@/components/panels/UserManagementPanel.jsx";
 import KnowledgeBasePanel from "@/components/ChunkInspector.jsx";
+import { apiFetch } from "@/lib/api.js";
 
 const NAV_ITEMS = [
   { key: "users", label: "User Management", icon: Users, Panel: UserManagementPanel },
@@ -45,7 +46,7 @@ function ViewAsControl({ apiBase, token, onTokenChange, identity }) {
     let cancelled = false;
     (async () => {
       try {
-        const res = await fetch(`${apiBase}/users`, { headers: { Authorization: `Bearer ${token}` } });
+        const res = await apiFetch(apiBase, "/users", { token });
         if (res.ok && !cancelled) setUsers(await res.json());
       } catch {
         // Convenience picker, not load-bearing — silently leave it empty on failure.
@@ -61,9 +62,10 @@ function ViewAsControl({ apiBase, token, onTokenChange, identity }) {
     setSwitching(true);
     setError("");
     try {
-      const res = await fetch(`${apiBase}/auth/view-as`, {
+      const res = await apiFetch(apiBase, "/auth/view-as", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        headers: { "Content-Type": "application/json" },
+        token,
         body: JSON.stringify({ user_id: userId }),
       });
       if (!res.ok) throw new Error(`Request failed (${res.status})`);
@@ -79,9 +81,9 @@ function ViewAsControl({ apiBase, token, onTokenChange, identity }) {
     setSwitching(true);
     setError("");
     try {
-      const res = await fetch(`${apiBase}/auth/stop-view-as`, {
+      const res = await apiFetch(apiBase, "/auth/stop-view-as", {
         method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
+        token,
       });
       if (!res.ok) throw new Error(`Request failed (${res.status})`);
       onTokenChange((await res.json()).access_token);

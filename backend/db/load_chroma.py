@@ -1,34 +1,30 @@
 """Populates the 3 Chroma collections used at this point in the build (runbooks, postmortems,
 ticket_history — negative_kb is embedded separately once the negative-KB retrieval path exists,
 Phase 3). Chunks come from backend/chunking.py (structural, per domain-guardrails.md); embeddings
-come from the real gateway (text-embedding-3-large), batched to keep call count sane (~700
-individual chunks would otherwise be ~700 sequential HTTP round trips).
+come from providers.EMBEDDING_PROVIDER — a fixed, server-controlled provider regardless of which
+provider any given visitor's session uses (see providers.py: re-embedding this same data with a
+different-dimension model would make an already-built collection unqueryable), batched to keep
+call count sane (~700 individual chunks would otherwise be ~700 sequential HTTP round trips).
 
     python db/load_chroma.py         # (re)builds the Chroma collections
     python db/load_chroma.py --test  # also runs a retrieval self-check per collection
 """
 # MUST be first — before any tiktoken/langchain import.
 import os
-os.environ["TIKTOKEN_CACHE_DIR"] = "./token"
+import sys
 
-import ssl
-import urllib3
-
-ssl._create_default_https_context = ssl._create_unverified_context
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+sys.path.insert(0, os.path.dirname(__file__) + "/..")
+import config  # noqa: E402  sets TIKTOKEN_CACHE_DIR + TCS_NETWORK-gated SSL bypass as a side effect
+import providers  # noqa: E402
 
 import csv
 import json
-import sys
+import time
 
 import chromadb
 import httpx
-from dotenv import load_dotenv
 
-sys.path.insert(0, os.path.dirname(__file__) + "/..")
 import chunking  # noqa: E402
-
-load_dotenv()
 
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 DATA_DIR = os.path.join(REPO_ROOT, "data")
@@ -37,21 +33,32 @@ RUNBOOKS_DIR = os.path.join(DATA_DIR, "runbooks")
 POSTMORTEMS_DIR = os.path.join(DATA_DIR, "postmortems")
 KNOWLEDGE_BASE_DIR = os.path.join(DATA_DIR, "knowledge_base")
 
-BASE_URL = os.getenv("BASE_URL", "https://genailab.tcs.in/v1").rstrip("/")
-API_KEY = os.getenv("API_KEY", "")
-EMBED_MODEL = os.getenv("DEFAULT_EMBED_MODEL", "azure/genailab-maas-text-embedding-3-large")
+_EMBED_PROVIDER_CFG = providers.PROVIDERS[providers.EMBEDDING_PROVIDER]
+BASE_URL = _EMBED_PROVIDER_CFG["base_url"].rstrip("/")
+API_KEY = providers.api_key_for(providers.EMBEDDING_PROVIDER, None)
+EMBED_MODEL = _EMBED_PROVIDER_CFG["embedding_model"]
 BATCH_SIZE = 50
 
 
-def embed_batch(client: httpx.Client, texts: list[str]) -> list[list[float]]:
-    resp = client.post(
-        f"{BASE_URL}/embeddings",
-        json={"model": EMBED_MODEL, "input": texts},
-        headers={"Authorization": f"Bearer {API_KEY}"},
-        timeout=60,
-    )
-    resp.raise_for_status()
-    return [row["embedding"] for row in resp.json()["data"]]
+def embed_batch(client: httpx.Client, texts: list[str], retries: int = 5) -> list[list[float]]:
+    # Gemini's free-tier embeddings quota is far more restrictive than TCS's was (real 429s hit
+    # even at BATCH_SIZE=50) — retry with backoff rather than failing the whole rebuild partway
+    # through, matching scripts/pregenerate_demo_outputs.py's approach to the same free-tier limit.
+    for attempt in range(retries):
+        resp = client.post(
+            f"{BASE_URL}/embeddings",
+            json={"model": EMBED_MODEL, "input": texts},
+            headers={"Authorization": f"Bearer {API_KEY}"},
+            timeout=60,
+        )
+        if resp.status_code == 429 and attempt < retries - 1:
+            wait = 15 * (attempt + 1)
+            print(f"  rate limited, waiting {wait}s (attempt {attempt + 1}/{retries})...")
+            time.sleep(wait)
+            continue
+        resp.raise_for_status()
+        return [row["embedding"] for row in resp.json()["data"]]
+    raise RuntimeError("Gave up on embed_batch after repeated 429s")
 
 
 def embed_all(client: httpx.Client, texts: list[str]) -> list[list[float]]:
@@ -59,6 +66,7 @@ def embed_all(client: httpx.Client, texts: list[str]) -> list[list[float]]:
     for i in range(0, len(texts), BATCH_SIZE):
         batch = texts[i : i + BATCH_SIZE]
         vectors.extend(embed_batch(client, batch))
+        time.sleep(2)  # space batches out — free-tier RPM, not just burst limits
     return vectors
 
 
@@ -111,7 +119,7 @@ def main() -> None:
     os.makedirs(CHROMA_DIR, exist_ok=True)
     chroma_client = chromadb.PersistentClient(path=CHROMA_DIR)
 
-    with httpx.Client(verify=False) as http_client:
+    with httpx.Client(verify=not _EMBED_PROVIDER_CFG["needs_ssl_bypass"]) as http_client:
         rb_chunks = build_runbook_chunks()
         kb_chunks = build_knowledge_base_chunks()
         all_chunks = rb_chunks + kb_chunks

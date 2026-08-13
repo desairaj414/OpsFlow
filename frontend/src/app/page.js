@@ -1,10 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { LogoMark } from "@/components/Logo.jsx";
 import CockpitShell from "@/components/CockpitShell.jsx";
+import LoginModeSelector from "@/components/LoginModeSelector.jsx";
+import { apiFetch } from "@/lib/api.js";
+import { getProviderMode, setProviderMode } from "@/lib/providerMode.js";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8765";
 
@@ -48,12 +51,32 @@ function RingWatermark() {
   );
 }
 
+// Matches the server default (free_demo/gemini) so the initial client render before hydration
+// can't mismatch the server-rendered HTML — the real localStorage-backed mode is picked up after
+// mount (see the useEffect below), same pattern theme.js's toggle uses for the same reason.
+const SERVER_SAFE_DEFAULT_MODE = { mode: "free_demo", provider: "gemini", byokKey: null };
+
 export default function Home() {
   const [token, setToken] = useState(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loggingIn, setLoggingIn] = useState(false);
+  const [mode, setMode] = useState(SERVER_SAFE_DEFAULT_MODE);
+
+  useEffect(() => {
+    setMode(getProviderMode());
+  }, []);
+
+  function handleModeChange(nextMode) {
+    setMode(nextMode);
+    setProviderMode(nextMode);
+  }
+
+  function handleQuickFill(account) {
+    setUsername(account.username);
+    setPassword(account.password);
+  }
 
   async function handleLogin(e) {
     e.preventDefault();
@@ -61,7 +84,7 @@ export default function Home() {
     setLoggingIn(true);
     try {
       const body = new URLSearchParams({ username, password });
-      const res = await fetch(`${API_BASE}/auth/login`, {
+      const res = await apiFetch(API_BASE, "/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body,
@@ -138,6 +161,8 @@ export default function Home() {
               {loggingIn ? "Signing in…" : "Log in"}
             </Button>
           </form>
+
+          <LoginModeSelector mode={mode} onModeChange={handleModeChange} onQuickFill={handleQuickFill} />
         </div>
       </div>
     </div>

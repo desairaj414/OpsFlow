@@ -1,9 +1,10 @@
 """Planner agent — drafts a plan ONLY from the approved runbook catalog (runbook-bounded action
 space, domain-guardrails.md pillar (a)): free-text remediation can only be raised as a proposal
-for a new runbook, routed to a human, never executed directly. Uses gpt-4.1-nano — the
-human-approved substitute for the deprecated DeepSeek V3 deployment (models-routing.md
-"CONFIRMED UNREACHABLE", decisions-log.md). Blast radius and the policy gate result are computed
-deterministically AFTER the LLM drafts the plan, never delegated to the model.
+for a new runbook, routed to a human, never executed directly. Uses the active provider's
+"structured"-role model (models-routing.md — reliable valid-JSON output at a normal token budget;
+e.g. gpt-4.1-nano on TCS, the human-approved substitute for the deprecated DeepSeek V3 deployment,
+decisions-log.md). Blast radius and the policy gate result are computed deterministically AFTER
+the LLM drafts the plan, never delegated to the model.
 """
 import json
 import os
@@ -18,7 +19,6 @@ from orchestrator.contracts import SpecialistResult
 from orchestrator.limits import TERMINATION_CAP_EXCEEDED, TurnCapExceeded, TurnTracker
 from orchestrator.retrieval import query_collection
 
-PLANNER_MODEL = "azure/genailab-maas-gpt-4.1-nano"  # DeepSeek V3 substitute, see models-routing.md
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 DATA_DIR = os.path.join(REPO_ROOT, "data")
 
@@ -74,7 +74,7 @@ async def run_planner(incident_id: str, ci: dict, runbook_class: str, hypothesis
         else:
             valid_chunk_ids = {c["id"] for c in chunks}
             tracker.use_turn()
-            llm = api_client.get_llm(model=PLANNER_MODEL, temperature=0)
+            llm = api_client.get_llm(role="structured", temperature=0)
             # .ainvoke(), not .invoke() — this is an async def handler; a sync call here blocks
             # uvicorn's single-threaded event loop for the whole gateway round-trip, stalling every
             # other request the backend is serving (SSE stream, unrelated fetches) until it returns.

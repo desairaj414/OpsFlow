@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: opsflow-backend
+    runtime: python
+    plan: free
+    region: oregon
+    rootDir: backend
+    buildCommand: >
+      pip install -r requirements.txt &&
+      python db/init_db.py &&
+      python db/load_chroma.py
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DEFAULT_PROVIDER
+        value: gemini
+      - key: TCS_NETWORK
+        value: "false"
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: A2A_SECRET
+        generateValue: true
+      - key: FRONTEND_ORIGIN
+        sync: false
+    # No persistent disk — Render's free Web Service tier doesn't support one (paid-plan add-on
+    # only). The build command rebuilds SQLite + Chroma fresh on every deploy/restart from the
+    # committed synthetic seed data, so the app always comes up consistent; the tradeoff is that
+    # any live-run state (audit_log, local_tickets) from a BYOK/Free-Demo-Key session doesn't
+    # survive a cold start (free tier sleeps after 15min idle) — acceptable for a public demo,
+    # since Instant Demo mode (the always-works path) never touches this DB at request time anyway.

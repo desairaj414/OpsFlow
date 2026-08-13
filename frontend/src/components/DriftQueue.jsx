@@ -3,6 +3,7 @@
 import { Fragment, useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { apiFetch } from "@/lib/api.js";
 
 function DriftListItem({ ci, selected, onClick }) {
   return (
@@ -65,7 +66,7 @@ export default function DriftQueue({ apiBase, token }) {
 
   useEffect(() => {
     let cancelled = false;
-    fetch(`${apiBase}/cmdb/drift`, { headers: { Authorization: `Bearer ${token}` } })
+    apiFetch(apiBase, "/cmdb/drift", { token })
       .then((res) => {
         if (!res.ok) throw new Error(`Request failed (${res.status})`);
         return res.json();

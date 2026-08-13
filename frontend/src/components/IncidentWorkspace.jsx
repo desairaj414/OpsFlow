@@ -10,6 +10,7 @@ import { Modal } from "@/components/ui/modal";
 import AgentTrace from "@/components/AgentTrace.jsx";
 import { findTraceEntry as findEntry } from "@/lib/utils";
 import { summarizeResult, AGENT_PIPELINE_ORDER, AGENT_DISPLAY_NAMES } from "@/lib/agentSummary";
+import { apiFetch } from "@/lib/api.js";
 
 const LLM_AGENTS = new Set(["diagnosis", "planner"]);
 
@@ -345,9 +346,10 @@ function ApprovalSection({ apiBase, token, incident, canDecide }) {
     setDecisionError("");
     setDeciding(true);
     try {
-      const res = await fetch(`${apiBase}/workflows/decision`, {
+      const res = await apiFetch(apiBase, "/workflows/decision", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        headers: { "Content-Type": "application/json" },
+        token,
         body: JSON.stringify({ incident_id: run.incident_id, decision, reason }),
       });
       if (!res.ok) throw new Error(`Request failed (${res.status})`);

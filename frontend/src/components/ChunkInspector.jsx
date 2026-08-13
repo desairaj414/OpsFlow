@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { apiFetch } from "@/lib/api.js";
 
 const DOC_TYPE_TABS = [
   { key: "", label: "All" },
@@ -33,9 +34,9 @@ function UploadControls({ apiBase, token, onUploaded }) {
     try {
       const form = new FormData();
       form.append("file", file);
-      const res = await fetch(`${apiBase}${endpoint}`, {
+      const res = await apiFetch(apiBase, endpoint, {
         method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
+        token,
         body: form,
       });
       if (!res.ok) {
@@ -104,7 +105,7 @@ export default function ChunkInspector({ apiBase, token, identity }) {
 
   function load() {
     const params = docType ? `?doc_type=${docType}` : "";
-    fetch(`${apiBase}/chunks${params}`, { headers: { Authorization: `Bearer ${token}` } })
+    apiFetch(apiBase, `/chunks${params}`, { token })
       .then((res) => {
         if (!res.ok) throw new Error(`Request failed (${res.status})`);
         return res.json();

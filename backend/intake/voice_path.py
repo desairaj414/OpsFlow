@@ -3,26 +3,39 @@ domain-privacy.md ordering, not optional: scrubber runs AFTER modality conversio
 else touches the text (including the intent parser). Confirmation-before-action for side-effecting
 intents is enforced by MaintenanceSignal.requires_human_confirmation — this module only sets that
 flag, the actual on-screen confirmation UI is Phase 4.
+
+Transcription is bound to whichever provider is active on the current request (provider_context.py)
+— only providers with `supports_transcription: True` (see providers.py) actually offer a Whisper-
+equivalent endpoint; the frontend hides the voice-intake UI for the others (roles.js canUseVoice()),
+and `run_voice_intake` raises a clear error here too if it's ever called anyway (defense in depth).
 """
 import uuid
 from datetime import datetime, timezone
 
-import config  # noqa: F401  sets TIKTOKEN_CACHE_DIR + SSL bypass as a side effect
+import config  # noqa: F401  sets TIKTOKEN_CACHE_DIR + TCS_NETWORK-gated SSL bypass as a side effect
 import httpx
 
+import providers
 from guardrails.scrubber import scrub
 from intake.voice_intent import INTENT_UNRECOGNIZED, parse_voice_intent
 from orchestrator.contracts import MaintenanceSignal
+from provider_context import get_active_api_key, get_active_provider
 
-_http_client = httpx.Client(verify=False)
+_verified_client = httpx.Client(verify=True)
+_unverified_client = httpx.Client(verify=False)
 
 
 def _transcribe(audio_bytes: bytes, filename: str = "voice.wav") -> str:
-    resp = _http_client.post(
-        f"{config.BASE_URL}/audio/transcriptions",
+    provider_name = get_active_provider()
+    provider_cfg = providers.PROVIDERS[provider_name]
+    if not provider_cfg["supports_transcription"]:
+        raise ValueError(f"{provider_cfg['label']} does not support voice transcription — switch provider.")
+    http_client = _unverified_client if provider_cfg["needs_ssl_bypass"] else _verified_client
+    resp = http_client.post(
+        f"{provider_cfg['base_url'].rstrip('/')}/audio/transcriptions",
         files={"file": (filename, audio_bytes, "audio/wav")},
-        data={"model": "azure/genailab-maas-whisper"},
-        headers={"Authorization": f"Bearer {config.API_KEY}"},
+        data={"model": provider_cfg["whisper_model"]},
+        headers={"Authorization": f"Bearer {providers.api_key_for(provider_name, get_active_api_key())}"},
         timeout=30,
     )
     resp.raise_for_status()

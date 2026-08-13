@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { apiFetch } from "@/lib/api.js";
 
 const SEVERITY_STYLE = {
   critical: "bg-red-600/10 text-red-600",
@@ -263,7 +264,7 @@ function PendingPatches({ apiBase, token, incident, refetchTickets, tickets, onO
 
   useEffect(() => {
     let cancelled = false;
-    fetch(`${apiBase}/patches/pending`, { headers: { Authorization: `Bearer ${token}` } })
+    apiFetch(apiBase, "/patches/pending", { token })
       .then((res) => (res.ok ? res.json() : Promise.reject(new Error(`Request failed (${res.status})`))))
       .then((data) => !cancelled && setPatches(data.patches))
       .catch((err) => !cancelled && setError(err.message))

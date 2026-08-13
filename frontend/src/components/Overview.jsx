@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Activity, CheckCircle2, UserCheck, AlertTriangle, PauseCircle, ShieldAlert, Wrench, Timer } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { apiFetch } from "@/lib/api.js";
 
 // Real elapsed seconds -> "12.4s" / "1m 03s" — these are genuinely fast (a full agent chain runs
 // in seconds), which is itself the honest point: shown as a real measured number, not compared
@@ -185,12 +186,11 @@ export default function Overview({ apiBase, token }) {
 
   useEffect(() => {
     let cancelled = false;
-    const headers = { Authorization: `Bearer ${token}` };
     Promise.all([
-      fetch(`${apiBase}/metrics/summary`, { headers }).then((r) => (r.ok ? r.json() : Promise.reject(r.status))),
-      fetch(`${apiBase}/cmdb/drift`, { headers }).then((r) => (r.ok ? r.json() : Promise.reject(r.status))),
-      fetch(`${apiBase}/autonomy-ladder`, { headers }).then((r) => (r.ok ? r.json() : Promise.reject(r.status))),
-      fetch(`${apiBase}/audit-log?limit=6`, { headers }).then((r) => (r.ok ? r.json() : { entries: null })),
+      apiFetch(apiBase, "/metrics/summary", { token }).then((r) => (r.ok ? r.json() : Promise.reject(r.status))),
+      apiFetch(apiBase, "/cmdb/drift", { token }).then((r) => (r.ok ? r.json() : Promise.reject(r.status))),
+      apiFetch(apiBase, "/autonomy-ladder", { token }).then((r) => (r.ok ? r.json() : Promise.reject(r.status))),
+      apiFetch(apiBase, "/audit-log?limit=6", { token }).then((r) => (r.ok ? r.json() : { entries: null })),
     ])
       .then(([m, d, l, a]) => {
         if (cancelled) return;

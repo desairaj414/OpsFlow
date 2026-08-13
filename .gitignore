@@ -18,6 +18,8 @@ build/
 
 # --- Data / caches ---
 data/*.db
+backend/app.db
+data/chroma_db/
 *.log
 
 # --- OS/editor ---

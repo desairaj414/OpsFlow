@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ROLE_LABELS } from "@/lib/roles";
+import { apiFetch } from "@/lib/api.js";
 
 // User Management (admin-only): real accounts hitting the `users` table with a real PBKDF2
 // password hash (auth_utils.py) — no mock data. Runbook/KB-article upload used to live in this
@@ -19,7 +20,7 @@ export default function UserManagementPanel({ apiBase, token }) {
 
   async function loadUsers() {
     try {
-      const res = await fetch(`${apiBase}/users`, { headers: { Authorization: `Bearer ${token}` } });
+      const res = await apiFetch(apiBase, "/users", { token });
       if (!res.ok) throw new Error(`Request failed (${res.status})`);
       setUsers(await res.json());
     } catch (err) {
@@ -37,9 +38,10 @@ export default function UserManagementPanel({ apiBase, token }) {
     setCreating(true);
     setUsersError("");
     try {
-      const res = await fetch(`${apiBase}/users`, {
+      const res = await apiFetch(apiBase, "/users", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        headers: { "Content-Type": "application/json" },
+        token,
         body: JSON.stringify({ username: newUsername, password: newPassword, display_name: newDisplayName, role: newRole }),
       });
       if (!res.ok) {
@@ -59,7 +61,7 @@ export default function UserManagementPanel({ apiBase, token }) {
 
   async function deleteUser(id) {
     setUsersError("");
-    const res = await fetch(`${apiBase}/users/${id}`, { method: "DELETE", headers: { Authorization: `Bearer ${token}` } });
+    const res = await apiFetch(apiBase, `/users/${id}`, { method: "DELETE", token });
     if (!res.ok) {
       const detail = await res.json().catch(() => ({}));
       setUsersError(detail.detail || `Request failed (${res.status})`);

@@ -9,6 +9,12 @@ to "ticket closed, CMDB updated, and a verified fix, not just an assumed one."
 Built for **TCS AI Fridays Season 2 — Regional Round**
 (*Problem statement: AI-Powered Multi-Agent Workflow Automation for IT Application Maintenance*).
 
+**🔗 Live demo:** _add your Vercel URL here after deploying (see [§8](#8-try-it-live--testing-modes))_
+
+No API key needed to try it — the login screen opens with an **Instant Demo** mode using
+pre-generated output, plus options to bring your own key or use a shared free key. See
+[§8 Try it live](#8-try-it-live--testing-modes) below.
+
 > New to this repo? Read this file top to bottom once — it gets you from a fresh clone to a
 > running app. Everything else you might want is linked from [§7 Learn more](#7-learn-more) below.
 
@@ -23,8 +29,13 @@ Built for **TCS AI Fridays Season 2 — Regional Round**
   feed, an incident workspace, a full agent-trace viewer, and a floating chat assistant that
   accepts text, voice, and screenshot uploads.
 - **No real third-party systems.** "ServiceNow" and "Jira" panels you'll see are FastAPI
-  simulators this project wrote itself — every model call goes to the TCS GenAI Lab gateway or a
-  local Ollama model, never to an outside vendor.
+  simulators this project wrote itself.
+- **Multi-provider LLM architecture** (`backend/providers.py`): Google Gemini by default, OpenRouter
+  as a fallback, and the original TCS GenAI Lab gateway kept as a legacy/gated provider (only
+  reachable from the TCS network) — plus a local Ollama model for the PII/secrets scrubber and as
+  an offline fallback if the active provider fails mid-request. Which provider backs a given
+  session depends on the testing mode chosen at login (§8) — never a mix of vendors within one
+  session, and a visitor's own Bring-Your-Own-Key never touches the server.
 - **100% synthetic data** — generated with a fixed seed, provenance-tracked in `data/PROVENANCE.md`.
 
 Full architecture, data flow, demo script, and folder-by-folder guide: see [§7](#7-learn-more).
@@ -165,6 +176,30 @@ This README gets you running. For everything else:
 | [`SETUP.md`](SETUP.md) | This README's detailed companion — full environment variable reference, troubleshooting appendix, verification checklist |
 | [`PRD_FINAL.md`](PRD_FINAL.md) | The frozen product requirements this build satisfies (long — reference, not required reading) |
 | [`.knowledge/`](.knowledge/) | The build's own engineering log (architecture-as-built detail, decisions, phase-by-phase history) — useful if you're extending the code, not needed to just run it |
+| [`.okf/`](.okf/) | Portable Open Knowledge Format bundle — the same system knowledge as `.knowledge/`, distilled into one-concept-per-file markdown for readers without this repo's session history. Start at `.okf/index.md`. |
+
+---
+
+## 8. Try it live / testing modes
+
+The login screen offers three ways to try OpsFlow — no account or key required just to look
+around:
+
+| Mode | What it needs | What it does |
+|---|---|---|
+| **Instant Demo** | Nothing | Replays 6 pre-generated scenario runs (`data/demo_outputs.json`, built by `scripts/pregenerate_demo_outputs.py`) plus a real, unmodified-pipeline PII-scrubbing sample — zero live model calls, always works. Ad-hoc chat, voice, and image intake are disabled with an inline explanation; the full agent-chain UI (Agent Trace, evidence, blast radius, approval flow) still renders from real (pre-captured) data. |
+| **Bring Your Own Key** | Your own key for Gemini, OpenRouter, or the legacy TCS gateway | Sent as request headers (`X-LLM-Provider`/`X-LLM-Api-Key`), used only for that browser session, never written to disk or logged. Voice intake is only available if the chosen provider supports transcription (TCS; Gemini/OpenRouter don't). |
+| **Free Demo Key** | Nothing (uses a key the deployer configured) | Live diagnosis backed by a Gemini key set as a platform secret, with the same offline-Ollama-fallback resilience the app already has for gateway outages. |
+
+Real login still happens either way — role quick-fill buttons on the login screen fill in one of
+the seeded demo accounts (§6 above) so you can prove sign-in works without hunting for credentials.
+
+**A note on free-tier limits** (found live-testing this): Gemini's free tier caps some models at a
+literal 20 requests/day (`gemini-flash-latest`'s "thinking" alias) — `providers.py` deliberately
+routes every Gemini role through `gemini-flash-lite-latest` instead, which doesn't hit that wall
+and doesn't truncate structured JSON output under a capped token budget the way the reasoning
+alias does. Embeddings have a separate, more generous per-minute quota; `orchestrator/retrieval.py`
+retries with a full-minute backoff on a 429 rather than failing the request.
 
 ---
 

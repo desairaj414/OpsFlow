@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { apiFetch } from "@/lib/api.js";
 
 // Local ITSM/Jira-shaped ticket history (GET /tickets) — lives at CockpitShell level so both Ops
 // Board (Diagnose/Run-all/Ticket History) and the header's notification bell share one fetch and
@@ -11,7 +12,7 @@ export function useTickets(apiBase, token) {
 
   async function refetch() {
     try {
-      const res = await fetch(`${apiBase}/tickets`, { headers: { Authorization: `Bearer ${token}` } });
+      const res = await apiFetch(apiBase, "/tickets", { token });
       if (!res.ok) throw new Error(`Request failed (${res.status})`);
       setTickets((await res.json()).tickets);
     } catch (err) {

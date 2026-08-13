@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { apiFetch } from "@/lib/api.js";
 
 // Audit Log (approver/admin only, enforced server-side by GET /audit-log): the append-only trail
 // of every agent handoff and human decision — audit_log is written to on every real run already,
@@ -14,7 +15,7 @@ export default function AuditLogPanel({ apiBase, token }) {
     let cancelled = false;
     (async () => {
       try {
-        const res = await fetch(`${apiBase}/audit-log?limit=50`, { headers: { Authorization: `Bearer ${token}` } });
+        const res = await apiFetch(apiBase, "/audit-log?limit=50", { token });
         if (!res.ok) throw new Error(res.status === 403 ? "Your role cannot view the audit log." : `Request failed (${res.status})`);
         const data = await res.json();
         if (!cancelled) setEntries(data.entries);

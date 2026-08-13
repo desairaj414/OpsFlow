@@ -4,6 +4,11 @@ Thin index only. Do not paste node contents here. Read a node when a step names 
 pre-read the whole tree. Product decisions live in `PRD_FINAL.md` (frozen, do not re-decide) —
 this `.knowledge/` tree is its execution-ready conversion for an executing AI session.
 
+This repo also has a portable OKF (Open Knowledge Format) v0.2 bundle at [.okf/](.okf/) — a
+one-concept-per-file distillation of this tree for outside readers (resume reviewers, anyone
+without this session's context). `.knowledge/` stays the authoritative execution log; `.okf/` is
+derived from it, not a replacement. See `.okf/index.md` for its entry point.
+
 ## Project
 - **Name:** my-hackathon-app — TCS AI Fridays S2, Cross-Stack Maintenance Control Plane
 - **Stack:** FastAPI (backend, async) + Next.js frontend (PRD spec). Repo currently has a working
@@ -81,3 +86,10 @@ Full per-phase clock times live in each `prd-phase-N.md` and in `state-progress.
 7. **Every node opens with YAML frontmatter** (`type/title/status/updated/related`). Keep
    `status` honest: `draft` until Phase 1 schema freeze, `active` while in use, `done` once its phase is closed.
 8. **Secrets never get copied into `.knowledge/` files.** Reference `backend/.env` by key name only.
+9. **Keep `.okf/` in sync with `.knowledge/` and the code.** After any code change that affects a
+   concept documented in `.okf/` (a new/removed module, changed provider/routing behavior, a new
+   endpoint, a schema change), update the corresponding `.okf` concept in the same session — don't
+   wait to be asked. Use the `okf` skill's **maintain** mode: update the affected concept's body and
+   `generated.at`, fix cross-links, update the relevant `index.md`/`log.md`, then validate with
+   `okf:validate --strict` before finishing. Skip the update only for changes with no knowledge
+   impact (formatting, typo fixes, dependency bumps that don't change behavior).

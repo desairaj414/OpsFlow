@@ -1,7 +1,8 @@
-"""Diagnosis agent — root-cause hypothesis generation & ranking, DeepSeek R1 (models-routing.md:
-"the only step genuinely needing multi-step reasoning over conflicting evidence"). Citation
-enforcement: a hypothesis whose cited_artifact_ids is empty or cites an artifact not in the
-evidence bundle is dropped before it is ever included in the returned result — functionally
+"""Diagnosis agent — root-cause hypothesis generation & ranking, using the active provider's
+"reasoning"-role model (models-routing.md: "the only step genuinely needing multi-step reasoning
+over conflicting evidence" — see providers.py for the per-provider role map, e.g. DeepSeek R1 on
+TCS). Citation enforcement: a hypothesis whose cited_artifact_ids is empty or cites an artifact not
+in the evidence bundle is dropped before it is ever included in the returned result — functionally
 "suppressed at generation" from the system's perspective, never filtered after the fact downstream.
 """
 import json
@@ -9,8 +10,6 @@ import json
 import api_client
 from orchestrator.contracts import SpecialistResult
 from orchestrator.limits import TERMINATION_CAP_EXCEEDED, TurnCapExceeded, TurnTracker
-
-DIAGNOSIS_MODEL = "azure_ai/genailab-maas-DeepSeek-R1"
 
 
 def _build_prompt(evidence: list[dict]) -> str:
@@ -55,7 +54,7 @@ def _parse_and_filter(raw_content: str, valid_ids: set[str]) -> list[dict]:
 async def run_diagnosis(incident_id: str, evidence: list[dict]) -> SpecialistResult:
     tracker = TurnTracker("diagnosis")
     valid_ids = {e["artifact_id"] for e in evidence}
-    llm = api_client.get_llm(model=DIAGNOSIS_MODEL, temperature=0)
+    llm = api_client.get_llm(role="reasoning", temperature=0)
     prompt = _build_prompt(evidence)
 
     hypotheses: list[dict] = []

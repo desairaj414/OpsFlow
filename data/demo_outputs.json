@@ -1,0 +1,1257 @@
+{
+  "CI-0059:incident": {
+    "incident_id": "INC-DEMO-SCEN-01",
+    "modality": "alert",
+    "workflow_type": "incident",
+    "status": "complete",
+    "reason": null,
+    "verification_status": "verified_resolved",
+    "trace": [
+      {
+        "agent_name": "enrichment",
+        "incident_id": "INC-DEMO-SCEN-01",
+        "result": {
+          "evidence": [
+            {
+              "artifact_id": "CI-0059",
+              "source_type": "cmdb",
+              "extract": "exchange-online-connector in staging, criticality P3, patch_level 8.6.7",
+              "confidence": 1.0
+            },
+            {
+              "artifact_id": "ALERT-0156",
+              "source_type": "alert",
+              "extract": "flow run failed - throttled (info severity, via apm)",
+              "confidence": 1.0
+            },
+            {
+              "artifact_id": "METRICS-CI-0059",
+              "source_type": "metrics",
+              "extract": "stable: memory 52%->58%, latency 149ms->149ms",
+              "confidence": 0.8
+            },
+            {
+              "artifact_id": "TCK-0058",
+              "source_type": "ticket_history_precedent",
+              "extract": "[incident/in_progress/P3] Service outage - exchange-online-connector-girl-108 (CI: CI-0108)",
+              "confidence": 0.684357613325119
+            },
+            {
+              "artifact_id": "TCK-0286",
+              "source_type": "ticket_history_precedent",
+              "extract": "[incident/closed/P4] Service outage - exchange-online-connector-kid-192 (CI: CI-0192)",
+              "confidence": 0.6696562170982361
+            }
+          ]
+        },
+        "cited_artifact_ids": [
+          "CI-0059",
+          "ALERT-0156",
+          "METRICS-CI-0059",
+          "TCK-0058",
+          "TCK-0286"
+        ],
+        "confidence": 1.0,
+        "turns_used": 3,
+        "termination_reason": "evidence_gathering_complete",
+        "latency_ms": 1046.758700045757,
+        "tokens_used": null,
+        "transport": "in_process",
+        "model_used": null
+      },
+      {
+        "agent_name": "diagnosis",
+        "incident_id": "INC-DEMO-SCEN-01",
+        "result": {
+          "hypotheses": [
+            {
+              "text": "The exchange-online-connector flow run failure and throttling are caused by hitting rate limits or resource constraints typical of staging environments, as indicated by the APM alert.",
+              "confidence": 0.75,
+              "cited_artifact_ids": [
+                "CI-0059",
+                "ALERT-0156",
+                "METRICS-CI-0059"
+              ]
+            },
+            {
+              "text": "The service outage pattern mirrors previous incidents with similar exchange-online-connector naming conventions, suggesting a configuration or deployment bottleneck.",
+              "confidence": 0.5,
+              "cited_artifact_ids": [
+                "CI-0059",
+                "TCK-0058",
+                "TCK-0286"
+              ]
+            }
+          ]
+        },
+        "cited_artifact_ids": [
+          "ALERT-0156",
+          "CI-0059",
+          "METRICS-CI-0059",
+          "TCK-0058",
+          "TCK-0286"
+        ],
+        "confidence": 0.75,
+        "turns_used": 1,
+        "termination_reason": "hypotheses_generated",
+        "latency_ms": 2656.5503999590874,
+        "tokens_used": 552,
+        "transport": "a2a",
+        "model_used": "azure_ai/genailab-maas-DeepSeek-R1"
+      },
+      {
+        "agent_name": "planner",
+        "incident_id": "INC-DEMO-SCEN-01",
+        "result": {
+          "runbook_id": "RB-006",
+          "steps": [
+            {
+              "step_no": 1,
+              "action": "Confirm the alert against the monitoring simulator: check current status and severity for the affected CI before taking any action.",
+              "cites_runbook_step": "RB-006-step1"
+            }
+          ],
+          "blast_radius": {
+            "ci_id": "CI-0059",
+            "affected_ci_ids": [],
+            "count": 0,
+            "max_depth": 2
+          },
+          "policy_gate_result": {
+            "decision": "allow",
+            "triggered_rules": [],
+            "reasons": []
+          }
+        },
+        "cited_artifact_ids": [
+          "RB-006-step1"
+        ],
+        "confidence": 1.0,
+        "turns_used": 2,
+        "termination_reason": "plan_drafted",
+        "latency_ms": 2262.188100023195,
+        "tokens_used": 634,
+        "transport": "in_process",
+        "model_used": "azure/genailab-maas-gpt-4.1-nano"
+      },
+      {
+        "agent_name": "verification",
+        "incident_id": "INC-DEMO-SCEN-01",
+        "result": {
+          "alert_cleared": true,
+          "health_probe_recovered": true,
+          "status": "verified_resolved"
+        },
+        "cited_artifact_ids": [],
+        "confidence": 1.0,
+        "turns_used": 1,
+        "termination_reason": "verification_complete",
+        "latency_ms": 0.07189996540546417,
+        "tokens_used": null,
+        "transport": "in_process",
+        "model_used": null
+      },
+      {
+        "agent_name": "sync",
+        "incident_id": "INC-DEMO-SCEN-01",
+        "result": {
+          "ticket": {
+            "sys_id": "TCK-0501",
+            "short_description": "[incident] INC-DEMO-SCEN-01: exchange-online-connector-major-059",
+            "state": "7",
+            "priority": "P2",
+            "cmdb_ci": "CI-0059",
+            "opened_at": "2026-08-13T16:40:16.402294+00:00",
+            "closed_at": "2026-08-13T16:40:21.348211+00:00",
+            "sys_class_name": "incident",
+            "work_notes": [
+              {
+                "note": "Verification status: verified_resolved. Plan runbook_id=RB-006, steps=1.",
+                "actor": "agent:sync",
+                "at": "2026-08-13T16:40:21.345214+00:00"
+              }
+            ]
+          },
+          "cmdb_proposal": {
+            "proposal_id": "PROP-0001",
+            "ci_id": "CI-0059",
+            "field": "last_verified_at",
+            "current_value": "2026-06-05T15:11:47",
+            "proposed_value": "2026-08-13T16:40:21.349211+00:00",
+            "reason": "Resolved via INC-DEMO-SCEN-01",
+            "actor": "agent:sync",
+            "status": "pending_approval",
+            "proposed_at": "2026-08-13T16:40:21.351215+00:00"
+          }
+        },
+        "cited_artifact_ids": [
+          "TCK-0501",
+          "CI-0059"
+        ],
+        "confidence": 1.0,
+        "turns_used": 1,
+        "termination_reason": "sync_complete",
+        "latency_ms": 7.883799960836768,
+        "tokens_used": null,
+        "transport": "in_process",
+        "model_used": null
+      },
+      {
+        "agent_name": "knowledge",
+        "incident_id": "INC-DEMO-SCEN-01",
+        "result": {
+          "verification_status": "verified_resolved",
+          "negative_kb_entry": null
+        },
+        "cited_artifact_ids": [],
+        "confidence": 1.0,
+        "turns_used": 1,
+        "termination_reason": "knowledge_capture_complete",
+        "latency_ms": 0.05179992876946926,
+        "tokens_used": null,
+        "transport": "in_process",
+        "model_used": null
+      }
+    ],
+    "agent_card": {
+      "name": "diagnosis-agent",
+      "description": "Root-cause hypothesis generation & ranking (DeepSeek R1). Every hypothesis cites at least one evidence artifact ID; uncited hypotheses are dropped before being returned.",
+      "capabilities": [
+        "generate_diagnosis"
+      ],
+      "endpoint": "http://localhost:9010/invoke",
+      "signature": "602e78df425571f6bfc5367e58140559795b8bf44a6e384ea0cb5cc94766a0e9"
+    }
+  },
+  "CI-0121:incident": {
+    "incident_id": "INC-DEMO-SCEN-02",
+    "modality": "alert",
+    "workflow_type": "incident",
+    "status": "complete",
+    "reason": null,
+    "verification_status": "symptom_suppressed",
+    "trace": [
+      {
+        "agent_name": "enrichment",
+        "incident_id": "INC-DEMO-SCEN-02",
+        "result": {
+          "evidence": [
+            {
+              "artifact_id": "CI-0121",
+              "source_type": "cmdb",
+              "extract": "onedrive-sync-cache in dev, criticality P3, patch_level 1.19.2",
+              "confidence": 1.0
+            },
+            {
+              "artifact_id": "ALERT-0467",
+              "source_type": "alert",
+              "extract": "flow run failed - throttled (critical severity, via snmp)",
+              "confidence": 1.0
+            },
+            {
+              "artifact_id": "METRICS-CI-0121",
+              "source_type": "metrics",
+              "extract": "degradation trend: memory 37%->85%, latency 99ms->417ms",
+              "confidence": 0.8
+            },
+            {
+              "artifact_id": "TCK-0189",
+              "source_type": "ticket_history_precedent",
+              "extract": "[incident/closed/P1] Service outage - onedrive-sync-cache-interesting-154 (CI: CI-0154)",
+              "confidence": 0.6766545474529266
+            },
+            {
+              "artifact_id": "TCK-0420",
+              "source_type": "ticket_history_precedent",
+              "extract": "[incident/closed/P1] Service outage - onedrive-sync-cache-look-092 (CI: CI-0092)",
+              "confidence": 0.6692394018173218
+            }
+          ]
+        },
+        "cited_artifact_ids": [
+          "CI-0121",
+          "ALERT-0467",
+          "METRICS-CI-0121",
+          "TCK-0189",
+          "TCK-0420"
+        ],
+        "confidence": 1.0,
+        "turns_used": 3,
+        "termination_reason": "evidence_gathering_complete",
+        "latency_ms": 626.3726999750361,
+        "tokens_used": null,
+        "transport": "in_process",
+        "model_used": null
+      },
+      {
+        "agent_name": "diagnosis",
+        "incident_id": "INC-DEMO-SCEN-02",
+        "result": {
+          "hypotheses": [
+            {
+              "text": "The OneDrive sync cache service is experiencing severe throttling and performance degradation due to resource exhaustion, as evidenced by rising memory usage and latency.",
+              "confidence": 0.85,
+              "cited_artifact_ids": [
+                "CI-0121",
+                "ALERT-0467",
+                "METRICS-CI-0121"
+              ]
+            },
+            {
+              "text": "A recurring systemic issue with sync-cache implementations under high load is causing flow failures and critical throttling, similar to past historical incidents.",
+              "confidence": 0.65,
+              "cited_artifact_ids": [
+                "ALERT-0467",
+                "TCK-0189",
+                "TCK-0420"
+              ]
+            }
+          ]
+        },
+        "cited_artifact_ids": [
+          "ALERT-0467",
+          "CI-0121",
+          "METRICS-CI-0121",
+          "TCK-0189",
+          "TCK-0420"
+        ],
+        "confidence": 0.85,
+        "turns_used": 1,
+        "termination_reason": "hypotheses_generated",
+        "latency_ms": 1960.5018999427557,
+        "tokens_used": 521,
+        "transport": "a2a",
+        "model_used": "azure_ai/genailab-maas-DeepSeek-R1"
+      },
+      {
+        "agent_name": "planner",
+        "incident_id": "INC-DEMO-SCEN-02",
+        "result": {
+          "runbook_id": "RB-001",
+          "steps": [
+            {
+              "step_no": 1,
+              "action": "Confirm the CI ID and class match this runbook's scope and ensure the incident/change has passed the Policy Gate for this CI's environment and criticality.",
+              "cites_runbook_step": "RB-001-step3"
+            },
+            {
+              "step_no": 2,
+              "action": "Check the Negative KB to ensure the failure matches a known signature and that the fix has not already been recorded as failed for this CI class.",
+              "cites_runbook_step": "RB-001-step3"
+            },
+            {
+              "step_no": 3,
+              "action": "Apply the corrective action by restarting the affected OneDrive sync cache service.",
+              "cites_runbook_step": "RB-001-step3"
+            }
+          ],
+          "blast_radius": {
+            "ci_id": "CI-0121",
+            "affected_ci_ids": [],
+            "count": 0,
+            "max_depth": 2
+          },
+          "policy_gate_result": {
+            "decision": "allow",
+            "triggered_rules": [],
+            "reasons": []
+          }
+        },
+        "cited_artifact_ids": [
+          "RB-001-step3"
+        ],
+        "confidence": 1.0,
+        "turns_used": 2,
+        "termination_reason": "plan_drafted",
+        "latency_ms": 2774.5076999999583,
+        "tokens_used": 801,
+        "transport": "in_process",
+        "model_used": "azure/genailab-maas-gpt-4.1-nano"
+      },
+      {
+        "agent_name": "verification",
+        "incident_id": "INC-DEMO-SCEN-02",
+        "result": {
+          "alert_cleared": true,
+          "health_probe_recovered": false,
+          "status": "symptom_suppressed"
+        },
+        "cited_artifact_ids": [],
+        "confidence": 1.0,
+        "turns_used": 1,
+        "termination_reason": "verification_complete",
+        "latency_ms": 0.06210000719875097,
+        "tokens_used": null,
+        "transport": "in_process",
+        "model_used": null
+      },
+      {
+        "agent_name": "sync",
+        "incident_id": "INC-DEMO-SCEN-02",
+        "result": {
+          "ticket": {
+            "sys_id": "TCK-0502",
+            "short_description": "[incident] INC-DEMO-SCEN-02: onedrive-sync-cache-that-121",
+            "state": "2",
+            "priority": "P2",
+            "cmdb_ci": "CI-0121",
+            "opened_at": "2026-08-13T16:40:30.004274+00:00",
+            "closed_at": null,
+            "sys_class_name": "incident",
+            "work_notes": [
+              {
+                "note": "Verification status: symptom_suppressed. Plan runbook_id=RB-001, steps=3.",
+                "actor": "agent:sync",
+                "at": "2026-08-13T16:40:34.763977+00:00"
+              }
+            ]
+          },
+          "cmdb_proposal": null
+        },
+        "cited_artifact_ids": [
+          "TCK-0502",
+          "CI-0121"
+        ],
+        "confidence": 1.0,
+        "turns_used": 1,
+        "termination_reason": "sync_complete",
+        "latency_ms": 4.91729995701462,
+        "tokens_used": null,
+        "transport": "in_process",
+        "model_used": null
+      },
+      {
+        "agent_name": "knowledge",
+        "incident_id": "INC-DEMO-SCEN-02",
+        "result": {
+          "verification_status": "symptom_suppressed",
+          "negative_kb_entry": {
+            "id": "NEGKB-RUNTIME-0502",
+            "ci_class": "onedrive-sync-cache",
+            "failure_signature": "The OneDrive sync cache service is experiencing severe throttling and performance degradation due to resource exhaustion, as evidenced by rising memory usage and latency."
+          }
+        },
+        "cited_artifact_ids": [],
+        "confidence": 1.0,
+        "turns_used": 1,
+        "termination_reason": "knowledge_capture_complete",
+        "latency_ms": 6.016399944201112,
+        "tokens_used": null,
+        "transport": "in_process",
+        "model_used": null
+      }
+    ],
+    "agent_card": {
+      "name": "diagnosis-agent",
+      "description": "Root-cause hypothesis generation & ranking (DeepSeek R1). Every hypothesis cites at least one evidence artifact ID; uncited hypotheses are dropped before being returned.",
+      "capabilities": [
+        "generate_diagnosis"
+      ],
+      "endpoint": "http://localhost:9010/invoke",
+      "signature": "602e78df425571f6bfc5367e58140559795b8bf44a6e384ea0cb5cc94766a0e9"
+    }
+  },
+  "CI-0009:incident": {
+    "incident_id": "INC-DEMO-SCEN-03",
+    "modality": "alert",
+    "workflow_type": "incident",
+    "status": "blocked",
+    "reason": [
+      "blast radius 40 exceeds hard block threshold 15"
+    ],
+    "verification_status": null,
+    "trace": [
+      {
+        "agent_name": "enrichment",
+        "incident_id": "INC-DEMO-SCEN-03",
+        "result": {
+          "evidence": [
+            {
+              "artifact_id": "CI-0009",
+              "source_type": "cmdb",
+              "extract": "dataverse-instance in dev, criticality P4, patch_level 8.11.9",
+              "confidence": 1.0
+            },
+            {
+              "artifact_id": "CI-0009",
+              "source_type": "cmdb_relationship",
+              "extract": "20 related CIs: hosts->CI-0077, depends_on->CI-0110, replicates_to->CI-0150, connects_to->CI-0035, hosts->CI-0123",
+              "confidence": 1.0
+            },
+            {
+              "artifact_id": "ALERT-0001",
+              "source_type": "alert",
+              "extract": "5xx error rate spike (warning severity, via prometheus)",
+              "confidence": 1.0
+            },
+            {
+              "artifact_id": "ALERT-0102",
+              "source_type": "alert",
+              "extract": "5xx error rate spike (info severity, via apm)",
+              "confidence": 1.0
+            },
+            {
+              "artifact_id": "METRICS-CI-0009",
+              "source_type": "metrics",
+              "extract": "stable: memory 56%->58%, latency 48ms->57ms",
+              "confidence": 0.8
+            },
+            {
+              "artifact_id": "TCK-0351",
+              "source_type": "ticket_history_precedent",
+              "extract": "[incident/closed/P3] Service outage - dataverse-instance-authority-038 (CI: CI-0038)",
+              "confidence": 0.6210573315620422
+            },
+            {
+              "artifact_id": "TCK-0024",
+              "source_type": "ticket_history_precedent",
+              "extract": "[incident/closed/P4] Service outage - dataverse-instance-authority-038 (CI: CI-0038)",
+              "confidence": 0.6178187131881714
+            }
+          ]
+        },
+        "cited_artifact_ids": [
+          "CI-0009",
+          "ALERT-0001",
+          "ALERT-0102",
+          "METRICS-CI-0009",
+          "TCK-0351",
+          "TCK-0024"
+        ],
+        "confidence": 1.0,
+        "turns_used": 3,
+        "termination_reason": "evidence_gathering_complete",
+        "latency_ms": 631.2573999166489,
+        "tokens_used": null,
+        "transport": "in_process",
+        "model_used": null
+      },
+      {
+        "agent_name": "diagnosis",
+        "incident_id": "INC-DEMO-SCEN-03",
+        "result": {
+          "hypotheses": [
+            {
+              "text": "A minor software bug or edge-case payload failure in the dataverse-instance leading to low-severity 5xx responses without exhausting system memory or significantly degrading latency.",
+              "confidence": 0.35,
+              "cited_artifact_ids": [
+                "CI-0009",
+                "ALERT-0001",
+                "METRICS-CI-0009"
+              ]
+            }
+          ]
+        },
+        "cited_artifact_ids": [
+          "ALERT-0001",
+          "CI-0009",
+          "METRICS-CI-0009"
+        ],
+        "confidence": 0.35,
+        "turns_used": 1,
+        "termination_reason": "hypotheses_generated",
+        "latency_ms": 2000.644400017336,
+        "tokens_used": 635,
+        "transport": "a2a",
+        "model_used": "azure_ai/genailab-maas-DeepSeek-R1"
+      },
+      {
+        "agent_name": "planner",
+        "incident_id": "INC-DEMO-SCEN-03",
+        "result": {
+          "runbook_id": "RB-004",
+          "steps": [
+            {
+              "step_no": 1,
+              "action": "Confirm the CI ID and class match this runbook's scope before proceeding, and ensure the incident/change has passed the Policy Gate for this CI's environment and criticality.",
+              "cites_runbook_step": "RB-004-step3"
+            },
+            {
+              "step_no": 2,
+              "action": "If the failure matches a known signature (see Negative KB first — do not repeat a fix already recorded as failed for this CI class), apply the corrective action: restart the affected service.",
+              "cites_runbook_step": "RB-004-step3"
+            },
+            {
+              "step_no": 3,
+              "action": "If the health probe has recovered and holds through the stabilisation window, proceed to close. If not recovered after one restart attempt, escalate to on-call SRE — do not restart a second time without approval.",
+              "cites_runbook_step": "RB-002-step5"
+            }
+          ],
+          "blast_radius": {
+            "ci_id": "CI-0009",
+            "affected_ci_ids": [
+              "CI-0005",
+              "CI-0035",
+              "CI-0055",
+              "CI-0058",
+              "CI-0063",
+              "CI-0077",
+              "CI-0087",
+              "CI-0098",
+              "CI-0110",
+              "CI-0111",
+              "CI-0123",
+              "CI-0140",
+              "CI-0148",
+              "CI-0149",
+              "CI-0150",
+              "CI-0169",
+              "CI-0177",
+              "CI-0182",
+              "CI-0193",
+              "CI-0195",
+              "CI-0012",
+              "CI-0167",
+              "CI-0126",
+              "CI-0044",
+              "CI-0066",
+              "CI-0086",
+              "CI-0011",
+              "CI-0185",
+              "CI-0143",
+              "CI-0080",
+              "CI-0157",
+              "CI-0052",
+              "CI-0043",
+              "CI-0113",
+              "CI-0156",
+              "CI-0107",
+              "CI-0134",
+              "CI-0048",
+              "CI-0165",
+              "CI-0196"
+            ],
+            "count": 40,
+            "max_depth": 2
+          },
+          "policy_gate_result": {
+            "decision": "block",
+            "triggered_rules": [
+              "BLAST_RADIUS_BLOCK"
+            ],
+            "reasons": [
+              "blast radius 40 exceeds hard block threshold 15"
+            ]
+          }
+        },
+        "cited_artifact_ids": [
+          "RB-002-step5",
+          "RB-004-step3"
+        ],
+        "confidence": 1.0,
+        "turns_used": 2,
+        "termination_reason": "plan_drafted",
+        "latency_ms": 2798.6958000110462,
+        "tokens_used": 906,
+        "transport": "in_process",
+        "model_used": "azure/genailab-maas-gpt-4.1-nano"
+      }
+    ],
+    "agent_card": {
+      "name": "diagnosis-agent",
+      "description": "Root-cause hypothesis generation & ranking (DeepSeek R1). Every hypothesis cites at least one evidence artifact ID; uncited hypotheses are dropped before being returned.",
+      "capabilities": [
+        "generate_diagnosis"
+      ],
+      "endpoint": "http://localhost:9010/invoke",
+      "signature": "602e78df425571f6bfc5367e58140559795b8bf44a6e384ea0cb5cc94766a0e9"
+    }
+  },
+  "CI-0059:patch": {
+    "incident_id": "INC-DEMO-SCEN-04",
+    "modality": "alert",
+    "workflow_type": "patch",
+    "status": "complete",
+    "reason": null,
+    "verification_status": "verified_resolved",
+    "trace": [
+      {
+        "agent_name": "enrichment",
+        "incident_id": "INC-DEMO-SCEN-04",
+        "result": {
+          "evidence": [
+            {
+              "artifact_id": "CI-0059",
+              "source_type": "cmdb",
+              "extract": "exchange-online-connector in staging, criticality P3, patch_level 8.6.7",
+              "confidence": 1.0
+            },
+            {
+              "artifact_id": "PATCHINV-CI-0059",
+              "source_type": "patch_inventory",
+              "extract": "1 pending patch(es): PATCH-0049 (high)",
+              "confidence": 1.0
+            },
+            {
+              "artifact_id": "CHANGECAL-CI-0059",
+              "source_type": "change_calendar",
+              "extract": "4 blackout window(s) apply: BLACKOUT-G01 (Annual audit freeze), BLACKOUT-G02 (Year-end code freeze), BLACKOUT-G03 (Regional public holiday freeze), BLACKOUT-E02 (Year-end code freeze)",
+              "confidence": 1.0
+            },
+            {
+              "artifact_id": "ALERT-0156",
+              "source_type": "alert",
+              "extract": "flow run failed - throttled (info severity, via apm)",
+              "confidence": 1.0
+            },
+            {
+              "artifact_id": "METRICS-CI-0059",
+              "source_type": "metrics",
+              "extract": "stable: memory 52%->58%, latency 149ms->149ms",
+              "confidence": 0.8
+            },
+            {
+              "artifact_id": "TCK-0058",
+              "source_type": "ticket_history_precedent",
+              "extract": "[incident/in_progress/P3] Service outage - exchange-online-connector-girl-108 (CI: CI-0108)",
+              "confidence": 0.684357613325119
+            },
+            {
+              "artifact_id": "TCK-0286",
+              "source_type": "ticket_history_precedent",
+              "extract": "[incident/closed/P4] Service outage - exchange-online-connector-kid-192 (CI: CI-0192)",
+              "confidence": 0.6696562170982361
+            }
+          ]
+        },
+        "cited_artifact_ids": [
+          "CI-0059",
+          "PATCHINV-CI-0059",
+          "CHANGECAL-CI-0059",
+          "ALERT-0156",
+          "METRICS-CI-0059",
+          "TCK-0058",
+          "TCK-0286"
+        ],
+        "confidence": 1.0,
+        "turns_used": 3,
+        "termination_reason": "evidence_gathering_complete",
+        "latency_ms": 942.6361999940127,
+        "tokens_used": null,
+        "transport": "in_process",
+        "model_used": null
+      },
+      {
+        "agent_name": "diagnosis",
+        "incident_id": "INC-DEMO-SCEN-04",
+        "result": {
+          "hypotheses": [
+            {
+              "text": "The exchange-online-connector in staging experienced execution throttling resulting in flow run failure, as indicated by the APM alert.",
+              "confidence": 0.85,
+              "cited_artifact_ids": [
+                "CI-0059",
+                "ALERT-0156"
+              ]
+            },
+            {
+              "text": "A pending high-priority security patch on the connector prevented normal execution cycles during staging validation.",
+              "confidence": 0.6,
+              "cited_artifact_ids": [
+                "CI-0059",
+                "PATCHINV-CI-0059"
+              ]
+            },
+            {
+              "text": "Resource contention during a strict blackout window caused downstream processing delays and subsequent throttling.",
+              "confidence": 0.4,
+              "cited_artifact_ids": [
+                "CI-0059",
+                "CHANGECAL-CI-0059",
+                "ALERT-0156"
+              ]
+            }
+          ]
+        },
+        "cited_artifact_ids": [
+          "ALERT-0156",
+          "CHANGECAL-CI-0059",
+          "CI-0059",
+          "PATCHINV-CI-0059"
+        ],
+        "confidence": 0.85,
+        "turns_used": 1,
+        "termination_reason": "hypotheses_generated",
+        "latency_ms": 1967.4385000253096,
+        "tokens_used": 684,
+        "transport": "a2a",
+        "model_used": "azure_ai/genailab-maas-DeepSeek-R1"
+      },
+      {
+        "agent_name": "planner",
+        "incident_id": "INC-DEMO-SCEN-04",
+        "result": {
+          "runbook_id": "RB-014",
+          "steps": [
+            {
+              "step_no": 1,
+              "action": "Verify service health post-patch: health probe recovered, no new alerts raised in the window.",
+              "cites_runbook_step": "RB-014-step5"
+            }
+          ],
+          "blast_radius": {
+            "ci_id": "CI-0059",
+            "affected_ci_ids": [],
+            "count": 0,
+            "max_depth": 2
+          },
+          "policy_gate_result": {
+            "decision": "allow",
+            "triggered_rules": [],
+            "reasons": []
+          },
+          "maintenance_window": {
+            "ci_id": "CI-0059",
+            "grouped_patches": [
+              {
+                "id": "PATCH-0049",
+                "severity": "high",
+                "order": 1,
+                "depends_on_patch_ids": []
+              }
+            ],
+            "proposed_window": {
+              "start": "2026-08-13T16:41:01.363143+00:00",
+              "end": "2026-08-13T18:41:01.363143+00:00"
+            },
+            "sla_at_risk": true,
+            "earliest_sla_due": "2026-07-14T20:24:28.408399+00:00",
+            "blackout_windows_checked": 4
+          }
+        },
+        "cited_artifact_ids": [
+          "RB-014-step5"
+        ],
+        "confidence": 1.0,
+        "turns_used": 2,
+        "termination_reason": "plan_drafted",
+        "latency_ms": 2185.849800007418,
+        "tokens_used": 611,
+        "transport": "in_process",
+        "model_used": "azure/genailab-maas-gpt-4.1-nano"
+      },
+      {
+        "agent_name": "verification",
+        "incident_id": "INC-DEMO-SCEN-04",
+        "result": {
+          "alert_cleared": true,
+          "health_probe_recovered": true,
+          "status": "verified_resolved"
+        },
+        "cited_artifact_ids": [],
+        "confidence": 1.0,
+        "turns_used": 1,
+        "termination_reason": "verification_complete",
+        "latency_ms": 0.1194999786093831,
+        "tokens_used": null,
+        "transport": "in_process",
+        "model_used": null
+      },
+      {
+        "agent_name": "sync",
+        "incident_id": "INC-DEMO-SCEN-04",
+        "result": {
+          "ticket": {
+            "sys_id": "TCK-0504",
+            "short_description": "[patch] INC-DEMO-SCEN-04: exchange-online-connector-major-059",
+            "state": "7",
+            "priority": "P2",
+            "cmdb_ci": "CI-0059",
+            "opened_at": "2026-08-13T16:40:57.204043+00:00",
+            "closed_at": "2026-08-13T16:41:01.385400+00:00",
+            "sys_class_name": "incident",
+            "work_notes": [
+              {
+                "note": "Verification status: verified_resolved. Plan runbook_id=RB-014, steps=1.",
+                "actor": "agent:sync",
+                "at": "2026-08-13T16:41:01.380402+00:00"
+              }
+            ]
+          },
+          "cmdb_proposal": {
+            "proposal_id": "PROP-0002",
+            "ci_id": "CI-0059",
+            "field": "last_verified_at",
+            "current_value": "2026-06-05T15:11:47",
+            "proposed_value": "2026-08-13T16:41:01.386405+00:00",
+            "reason": "Resolved via INC-DEMO-SCEN-04",
+            "actor": "agent:sync",
+            "status": "pending_approval",
+            "proposed_at": "2026-08-13T16:41:01.387405+00:00"
+          }
+        },
+        "cited_artifact_ids": [
+          "TCK-0504",
+          "CI-0059"
+        ],
+        "confidence": 1.0,
+        "turns_used": 1,
+        "termination_reason": "sync_complete",
+        "latency_ms": 9.221700020134449,
+        "tokens_used": null,
+        "transport": "in_process",
+        "model_used": null
+      },
+      {
+        "agent_name": "knowledge",
+        "incident_id": "INC-DEMO-SCEN-04",
+        "result": {
+          "verification_status": "verified_resolved",
+          "negative_kb_entry": null
+        },
+        "cited_artifact_ids": [],
+        "confidence": 1.0,
+        "turns_used": 1,
+        "termination_reason": "knowledge_capture_complete",
+        "latency_ms": 0.0638000201433897,
+        "tokens_used": null,
+        "transport": "in_process",
+        "model_used": null
+      }
+    ],
+    "agent_card": {
+      "name": "diagnosis-agent",
+      "description": "Root-cause hypothesis generation & ranking (DeepSeek R1). Every hypothesis cites at least one evidence artifact ID; uncited hypotheses are dropped before being returned.",
+      "capabilities": [
+        "generate_diagnosis"
+      ],
+      "endpoint": "http://localhost:9010/invoke",
+      "signature": "602e78df425571f6bfc5367e58140559795b8bf44a6e384ea0cb5cc94766a0e9"
+    }
+  },
+  "CI-0138:performance": {
+    "incident_id": "INC-DEMO-SCEN-05",
+    "modality": "alert",
+    "workflow_type": "performance",
+    "status": "pending_approval",
+    "reason": null,
+    "verification_status": null,
+    "trace": [
+      {
+        "agent_name": "enrichment",
+        "incident_id": "INC-DEMO-SCEN-05",
+        "result": {
+          "evidence": [
+            {
+              "artifact_id": "CI-0138",
+              "source_type": "cmdb",
+              "extract": "power-platform-environment in prod, criticality P1, patch_level 8.16.0",
+              "confidence": 1.0
+            },
+            {
+              "artifact_id": "CI-0138",
+              "source_type": "cmdb_relationship",
+              "extract": "1 related CIs: depends_on->CI-0160",
+              "confidence": 1.0
+            },
+            {
+              "artifact_id": "ALERT-0004",
+              "source_type": "alert",
+              "extract": "connection pool utilization trending toward saturation (info severity, via prometheus)",
+              "confidence": 1.0
+            },
+            {
+              "artifact_id": "ALERT-0273",
+              "source_type": "alert",
+              "extract": "throttling rate higher than baseline for 3 days (info severity, via prometheus)",
+              "confidence": 1.0
+            },
+            {
+              "artifact_id": "METRICS-CI-0138",
+              "source_type": "metrics",
+              "extract": "stable: memory 40%->38%, latency 105ms->102ms",
+              "confidence": 0.8
+            },
+            {
+              "artifact_id": "TCK-0008",
+              "source_type": "ticket_history_precedent",
+              "extract": "[incident/closed/P3] Service outage - power-platform-environment-involve-200 (CI: CI-0200)",
+              "confidence": 0.6538098454475403
+            },
+            {
+              "artifact_id": "TCK-0390",
+              "source_type": "ticket_history_precedent",
+              "extract": "[incident/closed/P1] Service outage - power-platform-environment-form-160 (CI: CI-0160)",
+              "confidence": 0.6315957307815552
+            }
+          ]
+        },
+        "cited_artifact_ids": [
+          "CI-0138",
+          "ALERT-0004",
+          "ALERT-0273",
+          "METRICS-CI-0138",
+          "TCK-0008",
+          "TCK-0390"
+        ],
+        "confidence": 1.0,
+        "turns_used": 3,
+        "termination_reason": "evidence_gathering_complete",
+        "latency_ms": 1001.3762000016868,
+        "tokens_used": null,
+        "transport": "in_process",
+        "model_used": null
+      },
+      {
+        "agent_name": "diagnosis",
+        "incident_id": "INC-DEMO-SCEN-05",
+        "result": {
+          "hypotheses": [
+            {
+              "text": "Upstream dependency failure in CI-0160 causing cascading performance degradation and throttling in the Power Platform production environment.",
+              "confidence": 0.85,
+              "cited_artifact_ids": [
+                "CI-0138",
+                "ALERT-0273",
+                "TCK-0390"
+              ]
+            },
+            {
+              "text": "Resource exhaustion and connection pool saturation leading to request throttling, correlating with historical incidents involving related infrastructure.",
+              "confidence": 0.7,
+              "cited_artifact_ids": [
+                "CI-0138",
+                "ALERT-0004",
+                "ALERT-0273"
+              ]
+            }
+          ]
+        },
+        "cited_artifact_ids": [
+          "ALERT-0004",
+          "ALERT-0273",
+          "CI-0138",
+          "TCK-0390"
+        ],
+        "confidence": 0.85,
+        "turns_used": 1,
+        "termination_reason": "hypotheses_generated",
+        "latency_ms": 1854.945599916391,
+        "tokens_used": 580,
+        "transport": "a2a",
+        "model_used": "azure_ai/genailab-maas-DeepSeek-R1"
+      },
+      {
+        "agent_name": "planner",
+        "incident_id": "INC-DEMO-SCEN-05",
+        "result": {
+          "runbook_id": "RB-020",
+          "steps": [
+            {
+              "step_no": 1,
+              "action": "Identify the specific bottleneck resource or query pattern responsible for the trend — do not propose a change without a specific, cited cause.",
+              "cites_runbook_step": "RB-020-step2"
+            }
+          ],
+          "blast_radius": {
+            "ci_id": "CI-0138",
+            "affected_ci_ids": [
+              "CI-0160",
+              "CI-0088"
+            ],
+            "count": 2,
+            "max_depth": 2
+          },
+          "policy_gate_result": {
+            "decision": "needs_approval",
+            "triggered_rules": [
+              "ADVISORY_ONLY_WORKFLOW",
+              "REQUIRED_APPROVER_ROLE"
+            ],
+            "reasons": [
+              "'tuning' is advisory-only by design and never auto-executes",
+              "actor role 'operator' is not an approver role, required for prod and/or P1 actions"
+            ]
+          }
+        },
+        "cited_artifact_ids": [
+          "RB-020-step2"
+        ],
+        "confidence": 1.0,
+        "turns_used": 2,
+        "termination_reason": "plan_drafted",
+        "latency_ms": 2195.3283000038937,
+        "tokens_used": 640,
+        "transport": "in_process",
+        "model_used": "azure/genailab-maas-gpt-4.1-nano"
+      }
+    ],
+    "agent_card": {
+      "name": "diagnosis-agent",
+      "description": "Root-cause hypothesis generation & ranking (DeepSeek R1). Every hypothesis cites at least one evidence artifact ID; uncited hypotheses are dropped before being returned.",
+      "capabilities": [
+        "generate_diagnosis"
+      ],
+      "endpoint": "http://localhost:9010/invoke",
+      "signature": "602e78df425571f6bfc5367e58140559795b8bf44a6e384ea0cb5cc94766a0e9"
+    }
+  },
+  "CI-0181:performance": {
+    "incident_id": "INC-DEMO-SCEN-06",
+    "modality": "alert",
+    "workflow_type": "performance",
+    "status": "pending_approval",
+    "reason": null,
+    "verification_status": null,
+    "trace": [
+      {
+        "agent_name": "enrichment",
+        "incident_id": "INC-DEMO-SCEN-06",
+        "result": {
+          "evidence": [
+            {
+              "artifact_id": "CI-0181",
+              "source_type": "cmdb",
+              "extract": "power-platform-environment in staging, criticality P4, patch_level 9.12.7",
+              "confidence": 1.0
+            },
+            {
+              "artifact_id": "CI-0181",
+              "source_type": "cmdb_relationship",
+              "extract": "1 related CIs: depends_on->CI-0124",
+              "confidence": 1.0
+            },
+            {
+              "artifact_id": "ALERT-0007",
+              "source_type": "alert",
+              "extract": "connection pool utilization trending toward saturation (critical severity, via snmp)",
+              "confidence": 1.0
+            },
+            {
+              "artifact_id": "ALERT-0224",
+              "source_type": "alert",
+              "extract": "connection pool utilization trending toward saturation (warning severity, via snmp)",
+              "confidence": 1.0
+            },
+            {
+              "artifact_id": "TCK-0008",
+              "source_type": "ticket_history_precedent",
+              "extract": "[incident/closed/P3] Service outage - power-platform-environment-involve-200 (CI: CI-0200)",
+              "confidence": 0.6538098454475403
+            },
+            {
+              "artifact_id": "TCK-0390",
+              "source_type": "ticket_history_precedent",
+              "extract": "[incident/closed/P1] Service outage - power-platform-environment-form-160 (CI: CI-0160)",
+              "confidence": 0.6315957307815552
+            }
+          ]
+        },
+        "cited_artifact_ids": [
+          "CI-0181",
+          "ALERT-0007",
+          "ALERT-0224",
+          "TCK-0008",
+          "TCK-0390"
+        ],
+        "confidence": 1.0,
+        "turns_used": 3,
+        "termination_reason": "evidence_gathering_complete",
+        "latency_ms": 597.1085999626666,
+        "tokens_used": null,
+        "transport": "in_process",
+        "model_used": null
+      },
+      {
+        "agent_name": "diagnosis",
+        "incident_id": "INC-DEMO-SCEN-06",
+        "result": {
+          "hypotheses": [
+            {
+              "text": "The power platform environment in staging is experiencing service degradation due to connection pool saturation, as indicated by critical and warning SNMP connection pool alerts.",
+              "confidence": 0.85,
+              "cited_artifact_ids": [
+                "CI-0181",
+                "ALERT-0007",
+                "ALERT-0224"
+              ]
+            },
+            {
+              "text": "A recurring upstream dependency failure (associated with CI-0124) is leading to connection pool exhaustion and subsequent performance bottlenecks in the staging power platform environment.",
+              "confidence": 0.65,
+              "cited_artifact_ids": [
+                "CI-0181",
+                "ALERT-0007"
+              ]
+            },
+            {
+              "text": "Historical precedent indicates that power-platform-environments are vulnerable to cascading outages caused by resource exhaustion and connection leaks.",
+              "confidence": 0.45,
+              "cited_artifact_ids": [
+                "CI-0181",
+                "TCK-0008",
+                "TCK-0390"
+              ]
+            }
+          ]
+        },
+        "cited_artifact_ids": [
+          "ALERT-0007",
+          "ALERT-0224",
+          "CI-0181",
+          "TCK-0008",
+          "TCK-0390"
+        ],
+        "confidence": 0.85,
+        "turns_used": 1,
+        "termination_reason": "hypotheses_generated",
+        "latency_ms": 2151.041500037536,
+        "tokens_used": 648,
+        "transport": "a2a",
+        "model_used": "azure_ai/genailab-maas-DeepSeek-R1"
+      },
+      {
+        "agent_name": "planner",
+        "incident_id": "INC-DEMO-SCEN-06",
+        "result": {
+          "runbook_id": "RB-020",
+          "steps": [
+            {
+              "step_no": 1,
+              "action": "Identify the specific bottleneck resource or query pattern responsible for the trend — do not propose a change without a specific, cited cause.",
+              "cites_runbook_step": "RB-020-step2"
+            }
+          ],
+          "blast_radius": {
+            "ci_id": "CI-0181",
+            "affected_ci_ids": [
+              "CI-0124",
+              "CI-0016",
+              "CI-0144"
+            ],
+            "count": 3,
+            "max_depth": 2
+          },
+          "policy_gate_result": {
+            "decision": "needs_approval",
+            "triggered_rules": [
+              "ADVISORY_ONLY_WORKFLOW"
+            ],
+            "reasons": [
+              "'tuning' is advisory-only by design and never auto-executes"
+            ]
+          }
+        },
+        "cited_artifact_ids": [
+          "RB-020-step2"
+        ],
+        "confidence": 1.0,
+        "turns_used": 2,
+        "termination_reason": "plan_drafted",
+        "latency_ms": 2284.319599973969,
+        "tokens_used": 643,
+        "transport": "in_process",
+        "model_used": "azure/genailab-maas-gpt-4.1-nano"
+      }
+    ],
+    "agent_card": {
+      "name": "diagnosis-agent",
+      "description": "Root-cause hypothesis generation & ranking (DeepSeek R1). Every hypothesis cites at least one evidence artifact ID; uncited hypotheses are dropped before being returned.",
+      "capabilities": [
+        "generate_diagnosis"
+      ],
+      "endpoint": "http://localhost:9010/invoke",
+      "signature": "602e78df425571f6bfc5367e58140559795b8bf44a6e384ea0cb5cc94766a0e9"
+    }
+  }
+}

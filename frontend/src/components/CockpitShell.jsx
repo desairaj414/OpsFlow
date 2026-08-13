@@ -19,6 +19,7 @@ import { useAlertStream } from "@/hooks/useAlertStream";
 import { useWorkflowRun } from "@/hooks/useWorkflowRun";
 import { useTickets } from "@/hooks/useTickets";
 import { useAutoTriage } from "@/hooks/useAutoTriage";
+import { apiFetch } from "@/lib/api.js";
 
 const TABS = ["Overview", "Ops Board", "Tickets", "Incident Workspace", "Autonomy Ladder"];
 
@@ -108,7 +109,7 @@ export default function CockpitShell({ token, onTokenChange, apiBase, username, 
   }
 
   async function openTicket(ticket) {
-    const res = await fetch(`${apiBase}/tickets/${ticket.id}`, { headers: { Authorization: `Bearer ${token}` } });
+    const res = await apiFetch(apiBase, `/tickets/${ticket.id}`, { token });
     if (!res.ok) return;
     const detail = await res.json();
     openIncident(detail.trace_snapshot);
