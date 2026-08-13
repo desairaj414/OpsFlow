@@ -5,12 +5,12 @@ description: PII/secrets redaction pipeline — a regex pass for structured iden
 resource: backend/guardrails/scrubber.py
 tags: [guardrails, privacy, pii]
 status: stable
-generated: { by: "claude-sonnet-5/okf-produce", at: "2026-08-11T00:00:00Z" }
+generated: { by: "claude-sonnet-5/okf-maintain", at: "2026-08-13T00:00:00Z" }
 sources:
   - id: scrubber-py
     resource: backend/guardrails/scrubber.py
     title: backend/guardrails/scrubber.py
-    last_modified: 2026-08-11
+    last_modified: 2026-08-13
   - id: domain-privacy
     resource: .knowledge/domain-privacy.md
     title: Domain — Privacy, Scrubbing & Audit
@@ -29,8 +29,16 @@ intent parsing.[^domain-privacy] Two passes:
    private IPs, internal hostnames, phone numbers.[^scrubber-py]
 2. **Local SLM** (Ollama, `llama-3.2-3b-it`, localhost only) — free-text person names regex can't
    reliably catch. "Highest-sensitivity content never leaves the machine" is a privacy
-   *architecture* choice here, not a cost optimization.[^domain-privacy] If Ollama is unreachable,
-   this pass fails closed (returns the regex-only result, `slm_pass_ran=False`) rather than raising.
+   *architecture* choice here, not a cost optimization.[^domain-privacy] If Ollama is unreachable
+   (e.g. running this build off the TCS network, where the local SLM host isn't available), this
+   pass fails closed — returns the regex-only result, `slm_pass_ran=False` — rather than raising.
+   Regex-covered structured secrets are still redacted either way; only free-text names are at risk
+   of passing through unscrubbed when this happens.
+
+**ADDED 2026-08-13**: `slm_pass_ran` no longer dead-ends in the `ScrubResult` dataclass — both
+intake paths copy it onto the returned `MaintenanceSignal` (see [API Contract](/architecture/) /
+`.knowledge/api-contract.md`), and `ChatWidget.jsx` shows an inline warning in the chat transcript
+when it's `false`, so a missing local Ollama degrades visibly instead of silently.
 
 # Reversible tokenisation
 

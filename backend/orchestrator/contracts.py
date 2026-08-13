@@ -43,6 +43,12 @@ class MaintenanceSignal(BaseModel):
     confidence: float
     requires_human_confirmation: bool
     parsed_intent: str | None = None  # voice only
+    # Whether guardrails/scrubber.py's local-Ollama free-text-name pass actually ran, set by the
+    # voice/image intake paths (scrub() is not called for alert-modality signals, so this stays
+    # None there): None = not applicable to this modality; True = it ran; False = it was attempted
+    # and failed (e.g. no local Ollama reachable) — regex-based redaction (emails, phones, IPs,
+    # etc.) still applied, but free-text person names in this signal may NOT be scrubbed.
+    slm_pass_ran: bool | None = None
 
     @field_validator("modality")
     @classmethod

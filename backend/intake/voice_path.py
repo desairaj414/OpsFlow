@@ -19,7 +19,7 @@ import providers
 from guardrails.scrubber import scrub
 from intake.voice_intent import INTENT_UNRECOGNIZED, parse_voice_intent
 from orchestrator.contracts import MaintenanceSignal
-from provider_context import get_active_api_key, get_active_provider
+from provider_context import get_active_api_key, get_active_base_url, get_active_provider
 
 _verified_client = httpx.Client(verify=True)
 _unverified_client = httpx.Client(verify=False)
@@ -31,8 +31,9 @@ def _transcribe(audio_bytes: bytes, filename: str = "voice.wav") -> str:
     if not provider_cfg["supports_transcription"]:
         raise ValueError(f"{provider_cfg['label']} does not support voice transcription — switch provider.")
     http_client = _unverified_client if provider_cfg["needs_ssl_bypass"] else _verified_client
+    base_url = providers.resolve_base_url(provider_name, get_active_base_url())
     resp = http_client.post(
-        f"{provider_cfg['base_url'].rstrip('/')}/audio/transcriptions",
+        f"{base_url.rstrip('/')}/audio/transcriptions",
         files={"file": (filename, audio_bytes, "audio/wav")},
         data={"model": provider_cfg["whisper_model"]},
         headers={"Authorization": f"Bearer {providers.api_key_for(provider_name, get_active_api_key())}"},
@@ -64,4 +65,5 @@ def run_voice_intake(audio_bytes: bytes, filename: str = "voice.wav") -> Mainten
         confidence=1.0 if parsed.intent != INTENT_UNRECOGNIZED else 0.0,
         requires_human_confirmation=parsed.requires_human_confirmation or parsed.intent == INTENT_UNRECOGNIZED,
         parsed_intent=parsed.intent,
+        slm_pass_ran=scrub_result.slm_pass_ran,
     )

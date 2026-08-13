@@ -5,12 +5,12 @@ description: Screenshot/error-image -> vision-model extraction -> scrub -> Maint
 resource: backend/intake/vision_path.py
 tags: [intake, vision, multimodal]
 status: stable
-generated: { by: "claude-sonnet-5/okf-produce", at: "2026-08-11T00:00:00Z" }
+generated: { by: "claude-sonnet-5/okf-maintain", at: "2026-08-13T00:00:00Z" }
 sources:
   - id: vision-path-py
     resource: backend/intake/vision_path.py
     title: backend/intake/vision_path.py
-    last_modified: 2026-08-11
+    last_modified: 2026-08-13
   - id: domain-multimodal
     resource: .knowledge/domain-multimodal-intake.md
     title: Domain — Multimodal Intake
@@ -25,6 +25,9 @@ registered provider supports vision, unlike voice transcription), asking for err
 identifiers, and timestamps as JSON. The combined extracted text is then scrubbed before anything
 else touches it, and CI references (`CI-\d{4,}` pattern) are parsed from the **scrubbed** text so a
 redaction can never accidentally remove or corrupt a real CI id used downstream.[^vision-path-py]
+The returned `MaintenanceSignal` also carries `slm_pass_ran` (see
+[Scrubber](/guardrails/scrubber.md)) so the chat UI can warn if the local name-scrubbing model
+wasn't reachable for this image.
 
 # Unconditional confirmation
 

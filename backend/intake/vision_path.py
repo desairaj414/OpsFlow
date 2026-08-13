@@ -18,7 +18,7 @@ import httpx
 import providers
 from guardrails.scrubber import scrub
 from orchestrator.contracts import MaintenanceSignal
-from provider_context import get_active_api_key, get_active_provider
+from provider_context import get_active_api_key, get_active_base_url, get_active_model, get_active_provider
 
 _CI_REF_PATTERN = re.compile(r"\bCI-\d{4,}\b")
 _verified_client = httpx.Client(verify=True)
@@ -36,10 +36,12 @@ def _extract(image_b64: str, mime_type: str = "image/png") -> dict:
     provider_name = get_active_provider()
     provider_cfg = providers.PROVIDERS[provider_name]
     http_client = _unverified_client if provider_cfg["needs_ssl_bypass"] else _verified_client
+    base_url = providers.resolve_base_url(provider_name, get_active_base_url())
+    model = providers.resolve_model(provider_name, "vision", get_active_model())
     resp = http_client.post(
-        f"{provider_cfg['base_url'].rstrip('/')}/chat/completions",
+        f"{base_url.rstrip('/')}/chat/completions",
         json={
-            "model": provider_cfg["roles"]["vision"],
+            "model": model,
             "messages": [{
                 "role": "user",
                 "content": [
@@ -88,4 +90,5 @@ def run_vision_intake(image_bytes: bytes, mime_type: str = "image/png") -> Maint
         confidence=0.7 if combined_text.strip() else 0.0,  # extraction confidence, not a guess of correctness
         requires_human_confirmation=True,  # unconditional for the vision path, per domain-multimodal-intake.md
         parsed_intent=None,  # voice-only field
+        slm_pass_ran=scrub_result.slm_pass_ran,
     )

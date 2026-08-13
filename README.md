@@ -9,7 +9,7 @@ to "ticket closed, CMDB updated, and a verified fix, not just an assumed one."
 Built for **TCS AI Fridays Season 2 — Regional Round**
 (*Problem statement: AI-Powered Multi-Agent Workflow Automation for IT Application Maintenance*).
 
-**🔗 Live demo:** _add your Vercel URL here after deploying (see [§8](#8-try-it-live--testing-modes))_
+**🔗 Live demo:** _add your Render static site URL here after deploying (see [§8](#8-try-it-live--testing-modes))_
 
 No API key needed to try it — the login screen opens with an **Instant Demo** mode using
 pre-generated output, plus options to bring your own key or use a shared free key. See
@@ -188,7 +188,7 @@ around:
 | Mode | What it needs | What it does |
 |---|---|---|
 | **Instant Demo** | Nothing | Replays 6 pre-generated scenario runs (`data/demo_outputs.json`, built by `scripts/pregenerate_demo_outputs.py`) plus a real, unmodified-pipeline PII-scrubbing sample — zero live model calls, always works. Ad-hoc chat, voice, and image intake are disabled with an inline explanation; the full agent-chain UI (Agent Trace, evidence, blast radius, approval flow) still renders from real (pre-captured) data. |
-| **Bring Your Own Key** | Your own key for Gemini, OpenRouter, or the legacy TCS gateway | Sent as request headers (`X-LLM-Provider`/`X-LLM-Api-Key`), used only for that browser session, never written to disk or logged. Voice intake is only available if the chosen provider supports transcription (TCS; Gemini/OpenRouter don't). |
+| **Bring Your Own Key** | Your own key for Google Gemini, OpenAI, OpenRouter, xAI Grok, the legacy TCS gateway, or any custom OpenAI-compatible endpoint | Sent as request headers (`X-LLM-Provider`/`X-LLM-Api-Key`/`X-LLM-Model`), used only for that browser session, never written to disk or logged. The login screen validates the key/model against the real provider before letting you into the cockpit — a bad key surfaces the provider's real error inline instead of failing later. Voice intake is only available if the chosen provider supports transcription (OpenAI, TCS; for a custom endpoint this is actually checked live rather than guessed — see `providers.py`'s `probe_transcription_support()`). |
 | **Free Demo Key** | Nothing (uses a key the deployer configured) | Live diagnosis backed by a Gemini key set as a platform secret, with the same offline-Ollama-fallback resilience the app already has for gateway outages. |
 
 Real login still happens either way — role quick-fill buttons on the login screen fill in one of
@@ -200,6 +200,41 @@ routes every Gemini role through `gemini-flash-lite-latest` instead, which doesn
 and doesn't truncate structured JSON output under a capped token budget the way the reasoning
 alias does. Embeddings have a separate, more generous per-minute quota; `orchestrator/retrieval.py`
 retries with a full-minute backoff on a 429 rather than failing the request.
+
+---
+
+## 9. Deploying your own copy
+
+One platform, two free service types on [Render](https://render.com) — a Web Service for the
+backend (needs a long-running process: SQLite + Chroma opened once and held across requests, plus
+an SSE stream) and a Static Site for the frontend (zero server-side routes, so it gets a strictly
+better free tier: always-warm, CDN-backed, no idle-sleep). `render.yaml` at the repo root defines
+both as a Render Blueprint.
+
+1. Push this repo to your own GitHub account (public or private — Render's free tier works with
+   either).
+2. On Render: **New +** → **Blueprint**, connect the repo. Render reads `render.yaml` and proposes
+   both services (`opsflow-backend`, `opsflow-frontend`).
+3. Fill in the secrets it asks for before creating: `GEMINI_API_KEY` (required — backs both
+   embeddings and Free Demo Key mode; get one free at aistudio.google.com/apikey) and
+   `OPENROUTER_API_KEY` (optional — only needed if you want that as a working Free/BYOK fallback
+   option). `JWT_SECRET`/`A2A_SECRET` auto-generate; leave `FRONTEND_ORIGIN` and
+   `NEXT_PUBLIC_API_BASE_URL` blank for now — their real values aren't known until both services
+   exist.
+4. Once both are created, note their actual `*.onrender.com` URLs (Render appends a suffix if your
+   chosen name is taken by someone else). Set:
+   - `opsflow-backend`'s `FRONTEND_ORIGIN` → the frontend's URL, then trigger a manual restart (no
+     rebuild needed — read from the environment at request time).
+   - `opsflow-frontend`'s `NEXT_PUBLIC_API_BASE_URL` → the backend's URL, then trigger a manual
+     **deploy** (rebuild needed — Next.js bakes `NEXT_PUBLIC_*` values into the static bundle at
+     build time, per `output: "export"` in `next.config.mjs`).
+5. Visit the frontend's URL, confirm `/health` on the backend responds, and run one Instant Demo
+   scenario end to end before calling it done.
+
+The backend's free tier sleeps after 15 minutes idle (~1 min cold-start on the next request) and
+has no persistent disk — SQLite/Chroma rebuild fresh from the committed synthetic seed data on
+every boot, so this is expected, not a bug (see `render.yaml`'s comments). The frontend never
+sleeps.
 
 ---
 

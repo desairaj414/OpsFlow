@@ -6,3 +6,4 @@
 * [Embeddings Fixed Provider](embeddings-fixed-provider.md) - why embeddings never follow a visitor's chosen LLM provider.
 * [No Workflow Checkpointing](no-workflow-checkpointing.md) - why approving a paused plan re-runs the workflow fresh instead of resuming it.
 * [Real Authentication](real-authentication.md) - superseding the original "no real auth" call with genuine per-account credentials.
+* [Hosting Platform](hosting-platform.md) - one Render Blueprint (Web Service + Static Site) instead of splitting across Render and Vercel, or merging into one process.

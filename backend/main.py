@@ -249,6 +249,49 @@ def login(form_data: OAuth2PasswordRequestForm = Depends()):
     return TokenResponse(access_token=token)
 
 
+class FetchModelsRequest(BaseModel):
+    provider: str
+    api_key: str
+    base_url: str | None = None  # only meaningful for provider="custom"
+
+
+class ValidateKeyRequest(BaseModel):
+    provider: str
+    api_key: str
+    model: str
+    base_url: str | None = None
+
+
+@app.post("/providers/fetch-models")
+def fetch_provider_models(req: FetchModelsRequest):
+    """Called from the login screen's Bring Your Own Key panel (LoginModeSelector.jsx) before a
+    visitor has authenticated — no Depends(get_current_identity), deliberately. Never logs req.api_key."""
+    if req.provider not in providers.PROVIDERS:
+        raise HTTPException(status_code=400, detail=f"Unknown provider '{req.provider}'")
+    return {"models": providers.fetch_models(req.provider, req.api_key, req.base_url)}
+
+
+@app.post("/providers/validate-key")
+def validate_provider_key(req: ValidateKeyRequest):
+    """Same pre-login context as fetch_provider_models — lets the login screen catch a bad BYOK
+    key/model before the visitor ever reaches the cockpit, instead of failing silently on the first
+    real workflow run.
+
+    Also returns `capabilities.supports_transcription` — the registry's static, verified value for
+    every curated provider (no extra network call), or a real 404-vs-not probe result for `custom`,
+    where it can't be known ahead of time (see providers.probe_transcription_support()). The
+    frontend's canUseVoice() prefers this returned value over its own static default when present."""
+    if req.provider not in providers.PROVIDERS:
+        raise HTTPException(status_code=400, detail=f"Unknown provider '{req.provider}'")
+    ok, error = providers.validate_key(req.provider, req.api_key, req.model, req.base_url)
+    capabilities = {}
+    if ok:
+        capabilities["supports_transcription"] = providers.probe_transcription_support(
+            req.provider, req.api_key, req.base_url
+        )
+    return {"ok": ok, "error": error, "capabilities": capabilities}
+
+
 @app.get("/auth/me")
 def read_me(identity: Identity = Depends(get_current_identity)):
     return identity.model_dump()
@@ -1303,11 +1346,24 @@ def _model_routing_display(provider_name: str) -> dict:
     if provider_name == provider_context.INSTANT_DEMO:
         return {"note": "Instant Demo replays pre-generated output — no live model calls are made."}
     provider_cfg = providers.PROVIDERS[provider_name]
+    # A BYOK visitor's explicit model choice (openai/grok/custom have no curated roles map at all —
+    # see providers.py) overrides every role uniformly, same as providers.resolve_model() does for
+    # the actual LLM calls; Free Demo Key / Instant Demo never set this, so they fall through to the
+    # curated per-role map below unchanged.
+    override_model = provider_context.get_active_model()
+
+    def _model_for(role: str, supported: bool) -> str:
+        if not supported:
+            return "not supported by this provider"
+        if override_model:
+            return override_model
+        return provider_cfg["roles"].get(role, "not set — Bring Your Own Key sessions must select a model")
+
     display = {
         "provider": provider_cfg["label"],
-        "diagnosis": provider_cfg["roles"]["reasoning"],
-        "planner": provider_cfg["roles"]["structured"],
-        "vision_intake": provider_cfg["roles"]["vision"] if provider_cfg["vision"] else "not supported by this provider",
+        "diagnosis": _model_for("reasoning", True),
+        "planner": _model_for("structured", True),
+        "vision_intake": _model_for("vision", provider_cfg["vision"]),
     }
     display["voice_intake"] = provider_cfg.get("whisper_model", "not supported by this provider") if provider_cfg["supports_transcription"] else "not supported by this provider"
     return display

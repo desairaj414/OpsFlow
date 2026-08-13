@@ -25,9 +25,35 @@ services:
         generateValue: true
       - key: FRONTEND_ORIGIN
         sync: false
+        # Set this to the opsflow-frontend static site's actual URL after both services exist
+        # (Render assigns the final <name>.onrender.com only once the service is created — if
+        # "opsflow-frontend" collides with another Render user's service, yours gets a different
+        # name/suffix). No rebuild needed after changing this — it's read from the environment at
+        # request time (config.py), a restart is enough.
     # No persistent disk — Render's free Web Service tier doesn't support one (paid-plan add-on
     # only). The build command rebuilds SQLite + Chroma fresh on every deploy/restart from the
     # committed synthetic seed data, so the app always comes up consistent; the tradeoff is that
     # any live-run state (audit_log, local_tickets) from a BYOK/Free-Demo-Key session doesn't
     # survive a cold start (free tier sleeps after 15min idle) — acceptable for a public demo,
     # since Instant Demo mode (the always-works path) never touches this DB at request time anyway.
+
+  - type: web
+    name: opsflow-frontend
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./out
+    envVars:
+      - key: NEXT_PUBLIC_API_BASE_URL
+        sync: false
+        # Set this to the opsflow-backend web service's actual URL after both services exist (same
+        # naming-collision caveat as above). Unlike FRONTEND_ORIGIN, this DOES need a rebuild after
+        # changing it — Next.js bakes NEXT_PUBLIC_* values into the static JS bundle at build time
+        # (output: "export" in next.config.mjs), not read at runtime. Trigger a manual deploy on
+        # this service after setting/changing it.
+    # Free, unlimited, no idle-sleep tier (unlike the backend's free Web Service) — this is why the
+    # frontend and backend are two separate service types on the same platform rather than one:
+    # the backend genuinely needs a long-running process (SQLite + Chroma opened once, held across
+    # requests, plus an SSE stream), which only Render's Web Service tier provides; the frontend has
+    # zero server-side routes (frontend/src/app/ is a single client-rendered page) and gets a
+    # strictly better free tier — always-warm, CDN-backed — by being a Static Site instead.

@@ -8,6 +8,7 @@ import CockpitShell from "@/components/CockpitShell.jsx";
 import LoginModeSelector from "@/components/LoginModeSelector.jsx";
 import { apiFetch } from "@/lib/api.js";
 import { getProviderMode, setProviderMode } from "@/lib/providerMode.js";
+import { PROVIDER_INFO, validateByokKey } from "@/lib/providers.js";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8765";
 
@@ -54,7 +55,7 @@ function RingWatermark() {
 // Matches the server default (free_demo/gemini) so the initial client render before hydration
 // can't mismatch the server-rendered HTML — the real localStorage-backed mode is picked up after
 // mount (see the useEffect below), same pattern theme.js's toggle uses for the same reason.
-const SERVER_SAFE_DEFAULT_MODE = { mode: "free_demo", provider: "gemini", byokKey: null };
+const SERVER_SAFE_DEFAULT_MODE = { mode: "free_demo", provider: "gemini", byokKey: null, model: null, baseUrl: null, validated: true };
 
 export default function Home() {
   const [token, setToken] = useState(null);
@@ -81,6 +82,42 @@ export default function Home() {
   async function handleLogin(e) {
     e.preventDefault();
     setError("");
+
+    // Bring Your Own Key must be checked before this screen ever navigates to the cockpit — a
+    // missing or bad key/model used to only surface much later, on the first live workflow call.
+    if (mode.mode === "byok") {
+      const info = PROVIDER_INFO[mode.provider];
+      if (!mode.byokKey) {
+        setError("Enter an API key for Bring Your Own Key mode, or switch to another testing mode.");
+        return;
+      }
+      if (info?.needsBaseUrl && !mode.baseUrl) {
+        setError("Enter a base URL for the Custom provider.");
+        return;
+      }
+      if (!mode.model) {
+        setError("Select or enter a model for Bring Your Own Key mode.");
+        return;
+      }
+      if (!mode.validated) {
+        setLoggingIn(true);
+        const { ok, error: validateErr, capabilities } = await validateByokKey(API_BASE, {
+          provider: mode.provider,
+          apiKey: mode.byokKey,
+          model: mode.model,
+          baseUrl: mode.baseUrl,
+        });
+        if (!ok) {
+          setError(`That key/model didn't work: ${validateErr}`);
+          setLoggingIn(false);
+          return;
+        }
+        const validatedMode = { ...mode, validated: true, capabilities: capabilities || null };
+        setMode(validatedMode);
+        setProviderMode(validatedMode);
+      }
+    }
+
     setLoggingIn(true);
     try {
       const body = new URLSearchParams({ username, password });
@@ -116,7 +153,10 @@ export default function Home() {
     <div className="grid min-h-screen md:grid-cols-2">
       {/* Brand panel — light, matching the app's own surface, with the logo's ring motif oversized
           and faint in the background rather than a heavy dark block. */}
-      <div className="relative flex flex-col justify-center overflow-hidden bg-accent-soft/40 px-8 py-12 sm:px-14 md:py-0">
+      {/* Sticky + viewport-height on md+ so this panel stays pinned in place instead of stretching
+          to match the sign-in column's height — the BYOK panel below can make that column taller
+          than one viewport, and this column previously grew (and re-centered) right along with it. */}
+      <div className="relative flex flex-col justify-center overflow-hidden bg-accent-soft/40 px-8 py-12 sm:px-14 md:sticky md:top-0 md:h-screen md:py-0">
         <RingWatermark />
         <div className="relative mx-auto w-full max-w-sm md:mx-0">
           <LogoMark size={40} />

@@ -158,6 +158,19 @@ export default function ChatWidget({ apiBase, token, incident, onOpenIncident, o
       const signal = await res.json();
       // extracted_text is already scrubbed (voice_path.py runs the PII/secret scrubber before this
       // signal is built) — safe to hand straight to the same chat pipeline as typed text.
+      // slm_pass_ran === false means the local-Ollama free-text-name pass was attempted and failed
+      // (e.g. no local Ollama reachable on this machine) — structured secrets are still redacted,
+      // but a name typed in prose may not be. Surface that instead of failing silently.
+      if (signal.slm_pass_ran === false) {
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: "assistant",
+            content:
+              "⚠️ Local PII name-scrubbing model (Ollama) wasn't reachable — structured secrets (emails, phones, IDs) were still redacted, but free-text names in this transcript may not have been.",
+          },
+        ]);
+      }
       await sendMessage(signal.extracted_text || "");
     } catch (err) {
       setError(err.message);
@@ -185,9 +198,13 @@ export default function ChatWidget({ apiBase, token, incident, onOpenIncident, o
       });
       if (!res.ok) throw new Error(`Request failed (${res.status})`);
       const signal = await res.json();
-      const content = signal.extracted_text
+      let content = signal.extracted_text
         ? `Extracted: "${signal.extracted_text}"\nCandidate CI: ${signal.candidate_ci_refs?.join(", ") || "none found"}`
         : "Nothing extracted from that image.";
+      if (signal.slm_pass_ran === false) {
+        content +=
+          "\n\n⚠️ Local PII name-scrubbing model (Ollama) wasn't reachable — free-text names in this image may not have been redacted.";
+      }
       setMessages((prev) => [...prev, { role: "assistant", content, action: { type: "image_signal", signal } }]);
     } catch (err) {
       setMessages((prev) => [...prev, { role: "assistant", content: `Something went wrong: ${err.message}` }]);
@@ -339,7 +356,7 @@ export default function ChatWidget({ apiBase, token, incident, onOpenIncident, o
             )}
             {!isInstantDemo && !voiceAvailable && (
               <p className="mt-1 px-1 text-[11px] text-muted-foreground">
-                Voice intake isn&apos;t available on {mode.provider} — switch to a provider that supports transcription (e.g. TCS) to use it.
+                Voice intake isn&apos;t available on {mode.provider} — switch to a provider that supports transcription (e.g. OpenAI or TCS) to use it.
               </p>
             )}
             {!isInstantDemo && (

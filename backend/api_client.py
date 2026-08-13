@@ -10,7 +10,7 @@ import httpx
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 
 import providers
-from provider_context import get_active_api_key, get_active_provider
+from provider_context import get_active_api_key, get_active_base_url, get_active_model, get_active_provider
 
 # One client per trust level, mirroring EduCare's api_client.py split — `verify=False` only ever
 # applies to the `tcs` provider's own calls (its base_url sits behind the TCS network's MITM
@@ -43,9 +43,9 @@ def get_llm(role: str = "default", temperature: float = 0.2, enable_offline_fall
     provider_cfg = providers.PROVIDERS[provider_name]
     api_key = providers.api_key_for(provider_name, get_active_api_key())
     primary = ChatOpenAI(
-        base_url=provider_cfg["base_url"],
+        base_url=providers.resolve_base_url(provider_name, get_active_base_url()),
         api_key=api_key,
-        model=provider_cfg["roles"][role],
+        model=providers.resolve_model(provider_name, role, get_active_model()),
         temperature=temperature,
         http_client=_http_client_for(provider_cfg),
         timeout=45,

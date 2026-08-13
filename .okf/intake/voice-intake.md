@@ -5,12 +5,12 @@ description: Audio -> Whisper (or provider-equivalent) transcription -> scrub ->
 resource: backend/intake/voice_path.py
 tags: [intake, voice, multimodal]
 status: stable
-generated: { by: "claude-sonnet-5/okf-produce", at: "2026-08-11T00:00:00Z" }
+generated: { by: "claude-sonnet-5/okf-maintain", at: "2026-08-13T00:00:00Z" }
 sources:
   - id: voice-path-py
     resource: backend/intake/voice_path.py
     title: backend/intake/voice_path.py
-    last_modified: 2026-08-11
+    last_modified: 2026-08-13
   - id: voice-intent-py
     resource: backend/intake/voice_intent.py
     title: backend/intake/voice_intent.py
@@ -25,10 +25,19 @@ sources:
 
 `run_voice_intake(audio_bytes, filename)` transcribes audio via the active provider's transcription
 endpoint (only providers with `supports_transcription: True` in the
-[Provider Registry](/architecture/provider-registry.md) offer this — currently only `tcs`; the
-frontend hides the voice-intake UI for others, and the backend raises a clear error too, as defense
-in depth), then — critically — **scrubs the transcript before intent parsing**, per the
-scrub-after-convert, scrub-before-anything-else ordering.[^voice-path-py]
+[Provider Registry](/architecture/provider-registry.md) offer this — currently `tcs` (Whisper) and
+`openai` (`whisper-1`); Gemini/OpenRouter/Grok don't, and this is a fixed fact of each provider's
+API surface, not something that changes with a paid account — Gemini's OpenAI-compat layer has
+never exposed `/audio/transcriptions`, free or paid. `custom` is the one exception: since an
+arbitrary endpoint's support is genuinely unknown ahead of time, `providers.py`'s
+`probe_transcription_support()` actually checks for a working `/audio/transcriptions` route at
+login (404 vs. not) rather than guessing, and the frontend trusts that real result over its static
+default. The frontend hides the voice-intake UI for providers/endpoints that don't support it
+(`canUseVoice()`, `frontend/src/lib/providers.js`), and the backend raises a clear error too, as
+defense in depth), then — critically — **scrubs the transcript before intent
+parsing**, per the scrub-after-convert, scrub-before-anything-else ordering.[^voice-path-py] The
+returned `MaintenanceSignal` also carries `slm_pass_ran` (see [Scrubber](/guardrails/scrubber.md))
+so the chat UI can warn if the local name-scrubbing model wasn't reachable for this transcript.
 
 # Closed-vocabulary intent parsing — deliberately not an LLM
 
@@ -57,8 +66,9 @@ against; this is stated honestly in the UI rather than faked.
 
 # Consumers
 
-The Sidebar's push-to-talk mic and the [Chat Widget](/architecture/cockpit-ui.md)'s mic button both
-go through this same path — one pipeline, not two parsers.
+The [Chat Widget](/architecture/cockpit-ui.md)'s mic button is the only voice-input surface — a
+Sidebar push-to-talk button existed early on but was consolidated into the Chat Widget by explicit
+request (one conversational surface instead of two, one pipeline instead of two parsers).
 
 [^voice-path-py]: backend/intake/voice_path.py
 [^voice-intent-py]: backend/intake/voice_intent.py

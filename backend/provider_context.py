@@ -26,6 +26,11 @@ import providers
 
 _active_provider: ContextVar[str] = ContextVar("active_provider", default=providers.DEFAULT_PROVIDER)
 _active_api_key: ContextVar[str | None] = ContextVar("active_api_key", default=None)
+# Set only for Bring Your Own Key sessions where the visitor picked a specific model/base URL at
+# login (LoginModeSelector.jsx's fetch/validate step) — None for Free Demo Key / Instant Demo, which
+# never send these headers and so keep using each provider's curated per-role model map unchanged.
+_active_model: ContextVar[str | None] = ContextVar("active_model", default=None)
+_active_base_url: ContextVar[str | None] = ContextVar("active_base_url", default=None)
 
 INSTANT_DEMO = "instant_demo"
 
@@ -39,17 +44,23 @@ class ProviderContext:
 def get_provider_context(
     x_llm_provider: str | None = Header(default=None),
     x_llm_api_key: str | None = Header(default=None),
+    x_llm_model: str | None = Header(default=None),
+    x_llm_base_url: str | None = Header(default=None),
 ) -> ProviderContext:
     """FastAPI dependency — add to any endpoint that (directly or transitively) makes an LLM call,
     so the contextvars below are populated before that endpoint's handler runs."""
     if x_llm_provider == INSTANT_DEMO:
         _active_provider.set(providers.DEFAULT_PROVIDER)  # unused when is_instant_demo short-circuits, harmless default
         _active_api_key.set(None)
+        _active_model.set(None)
+        _active_base_url.set(None)
         return ProviderContext(provider=INSTANT_DEMO, is_instant_demo=True)
 
     resolved = providers.resolve_provider(x_llm_provider)
     _active_provider.set(resolved)
     _active_api_key.set(x_llm_api_key)
+    _active_model.set(x_llm_model)
+    _active_base_url.set(x_llm_base_url)
     return ProviderContext(provider=resolved, is_instant_demo=False)
 
 
@@ -66,6 +77,17 @@ def get_active_api_key() -> str | None:
     return _active_api_key.get()
 
 
+def get_active_model() -> str | None:
+    """The visitor's explicit BYOK model choice, if any — see providers.resolve_model()."""
+    return _active_model.get()
+
+
+def get_active_base_url() -> str | None:
+    """The visitor's explicit base URL, only meaningful for the `custom` provider — see
+    providers.resolve_base_url()."""
+    return _active_base_url.get()
+
+
 def set_provider_for_script(provider_name: str) -> None:
     """For standalone scripts run outside a FastAPI request (e.g.
     scripts/pregenerate_demo_outputs.py) that want to be explicit about which provider they're
@@ -74,3 +96,5 @@ def set_provider_for_script(provider_name: str) -> None:
         raise ValueError(f"unknown provider {provider_name!r}")
     _active_provider.set(provider_name)
     _active_api_key.set(None)
+    _active_model.set(None)
+    _active_base_url.set(None)

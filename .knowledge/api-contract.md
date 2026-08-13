@@ -23,11 +23,16 @@ everything downstream (scrubber, correlation, agents) shares one shape.
   "candidate_alert_refs": ["ALERT-1043"],
   "confidence": 0.0,
   "requires_human_confirmation": true,
-  "parsed_intent": "for voice only — closed-vocabulary intent, e.g. approve_x | show_incident | start_scenario"
+  "parsed_intent": "for voice only — closed-vocabulary intent, e.g. approve_x | show_incident | start_scenario",
+  "slm_pass_ran": "null (alert modality, scrub() not called) | true | false (SLM name pass attempted, local Ollama unreachable — regex redaction still applied, free-text names may not be)"
 }
 ```
 Rule: the scrubber runs **after** modality conversion, **before** this object enters any workflow or
 model call (PRD §1.5). Confirmation-before-action is mandatory for both voice and image paths.
+**ADDED 2026-08-13**: `slm_pass_ran` surfaces `guardrails/scrubber.py`'s `ScrubResult.slm_pass_ran`
+so a missing/unreachable local Ollama (common off the TCS network — see
+[Errors Solved](errors-solved.md)) degrades visibly instead of silently under-scrubbing free-text
+names. `frontend/src/components/ChatWidget.jsx` shows an inline warning when it's `false`.
 **IMPLEMENTED 2026-08-07** as a pydantic model, `backend/orchestrator/contracts.py`
 `MaintenanceSignal`. Voice path: `backend/intake/voice_path.py`. Image path:
 `backend/intake/vision_path.py`. Both confirmed via tests to scrub before parsing/before the

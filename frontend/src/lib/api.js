@@ -14,6 +14,8 @@ export function apiFetch(apiBase, path, { token, headers, ...rest } = {}) {
   if (mode) {
     mergedHeaders["X-LLM-Provider"] = mode.mode === "instant_demo" ? "instant_demo" : mode.provider;
     if (mode.mode === "byok" && mode.byokKey) mergedHeaders["X-LLM-Api-Key"] = mode.byokKey;
+    if (mode.mode === "byok" && mode.model) mergedHeaders["X-LLM-Model"] = mode.model;
+    if (mode.mode === "byok" && mode.baseUrl) mergedHeaders["X-LLM-Base-Url"] = mode.baseUrl;
   }
   return fetch(`${apiBase}${path}`, { ...rest, headers: mergedHeaders });
 }
