@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { LogoMark } from "@/components/Logo.jsx";
 import CockpitShell from "@/components/CockpitShell.jsx";
 import LoginModeSelector from "@/components/LoginModeSelector.jsx";
+import { useTheme } from "@/hooks/useTheme.js";
 import { apiFetch } from "@/lib/api.js";
 import { getProviderMode, setProviderMode } from "@/lib/providerMode.js";
 import { PROVIDER_INFO, validateByokKey } from "@/lib/providers.js";
@@ -58,6 +60,7 @@ function RingWatermark() {
 const SERVER_SAFE_DEFAULT_MODE = { mode: "free_demo", provider: "gemini", byokKey: null, model: null, baseUrl: null, validated: true };
 
 export default function Home() {
+  const { theme, toggleTheme } = useTheme();
   const [token, setToken] = useState(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -151,6 +154,16 @@ export default function Home() {
 
   return (
     <div className="grid min-h-screen md:grid-cols-2">
+      {/* Fixed, not part of either column's flow, so it stays put regardless of scroll — same
+          toggle Sidebar.jsx uses post-login, just not tucked inside a sidebar here. */}
+      <button
+        onClick={toggleTheme}
+        title={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
+        className="fixed right-4 top-4 z-10 rounded-md border border-border bg-background/80 p-2 text-muted-foreground backdrop-blur hover:bg-secondary hover:text-foreground"
+      >
+        {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+      </button>
+
       {/* Brand panel — light, matching the app's own surface, with the logo's ring motif oversized
           and faint in the background rather than a heavy dark block. */}
       {/* Sticky + viewport-height on md+ so this panel stays pinned in place instead of stretching
