@@ -31,9 +31,19 @@ def get_llm(role: str = "default", temperature: float = 0.2, enable_offline_fall
     `reasoning`, `structured`, `vision`) instead of a literal model id, so the same call site works
     unchanged across every provider.
 
-    Transparently falls back to a local Ollama SLM (models-routing.md: "Offline fallback for demo
-    resilience... must still run if the gateway dies mid-demo", PRD §3.2) if the active provider's
-    call itself fails — this resilience layer is independent of which provider is primary.
+    Falls back in order: (1) OpenRouter using the platform's own OPENROUTER_API_KEY, but ONLY for
+    Free Demo Key sessions (no visitor-supplied key, active provider is providers.DEMO_PROVIDER) —
+    never for Bring Your Own Key, where the visitor's own key/provider choice is exclusive by design
+    (silently rerouting their request through the deployer's OpenRouter key would spend the
+    deployer's quota without consent and break the "your key, your quota" promise); (2) a local
+    Ollama SLM (models-routing.md: "Offline fallback for demo resilience... must still run if the
+    gateway dies mid-demo", PRD §3.2). Both are skipped if their key/reachability requirement isn't
+    met — Ollama in particular is a no-op on a hosted deploy with no local Ollama process (it just
+    fails and falls through), which is exactly why the OpenRouter step was added: it's the only
+    fallback in this chain that's actually reachable from a public deploy, giving Free Demo Key
+    sessions real resilience if the shared Gemini key hits its quota, instead of a hard failure with
+    a fallback that can never succeed off the TCS network / a local dev machine.
+
     `max_retries=1` bounds the SDK's default several-retries-with-backoff; `timeout=45` deliberately
     stays generous — reasoning-role calls legitimately take "tens of seconds" on a busy provider, so
     a short timeout would falsely trigger the fallback on normal slow-but-working calls, not just
@@ -41,7 +51,8 @@ def get_llm(role: str = "default", temperature: float = 0.2, enable_offline_fall
     the returned object, whichever backend actually answered)."""
     provider_name = get_active_provider()
     provider_cfg = providers.PROVIDERS[provider_name]
-    api_key = providers.api_key_for(provider_name, get_active_api_key())
+    active_key = get_active_api_key()
+    api_key = providers.api_key_for(provider_name, active_key)
     primary = ChatOpenAI(
         base_url=providers.resolve_base_url(provider_name, get_active_base_url()),
         api_key=api_key,
@@ -53,15 +64,29 @@ def get_llm(role: str = "default", temperature: float = 0.2, enable_offline_fall
     )
     if not enable_offline_fallback:
         return primary
-    fallback = ChatOpenAI(
+
+    fallbacks = []
+    is_server_key_session = active_key is None  # None (not BYOK) vs "" (BYOK visitor left it blank, shouldn't reach here)
+    if is_server_key_session and provider_name == providers.DEMO_PROVIDER and config.OPENROUTER_API_KEY:
+        openrouter_cfg = providers.PROVIDERS["openrouter"]
+        fallbacks.append(ChatOpenAI(
+            base_url=openrouter_cfg["base_url"],
+            api_key=config.OPENROUTER_API_KEY,
+            model=providers.resolve_model("openrouter", role, None),
+            temperature=temperature,
+            http_client=_http_client_for(openrouter_cfg),
+            timeout=45,
+            max_retries=1,
+        ))
+    fallbacks.append(ChatOpenAI(
         base_url=config.OLLAMA_BASE_URL,
         api_key="ollama",  # unused by Ollama, the client just requires a non-empty string
         model=config.OLLAMA_FALLBACK_CHAT_MODEL,
         temperature=temperature,
         timeout=45,
         max_retries=0,
-    )
-    return primary.with_fallbacks([fallback])
+    ))
+    return primary.with_fallbacks(fallbacks)
 
 
 def extract_token_usage(response) -> int | None:

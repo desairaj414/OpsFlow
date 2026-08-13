@@ -19,6 +19,10 @@ services:
         sync: false
       - key: OPENROUTER_API_KEY
         sync: false
+        # Optional, but worth setting: api_client.py's get_llm() falls back to this key (never a
+        # visitor's own BYOK key/provider) if Gemini fails during a Free Demo Key session — the only
+        # step in that fallback chain actually reachable from here, since the Ollama step after it
+        # needs a local Ollama process this hosted deploy doesn't have.
       - key: JWT_SECRET
         generateValue: true
       - key: A2A_SECRET

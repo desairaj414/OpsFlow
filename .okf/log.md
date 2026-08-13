@@ -1,6 +1,16 @@
 # Update Log
 
 ## 2026-08-14
+* **Maintain**: `api_client.py`'s `get_llm()` fallback chain gained a real intermediate step —
+  OpenRouter, using the platform's own `OPENROUTER_API_KEY` — but scoped tightly: only for Free
+  Demo Key sessions (no visitor-supplied key, active provider is `providers.DEMO_PROVIDER`), never
+  for Bring Your Own Key (a visitor's own key/provider choice stays exclusive; rerouting their
+  request through the deployer's key would spend the deployer's quota without consent). Prompted by
+  a user question during Render deployment prep: the existing Ollama fallback is a no-op on a
+  hosted deploy (no local Ollama process there), so before this change a Free Demo Key session had
+  no *working* fallback at all if the shared Gemini key hit its quota — confirmed by inspecting the
+  constructed `RunnableWithFallbacks` chain directly for three cases (Free Demo Key, BYOK+Gemini,
+  BYOK+OpenRouter) rather than assuming. Updated: [Model Routing](architecture/model-routing.md).
 * **Maintain**: Hosting plan changed from Vercel (frontend) + Render (backend) to Render-only —
   a Web Service for the backend plus a free Static Site for the frontend (Next.js
   `output: "export"`), one platform instead of two, verified free tier had no cost or UX

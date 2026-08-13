@@ -4,7 +4,7 @@ title: Model Routing — LLM vs SLM vs Classical ML vs Deterministic
 description: The routing principle (route by task shape, not model prestige) and exactly which technique each pipeline step uses.
 tags: [llm, architecture, routing]
 status: stable
-generated: { by: "claude-sonnet-5/okf-produce", at: "2026-08-11T00:00:00Z" }
+generated: { by: "claude-sonnet-5/okf-maintain", at: "2026-08-14T00:00:00Z" }
 sources:
   - id: architecture-as-built
     resource: .knowledge/architecture-as-built.md
@@ -14,6 +14,10 @@ sources:
     resource: .knowledge/rules-backend.md
     title: Backend Rules & Commenting Standard
     last_modified: 2026-08-07
+  - id: api-client-py
+    resource: backend/api_client.py
+    title: backend/api_client.py
+    last_modified: 2026-08-14
 ---
 
 # The routing rule
@@ -39,7 +43,7 @@ preference.[^rules-backend]
 | Knowledge | Deterministic — seeds the Negative KB on a suppressed-symptom outcome |
 | Voice/image intake scrub | Local SLM (Ollama) + regex, never a hosted model |
 | Voice intent parsing | Deterministic closed-vocabulary matcher — never an LLM, see [Voice Intake](/intake/voice-intake.md) |
-| Any LLM call, if the active provider fails | Local Ollama SLM offline fallback |
+| Any LLM call, if the active provider fails | Two-step fallback chain (`api_client.py`'s `get_llm()`): a **Free Demo Key** session (server-controlled key, no visitor-supplied one) tries the platform's `OPENROUTER_API_KEY` first — the only step in the chain actually reachable from a hosted deploy — then falls through to a local Ollama SLM regardless of mode. A **Bring Your Own Key** session skips the OpenRouter step entirely and goes straight to Ollama: the visitor's own key/provider choice is exclusive by design, never silently rerouted through the deployer's own key/quota.[^api-client-py] |
 | Chat assistant intent classification | LLM (`default`-role model); everything the classifier's intent triggers (ticket queries, approve/reject) is a real deterministic action, not model-generated |
 
 This table describes technique per step, not which literal model id fills an LLM/SLM role for a
@@ -60,3 +64,4 @@ refactor.[^architecture-as-built]
 
 [^architecture-as-built]: Architecture As-Built
 [^rules-backend]: Backend Rules & Commenting Standard
+[^api-client-py]: backend/api_client.py
