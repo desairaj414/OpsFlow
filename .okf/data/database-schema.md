@@ -5,7 +5,7 @@ description: Transactional/workflow state lives in SQLite; runbook/postmortem/ti
 resource: backend/db/schema.sql
 tags: [schema, database, sqlite, chroma]
 status: stable
-generated: { by: "claude-sonnet-5/okf-produce", at: "2026-08-11T00:00:00Z" }
+generated: { by: "claude-sonnet-5/okf-maintain", at: "2026-08-14T00:00:00Z" }
 sources:
   - id: schema-sql
     resource: backend/db/schema.sql
@@ -15,6 +15,10 @@ sources:
     resource: .knowledge/schema-db.md
     title: Database Schema (SQLite + Chroma)
     last_modified: 2026-08-07
+  - id: render-yaml
+    resource: render.yaml
+    title: render.yaml
+    last_modified: 2026-08-14
 ---
 
 # SQLite — transactional/state
@@ -64,6 +68,14 @@ reference, input modality.
 All four are embedded and queried via a single **fixed** provider — see
 [Embeddings Fixed Provider](/decisions/embeddings-fixed-provider.md) — regardless of which LLM
 provider a given visitor session is using.
+
+`data/chroma_db/` (the built index) is committed to git, not rebuilt during deploy. The source
+data is frozen synthetic seed content that never changes, and re-embedding it from scratch on
+every Render build means ~700 calls against Gemini's free-tier embeddings API — rate-limited
+tightly enough to fail a build outright on repeated 429s (real incident, 2026-08-13). Render's
+`buildCommand` (see [Hosting Platform](/decisions/hosting-platform.md)) only runs `db/init_db.py`;
+`db/load_chroma.py` is now a manual, local-only step, re-run and recommitted only if the source
+runbooks/postmortems/tickets actually change.
 
 # Why SQLite + Chroma, not Postgres/Neo4j
 

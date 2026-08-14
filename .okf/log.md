@@ -1,6 +1,14 @@
 # Update Log
 
 ## 2026-08-14
+* **Maintain**: `data/chroma_db/` (the built vector index) is now committed to git instead of
+  gitignored, and `render.yaml`'s backend `buildCommand` no longer runs `db/load_chroma.py`.
+  Real incident: Render's build ran `db/load_chroma.py` fresh on every deploy, re-embedding ~700
+  chunks through Gemini's free-tier embeddings API, which is rate-limited tightly enough (429s,
+  even with 5x retry/backoff) to fail the build outright. Since the source data is frozen synthetic
+  seed content that never changes, the fix is to commit the already-built, self-test-passing index
+  and only re-run `load_chroma.py` locally (then recommit) if that source data ever actually
+  changes. Updated: [Database Schema](data/database-schema.md).
 * **Maintain**: `api_client.py`'s `get_llm()` fallback chain gained a real intermediate step —
   OpenRouter, using the platform's own `OPENROUTER_API_KEY` — but scoped tightly: only for Free
   Demo Key sessions (no visitor-supplied key, active provider is `providers.DEMO_PROVIDER`), never
