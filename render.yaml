@@ -7,9 +7,15 @@ services:
     rootDir: backend
     buildCommand: >
       pip install -r requirements.txt &&
-      python db/init_db.py &&
-      python db/load_chroma.py
+      python db/init_db.py
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    # db/load_chroma.py deliberately does NOT run here. It re-embeds ~700 chunks through Gemini's
+    # free-tier embeddings API, which is tightly rate-limited (real incident: a Render build failed
+    # outright on repeated 429s, 2026-08-13) — expensive and flaky to redo on every deploy/restart
+    # for data that never changes (frozen synthetic seed runbooks/postmortems/tickets). Instead
+    # data/chroma_db/ is pre-built locally and committed to git (see .gitignore), so Render's build
+    # just uses the already-populated index. Re-run `python db/load_chroma.py` locally and commit
+    # the result only if the source runbooks/postmortems/tickets data ever actually changes.
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.9

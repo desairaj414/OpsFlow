@@ -19,8 +19,13 @@ build/
 # --- Data / caches ---
 data/*.db
 backend/app.db
-data/chroma_db/
 *.log
+
+# data/chroma_db/ is intentionally committed (not ignored) — see render.yaml's backend build
+# comment: the source data is frozen synthetic seed data, and rebuilding the Chroma index from
+# scratch on every Render deploy means re-running ~700 embedding calls against Gemini's tightly
+# rate-limited free tier, which is slow and can fail the build outright (real incident, 2026-08-13).
+# Shipping the pre-built index instead makes deploys deterministic and quota-independent.
 
 # --- OS/editor ---
 .DS_Store
