@@ -3,6 +3,12 @@
 .env.*
 !.env.example
 
+# .mcp.json can carry a raw API key/token in a --header value (e.g. `claude mcp add -s project`
+# with an Authorization header) — project-scope MCP servers are meant to be git-shared config, but
+# a literal secret should never end up there. Real credentials belong in local-scope MCP config
+# (~/.claude.json, outside this repo) instead, same principle as .env above.
+.mcp.json
+
 # --- Python ---
 __pycache__/
 *.pyc

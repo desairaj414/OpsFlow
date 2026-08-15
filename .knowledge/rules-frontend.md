@@ -23,10 +23,11 @@ Never render copy implying the system was fine-tuned. "AI proposed" / "human app
 verified" badges (PRD §7) must never blur into implying model training occurred.
 
 ## Stack note — RESOLVED 2026-08-07
-Migrated to Next.js 16.3.0 (App Router, Tailwind v4, Turbopack) per PRD §0 in Phase 4. Old Vite app
-preserved at `frontend_vite_backup/` (rollback path, no git repo in this project). See
-[decisions-log.md](decisions-log.md) for the decision record and [state-progress.md](state-progress.md)
-for the migration detail.
+Migrated to Next.js 16.3.0 (App Router, Tailwind v4, Turbopack) per PRD §0 in Phase 4. The old Vite
+app was kept at `frontend_vite_backup/` as a rollback path during the migration; deleted 2026-08-15
+once the Next.js frontend had been live, deployed, and repeatedly verified for over a week — no
+longer needed. See [decisions-log.md](decisions-log.md) for the decision record and
+[state-progress.md](state-progress.md) for the migration detail.
 
 ## Actual final component list (Phase 4, complete — CONTEXT CHECKPOINT)
 `frontend/src/components/{Sidebar,CockpitShell,OpsBoard,AgentTrace,IncidentWorkspace,ApprovalQueue,

@@ -11,10 +11,9 @@ derived from it, not a replacement. See `.okf/index.md` for its entry point.
 
 ## Project
 - **Name:** my-hackathon-app — TCS AI Fridays S2, Cross-Stack Maintenance Control Plane
-- **Stack:** FastAPI (backend, async) + Next.js frontend (PRD spec). Repo currently has a working
-  **Vite/React** scaffold from before this decision; human confirmed 2026-08-07 to migrate to
-  Next.js (see [decisions-log.md](.knowledge/decisions-log.md)) — migration itself happens in
-  Phase 4, not yet done. Backend (Phases 0-3) is complete and stack-agnostic.
+- **Stack:** FastAPI (backend, async) + Next.js frontend (App Router, Tailwind v4, Turbopack). The
+  original Vite/React scaffold was migrated to Next.js in Phase 4 (human confirmed 2026-08-07; see
+  [decisions-log.md](.knowledge/decisions-log.md)) — migration is complete, not a pending item.
 - **LLM endpoint:** TCS GenAI Lab (OpenAI-compatible) gateway — `https://genailab.tcs.in/v1` — plus local Ollama SLMs
 - **Problem statement:** AI-Powered Multi-Agent Workflow Automation for IT Application Maintenance — see `PRD_FINAL.md`
 
