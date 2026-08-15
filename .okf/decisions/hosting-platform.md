@@ -4,12 +4,12 @@ title: Hosting — One Platform, Two Service Types
 description: Backend and frontend both deploy to Render — a Web Service for the backend, a static-exported Site for the frontend — rather than splitting across Render and Vercel or merging into one process.
 tags: [hosting, deployment, architecture]
 status: stable
-generated: { by: "claude-sonnet-5/okf-maintain", at: "2026-08-14T00:00:00Z" }
+generated: { by: "claude-sonnet-5/okf-maintain", at: "2026-08-15T00:00:00Z" }
 sources:
   - id: render-yaml
     resource: render.yaml
     title: render.yaml
-    last_modified: 2026-08-14
+    last_modified: 2026-08-15
   - id: next-config
     resource: frontend/next.config.mjs
     title: frontend/next.config.mjs
@@ -18,9 +18,15 @@ sources:
 
 # Decision
 
-Both services deploy to [Render](https://render.com), defined together in one `render.yaml`
-Blueprint: `opsflow-backend` as a Python **Web Service**, `opsflow-frontend` as a **Static Site**
-(Next.js built with `output: "export"`, no Node server).[^render-yaml] [^next-config]
+Both services deploy to [Render](https://render.com): `opsflowapp-backend`
+(https://opsflowapp-backend.onrender.com) as a Python **Web Service**, `opsflowapp`
+(https://opsflowapp.onrender.com) as a **Static Site** (Next.js built with `output: "export"`, no
+Node server).[^render-yaml] [^next-config] `render.yaml` at the repo root still defines this shape
+as a Blueprint (for anyone deploying their own copy), but the live services themselves were created
+directly via Render's API/MCP on 2026-08-15, not by running the Blueprint — the original
+Blueprint-created deploy (named `opsflow-backend`/`opsflow-frontend`) had both names collide with
+another Render account and get random suffixes appended (`opsflow-backend-k6xm`,
+`opsflow-frontend-fz2u`); recreating under the `opsflowapp*` names landed clean with no suffix.
 
 # Alternatives considered
 

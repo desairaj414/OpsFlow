@@ -1,5 +1,16 @@
 # Update Log
 
+## 2026-08-15
+* **Maintain**: Live Render services renamed. The original Blueprint-created deploy
+  (`opsflow-backend`/`opsflow-frontend`) had both names collide with another Render account,
+  landing on random-suffixed URLs (`opsflow-backend-k6xm`, `opsflow-frontend-fz2u`). Recreated both
+  directly via Render's API/MCP under `opsflowapp-backend`/`opsflowapp` — both landed with clean,
+  suffix-free URLs. `render.yaml`'s `name:` fields updated to match, so a future Blueprint sync
+  stays consistent with the live services; `README.md`'s live-demo link and §9 walkthrough updated
+  to match. Old `opsflow-backend`/`opsflow-frontend` services left running pending manual deletion
+  (no delete tool in this Render MCP server's toolset). Updated:
+  [Hosting Platform](decisions/hosting-platform.md).
+
 ## 2026-08-14
 * **Maintain**: `data/chroma_db/` (the built vector index) is now committed to git instead of
   gitignored, and `render.yaml`'s backend `buildCommand` no longer runs `db/load_chroma.py`.

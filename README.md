@@ -9,7 +9,7 @@ to "ticket closed, CMDB updated, and a verified fix, not just an assumed one."
 Built for **TCS AI Fridays Season 2 — Regional Round**
 (*Problem statement: AI-Powered Multi-Agent Workflow Automation for IT Application Maintenance*).
 
-**🔗 Live demo:** _add your Render static site URL here after deploying (see [§8](#8-try-it-live--testing-modes))_
+**🔗 Live demo:** [opsflowapp.onrender.com](https://opsflowapp.onrender.com)
 
 No API key needed to try it — the login screen opens with an **Instant Demo** mode using
 pre-generated output, plus options to bring your own key or use a shared free key. See
@@ -214,7 +214,11 @@ both as a Render Blueprint.
 1. Push this repo to your own GitHub account (public or private — Render's free tier works with
    either).
 2. On Render: **New +** → **Blueprint**, connect the repo. Render reads `render.yaml` and proposes
-   both services (`opsflow-backend`, `opsflow-frontend`).
+   both services (`opsflowapp-backend`, `opsflowapp`) — rename them in `render.yaml` first if you
+   want different names; Render silently appends a random suffix to whichever ones are already
+   taken by another account, which is exactly what happened on the first deploy of this project
+   (fixed 2026-08-15 by recreating both services directly via Render's API under names that turned
+   out to be free).
 3. Fill in the secrets it asks for before creating: `GEMINI_API_KEY` (required — backs both
    embeddings and Free Demo Key mode; get one free at aistudio.google.com/apikey) and
    `OPENROUTER_API_KEY` (optional — only needed if you want that as a working Free/BYOK fallback
@@ -223,9 +227,9 @@ both as a Render Blueprint.
    exist.
 4. Once both are created, note their actual `*.onrender.com` URLs (Render appends a suffix if your
    chosen name is taken by someone else). Set:
-   - `opsflow-backend`'s `FRONTEND_ORIGIN` → the frontend's URL, then trigger a manual restart (no
+   - The backend's `FRONTEND_ORIGIN` → the frontend's URL, then trigger a manual restart (no
      rebuild needed — read from the environment at request time).
-   - `opsflow-frontend`'s `NEXT_PUBLIC_API_BASE_URL` → the backend's URL, then trigger a manual
+   - The frontend's `NEXT_PUBLIC_API_BASE_URL` → the backend's URL, then trigger a manual
      **deploy** (rebuild needed — Next.js bakes `NEXT_PUBLIC_*` values into the static bundle at
      build time, per `output: "export"` in `next.config.mjs`).
 5. Visit the frontend's URL, confirm `/health` on the backend responds, and run one Instant Demo
