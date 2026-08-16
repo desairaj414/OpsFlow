@@ -221,9 +221,9 @@ export default function ChatWidget({ apiBase, token, incident, onOpenIncident, o
   }
 
   return (
-    <div className="fixed bottom-5 right-5 z-40 flex flex-col items-end gap-3">
+    <div className="fixed inset-x-3 bottom-3 z-40 flex flex-col items-end gap-3 sm:inset-x-auto sm:bottom-5 sm:right-5">
       {open && (
-        <div className="flex h-[520px] w-96 flex-col overflow-hidden rounded-lg border border-border bg-card shadow-xl">
+        <div className="flex h-[min(520px,75vh)] w-full flex-col overflow-hidden rounded-lg border border-border bg-card shadow-xl sm:w-96">
           <div className="flex shrink-0 items-center justify-between border-b border-border bg-header px-4 py-3 text-header-foreground">
             <div>
               <p className="text-sm font-semibold">Assistant</p>

@@ -41,29 +41,34 @@ export default function AutonomyLadder({ apiBase, token }) {
       {error && <p className="text-sm text-red-500">{error}</p>}
       {!data && !error && <p className="text-sm text-muted-foreground">Loading…</p>}
       {data && (
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm">
-            <thead>
-              <tr className="border-b border-border text-xs text-muted-foreground">
-                <th className="py-1 pr-4">Runbook</th>
-                <th className="py-1 pr-4">Class</th>
-                <th className="py-1 pr-4">Tier</th>
-                <th className="py-1 pr-4">Verified resolutions</th>
-                <th className="py-1 pr-4">Last promoted</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.runbooks.map((r) => (
-                <tr key={r.runbook_id} className="border-b border-border/50">
-                  <td className="py-1 pr-4 font-mono">{r.runbook_id}</td>
-                  <td className="py-1 pr-4">{r.class}</td>
-                  <td className="py-1 pr-4">{TIER_LABELS[r.current_tier] ?? r.current_tier}</td>
-                  <td className="py-1 pr-4">{r.verified_resolution_count}</td>
-                  <td className="py-1 pr-4 text-muted-foreground">{r.last_promoted_at ?? "never"}</td>
+        <div className="relative">
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[520px] text-left text-sm">
+              <thead>
+                <tr className="border-b border-border text-xs text-muted-foreground">
+                  <th className="py-1 pr-4">Runbook</th>
+                  <th className="py-1 pr-4">Class</th>
+                  <th className="py-1 pr-4">Tier</th>
+                  <th className="py-1 pr-4">Verified resolutions</th>
+                  <th className="py-1 pr-4">Last promoted</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {data.runbooks.map((r) => (
+                  <tr key={r.runbook_id} className="border-b border-border/50">
+                    <td className="py-1 pr-4 font-mono">{r.runbook_id}</td>
+                    <td className="py-1 pr-4">{r.class}</td>
+                    <td className="py-1 pr-4">{TIER_LABELS[r.current_tier] ?? r.current_tier}</td>
+                    <td className="py-1 pr-4">{r.verified_resolution_count}</td>
+                    <td className="py-1 pr-4 text-muted-foreground">{r.last_promoted_at ?? "never"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          {/* Same discoverability hint as CockpitShell's tab bar — table has real horizontal scroll
+              (min-w keeps every column readable instead of squeezing), this just signals it exists. */}
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-background to-transparent sm:hidden" />
         </div>
       )}
     </div>

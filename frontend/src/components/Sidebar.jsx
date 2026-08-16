@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Radio, Settings, PlayCircle, ScrollText, Users, BookOpen, PanelLeftClose, PanelLeftOpen, Sun, Moon } from "lucide-react";
+import { Radio, Settings, PlayCircle, ScrollText, Users, BookOpen, PanelLeftClose, PanelLeftOpen, Sun, Moon, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/ui/modal";
 import { cn } from "@/lib/utils";
@@ -137,7 +137,10 @@ function ViewAsControl({ apiBase, token, onTokenChange, identity }) {
 // Collapsed by default (icon rail) — expand via the toggle button. Nav items open their panel in a
 // Modal (works identically collapsed or expanded) rather than the old inline expansion, which got
 // cramped inside a 256px-wide sidebar.
-export default function Sidebar({ collapsed, onToggleCollapsed, identity, connectionStatus, apiBase, token, onTokenChange, incident }) {
+// On mobile (below md) the icon rail/expanded column never renders at all — there's no room for a
+// permanent side column on a phone screen. Instead CockpitShell's header shows a hamburger button
+// that opens `mobileOpen`, rendering this same nav as a full-screen slide-in drawer instead.
+export default function Sidebar({ collapsed, onToggleCollapsed, identity, connectionStatus, apiBase, token, onTokenChange, incident, mobileOpen, onMobileClose }) {
   const { theme, toggleTheme } = useTheme();
   const [activePanel, setActivePanel] = useState(null);
   const visibleNavItems = NAV_ITEMS.filter((item) => canSeePanel(identity.role, item.key));
@@ -172,10 +175,66 @@ export default function Sidebar({ collapsed, onToggleCollapsed, identity, connec
     </Modal>
   );
 
+  // Same content the expanded desktop sidebar shows — reused as-is inside the mobile drawer so the
+  // two surfaces can't drift out of sync with each other.
+  const mobileDrawer = (
+    <div className={cn("fixed inset-0 z-50 md:hidden", mobileOpen ? "" : "pointer-events-none")}>
+      <div
+        onClick={onMobileClose}
+        className={cn(
+          "absolute inset-0 bg-black/40 transition-opacity",
+          mobileOpen ? "opacity-100" : "opacity-0"
+        )}
+      />
+      <aside
+        className={cn(
+          "absolute inset-y-0 left-0 flex w-72 max-w-[85vw] flex-col gap-6 overflow-y-auto border-r border-border bg-card p-4 shadow-xl transition-transform duration-200",
+          mobileOpen ? "translate-x-0" : "-translate-x-full"
+        )}
+      >
+        <div className="flex items-center justify-between">
+          <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Console</span>
+          <div className="flex items-center gap-1">
+            <button
+              onClick={toggleTheme}
+              title={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
+              className="rounded-md p-1.5 text-muted-foreground hover:bg-secondary hover:text-foreground"
+            >
+              {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            </button>
+            <button
+              onClick={onMobileClose}
+              title="Close menu"
+              className="rounded-md p-1.5 text-muted-foreground hover:bg-secondary hover:text-foreground"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+        </div>
+
+        <ViewAsControl apiBase={apiBase} token={token} onTokenChange={onTokenChange} identity={identity} />
+
+        <div className="flex items-center gap-2 rounded-md border border-border bg-secondary/50 p-3">
+          <Radio className={cn("h-4 w-4", connectionStatus === "live" ? "text-green-600" : "text-red-500")} />
+          <span className="text-xs text-muted-foreground">
+            Live feed: {connectionStatus === "live" ? "connected" : connectionStatus}
+          </span>
+        </div>
+
+        <nav className="flex flex-col gap-1" onClick={onMobileClose}>
+          {navButtons(false)}
+          {visibleNavItems.length === 0 && (
+            <p className="px-3 py-2 text-xs text-muted-foreground">No admin panels available for this role.</p>
+          )}
+        </nav>
+      </aside>
+    </div>
+  );
+
   if (collapsed) {
     return (
       <>
-        <aside className="flex w-14 shrink-0 flex-col items-center gap-3 border-r border-border bg-card py-4">
+        <aside className="hidden w-14 shrink-0 flex-col items-center gap-3 border-r border-border bg-card py-4 md:flex">
           <button
             onClick={onToggleCollapsed}
             title="Expand sidebar"
@@ -194,13 +253,14 @@ export default function Sidebar({ collapsed, onToggleCollapsed, identity, connec
           </button>
         </aside>
         {modal}
+        {mobileDrawer}
       </>
     );
   }
 
   return (
     <>
-      <aside className="flex w-64 shrink-0 flex-col gap-6 overflow-y-auto border-r border-border bg-card p-4">
+      <aside className="hidden w-64 shrink-0 flex-col gap-6 overflow-y-auto border-r border-border bg-card p-4 md:flex">
         <div className="flex items-center justify-between">
           <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Console</span>
           <div className="flex items-center gap-1">
@@ -238,6 +298,7 @@ export default function Sidebar({ collapsed, onToggleCollapsed, identity, connec
         </nav>
       </aside>
       {modal}
+      {mobileDrawer}
     </>
   );
 }

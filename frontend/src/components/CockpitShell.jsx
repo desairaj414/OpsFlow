@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { Menu } from "lucide-react";
 import Sidebar from "@/components/Sidebar.jsx";
 import Overview from "@/components/Overview.jsx";
 import { LogoMark } from "@/components/Logo.jsx";
@@ -90,6 +91,9 @@ export default function CockpitShell({ token, onTokenChange, apiBase, username, 
 
   const [activeTab, setActiveTab] = useState(visibleTabs[0]);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
+  // Sidebar itself never renders below md (no room for a permanent side column on a phone) — this
+  // instead opens it as a full-screen drawer, independent of the desktop collapsed/expanded state.
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { alerts, totalReceived, connectionStatus } = useAlertStream({ apiBase, token });
   const incident = useWorkflowRun({ apiBase, token });
   const { tickets, refetch: refetchTickets } = useTickets(apiBase, token);
@@ -126,24 +130,35 @@ export default function CockpitShell({ token, onTokenChange, apiBase, username, 
         token={token}
         onTokenChange={onTokenChange}
         incident={incident}
+        mobileOpen={mobileMenuOpen}
+        onMobileClose={() => setMobileMenuOpen(false)}
       />
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex shrink-0 items-center justify-between border-b border-border bg-header px-6 py-3 text-header-foreground">
-          <div className="flex items-center gap-3">
-            <LogoMark size={26} />
-            <div>
-              <h1 className="text-base font-semibold leading-tight">OpsFlow</h1>
-              <p className="text-xs text-muted-foreground leading-tight">AI-verified operations console</p>
+        <header className="flex shrink-0 items-center justify-between gap-2 border-b border-border bg-header px-3 py-3 text-header-foreground sm:px-6">
+          <div className="flex min-w-0 items-center gap-2 sm:gap-3">
+            <button
+              onClick={() => setMobileMenuOpen(true)}
+              title="Open menu"
+              className="-ml-1 shrink-0 rounded-md p-1.5 text-header-foreground/80 hover:bg-secondary hover:text-foreground md:hidden"
+            >
+              <Menu className="h-5 w-5" />
+            </button>
+            <LogoMark size={26} className="shrink-0" />
+            <div className="min-w-0">
+              <h1 className="truncate text-base font-semibold leading-tight">OpsFlow</h1>
+              <p className="hidden truncate text-xs text-muted-foreground leading-tight sm:block">
+                AI-verified operations console
+              </p>
             </div>
           </div>
-          <div className="flex items-center gap-3 text-sm text-header-foreground/80">
+          <div className="flex shrink-0 items-center gap-2 text-sm text-header-foreground/80 sm:gap-3">
             {identity.realUsername ? (
-              <span className="rounded-md border border-accent/40 bg-accent-soft px-2 py-1 text-xs text-foreground">
+              <span className="hidden rounded-md border border-accent/40 bg-accent-soft px-2 py-1 text-xs text-foreground sm:inline">
                 {identity.realDisplayName} viewing as <span className="font-medium">{identity.displayName}</span> ({ROLE_LABELS[identity.role]})
               </span>
             ) : (
-              <span>
+              <span className="hidden sm:inline">
                 {identity.displayName || username}
                 <span className="text-muted-foreground"> · {ROLE_LABELS[identity.role]}</span>
               </span>
@@ -155,21 +170,27 @@ export default function CockpitShell({ token, onTokenChange, apiBase, username, 
           </div>
         </header>
 
-        <nav className="flex shrink-0 gap-1 overflow-x-auto border-b border-border bg-card px-4">
-          {visibleTabs.map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              title={TAB_INFO[tab]?.description}
-              className={cn(
-                "whitespace-nowrap border-b-2 border-transparent px-3 py-2.5 text-sm text-muted-foreground hover:text-foreground",
-                activeTab === tab && "border-accent font-medium text-foreground"
-              )}
-            >
-              {tab}
-            </button>
-          ))}
-        </nav>
+        <div className="relative shrink-0 border-b border-border bg-card">
+          <nav className="flex gap-1 overflow-x-auto px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {visibleTabs.map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                title={TAB_INFO[tab]?.description}
+                className={cn(
+                  "whitespace-nowrap border-b-2 border-transparent px-3 py-2.5 text-sm text-muted-foreground hover:text-foreground",
+                  activeTab === tab && "border-accent font-medium text-foreground"
+                )}
+              >
+                {tab}
+              </button>
+            ))}
+          </nav>
+          {/* Hints that the tab bar scrolls — only matters on narrow screens where tabs actually
+              overflow; the bar has no scrollbar of its own (hidden above) so without this a user has
+              no visual cue that swiping reveals more tabs. */}
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-card to-transparent sm:hidden" />
+        </div>
 
         <IncidentStatusBar incident={incident} />
 
