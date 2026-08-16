@@ -31,8 +31,10 @@ def verify_agent_card(card: dict) -> bool:
 
 DIAGNOSIS_AGENT_CARD = build_agent_card(
     name="diagnosis-agent",
-    description="Root-cause hypothesis generation & ranking (DeepSeek R1). Every hypothesis cites "
-                "at least one evidence artifact ID; uncited hypotheses are dropped before being returned.",
+    description="Root-cause hypothesis generation & ranking, using the active session's "
+                "reasoning-role model (provider-dependent, see backend/providers.py). Every "
+                "hypothesis cites at least one evidence artifact ID; uncited hypotheses are "
+                "dropped before being returned.",
     capabilities=["generate_diagnosis"],
     endpoint="http://localhost:9010/invoke",
 )

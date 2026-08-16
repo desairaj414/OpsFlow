@@ -9,6 +9,8 @@ from pydantic import BaseModel, Field, field_validator
 
 class SpecialistResult(BaseModel):
     """The Supervisor <-> specialist handoff contract (api-contract.md)."""
+    model_config = {"protected_namespaces": ()}  # `model_used` is a legitimate field name, not pydantic internals
+
     agent_name: str
     incident_id: str
     result: dict[str, Any]
@@ -21,6 +23,11 @@ class SpecialistResult(BaseModel):
     latency_ms: float | None = None  # set by the Supervisor, which brackets each handoff
     tokens_used: int | None = None  # only set by LLM-calling agents (diagnosis, planner); None = no LLM call, not "unknown"
     transport: str = "in_process"  # "in_process" | "a2a" — Supervisor overrides to "a2a" for the one A2A handoff
+    # The model id that actually answered (api_client.extract_model_used) — provider-dependent, not
+    # a fixed string; None = no LLM call, or the response didn't report one. Added post-submission
+    # when supervisor.py's audit-log write was found hardcoding TCS-only model names regardless of
+    # the session's active provider (decisions-log.md's multi-provider pivot entry).
+    model_used: str | None = None
 
     @field_validator("confidence")
     @classmethod

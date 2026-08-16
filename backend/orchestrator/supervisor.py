@@ -101,7 +101,7 @@ async def run_workflow(
         )
         trace.append(diagnosis_result)
         write_audit_entry(conn, actor="agent:diagnosis", action="generate_hypotheses", target_artifact=incident_id,
-                           evidence_ids=diagnosis_result.cited_artifact_ids, model_used="azure_ai/genailab-maas-DeepSeek-R1")
+                           evidence_ids=diagnosis_result.cited_artifact_ids, model_used=diagnosis_result.model_used)
         if not diagnosis_result.result["hypotheses"]:
             return {"status": "stopped", "reason": "no_valid_hypotheses", "trace": trace, "sys_id": sys_id}
         top_hypothesis = diagnosis_result.result["hypotheses"][0]
@@ -109,7 +109,7 @@ async def run_workflow(
         planner_result = await _timed(run_planner(incident_id, ci, workflow["runbook_class"], top_hypothesis, actor_role))
         trace.append(planner_result)
         write_audit_entry(conn, actor="agent:planner", action="draft_plan", target_artifact=incident_id,
-                           evidence_ids=planner_result.cited_artifact_ids, model_used="azure/genailab-maas-gpt-4.1-nano")
+                           evidence_ids=planner_result.cited_artifact_ids, model_used=planner_result.model_used)
         policy_decision = planner_result.result["policy_gate_result"]["decision"]
         if policy_decision == "block":
             return {"status": "blocked", "reason": planner_result.result["policy_gate_result"]["reasons"], "trace": trace, "sys_id": sys_id}

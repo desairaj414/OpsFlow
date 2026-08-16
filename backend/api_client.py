@@ -98,6 +98,16 @@ def extract_token_usage(response) -> int | None:
     return None
 
 
+def extract_model_used(response) -> str | None:
+    """The model id that actually answered a get_llm() call, read off the response itself rather
+    than re-derived from providers.py — this is what makes it correct even when a fallback (not the
+    requested primary) is the one that actually responded. `response_metadata["model_name"]` is set
+    by langchain_openai from the raw API response's own `model` field (chat_models/base.py), so it
+    reflects the real answering model, not just the requested one. None means genuinely not
+    reported, not "unknown"."""
+    return getattr(response, "response_metadata", {}).get("model_name")
+
+
 class _EmbeddingsWithFallback:
     """`OpenAIEmbeddings` isn't a LangChain Runnable (no `.with_fallbacks()`, unlike `ChatOpenAI`) —
     this hand-rolls the same primary-then-local-Ollama fallback (models-routing.md) over the two

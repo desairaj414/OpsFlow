@@ -87,4 +87,5 @@ async def run_diagnosis(incident_id: str, evidence: list[dict]) -> SpecialistRes
         result={"hypotheses": hypotheses}, cited_artifact_ids=cited_artifact_ids,
         confidence=top_confidence, turns_used=tracker.turns_used, termination_reason=termination_reason,
         tokens_used=api_client.extract_token_usage(response) if response is not None else None,
+        model_used=api_client.extract_model_used(response) if response is not None else None,
     )

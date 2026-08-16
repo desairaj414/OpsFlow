@@ -119,4 +119,5 @@ async def run_planner(incident_id: str, ci: dict, runbook_class: str, hypothesis
         confidence=1.0 if plan["steps"] else 0.0,
         turns_used=tracker.turns_used, termination_reason=termination_reason,
         tokens_used=api_client.extract_token_usage(response) if response is not None else None,
+        model_used=api_client.extract_model_used(response) if response is not None else None,
     )
