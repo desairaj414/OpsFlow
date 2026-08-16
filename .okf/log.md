@@ -1,5 +1,31 @@
 # Update Log
 
+## 2026-08-16
+* **Maintain**: Fixed a real code staleness a same-day doc audit surfaced but deliberately didn't
+  touch: `supervisor.py`'s audit-log writes for the diagnosis/planner steps hardcoded TCS-only
+  model ids (`"azure_ai/genailab-maas-DeepSeek-R1"`, `"azure/genailab-maas-gpt-4.1-nano"`) into
+  `model_used` regardless of the session's actual active provider, and the A2A Diagnosis Agent
+  Card's `description` hardcoded "(DeepSeek R1)" the same way. `SpecialistResult` (the frozen
+  Supervisor<->specialist contract) gained an additive, optional `model_used` field, set by
+  `api_client.extract_model_used()` — reads `response.response_metadata["model_name"]`, the model
+  that actually answered (correct even when a fallback responded, not just the requested primary).
+  `diagnosis.py`/`planner.py` populate it; `supervisor.py` now passes it through instead of the two
+  hardcoded strings; the Agent Card description is now provider-neutral. Full backend suite rerun
+  clean (96 passed, 2 skipped — unrelated `smoke_test.py` script-style tests aren't real pytest
+  cases and always error under bare collection). Updated: [A2A Handoff](agents/a2a-handoff.md)
+  (`generated.at` only, no content change needed — it already only excerpted the description with
+  "...").
+* **Maintain**: Full mobile-responsive pass across the cockpit UI (Sidebar becomes a slide-in
+  drawer below `md:`, native `<select>`s replaced with custom dropdowns, `IncidentWorkspace.jsx`'s
+  agent-chain flow stacks into full-width cards with down-arrows, floating panels switch from
+  `absolute` to viewport-relative `fixed` positioning below `sm:`), plus a proactive backend
+  wake-up poll on first page load (was previously gated behind clicking Log in) with a "waking up"
+  banner, for Render free-tier cold starts. Also corrected a stale "known gap" note in
+  [Cockpit UI](architecture/cockpit-ui.md) left over from 2026-08-13 — it still claimed no
+  login-time mode-selector existed, when `LoginModeSelector.jsx` had already shipped and
+  [Public Hosting Modes](demo-modes/public-hosting-modes.md) had already been corrected to say so;
+  this file just hadn't been updated to match at the time. Updated: [Cockpit UI](architecture/cockpit-ui.md).
+
 ## 2026-08-15
 * **Maintain**: Live Render services renamed. The original Blueprint-created deploy
   (`opsflow-backend`/`opsflow-frontend`) had both names collide with another Render account,

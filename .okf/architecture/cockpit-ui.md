@@ -4,7 +4,7 @@ title: Cockpit UI
 description: The Next.js frontend — tab structure, the Agent Trace Viewer centerpiece, the three-badge trust system, the floating chat assistant, and accessibility requirements.
 tags: [frontend, ui]
 status: stable
-generated: { by: "claude-sonnet-5/okf-produce", at: "2026-08-11T00:00:00Z" }
+generated: { by: "claude-sonnet-5/okf-maintain", at: "2026-08-16T00:00:00Z" }
 sources:
   - id: rules-frontend
     resource: .knowledge/rules-frontend.md
@@ -31,9 +31,10 @@ incident stays consistent across tabs), `Overview` (KPI dashboard, see
 [Overview Metrics](overview-metrics.md)), `OpsBoard` (live alert feed + click-to-diagnose),
 `IncidentWorkspace` (evidence/diagnosis/plan/approval for one incident, plus a Maintenance Planner
 panel for patch workflows), `AgentTrace`, `Tickets`, `ChunkInspector` (doubles as the Knowledge
-Base browser), `AutonomyLadder`, `ChatWidget` (floating assistant), `Sidebar` (role switcher, push-
-to-talk mic, admin panels), `NotificationBell`, `DriftQueue` (currently hidden from navigation, not
-deleted).
+Base browser), `AutonomyLadder`, `ChatWidget` (floating assistant, including the mic — push-to-talk moved out of
+`Sidebar` into `ChatWidget`'s mic button, see [Decisions](/decisions/)), `Sidebar` (admin-only "view
+as" impersonation control, not a general role switcher; admin panels), `NotificationBell`,
+`DriftQueue` (currently hidden from navigation, not deleted).
 
 # Three-badge trust system
 
@@ -54,14 +55,27 @@ widget transcribes through the same real Whisper + scrubber pipeline as
 [Voice Intake](/intake/voice-intake.md) — one pipeline, not two parsers. Image upload uses the same
 [Vision Intake](/intake/vision-intake.md) flow.
 
-# Provider mode selection — a known gap
+# Provider mode selection
 
-The plumbing for the 3 [demo modes](/demo-modes/) exists on the frontend
-(`frontend/src/lib/providerMode.js` persists the choice, `frontend/src/lib/api.js` attaches it to
-every request as headers, `frontend/src/lib/providers.js` mirrors the backend's capability flags),
-but as of this bundle's writing there is no login-time mode-selector component wired up in
-`frontend/src/components/` — the default mode (`free_demo`, Gemini) is what every visitor gets
-until that UI is built.
+`LoginModeSelector.jsx`, rendered below the credentials form on the login screen, is the mode-
+selector UI for the 3 [demo modes](/demo-modes/) — see [Public Hosting Modes](/demo-modes/public-hosting-modes.md)
+for the full mode-card/BYOK-panel/role-quick-fill breakdown. The login screen also carries a
+light/dark theme toggle (reuses the same `useTheme()` hook post-login screens already had), so a
+visitor's theme preference applies before signing in, not just after.
+
+# Responsive layout
+
+Mobile-first Tailwind throughout: unprefixed classes are the mobile base, `sm:`/`md:`-prefixed
+classes override at that breakpoint up. `Sidebar` renders as a permanent column at `md:` and above;
+below that it's a full-screen slide-in drawer (`mobileOpen`/`onMobileClose` props), opened via a
+hamburger button in the header. Native `<select>` elements were replaced with custom button+listbox
+dropdowns (e.g. `Sidebar.jsx`'s "View as" control) since mobile browsers render native selects as
+full-screen OS pickers with no CSS control. `IncidentWorkspace.jsx`'s agent-chain `FlowPipeline`
+stacks into full-width cards with down-arrows below `sm:`, row-with-right-arrows above it.
+Floating/absolute-positioned panels (`ChatWidget.jsx`, `NotificationBell.jsx`) switch from
+viewport-relative `fixed` positioning below `sm:` to their original `absolute`-anchored positioning
+above it, since a panel anchored to a small wrapper's `right-0` can render off-screen on a narrow
+viewport otherwise.
 
 # Accessibility
 

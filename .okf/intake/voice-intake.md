@@ -5,7 +5,7 @@ description: Audio -> Whisper (or provider-equivalent) transcription -> scrub ->
 resource: backend/intake/voice_path.py
 tags: [intake, voice, multimodal]
 status: stable
-generated: { by: "claude-sonnet-5/okf-maintain", at: "2026-08-13T00:00:00Z" }
+generated: { by: "claude-sonnet-5/okf-maintain", at: "2026-08-16T00:00:00Z" }
 sources:
   - id: voice-path-py
     resource: backend/intake/voice_path.py
@@ -51,24 +51,36 @@ not an incomplete feature.[^voice-intent-py] See
 misheard command reaching an approval action is unacceptable, so command-scope plus on-screen
 confirmation is the chosen safety mechanism rather than smarter NLU.
 
-# Confirmation-before-action
+# Confirmation-before-action (as designed; superseded downstream, see Consumers)
 
-`approve_x`, `reject_x`, and `start_scenario` require on-screen confirmation before executing
-(`requires_human_confirmation`); read-only queries don't. Every voice action lands in the audit log
-tagged `modality: voice`.[^voice-intent-py]
+By design, `parse_voice_intent()`'s own output marks `approve_x`, `reject_x`, and `start_scenario`
+as needing on-screen confirmation before executing (`requires_human_confirmation`); read-only
+queries don't. This field still computes and still lands on the returned `MaintenanceSignal`, but
+see Consumers below for what actually acts on a transcript today.
 
-# What's real vs. recognized-but-unwired
+# What's real vs. recognized-but-unwired — corrected, this section was stale
 
-As of this bundle's writing, `approve_x`/`reject_x` are wired to a real action (the audited
-`/workflows/decision` path). The other 4 intents are recognized and displayed on screen but not
-wired to an action — no incidents-list/scenario-library endpoint exists yet for them to act
-against; this is stated honestly in the UI rather than faked.
+Earlier revisions of this file said `approve_x`/`reject_x` were "wired to a real action" and the
+other 4 intents were "recognized and displayed on screen." That's no longer how the live path
+works. `ChatWidget.jsx`'s `transcribeAndSend()` reads only `signal.extracted_text` and
+`signal.slm_pass_ran` off the `/intake/voice` response — `signal.parsed_intent` is never read
+anywhere in the frontend. The scrubbed transcript is forwarded as an ordinary text message into
+`/chat`, which runs its own separate LLM-based intent classifier
+(`query_tickets`/`approve_incident`/`reject_incident`/`app_help`/`unrecognized` — see
+[Cockpit UI](/architecture/cockpit-ui.md)'s Floating chat assistant section) — a different
+vocabulary and mechanism from `voice_intent.py`'s regex parser. `parse_voice_intent()` still runs
+server-side on every voice signal and its result is still attached to the `MaintenanceSignal`, but
+nothing currently displays or acts on it — it's dead data as of this correction, not a documentation
+error about what the code does.
 
 # Consumers
 
 The [Chat Widget](/architecture/cockpit-ui.md)'s mic button is the only voice-input surface — a
 Sidebar push-to-talk button existed early on but was consolidated into the Chat Widget by explicit
-request (one conversational surface instead of two, one pipeline instead of two parsers).
+request (one conversational surface instead of two). The transcript itself flows through one
+pipeline (Whisper/provider-equivalent → scrub → `/chat`'s own intent classifier); `voice_intent.py`'s
+closed-vocabulary parse is a second, currently-unconsumed classification of the same transcript —
+see the corrected section above.
 
 [^voice-path-py]: backend/intake/voice_path.py
 [^voice-intent-py]: backend/intake/voice_intent.py

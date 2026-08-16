@@ -2,7 +2,7 @@
 type: reference
 title: Architecture Overview
 status: active
-updated: 2026-08-07
+updated: 2026-08-16
 related: [models-routing.md, api-contract.md, domain-agents.md, rules-backend.md]
 ---
 
@@ -36,14 +36,29 @@ From PRD_FINAL.md §3. Draw the tier diagram below when a juror asks — do not 
    Models: TCS GenAI Lab gateway ▸ + local Ollama ▸ — no external MaaS
    Protocols: MCP (agent→tools) · A2A (agent→agent) — open specs, local endpoints
 ```
-**Frontend note:** the current repo has a working Vite/React app, not Next.js — see KNOWN ISSUES in
-[state-progress.md](state-progress.md). This diagram reflects the frozen PRD decision; do not edit it to match the repo.
+**Frontend note:** the Vite/React scaffold was migrated to Next.js in Phase 4 (complete, human-
+confirmed 2026-08-07 — see [decisions-log.md](decisions-log.md)). This diagram is the frozen PRD
+tier design; do not edit it to relitigate that decision.
+
+**Models note (post-submission pivot, see [decisions-log.md](decisions-log.md)):** the single
+"TCS GenAI Lab gateway" box above is the original PRD design. The as-built system
+(`backend/providers.py`) instead supports 6 providers (gemini/openrouter/openai/grok/custom/tcs),
+each resolved per-request via HTTP headers + a contextvar (`backend/provider_context.py`); Gemini
+is the public-deploy default, TCS is a legacy/gated option reachable only on the TCS network. Local
+Ollama fallback is unchanged. See [models-routing.md](models-routing.md) for the current-vs-legacy
+distinction.
+
+**Hosting note:** deployed on Render — backend as a Web Service (`opsflowapp-backend`), frontend as
+a Static Site (`opsflowapp`, Next.js `output: "export"`). See [decisions-log.md](decisions-log.md)'s
+Render-only-hosting entry and `.okf/decisions/hosting-platform.md` for full detail.
 
 ## Routing principle (PRD §3.1)
 Route by task shape, not model prestige:
 - Deterministic? → no LLM at all (correlation, policy checks, blast radius, voice-intent parsing, metric math).
 - Sensitive content? → local Ollama SLM.
-- Genuine multi-step reasoning? → reasoning model (DeepSeek R1), and only there.
+- Genuine multi-step reasoning? → reasoning-role model (per active provider — see
+  [models-routing.md](models-routing.md); DeepSeek R1 only under the legacy `tcs` provider), and
+  only there.
 Using an LLM for arithmetic or rule evaluation is the most common hackathon mistake — a juror will call it out. Full routing table: [models-routing.md](models-routing.md).
 
 ## Orchestration shape (PRD §3.4)

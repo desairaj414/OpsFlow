@@ -2,7 +2,7 @@
 type: domain
 title: Domain — Multimodal Intake (Voice + Vision)
 status: active
-updated: 2026-08-07
+updated: 2026-08-16
 related: [api-contract.md, models-routing.md, domain-privacy.md, prd-phase-3.md]
 ---
 
@@ -30,7 +30,8 @@ Every voice action lands in the audit log with `modality: voice`. **Destructive 
 intents are confirmed on screen before executing** — a misheard "approve" must never commit a
 production change.
 
-## Vision path (Llama Vision)
+## Vision path (originally Llama Vision — model is provider-dependent since the multi-provider
+pivot, see "Implemented 2026-08-07" below and models-routing.md)
 Paste/upload a screenshot (error dialog, stack trace, monitoring chart). Model extracts error text,
 identifiers, timestamps, apparent service names → normalised into `MaintenanceSignal` → **shown to
 the user for confirmation before entering a workflow** → cited thereafter as `IMG-nnn` so provenance
@@ -43,8 +44,12 @@ Alert trigger stays primary (clause C3). Voice and image are additional entry po
 - Voice: `backend/intake/voice_path.py` + `voice_intent.py` (Phase 2). Real Whisper call, scrub
   runs before intent parsing (tested). **No real recorded speech sample exists in this repo** —
   see PRD §6.1 test-data requirement below, still owed before Phase 5.
-- Vision: `backend/intake/vision_path.py`, gpt-4o (Llama Vision substitute, models-routing.md).
-  Real extraction tested against a synthetic error-dialog screenshot with genuine readable text.
+- Vision: `backend/intake/vision_path.py`, `api_client.get_llm(role="vision", ...)` — model is
+  provider-dependent (`backend/providers.py`): Gemini (public-deploy default) uses
+  `gemini-flash-lite-latest`, OpenRouter uses `nvidia/nemotron-nano-12b-v2-vl:free`, OpenAI/Grok/
+  Custom fetch or accept a manual model id, and only the legacy `tcs` provider resolves to gpt-4o
+  (the original Llama Vision substitute, see models-routing.md). Real extraction tested against a
+  synthetic error-dialog screenshot with genuine readable text.
 - Bridge into a real workflow: `backend/orchestrator/intake_adapter.py` — enforces the
   confirmation gate in code (an unconfirmed signal is rejected, tested), not just as a UI convention.
 

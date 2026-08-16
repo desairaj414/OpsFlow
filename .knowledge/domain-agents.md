@@ -2,7 +2,7 @@
 type: domain
 title: Domain — Agent Chain & Orchestration
 status: active
-updated: 2026-08-07
+updated: 2026-08-16
 related: [arch-overview.md, api-contract.md, domain-workflows.md, domain-guardrails.md]
 ---
 
@@ -12,8 +12,8 @@ a third level or let specialists call each other directly.**
 ## Agent chain, in demo-importance order (PRD §5 Phase 3) — BUILT 2026-08-07
 1. **Supervisor** (`backend/orchestrator/supervisor.py`) — dispatches, re-validates each typed result against the `SpecialistResult` schema before continuing, owns turn caps (`orchestrator/limits.py`) and termination conditions.
 2. **Enrichment** (`backend/agents/enrichment.py`) — gathers evidence across MCP-exposed systems + Chroma retrieval, attaches artifact IDs. Deterministic, no LLM.
-3. **Diagnosis** (`backend/agents/diagnosis.py`, DeepSeek R1, **the one A2A handoff** — see below) — root-cause hypothesis generation & ranking; a hypothesis with no cited artifact (or citing an artifact outside the evidence bundle) is dropped before ever being returned, functionally "suppressed at generation."
-4. **Planner** (`backend/agents/planner.py`, **gpt-4.1-nano** — DeepSeek V3's human-approved substitute, see models-routing.md) — drafts a plan **only** from retrieved runbook chunks (runbook-bounded action space, [domain-guardrails.md](domain-guardrails.md)); a step citing a non-retrieved chunk is dropped. Blast radius + policy gate computed deterministically after the LLM drafts, never delegated to the model.
+3. **Diagnosis** (`backend/agents/diagnosis.py`, `api_client.get_llm(role="reasoning", ...)` — provider-dependent, only the legacy `tcs` provider resolves to DeepSeek R1, see models-routing.md, **the one A2A handoff** — see below) — root-cause hypothesis generation & ranking; a hypothesis with no cited artifact (or citing an artifact outside the evidence bundle) is dropped before ever being returned, functionally "suppressed at generation."
+4. **Planner** (`backend/agents/planner.py`, `api_client.get_llm(role="structured", ...)` — provider-dependent, only the legacy `tcs` provider resolves to `gpt-4.1-nano` (DeepSeek V3's human-approved substitute, see models-routing.md)) — drafts a plan **only** from retrieved runbook chunks (runbook-bounded action space, [domain-guardrails.md](domain-guardrails.md)); a step citing a non-retrieved chunk is dropped. Blast radius + policy gate computed deterministically after the LLM drafts, never delegated to the model.
 5. **Verification** (`backend/agents/verification.py`) — the Fake Fix Detector; requires two independent signals (alert cleared AND the metric series held recovered through the tail of the stabilisation window, not a single point). Deterministic, no LLM. See [domain-guardrails.md](domain-guardrails.md).
 6. **Sync** (`backend/agents/sync.py`) — writes the outcome back to ITSM + CMDB (via MCP) as one consistent record. Deterministic.
 7. **Knowledge (+ Negative KB)** (`backend/agents/knowledge.py`) — captures the outcome; on `symptom_suppressed`, seeds the Negative KB scoped to CI class + failure signature. Deterministic.

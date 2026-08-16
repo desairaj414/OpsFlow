@@ -2,7 +2,7 @@
 type: domain
 title: Domain — Three Workflow Families
 status: active
-updated: 2026-08-07
+updated: 2026-08-16
 related: [domain-agents.md, schema-db.md, prd-phase-3.md]
 ---
 
@@ -30,7 +30,7 @@ prototype proves the *coordination*, not just the chat.
 delayed, ambiguous effects. This was a deliberate choice not to automate; state it as such if asked.
 
 ## Reference chain — incident resolution is the golden path (PRD §1.2 A3)
-Correlate → Enrich → Diagnose → Plan → Gate → Approve → Execute → Verify → Sync → Learn. Patch and
+Correlate → Enrich → Diagnose → Plan → Gate → Approve → Execute → Verify → Sync → Knowledge. Patch and
 performance derive from the same chain over different runbook classes and verification criteria.
 Agent-level detail: [domain-agents.md](domain-agents.md).
 

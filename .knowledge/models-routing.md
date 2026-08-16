@@ -2,11 +2,32 @@
 type: reference
 title: Model Routing Table
 status: active
-updated: 2026-08-07
+updated: 2026-08-16
 related: [arch-overview.md, citations.md, env-network.md]
 ---
 
-From PRD §3.2, mapped to actual `.env` model ids (see `backend/.env` → `MODELS`).
+**CURRENT SCOPE NOTE (2026-08-16):** everything below this line describes the **original,
+single-endpoint TCS GenAI Lab build** — it is now the `tcs` provider only, one of 6
+(`gemini`/`openrouter`/`openai`/`grok`/`custom`/`tcs`) in `backend/providers.py`'s `PROVIDERS`
+dict, kept as a legacy/gated option reachable only on the TCS network. Current routing resolves
+per-request: each call site asks for a **role** (`default`/`reasoning`/`structured`/`vision`) via
+`api_client.get_llm(role=..., ...)`, and `PROVIDERS[active_provider]["roles"][role]` supplies the
+actual model id — the active provider is set per-request via HTTP headers + a contextvar
+(`backend/provider_context.py`), not a single fixed `.env` value. **Gemini is now the public-deploy
+default** (`DEMO_PROVIDER = "gemini"`), mapping `reasoning`/`structured`/`default`/`vision` all to
+`gemini-flash-lite-latest`; OpenRouter maps them to distinct free-tier models per role (see
+`backend/providers.py` for the full current table). `backend/.env` today only sets
+`GEMINI_API_KEY`/`OPENROUTER_API_KEY` — the `MODELS`/`API_KEY`/`BASE_URL` keys referenced below are
+`tcs`-path-only and present in `.env.example` as defaults, not actually set. The **routing
+principle** (deterministic-where-possible, reasoning model only for genuine multi-step reasoning,
+local SLM for sensitive content) still holds — only the concrete model ids below are historical.
+See decisions-log.md's multi-provider-pivot entry and `.okf/architecture/provider-registry.md`.
+
+The table below is a legitimate historical record of the original model-substitution decisions
+(Phase 0 smoke test, DeepSeek V3/Llama Vision deprecations) — kept for that record, not deleted.
+
+From PRD §3.2, mapped to actual `.env` model ids (see `backend/.env` → `MODELS`) **as they existed
+in the original single-provider (`tcs`) build.**
 
 ## Routing table
 | Task | Model (handbook name) | Actual `.env` id | Why |

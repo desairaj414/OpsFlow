@@ -2,7 +2,7 @@
 type: contract
 title: API & Agent Contracts
 status: active
-updated: 2026-08-07
+updated: 2026-08-16
 related: [schema-db.md, domain-multimodal-intake.md, domain-agents.md, arch-overview.md]
 ---
 
@@ -63,7 +63,7 @@ the full rationale. Actual Agent Card as implemented (`backend/a2a/agent_card.py
 ```json
 {
   "name": "diagnosis-agent",
-  "description": "Root-cause hypothesis generation & ranking (DeepSeek R1). Every hypothesis cites at least one evidence artifact ID; uncited hypotheses are dropped before being returned.",
+  "description": "Root-cause hypothesis generation & ranking, using the active session's reasoning-role model (provider-dependent, see backend/providers.py). Every hypothesis cites at least one evidence artifact ID; uncited hypotheses are dropped before being returned.",
   "capabilities": ["generate_diagnosis"],
   "endpoint": "http://localhost:9010/invoke",
   "signature": "<hex HMAC-SHA256 over the other 4 fields, canonical JSON, sorted keys>"
@@ -72,6 +72,12 @@ the full rationale. Actual Agent Card as implemented (`backend/a2a/agent_card.py
 - Signature is a real HMAC-SHA256 (verifiable — `verify_agent_card()` rejects any tampered field),
   keyed by a local-only secret (`A2A_SECRET`) — **not** asymmetric/PKI signing; documented as a
   deliberate hackathon-scope simplification, not claimed to be more than it is.
+- **RESOLVED 2026-08-16** (was: "known doc/code gap" — the card's `description` hardcoded
+  "(DeepSeek R1)", inaccurate on any non-`tcs` provider). The description is now provider-neutral,
+  and `SpecialistResult` gained a `model_used` field (`api_client.extract_model_used()`, reads
+  `response.response_metadata["model_name"]` — the model that actually answered, correct even when
+  a fallback responded, not just the requested primary) that `supervisor.py`'s `diagnose`/`plan`
+  audit-log writes now use instead of the two hardcoded TCS model-id strings they had before.
 - Discovery: `GET /.well-known/agent-card.json`. Invocation: `POST /invoke` with
   `{incident_id, evidence}`, returns a `SpecialistResult`.
 - Everything else (Enrichment, Planner, Verification, Sync, Knowledge) stays in-process with typed
@@ -117,8 +123,8 @@ breaking; re-ran the full diagnosis/planner/supervisor test suite (14/14) after 
   `approval_ref`) — does NOT resume the paused run (`run_workflow` has no checkpointing); the
   frontend separately re-triggers `/workflows/run` with `auto_approve=true` on approve.
 - **`POST /intake/voice`** / **`POST /intake/image`** (header JWT, multipart `file`). Real
-  Whisper/gpt-4o intake, return a `MaintenanceSignal` with `requires_human_confirmation` set —
-  no workflow starts yet.
+  Whisper/vision-role intake (model provider-dependent, see domain-multimodal-intake.md), return
+  a `MaintenanceSignal` with `requires_human_confirmation` set — no workflow starts yet.
 - **`POST /intake/confirm`** (header JWT). Body `{"signal": MaintenanceSignal, "workflow_type"}`.
   Forces `requires_human_confirmation=False` and calls `intake_adapter.start_workflow_from_confirmed_signal`
   — same response shape as `/workflows/run` (`modality` reflects the signal's, `"voice"`/`"image"`).
@@ -127,4 +133,25 @@ breaking; re-ran the full diagnosis/planner/supervisor test suite (14/14) after 
 - **`GET /cmdb/drift`**, **`GET /autonomy-ladder`**, **`GET /chunks`**, **`GET /metrics/summary`**
   (all header JWT, read-only) — Drift Queue / Autonomy Ladder / Chunk Inspector / Metrics & Eval
   tab data sources respectively. See `state-progress.md` FILE INVENTORY for what each computes.
-- Auth: mock JWT (already working, see [state-progress.md](state-progress.md)), role claim drives the role switcher (server-side enforced, PRD §4.1).
+- Auth: real login (`POST /auth/login`, PBKDF2-verified against `users`, see schema-db.md and
+  decisions-log.md's "SUPERSEDES...No real authentication" entry), not mock JWT. Role claim drives
+  server-side enforcement (PRD §4.1); admin gets a scoped, audited "View as" impersonation control
+  (`POST /auth/view-as`, `POST /auth/stop-view-as`), not a free-for-all role switcher.
+
+## Additional endpoints (`backend/main.py`), beyond the core workflow set above
+Not part of the canonical PRD-derived contract above, but real, implemented routes — grouped by
+what they back:
+- **Providers (multi-provider BYOK login, see decisions-log.md's multi-provider-pivot entry)**:
+  `POST /providers/fetch-models`, `POST /providers/validate-key` — thin wrappers over
+  `backend/providers.py`'s `fetch_models()`/`validate_key()`.
+- **Users/auth**: `GET /users`, `POST /users`, `POST /auth/view-as`, `POST /auth/stop-view-as`.
+- **Local ticket lifecycle** (`local_tickets` table, schema-db.md): `GET /tickets`,
+  `GET /tickets/{ticket_id}`, `POST /tickets/sync`.
+- **Patch Management**: `GET /patches/pending`.
+- **Integration settings** (`integration_settings` table, schema-db.md): `GET /config/integrations`,
+  `POST /config/integrations`.
+- **Demo/eval support**: `GET /demo/pii-sample`, `GET /scenarios`, `GET /config/thresholds`,
+  `POST /config/thresholds`.
+- **Runbooks/knowledge base**: `GET /runbooks`, `POST /runbooks/upload`,
+  `POST /knowledge-base/upload`.
+- **Chat assistant**: `POST /chat` (see architecture-as-built.md's Chat Assistant section).

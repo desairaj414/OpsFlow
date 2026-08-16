@@ -2,7 +2,7 @@
 type: schema
 title: Database Schema (SQLite + Chroma)
 status: active
-updated: 2026-08-07
+updated: 2026-08-16
 related: [api-contract.md, prd-phase-1.md, domain-workflows.md]
 ---
 
@@ -33,6 +33,9 @@ the same table and should not be conflated.**
 - `pii_ground_truth` — planted sensitive items + location, for computing scrubber precision/recall (PRD §6.2).
 - `patch_inventory` — id, ci_id, vendor, title, severity, cve_ids, released_at, sla_days, depends_on_patch_ids (JSON array, same ci_id), status. Simulated vendor patch feed (`data_gen/patch_inventory.py`, served via `mcp_servers/patch_mcp.py`/`simulators/patch_source.py`, port 9005) — PRD row 816.
 - `change_calendar` — id, scope (`global`|environment name|a specific ci_id), starts_at, ends_at, reason. Blackout/freeze windows the scheduling rule engine (`guardrails/scheduling.py`) routes maintenance windows around (PRD C6).
+- `users` — id, username (unique), password_hash (salted PBKDF2-HMAC-SHA256, stdlib `hashlib`), display_name, role, created_at. Backs `/users`, `/auth/login` — real authentication, supersedes the original "no real authentication" PRD call (see decisions-log.md).
+- `local_tickets` — id, system (`itsm`|`tracker`), external_id (sys_id or issue key), cmdb_ci, workflow_type, status_raw, status_normalized (`open`|`in_progress`|`resolved`), priority, summary, opened_at, closed_at, linked_incident_id, trace_snapshot (JSON, full run trace so a past alert's diagnosis/plan/verification can be reopened without re-running the chain), created_at. Additive local record of tickets the simulated ITSM/Tracker already create per run — backs `/tickets`, `/tickets/{id}`, `/tickets/sync`. Does not touch the frozen `supervisor.py`/`sync.py`/`itsm_mcp.py` contracts.
+- `integration_settings` — single row (id CHECK = 1): servicenow_instance_url, jira_instance_url, last_synced_at. Where a future real ServiceNow/Jira instance would be pointed at; never functional in this build. Backs `/config/integrations` (GET/POST).
 
 ## Chroma — vector/RAG (PRD §3.5)
 - Collection `runbooks` — chunked per the structural rules in [domain-guardrails.md](domain-guardrails.md) §chunking, metadata includes heading path (`Runbook 14 › Rollback › Step 3`).

@@ -4,7 +4,7 @@ title: A2A Handoff — Supervisor to Diagnosis
 description: The one real Agent-to-Agent protocol handoff in OpsFlow — a genuinely HMAC-signed, discoverable Agent Card, invoked over HTTP (in-process ASGI transport in this build) instead of a plain function call.
 tags: [a2a, protocol, agents]
 status: stable
-generated: { by: "claude-sonnet-5/okf-produce", at: "2026-08-11T00:00:00Z" }
+generated: { by: "claude-sonnet-5/okf-maintain", at: "2026-08-16T00:00:00Z" }
 sources:
   - id: agent-card-py
     resource: backend/a2a/agent_card.py

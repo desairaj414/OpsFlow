@@ -14,7 +14,12 @@ derived from it, not a replacement. See `.okf/index.md` for its entry point.
 - **Stack:** FastAPI (backend, async) + Next.js frontend (App Router, Tailwind v4, Turbopack). The
   original Vite/React scaffold was migrated to Next.js in Phase 4 (human confirmed 2026-08-07; see
   [decisions-log.md](.knowledge/decisions-log.md)) — migration is complete, not a pending item.
-- **LLM endpoint:** TCS GenAI Lab (OpenAI-compatible) gateway — `https://genailab.tcs.in/v1` — plus local Ollama SLMs
+- **LLM endpoint:** originally a single hardcoded TCS GenAI Lab gateway; post-submission (see
+  `.knowledge/state-progress.md`'s POST-SUBMISSION WORK note) pivoted to a 6-provider registry
+  (`backend/providers.py` — Gemini default, OpenRouter fallback, TCS retained as a legacy/gated
+  option, plus OpenAI/Grok/custom for Bring Your Own Key) so the app runs as a public demo, not
+  just on the TCS network. Local Ollama SLMs still back the offline-fallback chain and the PII
+  scrubber's name-detection pass. See `.okf/architecture/provider-registry.md` for the full table.
 - **Problem statement:** AI-Powered Multi-Agent Workflow Automation for IT Application Maintenance — see `PRD_FINAL.md`
 
 ## Read first, every session
@@ -28,7 +33,8 @@ derived from it, not a replacement. See `.okf/index.md` for its entry point.
 
 ## Architecture & contracts
 - [.knowledge/arch-overview.md](.knowledge/arch-overview.md) — tier diagram, routing principle, orchestration shape, protocol layer
-- [.knowledge/architecture-as-built.md](.knowledge/architecture-as-built.md) — as-implemented agent-by-agent breakdown (LLM/SLM/RAG/deterministic, per step) + every Overview-tab metric's exact computation
+- [.knowledge/architecture-as-built.md](.knowledge/architecture-as-built.md) — as-implemented agent-by-agent breakdown (LLM/SLM/RAG/deterministic, per step)
+- [.knowledge/architecture-as-built-metrics.md](.knowledge/architecture-as-built-metrics.md) — every Overview-tab metric's exact computation (split out of architecture-as-built.md)
 - [.knowledge/schema-db.md](.knowledge/schema-db.md) — SQLite + Chroma schema
 - [.knowledge/api-contract.md](.knowledge/api-contract.md) — canonical `MaintenanceSignal`, MCP tool contracts, A2A Agent Card
 - [.knowledge/models-routing.md](.knowledge/models-routing.md) — model routing table, trade-offs, actual `.env` model-id mapping
@@ -56,6 +62,7 @@ derived from it, not a replacement. See `.okf/index.md` for its entry point.
 - [.knowledge/citations.md](.knowledge/citations.md) — dataset/model provenance for the README
 - [.knowledge/extra-credit.md](.knowledge/extra-credit.md) — §8 backlog, INCLUDE/SKIP as decided
 - [.knowledge/errors-solved.md](.knowledge/errors-solved.md) — error signature → root cause → fix
+- [.knowledge/session-workflow.md](.knowledge/session-workflow.md) — copy-paste session close-out / start-up prompts that keep `.knowledge/`+`.okf/` in sync across a fresh-session split
 
 ## Hard schedule anchors (non-negotiable, computed from H+1:30 @ Fri 10:30)
 - Handover: Fri 09:00 (H+0:00)

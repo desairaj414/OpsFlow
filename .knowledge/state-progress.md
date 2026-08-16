@@ -52,119 +52,26 @@ Moved to [state-progress-history.md](state-progress-history.md) for space — se
 live-verified at the time, confirmation status still open, not resolved by archiving. Foundational
 context for the chat/image work in the Demo-readiness pass directly below.
 
-## LAST VERIFIED STEP (self-verified, awaiting human confirmation) — Demo-readiness pass: dev-text
-## sweep, dark scrollbar, Sidebar panel consolidation, chat ticket table, image intake moved to chat
-Human's asks while preparing to submit: (1) chat's ticket-query replies truncated at 5 with "(+N
-more)" — show all matches in a table instead; (2) Sidebar's "Ingestion / Admin" panel and the
-Knowledge Base panel both had upload controls — duplicated, consolidate; (3) sweep every screen for
-leftover dev/testing-facing text now that the app is heading to demo; (4) dark theme's scrollbar
-still used the browser's light default; (5) move image intake out of Ops Board into the chat
-widget so voice+vision+text all live on one assistant surface. Mid-pass the human also asked to (6)
-add a "restart chat" control, and (7) flagged that the sample screenshot used for testing image
-intake read as a generic/fake error rather than something a real Microsoft product would show.
-**Dev-text sweep**: grep swept every `.jsx` for internal/dev-facing language actually rendered to
-users (not code comments) — fixed 8 instances: `IncidentWorkspace.jsx`'s "Evidence gaps: not
-computed by the current agent chain..." line (removed outright, nothing behind it anyway) and its
-"fresh run... no checkpointing exists" / "same shared incident" approval-confirmation text
-(reworded to plain "Executing the approved plan."); `Tickets.jsx`'s "Simulated — ...(an admin can
-set one under Model & Threshold Config)" banner and `ModelThresholdConfigPanel.jsx`'s matching
-"nothing here connects to it yet" copy (both reworded, same honest meaning, no dev tone);
-`Overview.jsx`'s two chart descriptions that read as internal disclaimers ("not compared against a
-claimed manual baseline, since none was measured here", "this demo has no real end users to
-survey" — both trimmed to the plain metric description); `ScenarioLauncherPanel.jsx`'s "golden-path
-bar" internal jargon (reworded, that label was never shown anywhere else in the UI); two stale
-comments (`IncidentWorkspace.jsx`, `Sidebar.jsx`) still referencing the old Sidebar push-to-talk
-after it moved into ChatWidget. (`Overview.jsx`'s scenario-eval line, `PlaceholderTab`,
-`AutonomyLadder` wording, the "Edit (not yet supported)" button, and dead `Dashboard.jsx`/
-`AdminControl.jsx` were already fixed in the immediately-prior turn of this same pass.)
-**Dark scrollbar**: `globals.css` gained a `:root[data-theme="dark"]` block (Firefox
-`scrollbar-color` + WebKit `::-webkit-scrollbar*`) using the existing `--border`/`--background`/
-`--muted-foreground` tokens — same explicit-toggle-only mechanism as the rest of the theme system,
-deliberately no `prefers-color-scheme` media query. Verified by setting `data-theme="dark"` directly
-and reading `getComputedStyle(...).scrollbarColor` (`rgb(41,47,61) rgb(12,17,29)`, matching the dark
-tokens) — the real toggle button itself is intermittently covered by Next.js's dev-mode indicator
-badge in the same bottom-left corner, a `next dev`-only artifact (confirmed via bounding-box
-inspection), not present in the production build already verified via `npm run build`.
-**Sidebar panel consolidation**: `IngestionAdminPanel.jsx` deleted outright, replaced by new
-`UserManagementPanel.jsx` (Users section only — runbook/KB-article upload removed, since
-`ChunkInspector.jsx`'s `UploadControls` already does the identical `/runbooks/upload` and
-`/knowledge-base/upload` calls). `roles.js`'s `PANEL_PERMISSIONS` key renamed `ingestion` →
-`users`; `Sidebar.jsx`'s `NAV_ITEMS` entry relabeled "User Management" with a `Users` icon (was
-`UploadCloud`). Two stale comments referencing the old panel name fixed (`ChunkInspector.jsx`,
-`ui/modal.jsx`).
-**Chat ticket table**: backend's `_format_ticket_query_reply` (`main.py`) no longer builds a
-truncated "(+N more)" example list — just the status breakdown line, plus "Full list below." when
-there are more than 5. The `/chat` endpoint's `query_tickets` action now returns every row the SQL
-query found (up to its existing `LIMIT 200`) instead of slicing to `tickets[:20]`. `ChatWidget.jsx`
-gained a `TicketsTable` component (scrollable, sticky header, click-to-open via the same
-`onOpenTicket` path `Tickets.jsx`/`OpsBoard.jsx` already use) rendered for any `query_tickets`
-action; the message bubble goes full-width instead of the usual 85% cap when a table is attached.
-`CockpitShell.jsx` now passes `onOpenTicket` through to `ChatWidget` (previously only
-`onOpenIncident`).
-**Image intake moved to chat**: `OpsBoard.jsx`'s `ImageDropZone` component deleted outright (drag-
-drop zone, preview, extract, confirm-and-start — all of it); `ChatWidget.jsx` gained the same
-`/intake/image` flow as an image-upload button (`ImagePlus` icon) next to the mic — the upload
-lands as a user message with the image thumbnail, the extraction as an assistant message carrying
-an `image_signal` action, and (since `requires_human_confirmation` is unconditional for images) an
-explicit "Confirm and start incident" button that calls the same `incident.runFromSignal` used
-before, updating that same message in place with a "started — Open Incident Workspace" link once
-confirmed. The "no screenshot handy? download a sample" hint moved to a small line under the chat's
-input row.
-**Restart chat**: header gained a second icon button (`RotateCcw`) next to Close that resets
-`messages` back to a single shared `GREETING` constant — no confirmation dialog, matches how
-lightweight the rest of the widget is.
-**Sample screenshot replaced**: the old `public/sample-incident-screenshot.png` was literal plain
-red/black text on white ("ERROR Connection refused / Service: CI-0056 unreachable") with no product
-identity — regenerated as an actual Microsoft Power Automate-styled error dialog (rendered from HTML
-via Playwright screenshot, not hand-drawn) citing the same `CI-0056`, whose real generated CMDB
-identity (fixed seed `20260807`) is `power-automate-gateway-develop-056` — so the sample now matches
-what it claims to be a screenshot of. Re-verified through the real vision pipeline directly
-(`run_vision_intake`): extracts the connection-failure text, `candidate_ci_refs: ['CI-0056']`,
-`requires_human_confirmation: True` — unchanged behavior, better-looking input.
-**Verified**: `npm run build` clean; full backend suite 98/98 (184s, real gateway calls, venv at
-`backend/venv`); live Playwright pass covering the whole set in one run against the already-running
-dev backend (port 8765) — login page confirmed free of the old demo-credential lines, User
-Management panel shows only Users (no "Runbook ingestion" text), Knowledge Base panel confirmed
-still has both upload controls, chat's image button uploaded the new sample and correctly extracted
-`CI-0056`, "Confirm and start incident" produced a real `INC-IMG-*` run that reached `complete`
-(visible in the post-run Overview dashboard's incremented counters), asking the chat for "all
-incidents from the last 30 days" rendered a real 20-row table (not truncated text), and "Restart
-chat" correctly reset to the greeting.
-**Answered inline, not a code change**: human asked what the three Model & Threshold Config policy
-numbers mean (blast radius approval/block thresholds, max concurrent prod changes) — explained via
-`guardrails/policy_gate.py`'s actual gating logic, no doc file changed.
+## LAST VERIFIED STEP (superseded) — Demo-readiness pass (dev-text sweep, dark scrollbar, Sidebar
+## panel consolidation, chat ticket table, image intake moved to chat) + Drift Queue hidden /
+## Autonomy Ladder seeded
+Both passes self-verified/live-verified at the time, confirmation status still open, not resolved
+by archiving. Moved to [state-progress-history.md](state-progress-history.md) for space — this was
+the last state-progress.md entry before the hackathon's own submission commit; see POST-SUBMISSION
+WORK below for everything since.
 
-## LAST VERIFIED STEP (self-verified, awaiting human confirmation) — Drift Queue hidden; Autonomy
-## Ladder seeded (was permanently empty, not a bug)
-Human asked to hide Drift Queue (not deemed demo-ready) and asked whether Autonomy Ladder's empty
-table was an error. Investigated: it wasn't an error — `autonomy_ladder` had **zero rows and no
-writer anywhere in the codebase** (confirmed via grep, `db/init_db.py`'s own self-test explicitly
-asserted it must be empty after seeding). This meant both the Autonomy Ladder tab AND Overview's
-"Most-trusted runbooks" card (same table) were permanently blank, not "static but populated" as
-previously assumed when writing `architecture-as-built.md`. Asked which fix the human wanted; chose
-seeding one starting-tier row per runbook.
-**Drift Queue hidden**: removed from `roles.js`'s `TAB_PERMISSIONS` (all 3 roles) and
-`CockpitShell.jsx`'s `TABS` array only — `DriftQueue.jsx` and its route logic untouched, so
-restoring it later is a one-line revert, not a rebuild.
-**Autonomy Ladder seeded**: new `populate_autonomy_ladder()` in `db/init_db.py` — one row per
-runbook (`current_tier='suggest_only'`, `verified_resolution_count=0`, `last_promoted_at=NULL`),
-wired into `main()` after `populate_runbooks`. Self-test's `empty_expected` list corrected (removed
-`autonomy_ladder`, since it's no longer meant to be empty) and a new assertion added
-(`counts["autonomy_ladder"] == counts["runbooks"]`). Applied to the **live** `data/app.db` via a
-targeted call to just `populate_autonomy_ladder()` on the existing connection — deliberately did
-NOT run `init_db.py`'s full `main()`, which drops and rebuilds the whole DB file and would have
-wiped this session's real `audit_log`/`local_tickets`/every workflow run so far. Confirmed
-untouched afterward (audit_log still had 1315 rows). Still genuinely static after this fix —
-`current_tier`/`verified_resolution_count` still have no runtime writer anywhere; seeding the
-starting state is not the same as building the (deliberately out-of-scope, PRD §4.0) live
-promotion engine.
-**Docs**: `architecture-as-built.md`'s "Most-trusted runbooks" row corrected (was: "static seed
-data, not live promotions" — now accurate; before this fix it should have said "no seed data at
-all, permanently empty").
-**Verified**: `npm run build` clean; full backend suite 98/98 (170s); live Playwright pass —
-Drift Queue absent from nav for all 3 roles, Autonomy Ladder tab shows all 22 runbooks at "Suggest
-only"/0 verified, Overview's "Most-trusted runbooks" card now populated; direct DB query confirmed
-seed applied without disturbing existing session rows.
+## POST-SUBMISSION WORK (2026-08-11 onward) — tracked in `.okf/log.md`, not narrated here
+The hackathon itself concluded at commit `6299a26` ("Final Submission", 2026-08-08). Everything
+since (multi-provider LLM pivot off the single hardcoded TCS endpoint, the 3-mode public demo UX —
+Instant Demo / Bring Your Own Key / Free Demo Key, the OKF v0.2 bundle at `.okf/`, Render hosting
+with the `opsflowapp`/`opsflowapp-backend` service rename, and a full mobile-responsive UI pass) is
+**post-submission portfolio-hardening**, not Phase 5 execution — it's deliberately tracked in
+[.okf/log.md](../.okf/log.md) (dated, newest-first) rather than backfilled here in narrative form,
+per `.okf/log.md`'s own 2026-08-11 entry (this file is explicitly excluded from the OKF bundle as a
+"hackathon-process artifact"). The two biggest product decisions from this era ARE backfilled into
+[decisions-log.md](decisions-log.md) (multi-provider pivot, Render-only hosting) since that file is
+meant to be the durable decision record regardless of era. For narrative/how-it-was-built detail on
+any post-submission concept, read the matching `.okf/` concept file, not this one.
 
 ## NEXT STEP
 Human confirmation still open on this pass, the ServiceNow/Approval-Queue pass, the Agent-Trace/

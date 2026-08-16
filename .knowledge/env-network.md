@@ -2,7 +2,7 @@
 type: reference
 title: Environment & Network
 status: active
-updated: 2026-08-07
+updated: 2026-08-16
 related: [errors-solved.md, prd-phase-0.md, models-routing.md]
 ---
 
@@ -28,26 +28,42 @@ npm.cmd run dev     # http://localhost:3000
 import os
 os.environ["TIKTOKEN_CACHE_DIR"] = "./token"
 
-# 1b. Corporate proxy MITM certs also break tiktoken's internal downloader (uses `requests`) — bypass globally
-import ssl
-ssl._create_default_https_context = ssl._create_unverified_context
+# 2. Corporate-proxy SSL bypass — GATED, not unconditional. Only applies when TCS_NETWORK=true
+# (backend/.env), since the public deploy has no corporate MITM proxy and disabling verification
+# globally there would be an unforced security regression. See config.py lines ~10-35.
+if TCS_NETWORK:                                    # os.getenv("TCS_NETWORK", "false").lower() == "true"
+    import ssl
+    ssl._create_default_https_context = ssl._create_unverified_context
 
-# 1c. tiktoken's downloader ignores the ssl monkeypatch — also patch requests.Session directly
-import requests
-_orig_request = requests.Session.request
-def _unverified_request(self, *args, **kwargs):
-    kwargs["verify"] = False
-    return _orig_request(self, *args, **kwargs)
-requests.Session.request = _unverified_request
-
-# 2. SSL bypass for outbound httpx/langchain calls
-import httpx
-http_client = httpx.Client(verify=False)          # or httpx.AsyncClient(verify=False) — PRD §0 requires async for FastAPI
+    import requests
+    _orig_request = requests.Session.request
+    def _unverified_request(self, *args, **kwargs):
+        kwargs["verify"] = False
+        return _orig_request(self, *args, **kwargs)
+    requests.Session.request = _unverified_request
 ```
+Per-provider SSL bypass for the `tcs` provider's own outbound calls (e.g. `httpx.Client(verify=False)`)
+is handled independently, per-client, in `api_client.py` — separate from the global gate above.
 
-## Endpoint
-- Base URL: `https://genailab.tcs.in/v1` (see `backend/.env` → `BASE_URL`)
-- Auth: `API_KEY` in `backend/.env` — **never copy the key value into `.knowledge/` files, reference by key name only**
+## Endpoint — multi-provider, not a single endpoint
+`backend/providers.py` is a 6-provider registry (Gemini default, OpenRouter fallback, TCS retained
+as a gated legacy option, plus others) — the TCS GenAI Lab gateway below is now just one option
+within it, not the app's sole endpoint. Full provider list, selection logic, and BYOK/Free-Demo-Key
+routing: `.okf/architecture/provider-registry.md` (not duplicated here).
+
+**`tcs` provider config** (`backend/.env`):
+- `BASE_URL` — `https://genailab.tcs.in/v1`
+- `API_KEY` — gateway key. **Never copy the key value into `.knowledge/` files, reference by key name only.**
+- Only reachable/enabled when `TCS_NETWORK=true` (see above) — corporate network only.
+
+**Other provider env keys** (`backend/.env`, see `backend/.env.example`):
+- `DEFAULT_PROVIDER` — which provider a request uses with no `X-LLM-Provider` header (`gemini` for
+  the public deploy, `tcs` for local dev against the original TCS gateway).
+- `GEMINI_API_KEY` — Gemini provider key.
+- `OPENROUTER_API_KEY` — OpenRouter provider key; also `api_client.py`'s fallback if Gemini fails
+  during a Free Demo Key session (never falls back to a visitor's own BYOK key).
+- `TCS_NETWORK` — boolean, default `false`. Gates the SSL-bypass monkeypatching above and whether
+  the `tcs` provider is reachable at all.
 
 ## Models available (from `backend/.env` → `MODELS`, confirmed reachable at least once)
 24/32 chat-capable models PASS per current smoke test. Handbook-relevant subset (see
@@ -61,17 +77,27 @@ http_client = httpx.Client(verify=False)          # or httpx.AsyncClient(verify=
 - Run `ollama list` and record exact model names/sizes in `PHASE0_FINDINGS.md`. **Never download new models.**
 
 ## Network / proxy notes
-- Corporate network requires SSL verification bypass (`verify=False`) everywhere outbound.
+- Corporate (TCS) network requires SSL verification bypass (`verify=False`) everywhere outbound —
+  but only there. Gated behind `TCS_NETWORK=true`; the public deploy runs with it off. See "Mandatory fixes" above.
 - `TIKTOKEN_CACHE_DIR` must point locally (`./token`) since HF/tiktoken downloads are blocked; a token cache dir already exists at `backend/token/`.
 
 ## Ports
 - Frontend: `http://localhost:3000`
 - Backend: `http://localhost:8765` — **not 8000/8001**, see `errors-solved.md` (Windows reserves those ephemeral ranges)
-- `frontend/.env` → `VITE_API_BASE_URL` must match the backend port above.
+- `frontend/.env.local` → `NEXT_PUBLIC_API_BASE_URL` must match the backend port above (see
+  `frontend/.env.local.example`; the old Vite app's `frontend/.env` → `VITE_API_BASE_URL` is gone
+  post-migration).
 - MCP simulator default ports (production mode; the app itself wires all of these in-process via
   `orchestrator/mcp_wiring.py`, so these only matter if a simulator is run standalone):
   Monitoring 9001, ITSM 9002, Tracker 9003, CMDB 9004, **Patch Source 9005** (added for Patch
   Management, `mcp_servers/simulators/patch_source.py`).
+
+## Deployment — Render (live)
+Both services deploy to Render as a Blueprint via `render.yaml` at repo root: `opsflowapp-backend`
+(Python Web Service) and `opsflowapp` (static-exported Next.js site). Live URLs:
+`https://opsflowapp-backend.onrender.com` (backend) and `https://opsflowapp.onrender.com`
+(frontend). Full rationale (why Render-only, why not Vercel+Render, the `opsflow-*` →
+`opsflowapp*` rename) lives in `.okf/decisions/hosting-platform.md` — not duplicated here.
 
 ## Phase 0 smoke-test results (verified 2026-08-07, `python smoke_test.py`)
 | Check | Status | Notes |

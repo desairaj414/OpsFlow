@@ -2,18 +2,23 @@
 type: reference
 title: Beginner's Glossary
 status: active
-updated: 2026-08-07
+updated: 2026-08-16
 related: [arch-overview.md, api-contract.md, domain-agents.md, domain-guardrails.md, domain-privacy.md]
 ---
 
 Plain-language definitions for terms used across the `.knowledge/` tree, written for a
 beginner-to-intermediate developer. Not a spec — see the linked node for the real contract.
 
-- **LLM / SLM** — Large/Small Language Model. LLM = the big reasoning-capable models on the
-  gateway (GPT-4o, DeepSeek R1). SLM = smaller local Ollama models, used for narrow tasks
-  (redaction, classification) where a full LLM is overkill or where data shouldn't leave the machine.
-- **Gateway** — `https://genailab.tcs.in/v1`, the TCS GenAI Lab's OpenAI-compatible proxy in
-  front of the hosted models. We call it like OpenAI's API, just with a different base URL.
+- **LLM / SLM** — Large/Small Language Model. LLM = the big reasoning-capable models reached
+  through whichever provider is active for a session (Gemini, OpenRouter, or the legacy TCS
+  gateway — see Gateway/Provider below; originally GPT-4o/DeepSeek R1 on TCS only). SLM = smaller
+  local Ollama models, used for narrow tasks (redaction, classification) where a full LLM is
+  overkill or where data shouldn't leave the machine.
+- **Gateway / Provider** — originally `https://genailab.tcs.in/v1`, the TCS GenAI Lab's
+  OpenAI-compatible proxy, called like OpenAI's API with a different base URL. Since the
+  multi-provider pivot (`backend/providers.py`), this is one of **6** providers
+  (gemini/openrouter/openai/grok/custom/tcs) selectable per session; Gemini is the public-deploy
+  default, TCS is a legacy/gated option reachable only on the TCS network. See models-routing.md.
 - **Ollama** — a local server that runs SLMs directly on this machine, no network call. Check
   what's installed with `ollama list`; never download new ones mid-hackathon.
 - **MCP (Model Context Protocol)** — a standard way for an agent to call an external tool/system
@@ -51,7 +56,11 @@ beginner-to-intermediate developer. Not a spec — see the linked node for the r
 - **Scrubber** — the step that strips/masks personal data out of intake content, run right after
   any modality (voice/image) is converted to text, before anything else sees it.
 - **Whisper** — the speech-to-text model used for voice intake.
-- **Llama Vision** — the image-understanding model used for image/screenshot intake.
+- **Llama Vision** — the original image-understanding model picked for image/screenshot intake;
+  its deployment was later confirmed permanently gone (see models-routing.md). Now a historical/
+  legacy label — the vision role's actual model is provider-dependent (see Gateway/Provider above),
+  and only the legacy `tcs` provider's vision role still traces back to that original substitution
+  (gpt-4o).
 - **CMDB (Configuration Management Database)** — inventory of IT assets ("Configuration Items")
   and how they relate to each other; here it's a simulator, not a real one.
 - **ITSM (IT Service Management)** — the ticketing/incident system category; here, our own

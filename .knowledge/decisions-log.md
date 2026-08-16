@@ -260,3 +260,36 @@ turns up a reason one should change, stop and tell the human; do not edit this l
   transcribes through the same real Whisper+scrubber pipeline as before (`/intake/voice`), then the
   transcript is handled as an ordinary chat message — one pipeline, not two parsers.
 - **Date:** 2026-08-08
+
+- **Decision:** POST-SUBMISSION (after the hackathon's own "Final Submission" commit). Pivoted the
+  app from a single hardcoded TCS GenAI Lab endpoint (reachable only on the TCS corporate network)
+  to a multi-provider LLM architecture (`backend/providers.py`: Gemini default, OpenRouter fallback,
+  TCS retained as a gated legacy option, later expanded to 6 BYOK providers total), plus a 3-mode
+  public demo UX (Instant Demo / Bring Your Own Key / Free Demo Key) so the app can run as a public,
+  self-serve resume artifact instead of only on-site. Full detail lives in the OKF bundle, not
+  duplicated here — see `.okf/decisions/multi-provider-architecture.md` and
+  `.okf/architecture/provider-registry.md`.
+- **Alternatives considered:** keep the single-endpoint design and document the public-hosting
+  limitation in the README instead of building provider abstraction.
+- **Rationale:** No reachable backend and no usable key exists for a visitor outside the TCS
+  network under the original design. Gemini's free tier covers chat+vision with one key and is
+  OpenAI-compatible, so existing `ChatOpenAI` plumbing needed parameterizing, not a rewrite.
+  `models-routing.md`'s task→model-id table describes the pre-pivot state and should be read
+  skeptically against current code; the routing *principle* it documents still holds.
+- **Date:** 2026-08-11 (bundle-documented; exact code-change date not logged here at the time)
+
+- **Decision:** Hosting is Render-only — a Python Web Service for the backend
+  (`opsflowapp-backend`) and a static-exported Site for the frontend (`opsflowapp`, Next.js
+  `output: "export"`) — not split across Render + Vercel, and not merged into one process. Full
+  detail (alternatives, rationale, the Blueprint-vs-API-created-service distinction, the
+  `opsflow-*` → `opsflowapp*` rename after a name collision) lives in
+  `.okf/decisions/hosting-platform.md` — not duplicated here.
+- **Alternatives considered:** Vercel (frontend) + Render (backend) — the original plan; one Render
+  Web Service serving both (rejected, would put the always-warm-capable frontend under the
+  backend's cold-start sleep for no benefit); fully serverless (rejected outright — SQLite/Chroma
+  and the `/alerts/stream` SSE connection both need a long-running process).
+- **Rationale:** Once the frontend's static-export viability was confirmed (one route, no
+  `app/api/`, no middleware, no `next/image`), Render's free Static Site tier beat both a second
+  platform and Render's paid Node Web Service tier ($7/mo minimum, confirmed live) — genuinely
+  free, always-warm, CDN-backed, with zero UX tradeoff.
+- **Date:** 2026-08-14 (hosting decision); service rename to `opsflowapp`/`opsflowapp-backend` 2026-08-15
