@@ -5,7 +5,7 @@ description: Transactional/workflow state lives in SQLite; runbook/postmortem/ti
 resource: backend/db/schema.sql
 tags: [schema, database, sqlite, chroma]
 status: stable
-generated: { by: "claude-sonnet-5/okf-maintain", at: "2026-08-14T00:00:00Z" }
+generated: { by: "claude-sonnet-5/okf-maintain", at: "2026-08-17T00:00:00Z" }
 sources:
   - id: schema-sql
     resource: backend/db/schema.sql
@@ -33,8 +33,8 @@ sources:
 | `autonomy_ladder` | one row per runbook, seeded at `suggest_only`/0 — no runtime promotion writer exists yet, a display of intended structure, not a live promotion engine |
 | `negative_kb_entries` | written by [Knowledge Agent](/agents/knowledge-agent.md) on a `symptom_suppressed` outcome |
 | `runbooks` | id/class/content_ref pointing at the chunked Chroma document |
-| `scenarios` | the Scenario Library, doubling as the test-fixture set |
-| `model_call_cache` | `hash(prompt_version, scrubbed_input) -> response` |
+| `scenarios` | the Scenario Library (14 rows: 10 named + 4 edge-case), doubling as the test-fixture set — see [Eval Harness](/architecture/eval-harness.md) |
+| `model_call_cache` | `hash(prompt_version, exact prompt) -> response` — declared since Phase 1, actually written to since 2026-08-17, see [Model-Call Cache](/architecture/model-call-cache.md) |
 | `pii_ground_truth` | planted sensitive items for the [Scrubber](/guardrails/scrubber.md)'s measured precision/recall |
 | `patch_inventory`, `change_calendar` | simulated vendor patch feed + blackout windows, read by `guardrails/scheduling.py` |
 | `users` | real accounts — PBKDF2-HMAC-SHA256 salted password hashes, one fixed role per account (`ops_engineer`\|`approver`\|`admin`) — see [Real Authentication](/decisions/real-authentication.md) |

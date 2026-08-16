@@ -1,0 +1,13 @@
+{
+  "id": "SCEN-09",
+  "name": "Low-blast-radius incident, SharePoint site — Fake Fix Detector catches symptom suppression (different CI type from SCEN-01/02; confirmed by an actual run, not assumed clean like SCEN-01)",
+  "workflow_type": "incident",
+  "is_edge_case": false,
+  "ci_id": "CI-0062",
+  "alert_category": "fault",
+  "auto_approve": true,
+  "expected": {
+    "status": "complete",
+    "verification_status": "symptom_suppressed"
+  }
+}

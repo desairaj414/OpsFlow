@@ -1,0 +1,12 @@
+{
+  "id": "SCEN-07",
+  "name": "P1 prod incident, moderate blast radius — approval required by role, not blast radius",
+  "workflow_type": "incident",
+  "is_edge_case": false,
+  "ci_id": "CI-0028",
+  "alert_category": "fault",
+  "auto_approve": false,
+  "expected": {
+    "status": ["pending_approval", "complete", "blocked"]
+  }
+}

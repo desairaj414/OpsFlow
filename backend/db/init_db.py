@@ -273,7 +273,7 @@ if __name__ == "__main__":
     assert counts["negative_kb_entries"] == 500  # fixed seed, data_gen/negative_kb.py
     assert counts["runbooks"] == 22
     assert counts["pii_ground_truth"] == 31
-    assert counts["scenarios"] == 6  # Phase 5 step 1: SCEN-01..06 (non-edge-case); step 2 adds edge cases on top
+    assert counts["scenarios"] == 14  # 10 non-edge (SCEN-01..10) + 4 edge cases (edge_*.json)
     assert counts["users"] == 3  # default seed: one real account per role; admin can add more via POST /users
     assert counts["integration_settings"] == 1  # single seeded row, all null until a real instance is set
     assert counts["patch_inventory"] == 153  # fixed seed, data_gen/patch_inventory.py

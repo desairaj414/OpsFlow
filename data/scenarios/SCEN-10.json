@@ -1,0 +1,12 @@
+{
+  "id": "SCEN-10",
+  "name": "Performance tuning, prod OneDrive sync cache — advisory-only, never auto-executes (different CI type from SCEN-05/06)",
+  "workflow_type": "performance",
+  "is_edge_case": false,
+  "ci_id": "CI-0019",
+  "alert_category": "degradation",
+  "auto_approve": false,
+  "expected": {
+    "status": "pending_approval"
+  }
+}

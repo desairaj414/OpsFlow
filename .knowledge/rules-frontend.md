@@ -3,7 +3,7 @@ type: rules
 title: Frontend Rules & Commenting Standard
 status: active
 updated: 2026-08-16
-related: [rules-backend.md, api-contract.md, domain-multimodal-intake.md]
+related: [rules-backend.md, architecture/architecture/api-contract.md, domain/domain/domain-multimodal-intake.md]
 ---
 
 **Re-read this on every coding step. It is a standing rule, not a one-time reminder.**
@@ -45,7 +45,8 @@ functionality folded into `IncidentWorkspace`/`Overview`. Post-Phase-4 additions
 - **`panels/`** — admin/config surfaces split out of `Sidebar`: audit log, model/threshold config,
   scenario launcher, user management.
 
-Two deviations from the original Phase 4 plan (`prd-phase-4.md`'s atomic-step file list), both load-bearing:
+Two deviations from the original Phase 4 plan (its atomic-step file list, in the now-deleted
+`prd-phase-4.md` — see `state-progress-history.md`'s archived phase narrative), both load-bearing:
 - **`CockpitShell` owns one shared `useWorkflowRun` instance** (a "golden-path bar": CI-scenario
   dropdown + "Start incident"), passed as an `incident` prop to Agent Trace/Incident Workspace/Ops
   Board's image path, instead of each tab triggering its own separate run. Not in the original
@@ -68,8 +69,9 @@ without reintroducing the risk the cut was meant to avoid — see the "Chat assi
 Tabbed workspace: Ops Board · Incident Workspace (+ Maintenance Planner panel) · Agent Trace ·
 Drift Queue (+ Drift-vs-Truth split screen) · Autonomy Ladder · Chunk Inspector · Overview.
 Sidebar: role switcher, ingestion/admin, model & threshold config, scenario launcher, audit log
-(push-to-talk moved out of Sidebar into ChatWidget's mic button, see below). Full detail:
-[prd-phase-4.md](prd-phase-4.md) (historical plan — component list above reflects current reality).
+(push-to-talk moved out of Sidebar into ChatWidget's mic button, see below). The component list
+above reflects current reality, not the original phase plan (deleted — see
+`state-progress-history.md` if you need the historical detail).
 
 ## Accessibility — mandatory, not optional (PRD §7)
 Every voice action has keyboard parity. Focus states visible. Confirmation step before any
@@ -110,5 +112,4 @@ UX — touch `LoginModeSelector.jsx` or its downstream auth/session wiring only 
   positioning at `sm:` and above.
 
 ## Where to look before writing frontend code
-- Canonical `MaintenanceSignal` and API response shapes: [api-contract.md](api-contract.md).
-- Component list and demotion order if Phase 4 runs long: [prd-phase-4.md](prd-phase-4.md).
+- Canonical `MaintenanceSignal` and API response shapes: [api-contract.md](architecture/api-contract.md).

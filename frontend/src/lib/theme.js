@@ -1,4 +1,4 @@
-export const THEME_STORAGE_KEY = "verascope-theme";
+export const THEME_STORAGE_KEY = "opsflow-theme";
 
 // Inline script text, injected into <head> by layout.js and run before first paint — reads the
 // stored preference and stamps data-theme on <html> synchronously so there's no flash of the wrong

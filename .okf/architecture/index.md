@@ -6,3 +6,5 @@
 * [Model Routing](model-routing.md) - the deterministic-vs-LLM-vs-SLM routing principle and a step-by-step technique table.
 * [Cockpit UI](cockpit-ui.md) - the Next.js frontend: tab structure, Agent Trace Viewer, three-badge system, accessibility.
 * [Overview Metrics](overview-metrics.md) - exactly how every number on the Overview dashboard is computed, and from what.
+* [Model-Call Cache](model-call-cache.md) - hash(prompt_version, exact prompt) -> response cache for Diagnosis/Planner, backed by a table that existed since Phase 1 but was unused until 2026-08-17.
+* [Eval Harness](eval-harness.md) - runs every seeded scenario through the real workflow and grades pass/fail, citation coverage, and cache-hit rate.

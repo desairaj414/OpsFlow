@@ -1,5 +1,34 @@
 # Update Log
 
+## 2026-08-17
+* **Maintain**: The `.knowledge/` hackathon-phase execution plan was retired this session (every
+  `prd-phase-N.md` and `extra-credit.md` deleted, replaced by plain ongoing-state tracking — see
+  `.knowledge/decisions-log.md`'s newest entry). As part of that cleanup, real backend work landed:
+  a model-call cache (`backend/orchestrator/cache.py`, new [Model-Call Cache](architecture/model-call-cache.md))
+  wiring the long-unused `model_call_cache` table into Diagnosis/Planner's LLM calls;
+  `SpecialistResult` gained an additive `cache_hit` field; a new eval harness
+  (`backend/eval/harness.py`, new [Eval Harness](architecture/eval-harness.md)) that actually runs
+  the Scenario Library and replaces `GET /metrics/summary`'s hardcoded `scenario_eval_status`
+  placeholder with a real report; the Scenario Library grew from 6 to 14 fixtures (10 named + 4
+  edge-case). Also found and documented (not fixed): `guardrails/policy_gate.py`'s `FREEZE_WINDOW`/
+  `MAX_CONCURRENT_CHANGES` rules are fully built and unit-tested but never reachable from a live
+  workflow run — `planner.py` always passes an empty `PolicyContext()`. Updated:
+  [Diagnosis Agent](agents/diagnosis-agent.md), [Planner Agent](agents/planner-agent.md),
+  [Database Schema](data/database-schema.md). Real voice-sample fixtures (PRD requires actual
+  recorded human speech) remain genuinely not built — no `.okf` concept claims otherwise.
+* **Maintain**: Follow-up same day, three fixes the human asked for directly. (1) Fixed the
+  `policy_gate.py` dead-code gap noted above: `planner.py`'s `_load_policy_context()` now builds a
+  real `PolicyContext` (live `active_changes_in_environment` COUNT + `freeze_windows`, patch
+  workflows only — see [Planner Agent](agents/planner-agent.md) for why universal wiring broke
+  tests and was scoped back). (2) Generated 3 synthetic voice-sample placeholders (Windows SAPI TTS)
+  with the human's explicit approval, clearly labeled as not satisfying PRD's real-recording
+  requirement; `eval/harness.py` now actually runs them through `run_voice_intake()`. (3) Corrected
+  the "Verascope" rebrand record: git history (`git log -S"Verascope"`) shows it was reverted to
+  OpsFlow the same day it was introduced, before the hackathon's own Final Submission — the app has
+  never actually shipped as anything but OpsFlow. One real shipped leftover fixed:
+  `frontend/src/lib/theme.js`'s `THEME_STORAGE_KEY` (was `"verascope-theme"`). `.okf/index.md`'s
+  "hackathon working name 'Verascope'" aside removed as no longer accurate/needed.
+
 ## 2026-08-16
 * **Maintain**: Fixed a real code staleness a same-day doc audit surfaced but deliberately didn't
   touch: `supervisor.py`'s audit-log writes for the diagnosis/planner steps hardcoded TCS-only

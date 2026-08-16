@@ -28,6 +28,12 @@ class SpecialistResult(BaseModel):
     # when supervisor.py's audit-log write was found hardcoding TCS-only model names regardless of
     # the session's active provider (decisions-log.md's multi-provider pivot entry).
     model_used: str | None = None
+    # Whether this agent's LLM call was served from orchestrator/cache.py's model_call_cache table
+    # instead of a live gateway call (Phase 5 step 5, api-contract.md updated accordingly). None =
+    # no LLM call (enrichment/verification/sync/knowledge never set this); True/False = a real
+    # cache lookup happened. Lets the eval harness confirm "a replayed scenario doesn't re-hit the
+    # gateway" from the trace alone, without re-deriving it from timing.
+    cache_hit: bool | None = None
 
     @field_validator("confidence")
     @classmethod

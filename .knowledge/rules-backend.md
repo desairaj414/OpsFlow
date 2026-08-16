@@ -3,7 +3,7 @@ type: rules
 title: Backend Rules & Commenting Standard
 status: active
 updated: 2026-08-07
-related: [rules-frontend.md, arch-overview.md, env-network.md]
+related: [rules-frontend.md, architecture/architecture/arch-overview.md, reference/reference/env-network.md]
 ---
 
 **Re-read this on every coding step. It is a standing rule, not a one-time reminder.**
@@ -27,7 +27,7 @@ and — only where genuinely executed — lightweight classical ML trained on CP
 scale). If a docstring, log message, or README line implies fine-tuning, it is a bug — fix it.
 
 ## Network fixes — mandatory on every entrypoint
-See [env-network.md](env-network.md) for the exact code: `TIKTOKEN_CACHE_DIR` set before any
+See [env-network.md](reference/env-network.md) for the exact code: `TIKTOKEN_CACHE_DIR` set before any
 tiktoken-dependent import; `httpx.AsyncClient(verify=False)` (async — PRD §0 mandates FastAPI async)
 for all gateway calls; `requests.Session` patched too (tiktoken's downloader ignores the ssl monkeypatch).
 
@@ -43,10 +43,10 @@ framework would otherwise give.
 
 ## Async & FastAPI
 - All I/O-bound endpoints and model calls are `async def`, using `httpx.AsyncClient`.
-- Every MCP server is its own FastAPI (or MCP-native) process — see [domain-agents.md](domain-agents.md) and the relevant phase node for exact ports.
+- Every MCP server is its own FastAPI (or MCP-native) process — see [domain-agents.md](domain/domain-agents.md) and the relevant phase node for exact ports.
 
 ## Where to look before writing backend code
-- Canonical schemas: [api-contract.md](api-contract.md) (frozen at end of Phase 1 — do not invent new shapes after freeze).
-- DB schema: [schema-db.md](schema-db.md).
-- Model choice for a given task: [models-routing.md](models-routing.md).
-- Guardrail behaviour required: [domain-guardrails.md](domain-guardrails.md).
+- Canonical schemas: [api-contract.md](architecture/api-contract.md) (frozen at end of Phase 1 — do not invent new shapes after freeze).
+- DB schema: [schema-db.md](architecture/schema-db.md).
+- Model choice for a given task: [models-routing.md](architecture/models-routing.md).
+- Guardrail behaviour required: [domain-guardrails.md](domain/domain-guardrails.md).

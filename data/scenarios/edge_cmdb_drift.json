@@ -1,0 +1,13 @@
+{
+  "id": "EDGE-CMDB-DRIFT",
+  "name": "Edge case: recorded CMDB says staging, ground truth says prod (data/cmdb_ground_truth.json _diverged_field=environment) — the workflow reasons over the recorded (as-recorded, not ground-truth) state, same as production would; the Drift Queue tab is the separate mechanism that surfaces the mismatch to a human",
+  "workflow_type": "incident",
+  "is_edge_case": true,
+  "ci_id": "CI-0012",
+  "alert_category": "fault",
+  "auto_approve": true,
+  "expected": {
+    "status": ["complete", "pending_approval", "blocked"],
+    "drift_note": "recorded environment=staging (policy gate sees this), actual ground-truth environment=prod — cross-check against GET /cmdb/drift, not asserted here as a strict pass/fail"
+  }
+}

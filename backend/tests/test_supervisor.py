@@ -86,7 +86,11 @@ def test_patch_workflow_runs_through_planner_with_patching_runbook_class():
     ci = cis[STABLE_LOW_BR_CI_ID]
     alerts = _fault_alerts_for(STABLE_LOW_BR_CI_ID)
     outcome = asyncio.run(run_workflow(incident_id="INC-SUP-005", ci=ci, alerts=alerts, workflow_type="patch"))
-    assert outcome["status"] in ("complete", "pending_approval", "stopped")
+    # "blocked" is a real, correct outcome here (not previously possible before 2026-08-17's
+    # policy_gate.py wiring fix): patch/change-freeze windows (data/change_calendar.json) are now
+    # actually consulted for patching workflows, and this suite can run while one is genuinely
+    # active (see agents/planner.py's _load_policy_context docstring).
+    assert outcome["status"] in ("complete", "pending_approval", "stopped", "blocked")
     planner_result = next((r for r in outcome["trace"] if r.agent_name == "planner"), None)
     if planner_result:
         assert planner_result.turns_used >= 1

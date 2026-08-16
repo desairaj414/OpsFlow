@@ -4,7 +4,7 @@ okf_version: "0.2"
 
 # OpsFlow Knowledge Bundle
 
-OpsFlow (hackathon working name "Verascope") is a cross-stack maintenance control plane: a
+OpsFlow is a cross-stack maintenance control plane: a
 Supervisor + specialist multi-agent system that takes IT operations signals (fault alerts, voice
 commands, screenshots) through correlation, diagnosis, planning, guardrailed approval, execution,
 verification, and knowledge capture — auditable at every step. Built for TCS AI Fridays Season 2

@@ -5,7 +5,7 @@ description: LLM-driven root-cause hypothesis generation and ranking, invoked ov
 resource: backend/agents/diagnosis.py
 tags: [agents, llm, citation]
 status: stable
-generated: { by: "claude-sonnet-5/okf-produce", at: "2026-08-11T00:00:00Z" }
+generated: { by: "claude-sonnet-5/okf-maintain", at: "2026-08-17T00:00:00Z" }
 sources:
   - id: diagnosis-py
     resource: backend/agents/diagnosis.py
@@ -43,5 +43,12 @@ loop for the length of this call).
 [Supervisor](supervisor.md) takes `result["hypotheses"][0]` (the top-ranked hypothesis) as
 [Planner](planner-agent.md)'s input; an empty hypothesis list stops the workflow with
 `stopped`/`no_valid_hypotheses`.
+
+# Model-call cache
+
+The LLM call is only made on the first attempt of the retry loop — before calling, it checks
+[the model-call cache](/architecture/model-call-cache.md) for an exact-match prompt from a prior
+run, and only calls the live gateway on a miss. `SpecialistResult.cache_hit` records which
+happened.[^diagnosis-py]
 
 [^diagnosis-py]: backend/agents/diagnosis.py

@@ -1229,11 +1229,26 @@ def metrics_summary(current_user: str = Depends(get_current_user)):
         # synthetic demo). None (not 0%) when no decisions exist yet, so the frontend can render
         # "no data yet" instead of a misleading 0%.
         "approval_rate_satisfaction_proxy": round(human_approvals / total_decisions, 3) if total_decisions else None,
-        # Honest gap, not filled in: Phase 5 (Scenario Library, Eval & Hardening) hasn't run yet,
-        # so there's no scenario pass/fail rate or accuracy metric to show — these are live
-        # operational aggregates from this session's real runs, not an eval report.
-        "scenario_eval_status": "not_run — Phase 5 not started",
+        "scenario_eval_status": _read_scenario_eval_status(),
     }
+
+
+def _read_scenario_eval_status() -> str:
+    """Reads the eval harness's last report (backend/eval/harness.py, run manually — not on every
+    request) instead of computing anything live here. Honest placeholder if it's never been run in
+    this environment, same spirit as the "not_run" string this replaced."""
+    report_path = os.path.join(os.path.dirname(DB_PATH), "eval_report.json")
+    try:
+        with open(report_path, encoding="utf-8") as f:
+            report = json.load(f)
+    except FileNotFoundError:
+        return "not_run — run backend/eval/harness.py to generate a report"
+    return (
+        f"{report['passed']}/{report['total_scenarios']} scenarios passed (run {report['run_label']}, "
+        f"{report['generated_at']}) — verified_resolved={report['verified_resolved']} "
+        f"symptom_suppressed={report['symptom_suppressed']} citation_coverage={report['citation_coverage']:.0%} "
+        f"cache_hits={report['cache_hits']}/{report['cache_checks']}"
+    )
 
 
 # ---------------- Multimodal intake (voice + image) — real Whisper/gpt-4o, confirmation-gated ----------------

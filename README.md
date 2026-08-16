@@ -158,8 +158,9 @@ If all three render without errors, the full stack is working end to end.
 ### Try one real workflow run
 Sidebar → **Scenarios** panel (Admin/Approver) → launch `SCEN-01` (a clean, auto-approved incident
 resolution). It should reach `verified_resolved` within roughly the time it takes DeepSeek R1 to
-respond (can be 10-40+ seconds on a busy gateway — this is expected, not a hang). See
-`DEMO_SCRIPT.md` for the full scenario list and what each one demonstrates.
+respond (can be 10-40+ seconds on a busy gateway — this is expected, not a hang). See the Scenario
+Launcher panel itself, or `.okf/demo-modes/pregenerate-script.md`, for the full scenario list and
+what each one demonstrates.
 
 ---
 
@@ -169,12 +170,7 @@ This README gets you running. For everything else:
 
 | Doc | What's in it |
 |---|---|
-| [`ARCHITECTURE.md`](ARCHITECTURE.md) | System design: tiers, the 9-step agent chain, models used, guardrails, protocols, storage |
-| [`APP_FLOW.md`](APP_FLOW.md) | End-to-end data flow, sequence diagrams, where every UI number comes from |
-| [`DEMO_SCRIPT.md`](DEMO_SCRIPT.md) | Jury pitch, use-case story, live demo click-path, all 6 scenario fixtures explained |
-| [`PROJECT_STRUCTURE.md`](PROJECT_STRUCTURE.md) | Folder-by-folder / file-by-file guide to the whole codebase |
-| [`SETUP.md`](SETUP.md) | This README's detailed companion — full environment variable reference, troubleshooting appendix, verification checklist |
-| [`PRD_FINAL.md`](PRD_FINAL.md) | The frozen product requirements this build satisfies (long — reference, not required reading) |
+| [`.knowledge/PRD_INITIAL.md`](.knowledge/reference/PRD_INITIAL.md) | The frozen original product requirements this build satisfies (long — reference, not required reading) |
 | [`.knowledge/`](.knowledge/) | The build's own engineering log (architecture-as-built detail, decisions, phase-by-phase history) — useful if you're extending the code, not needed to just run it |
 | [`.okf/`](.okf/) | Portable Open Knowledge Format bundle — the same system knowledge as `.knowledge/`, distilled into one-concept-per-file markdown for readers without this repo's session history. Start at `.okf/index.md`. |
 

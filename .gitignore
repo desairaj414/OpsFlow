@@ -27,6 +27,11 @@ data/*.db
 backend/app.db
 *.log
 
+# tiktoken's downloaded BPE vocabulary cache (config.py: TIKTOKEN_CACHE_DIR="./token", relative to
+# backend/) — a multi-MB third-party download, not source, and previously got committed by mistake
+# (found 2026-08-17, removed from tracking). Re-downloads locally on first run, nothing to restore.
+backend/token/
+
 # data/chroma_db/ is intentionally committed (not ignored) — see render.yaml's backend build
 # comment: the source data is frozen synthetic seed data, and rebuilding the Chroma index from
 # scratch on every Render deploy means re-running ~700 embedding calls against Gemini's tightly
@@ -45,6 +50,3 @@ backend/app.db
 # --- Explicitly KEEP (do not ignore) ---
 !.knowledge/
 !CLAUDE.md
-!PRD_DRAFT.md
-!PRD_FINAL.md
-!token/

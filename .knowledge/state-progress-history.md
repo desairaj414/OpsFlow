@@ -18,9 +18,10 @@ by the Verascope rebrand directly below.
 
 ## LAST VERIFIED STEP (superseded) — Role-based access, real authentication, Verascope rebrand, theme toggle
 Four passes (real server-enforced roles, real PBKDF2 authentication with 3 seeded accounts, the
-full Verascope rebrand+Overview dashboard, light/dark toggle), self-verified via 84/84 + Playwright
-QA. Login credentials: `alex.chen`/`OpsEngineer!123`, `priya.sharma`/`Approver!123`,
-`admin`/`Admin!123`.
+full rebrand+Overview dashboard, light/dark toggle), self-verified via 84/84 + Playwright QA. Login
+credentials: `alex.chen`/`OpsEngineer!123`, `priya.sharma`/`Approver!123`, `admin`/`Admin!123`.
+**Correction (2026-08-17):** the rebrand named itself "Verascope" only for a few hours the same day
+before reverting to OpsFlow, before Final Submission — see `decisions-log.md`. Not a durable name.
 
 ## LAST VERIFIED STEP (superseded) — Ops Board readability, ticket-lifecycle Steps 2-4, offline Ollama fallback
 Ops Board readability was human-confirmed; the ticket-lifecycle Steps 2-4 pass; the offline Ollama
@@ -210,7 +211,7 @@ per-agent handoff cards in a modal. No backend changes this pass, full suite not
 ### Phase 0 (closed)
 - [x] Backend FastAPI skeleton running, CORS to frontend origin configured.
 - [x] Frontend Vite/React + shadcn/ui skeleton running, JWT mock-auth login flow works end to end.
-- [x] SSL bypass + `TIKTOKEN_CACHE_DIR` fix applied and confirmed working (see [env-network.md](env-network.md)).
+- [x] SSL bypass + `TIKTOKEN_CACHE_DIR` fix applied and confirmed working (see [env-network.md](reference/env-network.md)).
 - [x] `ollama list` recorded, no models pulled.
 - [x] Whisper confirmed via real audio/transcriptions call.
 - [x] `text-embedding-3-large` → Chroma round-trip confirmed.
@@ -372,6 +373,11 @@ admin-center visual direction below entirely; the data pivot and per-tab-copy wo
   `AdminControl.jsx`, `ui/{button,card,input}.jsx`) as the migration source + rollback path.
 
 ## Role-based access, real authentication, full Verascope rebrand, light/dark toggle (2026-08-07)
+**Correction (2026-08-17):** the "Verascope" name in this entry never shipped — it was reverted back
+to OpsFlow the same day it was introduced, before the hackathon's own Final Submission (git-confirmed,
+see `decisions-log.md`'s 2026-08-17 entry). Read every "Verascope" mention below as what was built
+*in this pass*, not the durable product name — the rebrand's other lasting effects (the token
+system, Overview dashboard, real auth, theme toggle) all stayed.
 Four back-to-back human-directed passes, all off the original phase plan, all before Phase 5 resumed
 (moved here from state-progress.md to keep that file under its ~200-line budget — this content was
 still awaiting explicit human browser confirmation when archived, not superseded, so treat "not yet
@@ -998,3 +1004,96 @@ seed applied without disturbing existing session rows.
 ## RESOLVED ISSUES (historical)
 - ~~Stack mismatch~~ **RESOLVED 2026-08-07:** human decided to migrate to Next.js per the frozen PRD (see [decisions-log.md](decisions-log.md)). Migration work happens in Phase 4, not now — Phase 0/1 stay backend-only.
 - **Model deprecations (2026-08-07), both RESOLVED:** Llama Vision and DeepSeek V3 deployments both permanently gone (HTTP 404/410, confirmed on repeated recheck). Human asked Claude to pick the best substitute for each; `genailab-maas-gpt-4o` (vision) and `azure/genailab-maas-gpt-4.1-nano` (V3's role) chosen after real task-shaped tests, wired into `.env`/`smoke_test.py`, re-verified end to end. See [decisions-log.md](decisions-log.md).
+
+## ARCHIVED 2026-08-17 — the phase-numbered narrative, before phase-based tracking was retired
+The paragraphs below are exactly what `state-progress.md`'s CURRENT PHASE section said before the
+2026-08-17 cleanup pass replaced phase-gated tracking with plain ongoing-state tracking (see that
+file's "PHASE-BASED TRACKING RETIRED" note and `decisions-log.md`'s matching entry). Kept verbatim
+here as the historical record; the `prd-phase-N.md` files these paragraphs linked to were deleted
+in that same pass — the paths below are dead references, not fixed, since this section is a
+snapshot, not a living document.
+
+**Phase 0 — DONE.** See `PHASE0_FINDINGS.md` (repo root).
+**Phase 1 — DONE.** Data, Simulated Systems & MCP Layer.
+**Phase 2 — DONE.** Deterministic Core (no LLM), 44/44 unit tests green.
+**Phase 3 — DONE. DEMO-COMPLETE CHECKPOINT REACHED (H+4:19, ahead of the H+11:30 schedule anchor).**
+Agent Chain, Supervisor, A2A & Multimodal Intake — all 14 atomic steps (both tracks) complete,
+84/84 backend tests green (44 Phase 2 + 40 Phase 3). **Human confirmed end-to-end at H+5:48** after
+a live re-run of the full suite (84/84, 136.85s, real gateway calls) plus isolated re-runs of two
+tests that showed transient gateway/proxy flakiness under sustained load in the first attempt (see
+KNOWN ISSUES) — gate satisfied, not just taken on the test suite's prior word.
+**Phase 4 — Cockpit UI — DONE**, H+5:48 to H+8:56. Next.js migration complete; all 8 PRD §7 tabs
+built (Ops Board, Incident Workspace, Agent Trace, Approval Queue, Drift Queue, Autonomy Ladder,
+Chunk Inspector, Metrics & Eval); all 7 hard acceptance criteria closed (golden path, Agent Trace
+fields incl. modality, real voice approval, real image→IMG-nnn citation, three-badge system, SSE
+live feed, Drift-vs-Truth split screen). **Human confirmed Phase 4 complete at H+8:59**, satisfied
+to start Phase 5 in a fresh session.
+**Phase 5 — Scenario Library, Eval & Hardening — PARTIALLY STARTED, then paused by human request.**
+Atomic step 1 (6 non-edge-case scenario fixtures, `data/scenarios/SCEN-01..06.json` + `scenarios`
+table wiring in `init_db.py`) is done and verified (84/84 backend tests green). Steps 2-8 not
+started. Human then redirected to a series of **pre-Phase-5, off-plan passes** — a jury-readiness
+UI pass, then role-based access + real authentication + a full product rebrand (Verascope) + a
+light/dark theme toggle — before continuing Phase 5. A fifth off-plan pass (Ops Board readability +
+local ITSM/Jira-shaped ticket lifecycle + a merged Knowledge Base tab + folding Metrics & Eval into
+Overview) was immediately followed by a sixth, still human-directed, still pre-Phase-5: Incident
+Workspace readability + removing the demo "Start incident" bar + click-to-open-incident +
+auto-diagnosing newly-arrived alerts with a notification bell.
+
+**Human confirmation status as of the archive date:** every one of the above off-plan passes
+(ServiceNow/Approval-Queue, Agent-Trace/Knowledge-Base, chatbot, Patch Management, and earlier ones)
+was self-verified/live-verified by the AI but never explicitly re-confirmed by the human as a
+separate step — superseded by volume of later work rather than individually signed off. Given the
+hackathon itself has since been submitted and the app has had substantial verified post-submission
+use (Render hosting, real visitor traffic possible, 96/2 backend suite green as of 2026-08-17), this
+is treated as resolved-by-subsequent-verification rather than left open indefinitely — flag to the
+human if any specific one of these behaviors looks wrong in current use.
+
+**Old NEXT STEP note (now resolved):** two items were flagged as "still owed" here — a real
+recorded voice sample (PRD §6.1) and the `evidence`/`hypotheses`/`plans`/`approvals`/`incidents`
+tables being empty. The voice-sample gap is still genuinely open (see `data/voice_samples/README.md`
+— needs a real human recording, not something this cleanup pass could close). The empty-tables
+question was resolved by not needing them: `backend/eval/harness.py` (built 2026-08-17) grades
+scenarios directly against `run_workflow()`'s return value and the audit log, never needed those
+normalized tables.
+
+**Old H+ HOURS ELAPSED note:** the hard schedule anchors this tracked (demo-complete checkpoint,
+FEATURE FREEZE Sat 09:30, SUBMISSION Sat 11:00) all passed during the original hackathon session —
+submission happened 2026-08-08. Not relevant to any work after that date.
+
+**Old FILE INVENTORY note (Knowledge Base/ITSM pass + Patch Management pass, pre-2026-08-17):**
+- **Backend, new**: `data/knowledge_base/KB-{SHAREPOINT,TEAMS,POWER-AUTOMATE,POWER-APPS,AZURE-AD}.md`.
+- **Backend, edited**: `backend/data_gen/alerts.py` (+`summary` field), `backend/data_gen/cmdb.py`
+  (+`display_name`, `CI_TYPE_LABEL`), `backend/db/schema.sql` (+`alerts.ci_id/category/severity/
+  summary`, `cmdb_ci.display_name`, new `local_tickets`/`integration_settings` tables), `backend/db/
+  init_db.py` (`populate_integration_settings`, updated `populate_cmdb`/`populate_alerts`),
+  `backend/chunking.py` (`chunk_postmortem` now passes through all frontmatter), `backend/db/
+  load_chroma.py` (`build_knowledge_base_chunks`, `doc_type` tagging on both paths), `backend/main.py`
+  (`_fetch_alerts_after`/`/alerts/correlated` carry the new fields; `_persist_ticket_snapshot`, `GET
+  /tickets`, `GET /tickets/{id}`, `GET/POST /config/integrations`, `POST /knowledge-base/upload`,
+  `doc_type` filter on `GET /chunks`, `doc_type` tag on `/runbooks/upload`), `hnsw:search_ef=500` on
+  both `get_or_create_collection("runbooks", ...)` calls. `backend/config.py` (+`OLLAMA_BASE_URL`/
+  `OLLAMA_FALLBACK_CHAT_MODEL`/`OLLAMA_FALLBACK_EMBED_MODEL`). `backend/api_client.py` (`get_llm`/
+  `get_embeddings` now offline-fallback to local Ollama; new `_EmbeddingsWithFallback`).
+  `backend/orchestrator/retrieval.py` (`_embed` comment only — deliberately NOT given a fallback,
+  see errors-solved.md).
+- **Frontend, edited**: `OpsBoard.jsx` (human-readable alerts/candidates, scroll containers, Diagnose/
+  Run-all-untriaged, Ticket History), `ChunkInspector.jsx` (renamed concept to Knowledge Base —
+  doc_type filter, in-tab upload), `Overview.jsx` (2 new KPI tiles + eval-status footer),
+  `ModelThresholdConfigPanel.jsx` (ServiceNow/Jira integration section), `CockpitShell.jsx`/
+  `roles.js`/`tabInfo.js` (tab rename + Metrics & Eval removal). `MetricsEval.jsx` deleted.
+
+**Patch Management pass, new/changed files:**
+- **Backend, new**: `data_gen/patch_inventory.py`, `mcp_servers/simulators/patch_source.py`,
+  `mcp_servers/patch_mcp.py`, `guardrails/scheduling.py`, `tests/test_scheduling.py`.
+- **Backend, edited**: `db/schema.sql` (+`patch_inventory`/`change_calendar` tables), `db/init_db.py`
+  (`populate_patch_inventory`/`populate_change_calendar`, row-count assertions), `orchestrator/
+  mcp_wiring.py` (+patch_mcp wiring), `agents/enrichment.py` (+`workflow_type` param, patch evidence
+  gathering), `agents/planner.py` (+`maintenance_window` for `runbook_class == "patching"`),
+  `orchestrator/supervisor.py` (threads `workflow_type` into `run_enrichment`), `main.py`
+  (`_format_workflow_outcome` +`workflow_type` field, both call sites updated), `tests/
+  test_enrichment.py`/`test_planner.py`/`test_supervisor.py` (extended with patch-specific
+  assertions).
+- **Frontend, edited**: `IncidentWorkspace.jsx` (+`MaintenanceWindowSection`/"Maintenance Planner"
+  panel, +`patch_inventory`/`change_calendar` evidence labels), rendered only when
+  `run.workflow_type === "patch"`.
+- **Data, new (generated, fixed seed)**: `data/patch_inventory.json`, `data/change_calendar.json`.

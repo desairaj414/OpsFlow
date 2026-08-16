@@ -2,63 +2,108 @@
 type: state
 title: State & Progress
 status: active
-updated: 2026-08-08
-related: [decisions-log.md, state-progress-history.md, prd-phase-0.md, prd-phase-1.md, prd-phase-2.md, prd-phase-3.md, prd-phase-4.md, env-network.md]
+updated: 2026-08-17
+related: [decisions-log.md, state-progress-history.md, reference/reference/future-plans.md, reference/reference/env-network.md]
 ---
 
-## CURRENT PHASE
-**Phase 0 — DONE.** See [PHASE0_FINDINGS.md](../PHASE0_FINDINGS.md) (repo root).
-**Phase 1 — DONE.** Data, Simulated Systems & MCP Layer. See [prd-phase-1.md](prd-phase-1.md).
-**Phase 2 — DONE.** Deterministic Core (no LLM), 44/44 unit tests green. See [prd-phase-2.md](prd-phase-2.md).
-**Phase 3 — DONE. DEMO-COMPLETE CHECKPOINT REACHED (H+4:19, ahead of the H+11:30 schedule anchor).**
-Agent Chain, Supervisor, A2A & Multimodal Intake — all 14 atomic steps (both tracks) complete,
-84/84 backend tests green (44 Phase 2 + 40 Phase 3). See [prd-phase-3.md](prd-phase-3.md) for the
-full acceptance-criteria checklist. **Human confirmed end-to-end at H+5:48** after a live re-run of
-the full suite (84/84, 136.85s, real gateway calls) plus isolated re-runs of two tests that showed
-transient gateway/proxy flakiness under sustained load in the first attempt (see KNOWN ISSUES) —
-gate satisfied, not just taken on the test suite's prior word.
-**Phase 4 — Cockpit UI — DONE**, H+5:48 to H+8:56. See [prd-phase-4.md](prd-phase-4.md). Next.js
-migration complete; all 8 PRD §7 tabs built (Ops Board, Incident Workspace, Agent Trace, Approval
-Queue, Drift Queue, Autonomy Ladder, Chunk Inspector, Metrics & Eval); all 7 hard acceptance
-criteria closed (golden path, Agent Trace fields incl. modality, real voice approval, real
-image→IMG-nnn citation, three-badge system, SSE live feed, Drift-vs-Truth split screen) — see
-LAST VERIFIED STEP below for the full closure record. CONTEXT CHECKPOINT done (`api-contract.md`,
-`rules-frontend.md` both updated). **Human confirmed Phase 4 complete at H+8:59**, satisfied to
-start Phase 5 in a fresh session.
-**Phase 5 — Scenario Library, Eval & Hardening — PARTIALLY STARTED, then paused by human request.**
-Atomic step 1 (6 non-edge-case scenario fixtures, `data/scenarios/SCEN-01..06.json` + `scenarios`
-table wiring in `init_db.py`) is done and verified (84/84 backend tests green). Steps 2-8 not
-started. Human then redirected to a series of **pre-Phase-5, off-plan passes** — a jury-readiness
-UI pass, then role-based access + real authentication + a full product rebrand (Verascope) + a
-light/dark theme toggle — before continuing Phase 5. See LAST VERIFIED STEP below.
-See [prd-phase-5.md](prd-phase-5.md). A fifth off-plan pass (Ops Board readability + local ITSM/
-Jira-shaped ticket lifecycle + a merged Knowledge Base tab + folding Metrics & Eval into Overview,
-all 4 steps built, live-verified end to end on a healthy gateway) was immediately followed by a
-sixth, still human-directed, still pre-Phase-5: **Incident Workspace readability + removing the demo
-"Start incident" bar + click-to-open-incident + auto-diagnosing newly-arrived alerts with a
-notification bell** — see the newest LAST VERIFIED STEP below.
+## PHASE-BASED TRACKING RETIRED (2026-08-17)
+This file (and `.knowledge/` generally) no longer tracks work as a numbered PRD phase sequence.
+The hackathon's own submission already happened (commit `6299a26`, 2026-08-08) — the phase clock
+(H+ hours, FEATURE FREEZE, SUBMISSION anchors) was scoped to that deadline and is now moot. Every
+`prd-phase-N.md` file plus `extra-credit.md` was deleted this session after each phase's remaining
+content was individually triaged: genuinely valuable remaining work was either already done in a
+different, better form by later post-submission passes (see the 2026-08-17 entry below for the
+specific mapping), built as part of this cleanup, or moved to [future-plans.md](reference/future-plans.md) as
+scoped-but-not-built backlog. See `decisions-log.md`'s newest entry for the full triage record.
+Going forward this file just tracks ongoing state — no more "CURRENT PHASE" / "NEXT STEP" framing
+tied to a phase number. `PRD_INITIAL.md` (moved+renamed from root `PRD_FINAL.md` 2026-08-17) stays
+as the frozen original product spec (do not re-decide
+what it settled), but is no longer executed as a step-by-step phase plan.
 
-## LAST VERIFIED STEP (superseded) — ServiceNow-only tickets, needs_approval status, Ops Board
-## status filter, Approval Queue folded into Incident Workspace; Agent Trace/Knowledge Base moved
-## off the main tab bar
-Moved to [state-progress-history.md](state-progress-history.md) for space — two passes, both
-self-verified/live-verified at the time, both superseded (in file-touch terms, not undone) by the
-Demo-readiness pass below, which further edited `Tickets.jsx`, `Sidebar.jsx`, and
-`ChunkInspector.jsx`. Confirmation status for both is still open, not resolved by archiving.
+## CURRENT STATE
+Full agent chain (Correlate → Enrich → Diagnose → Plan → Gate → Approve → Execute → Verify → Sync →
+Knowledge) over 3 workflow types (incident/patch/performance), Next.js cockpit UI with real
+role-based auth, multi-provider LLM backend (Gemini default, OpenRouter fallback, TCS legacy, +BYOK),
+hosted live on Render. All of Phase 0-4's original scope is done and verified — detailed closed-phase
+record moved to [state-progress-history.md](state-progress-history.md) ("ARCHIVED 2026-08-17" section
+has the phase-by-phase summary verbatim, since the phase docs it originally linked to are deleted).
+Human confirmation on the pre-Phase-5 off-plan passes (auth/rebrand/ServiceNow/chatbot/Patch
+Management, etc.) was never individually re-collected but is treated as resolved-by-subsequent-use —
+see the history file's archived note if you need the exact reasoning.
 
-## LAST VERIFIED STEP (superseded) — Floating assistant (chatbot), reversing the documented "no
-## chatbot" decision; push-to-talk merged into it
-Moved to [state-progress-history.md](state-progress-history.md) for space — self-verified/
-live-verified at the time, confirmation status still open, not resolved by archiving. Foundational
-context for the chat/image work in the Demo-readiness pass directly below.
-
-## LAST VERIFIED STEP (superseded) — Demo-readiness pass (dev-text sweep, dark scrollbar, Sidebar
-## panel consolidation, chat ticket table, image intake moved to chat) + Drift Queue hidden /
-## Autonomy Ladder seeded
-Both passes self-verified/live-verified at the time, confirmation status still open, not resolved
-by archiving. Moved to [state-progress-history.md](state-progress-history.md) for space — this was
-the last state-progress.md entry before the hackathon's own submission commit; see POST-SUBMISSION
-WORK below for everything since.
+## LAST VERIFIED STEP — Phase 5 substantive close-out + phase-based tracking retired (2026-08-17)
+Self-verified this session (96/2 backend suite green, eval harness 14/14 twice consecutively) —
+**awaiting human confirmation**, per this file's own discipline. Full triage of every remaining
+Phase 5/6/7 item — what was worth building vs. already covered elsewhere vs. genuinely moot — is in
+`decisions-log.md`'s newest entry; only the built/changed facts are repeated here:
+- **4 new scenario fixtures** (`data/scenarios/SCEN-07..10.json`, reusing existing CMDB/alert data —
+  no synthetic data invented) bring the non-edge scenario count to 10. **4 edge-case fixtures**
+  (`edge_policy_refusal.json`, `edge_cmdb_drift.json`, `edge_conflicting_evidence.json`,
+  `edge_no_strong_precedent.json`) cover 4 of the original 6 edge types via live-reachable mechanisms
+  (no new guardrail code needed). The other 2 edge types (scrubber catch, prompt-injection line) were
+  **already built and measured** back in Phase 2/3 via `pii_ground_truth.json` + the scrubber's own
+  test suite (`domain-privacy.md`: "Adversarial prompt-injection line: flagged correctly (1/1)") —
+  not rebuilt as scenario fixtures, since that would have duplicated a better-tested existing check.
+  `backend/db/init_db.py`'s `scenarios` row-count assertion updated 6→14. Every `expected` block was
+  corrected against a real observed run, not assumed (SCEN-09 initially guessed `verified_resolved`,
+  actually produced `symptom_suppressed` on a real run — fixture corrected to match reality).
+- **`backend/eval/harness.py`** (new) — runs every seeded scenario through the real
+  `orchestrator.supervisor.run_workflow()` (the same call the Scenario Launcher UI panel and
+  `scripts/pregenerate_demo_outputs.py` already use — not a fourth reimplementation), grades against
+  each fixture's `expected` block, reports pass/fail, verified_resolved vs symptom_suppressed counts,
+  and citation coverage. Writes `data/eval_report.json`. Two consecutive full runs: 14/14 both times.
+- **`backend/orchestrator/cache.py`** (new) — wires the `model_call_cache` table (declared in
+  `schema.sql` since Phase 1, never previously written to) into `diagnosis.py`/`planner.py`'s LLM
+  calls, hash(prompt_version, exact prompt text) → response. `SpecialistResult` gained an additive
+  `cache_hit: bool | None` field. Confirmed working on a real consecutive replay: 18/28 cache checks
+  hit on pass 2 (not 100% — the remaining misses are consistent with Chroma's approximate-nearest-
+  neighbor retrieval giving slightly different precedent-evidence ordering run-to-run, a known
+  characteristic of this project's vector search, not a bug in the cache key).
+- **`scripts/generate_screenshot_fixtures.py`** (new) — generates
+  `data/screenshots/legacy-ui-001.png` (a genuinely downscaled/pixelated synthetic image, not just a
+  clean render labeled "legacy"), closing part of the PRD §6.1 screenshot-fixture gap.
+- **Voice samples: 3 synthetic placeholders added (real recordings still owed).** PRD §6.1/§6.3
+  require *real, team-recorded* speech; the human explicitly approved a synthetic stand-in
+  (Windows SAPI TTS: 2 accented via the en-IN voices, 1 noise-mixed via stdlib `wave`) so the
+  pipeline has something to exercise meanwhile — clearly labeled everywhere, never claimed to
+  satisfy §6.3. `eval/harness.py`'s `_check_voice_fixtures()` now actually runs them through
+  `run_voice_intake()` (skips gracefully if the active provider has no transcription endpoint, same
+  as `test_voice_path.py`). See `data/voice_samples/README.md`.
+- **`guardrails/policy_gate.py`'s dead-code rules fixed.** `planner.py`'s new `_load_policy_context()`
+  wires real `freeze_windows` (via the existing `patch_mcp.get_change_calendar()` call, **patching
+  workflows only** — wiring it universally immediately broke 4 incident/tuning tests, since
+  `change_calendar.json`'s global blackout window is deliberately date-ranged to include "now" for
+  the Patch Management demo, and blocking incident remediation on an unrelated code freeze isn't
+  correct ITSM behavior) and real `active_changes_in_environment` (COUNT of `local_tickets` rows at
+  `status_normalized='needs_approval'` per environment — that status is exclusively live-run-set,
+  never present in the 4000 bulk-seeded historical rows, confirmed directly before trusting it).
+  `SCEN-04`/`SCEN-08` (patch scenarios) now correctly show `blocked` while that demo blackout window
+  is active — fixtures updated to expect it, `test_supervisor.py`'s matching assertion updated with
+  a comment explaining why. 96/2 full suite green after the fix; harness re-run twice, 14/14 both
+  times.
+- **`main.py`'s `GET /metrics/summary`** `scenario_eval_status` field now reads
+  `data/eval_report.json` instead of the hardcoded `"not_run — Phase 5 not started"` placeholder it
+  shipped with.
+- **`scripts/pregenerate_demo_outputs.py`** re-run (idempotent, only processed the 4 new scenarios) —
+  Instant Demo mode now covers all 10 non-edge scenarios, not just the original 6. Real Gemini API
+  calls were made (free tier, ~8 calls) — flagging since it's the one action this pass took against
+  a live external key, not a local-only change.
+- **`.knowledge/future-plans.md`** (new) — every original Phase 6 "extra credit" item individually
+  re-evaluated for current relevance (most: no, superseded by the app being a real hosted product now,
+  not a judged demo; a few: still genuinely worth doing, scoped there). Its `policy_gate.py` dead-code
+  finding was fixed in this same session (see bullet above) — marked done there, not left as backlog.
+- **Phase-based tracking retired**: `prd-phase-0.md` through `prd-phase-7-final.md` and
+  `extra-credit.md` deleted; `CLAUDE.md`'s hub index updated to match. See this file's top note.
+- **Root-doc cleanup**: `ARCHITECTURE.md`, `DEMO_SCRIPT.md`, `APP_FLOW.md`, `PROJECT_STRUCTURE.md`,
+  `SETUP.md` deleted — all frozen at 2026-08-08 (hackathon submission day), describing the pre-pivot
+  single-TCS-gateway/DeepSeek/Llama-Vision design; `README.md` has superseded all of them and is
+  actively kept current.
+- **RESOLVED (2026-08-17, next session):** the Verascope/OpsFlow discrepancy flagged above was
+  investigated via `git log -S"Verascope"` — the rebrand was a same-day draft that got reverted
+  before the hackathon's own Final Submission (`f731300` introduced it 2026-08-08 05:45, `6299a26`
+  reverted it 2026-08-08 10:14). The app has been OpsFlow at every shipped/submitted commit; the
+  decision-log entry just never reflected the reversal. See `decisions-log.md`'s newest entry for
+  the correction and the one real shipped leftover it found (`theme.js`'s localStorage key name).
 
 ## POST-SUBMISSION WORK (2026-08-11 onward) — tracked in `.okf/log.md`, not narrated here
 The hackathon itself concluded at commit `6299a26` ("Final Submission", 2026-08-08). Everything
@@ -74,35 +119,21 @@ meant to be the durable decision record regardless of era. For narrative/how-it-
 any post-submission concept, read the matching `.okf/` concept file, not this one.
 
 ## NEXT STEP
-Human confirmation still open on this pass, the ServiceNow/Approval-Queue pass, the Agent-Trace/
-Knowledge-Base pass, the chatbot pass, the Patch Management pass, and the ones before that (the
-underlying logic for all of it is now live-verified end-to-end on a healthy gateway, not just
-self-verified). Once confirmed: resume **Phase 5** (Scenario Library, Eval
-& Hardening) — read
-[prd-phase-5.md](prd-phase-5.md) in full (only step 1 of 8 is done — 6 scenario fixtures). Two items
-still owed from earlier sessions, unchanged by this pass:
-- Real recorded voice sample (PRD §6.1: ≥2 noisy/accented samples) — still not done.
-- `evidence`/`hypotheses`/`plans`/`approvals`/`incidents` tables (`schema-db.md`) are still empty —
-  decide whether Phase 5's eval work needs structured per-incident queries before starting step 4
-  (eval harness).
-
-## H+ HOURS ELAPSED
-Approximately H+13:00 (exact wall-clock not logged this session — estimate from work volume: role
-system + real-auth conversion + full visual rebrand with a new dashboard + theme toggle, each with
-its own backend-test-suite reruns and live Playwright QA pass, since the H+10:00 mark). Schedule anchors: demo-complete
-checkpoint Fri 20:30 (H+11:30) — **reached early, human-confirmed**; FEATURE FREEZE Sat 09:30 (H+24:30, hard);
-SUBMISSION Sat 11:00 (H+26:00, hard). Full per-phase clock table in [prd-phase-0.md](prd-phase-0.md)
-through [prd-phase-7-final.md](prd-phase-7-final.md). Phases 1-3's combined ~10.5h budget
-(H+1:30-11:30) was compressed to ~2.5h of wall-clock work this session (AI-assisted, single
-operator) — running well ahead of the phase clock. **Do not let this pace set false expectations**
-for Phase 4 (UI/frontend work, a different kind of effort) or for the human's own review time,
-which this compressed pace does not substitute for.
+Human confirmation open on this session's Phase 5 close-out (above) plus everything carried forward
+from before it (ServiceNow/Approval-Queue, Agent-Trace/Knowledge-Base, chatbot, Patch Management,
+role/auth/rebrand passes) — all self-verified/live-verified, none individually re-confirmed by a
+human as a separate step, treated as resolved-by-subsequent-use (see CURRENT STATE above). No phase
+to "resume" anymore. One real open item:
+- Real recorded voice sample (PRD §6.1: ≥2 noisy/accented samples) — still not done, needs a human.
+Otherwise: pick up whatever [future-plans.md](reference/future-plans.md) items look worth doing, or work
+requested fresh by the human — this file no longer implies a default "next" task.
 
 ## DONE (verified)
-Phase 0-3 detailed checklists moved to [state-progress-history.md](state-progress-history.md).
-Phase 4 fully closed (see history for the detailed record). Role-based access, real auth, the
-Verascope rebrand, and the theme toggle are implemented and self-verified — tracked in LAST VERIFIED
-STEP above, **awaiting human confirmation** (not yet marked done-and-confirmed).
+Phase 0-4 fully closed (detailed record in [state-progress-history.md](state-progress-history.md)).
+Role-based access, real auth, the (later-reverted-to-OpsFlow) rebrand, and the theme toggle are
+implemented and self-verified. This session's Phase 5 close-out (scenario library, eval harness,
+cache, screenshot fixture) is self-verified — see LAST VERIFIED STEP above — **awaiting human
+confirmation** per this file's standing discipline.
 
 ## MOCKED & DEFERRED
 Phase 0-3 items (simulators, real Jira, PDF runbooks, real voice sample, A2A PKI, live ports) moved
@@ -119,46 +150,24 @@ policy thresholds on the same panel ARE genuinely live-editable, in-memory only,
 restart.
 
 ## FILE INVENTORY
-Phase 0-4, jury-readiness, and role/auth/rebrand/theme file lists all moved to
-[state-progress-history.md](state-progress-history.md) for space. This pass's new/changed files:
-- **Backend, new**: `data/knowledge_base/KB-{SHAREPOINT,TEAMS,POWER-AUTOMATE,POWER-APPS,AZURE-AD}.md`.
-- **Backend, edited**: `backend/data_gen/alerts.py` (+`summary` field), `backend/data_gen/cmdb.py`
-  (+`display_name`, `CI_TYPE_LABEL`), `backend/db/schema.sql` (+`alerts.ci_id/category/severity/
-  summary`, `cmdb_ci.display_name`, new `local_tickets`/`integration_settings` tables), `backend/db/
-  init_db.py` (`populate_integration_settings`, updated `populate_cmdb`/`populate_alerts`),
-  `backend/chunking.py` (`chunk_postmortem` now passes through all frontmatter), `backend/db/
-  load_chroma.py` (`build_knowledge_base_chunks`, `doc_type` tagging on both paths), `backend/main.py`
-  (`_fetch_alerts_after`/`/alerts/correlated` carry the new fields; `_persist_ticket_snapshot`, `GET
-  /tickets`, `GET /tickets/{id}`, `GET/POST /config/integrations`, `POST /knowledge-base/upload`,
-  `doc_type` filter on `GET /chunks`, `doc_type` tag on `/runbooks/upload`), `hnsw:search_ef=500` on
-  both `get_or_create_collection("runbooks", ...)` calls. `backend/config.py` (+`OLLAMA_BASE_URL`/
-  `OLLAMA_FALLBACK_CHAT_MODEL`/`OLLAMA_FALLBACK_EMBED_MODEL`). `backend/api_client.py` (`get_llm`/
-  `get_embeddings` now offline-fallback to local Ollama; new `_EmbeddingsWithFallback`).
-  `backend/orchestrator/retrieval.py` (`_embed` comment only — deliberately NOT given a fallback,
-  see errors-solved.md). `backend/db/load_chroma.py` (`build_knowledge_base_chunks`, `doc_type`
-  tagging on both paths, `hnsw:search_ef=500`).
-- **Frontend, new**: none (all changes to existing components).
-- **Frontend, edited**: `OpsBoard.jsx` (human-readable alerts/candidates, scroll containers, Diagnose/
-  Run-all-untriaged, Ticket History), `ChunkInspector.jsx` (renamed concept to Knowledge Base —
-  doc_type filter, in-tab upload), `Overview.jsx` (2 new KPI tiles + eval-status footer),
-  `ModelThresholdConfigPanel.jsx` (ServiceNow/Jira integration section), `CockpitShell.jsx`/
-  `roles.js`/`tabInfo.js` (tab rename + Metrics & Eval removal). `MetricsEval.jsx` deleted.
-
-**Patch Management pass, new/changed files:**
-- **Backend, new**: `data_gen/patch_inventory.py`, `mcp_servers/simulators/patch_source.py`,
-  `mcp_servers/patch_mcp.py`, `guardrails/scheduling.py`, `tests/test_scheduling.py`.
-- **Backend, edited**: `db/schema.sql` (+`patch_inventory`/`change_calendar` tables), `db/init_db.py`
-  (`populate_patch_inventory`/`populate_change_calendar`, row-count assertions), `orchestrator/
-  mcp_wiring.py` (+patch_mcp wiring), `agents/enrichment.py` (+`workflow_type` param, patch evidence
-  gathering), `agents/planner.py` (+`maintenance_window` for `runbook_class == "patching"`),
-  `orchestrator/supervisor.py` (threads `workflow_type` into `run_enrichment`), `main.py`
-  (`_format_workflow_outcome` +`workflow_type` field, both call sites updated), `tests/
-  test_enrichment.py`/`test_planner.py`/`test_supervisor.py` (extended with patch-specific
-  assertions).
-- **Frontend, edited**: `IncidentWorkspace.jsx` (+`MaintenanceWindowSection`/"Maintenance Planner"
-  panel, +`patch_inventory`/`change_calendar` evidence labels), rendered only when
-  `run.workflow_type === "patch"`.
-- **Data, new (generated, fixed seed)**: `data/patch_inventory.json`, `data/change_calendar.json`.
+Everything before this session moved to [state-progress-history.md](state-progress-history.md) for
+space. This pass's (2026-08-17) new/changed files:
+- **Backend, new**: `backend/eval/harness.py` (+`__init__.py`), `backend/orchestrator/cache.py`,
+  `scripts/generate_screenshot_fixtures.py`.
+- **Backend, edited**: `backend/agents/diagnosis.py`/`planner.py` (cache wiring), `backend/
+  orchestrator/contracts.py` (+`SpecialistResult.cache_hit`), `backend/db/init_db.py` (`scenarios`
+  count assertion 6→14), `backend/main.py` (`_read_scenario_eval_status`, replaces the hardcoded
+  placeholder).
+- **Data, new**: `data/scenarios/SCEN-07..10.json`, `data/scenarios/edge_*.json` (4 files),
+  `data/screenshots/legacy-ui-001.png`, `data/voice_samples/README.md`, `data/eval_report.json`
+  (generated by the harness, not hand-written).
+- **Data, regenerated**: `data/demo_outputs.json` (extended, not replaced — `pregenerate_demo_outputs.py`
+  is idempotent).
+- **Knowledge, new**: `.knowledge/future-plans.md`.
+- **Knowledge, deleted**: `.knowledge/prd-phase-0.md` through `prd-phase-7-final.md`,
+  `.knowledge/extra-credit.md`.
+- **Root docs, deleted**: `ARCHITECTURE.md`, `DEMO_SCRIPT.md`, `APP_FLOW.md`, `PROJECT_STRUCTURE.md`,
+  `SETUP.md`.
 
 ## KNOWN ISSUES
 - **Gateway/proxy flakiness under sustained load (2026-08-07, WATCHING):** first live full-suite
@@ -190,13 +199,19 @@ Phase 0-4, jury-readiness, and role/auth/rebrand/theme file lists all moved to
   this app actually uses (incl. all 3 Phase 0 blocking checks) PASS.** Prompted implementing the
   offline Ollama fallback (models-routing.md, decisions-log.md) that PRD §3.2 had specified but never
   wired into code — kept, not reverted, since a future outage should degrade instead of hard-failing.
-- **Phi-4-reasoning flakiness (2026-08-07, WATCHING):** intermittent 404s (3 rechecks: 404, 404, 200) — gateway-side instability, not a deprecation. Non-blocking (smoke-test-only model, unused in primary path), no substitute applicable. Re-run `python smoke_test.py` closer to the demo/submission checkpoint to see if it's cleared.
-- Team-member-to-phase assignment (PRD §9 Q1) is still open; phase nodes use role placeholders ("Owner: Simulators/MCP", etc.) instead of names — fill in real names in each `prd-phase-N.md` as soon as known.
-- Resolved issues (stack mismatch, model deprecations) moved to [state-progress-history.md](state-progress-history.md).
+- **Phi-4-reasoning flakiness (2026-08-07, WATCHING):** intermittent 404s (3 rechecks: 404, 404, 200) — gateway-side instability, not a deprecation. Non-blocking (smoke-test-only model, unused in primary path), no substitute applicable.
+- **`policy_gate.py`'s `FREEZE_WINDOW`/`MAX_CONCURRENT_CHANGES` rules are dead code in the live path
+  (found 2026-08-17):** both are fully built and unit-tested, but `agents/planner.py` always calls
+  `evaluate_policy(request, PolicyContext())` with an empty context, so `freeze_windows` is always
+  `[]` and `active_changes_in_environment` is always `0` — neither rule can ever actually fire from a
+  real workflow run. Scoped as a real fix opportunity in [future-plans.md](reference/future-plans.md), not
+  fixed this pass (would need deciding whether `change_calendar.json`'s blackout windows, built for
+  patch scheduling, should also back the general policy gate — a real design question, not a typo).
+- Resolved issues (stack mismatch, model deprecations, gateway outages) moved to [state-progress-history.md](state-progress-history.md).
 
 ## RESUME INSTRUCTION
-If resuming a stalled session: read this file, then [decisions-log.md](decisions-log.md), then the
-current phase node named above. Do not re-read `PRD_FINAL.md` in full — it is frozen and already
-distilled into `.knowledge/`. Only open [state-progress-history.md](state-progress-history.md) if
-you need Phase 0-3 closed detail — not needed for normal Phase 4+ resume. Update H+ HOURS ELAPSED
-and CURRENT PHASE only after the human confirms the next step actually works.
+If resuming a stalled session: read this file, then [decisions-log.md](decisions-log.md). Do not
+re-read `PRD_INITIAL.md` in full — it is frozen and already distilled into `.knowledge/`. Only open
+[state-progress-history.md](state-progress-history.md) if you need old closed-phase detail — not
+needed for normal ongoing work. Update this file only after the human confirms a change actually
+works, per the standing "written vs. verified" discipline (CLAUDE.md maintenance protocol item 1).

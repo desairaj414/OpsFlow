@@ -2,13 +2,14 @@
 type: decision
 title: Decisions Log
 status: active
-updated: 2026-08-07
-related: [extra-credit.md, arch-overview.md, models-routing.md]
+updated: 2026-08-17
+related: [reference/reference/future-plans.md, architecture/architecture/arch-overview.md, architecture/architecture/models-routing.md]
 ---
 
-Pulled directly from `PRD_FINAL.md` §3.7, §4.0 and §4.3 (already-resolved decisions). One line
-each: decision — alternative rejected — reason. **Do not re-litigate any of these.** If a phase
-turns up a reason one should change, stop and tell the human; do not edit this log unilaterally.
+Pulled directly from `PRD_INITIAL.md` §3.7, §4.0 and §4.3 (already-resolved decisions; file moved
++ renamed from root `PRD_FINAL.md` 2026-08-17). One line each: decision — alternative rejected —
+reason. **Do not re-litigate any of these.** If new work turns up a reason one should change, stop
+and tell the human; do not edit this log unilaterally.
 
 ## Log (from PRD §3.7 — alternatives considered)
 - **Two-level Supervisor + specialists** — rejected: single do-everything agent, fully autonomous remediation, LLM-based correlation, off-the-shelf frameworks (LangGraph/CrewAI/AutoGen), routing all traffic over A2A, an MCP server that "coordinates agents". Reason: MAST data attributes 44.2%/32.3% of multi-agent failures to system design/misalignment; centralised validation bottleneck contains error amplification to ~4.4× vs ~17× uncoordinated.
@@ -18,7 +19,7 @@ turns up a reason one should change, stop and tell the human; do not edit this l
 - **One A2A handoff only**, not routing all agent traffic over A2A — reason: the architectural claim needs exactly one demonstrated handoff; more is real implementation burden for no marginal credit.
 - **Simulated ITSM/Tracker/Monitoring/CMDB (our own FastAPI)**, not real ServiceNow PDI — rejected: real ServiceNow PDI. Reason: hibernates ~24h, releases after 10 days, possible waitlist, licence framing, lab-network risk; simulators can also produce scenarios (50-alert storm, 6-month CMDB drift, planted credential) a real instance cannot produce on demand.
 - **SQLite + Chroma**, not Postgres/Neo4j — reason: moderate data volume (hundreds of records); SQLite + an adjacency table covers CI relationships without overkill.
-- **Structural chunking (heading/step boundaries)**, not fixed-size chunking — reason: naive fixed-size splitting can cut a runbook step mid-instruction, which is dangerous when the retrieved text is an action against production. See §6.4 / [domain-guardrails.md](domain-guardrails.md).
+- **Structural chunking (heading/step boundaries)**, not fixed-size chunking — reason: naive fixed-size splitting can cut a runbook step mid-instruction, which is dangerous when the retrieved text is an action against production. See §6.4 / [domain-guardrails.md](domain/domain-guardrails.md).
 
 ## Log (from PRD §4.0 — trade ledger, what was cut to fund voice/vision/full-parity tuning)
 - **Cut scoped chat drawer** — reason: voice is now the conversational modality (D1), so the hybrid-interaction guidance is still satisfied without the "is this just a chatbot" framing risk.
@@ -46,7 +47,7 @@ turns up a reason one should change, stop and tell the human; do not edit this l
 - **Alternatives considered:** Keep Vite/React (repo already has a working skeleton) and note the
   deviation in the README instead of migrating.
 - **Rationale:** Human call, made explicitly to resolve the stack-mismatch flagged in
-  `state-progress.md` KNOWN ISSUES — PRD_FINAL.md is frozen and specifies Next.js. Migration work
+  `state-progress.md` KNOWN ISSUES — PRD_INITIAL.md is frozen and specifies Next.js. Migration work
   itself is deferred to Phase 4 (Cockpit UI) since Phase 0-1 are backend-only; not done as
   emergency surgery on the working Vite skeleton mid-Phase-0.
 - **Date:** 2026-08-07
@@ -293,3 +294,71 @@ turns up a reason one should change, stop and tell the human; do not edit this l
   platform and Render's paid Node Web Service tier ($7/mo minimum, confirmed live) — genuinely
   free, always-warm, CDN-backed, with zero UX tradeoff.
 - **Date:** 2026-08-14 (hosting decision); service rename to `opsflowapp`/`opsflowapp-backend` 2026-08-15
+
+- **Decision:** Retire phase-based execution tracking entirely. Every remaining item in
+  `prd-phase-5.md` (Scenario Library, Eval & Hardening — the only phase not fully closed),
+  `prd-phase-6.md` (Extra Credit), and `prd-phase-7-final.md` (Freeze & Packaging) was individually
+  triaged against the app's actual current state (multi-provider, publicly hosted, post-submission)
+  rather than mechanically executed as originally scoped. Outcome: `prd-phase-0.md` through
+  `prd-phase-7-final.md` and `extra-credit.md` deleted; `CLAUDE.md`'s hub index and
+  `state-progress.md` updated to drop phase-gated framing in favor of plain ongoing-state tracking.
+  Per-item triage:
+  - **Phase 5** — built out for real: 4 more scenario fixtures (10 total non-edge), 4 edge-case
+    fixtures for the 4 edge types not already covered elsewhere, `backend/eval/harness.py` (new),
+    `backend/orchestrator/cache.py` wiring the previously-unused `model_call_cache` table into
+    diagnosis/planner, a low-quality/legacy-UI screenshot fixture. Two of the six originally-planned
+    edge cases (scrubber catch, prompt-injection line) were found **already built and measured** in
+    Phase 2/3 via `pii_ground_truth.json` + the scrubber's own test suite — not rebuilt as
+    duplicate scenario fixtures. Real voice samples were left genuinely open (need a human to record
+    them; PRD requires real speech, not synthetic) per the human's explicit choice when asked.
+  - **Phase 6** — not built. Reframed entirely: it was scoped as "extra credit for judges" ahead of
+    a hackathon deadline that has already passed (commit `6299a26`). Every original item was
+    individually re-evaluated for whether it's still worth doing now that the app is a hosted public
+    product, not a judged demo — see `future-plans.md` (new) for the full per-item verdict and scope.
+  - **Phase 7** — effectively already done, in a better form, by post-submission work never
+    attributed to it: `README.md` (actively maintained, far more current than the phase spec's
+    README requirements) already covers the gateway/simulated-systems/MCP-A2A disclaimers this phase
+    called for. The phase's other deliverables (deck outline, demo video, round-robin rehearsal) were
+    hackathon-judging-specific with no ongoing audience. Its stale, never-updated-since-2026-08-08
+    byproducts (`ARCHITECTURE.md`, `DEMO_SCRIPT.md`, `APP_FLOW.md`, `PROJECT_STRUCTURE.md`,
+    `SETUP.md` — all pre-pivot, single-TCS-gateway/DeepSeek/Llama-Vision content) were deleted as
+    redundant with `README.md`.
+  - **New finding, not acted on:** `guardrails/policy_gate.py`'s `FREEZE_WINDOW`/
+    `MAX_CONCURRENT_CHANGES` rules are fully built and unit-tested but never reachable from a live
+    workflow run (`planner.py` always passes an empty `PolicyContext()`) — real, silent gap, scoped
+    in `future-plans.md`, not fixed here since it wasn't what was asked.
+- **Alternatives considered:** Mechanically complete every remaining Phase 5/6/7 checklist item as
+  originally scoped, regardless of current relevance (rejected — the human explicitly asked not to
+  duplicate/rebuild things that already exist in a better form elsewhere); leave the phase docs in
+  place indefinitely as historical record without retiring the tracking model (rejected — the
+  explicit goal was that a future session's resume shouldn't perceive incomplete phases as
+  outstanding work).
+- **Rationale:** Human's explicit request: check each phase's remaining scope against everything
+  built since (the multi-provider pivot, hosting, mobile-responsive pass, and the many off-plan UI
+  passes), build what's genuinely still worth it, don't duplicate what already exists in a different
+  form, and clean up the phase-tracking apparatus itself once resolved so it stops implying
+  unfinished phase work on every future session resume.
+- **Date:** 2026-08-17
+
+- **Decision:** SUPERSEDES the "full rebrand off Microsoft entirely... product name 'Verascope'"
+  decision above. The app is, and remains, **OpsFlow** — that rebrand was reverted the same day it
+  was introduced, before the hackathon's own Final Submission. Confirmed by git history, not
+  assumption: `Logo.jsx` introduced "Verascope" branding in commit `f731300` ("Final Draft 1",
+  2026-08-08 05:45), then was reverted back to "OpsFlow" in commit `6299a26` ("Final Submission",
+  2026-08-08 10:14) — under 5 hours later, same day. The decision entry above was never corrected to
+  reflect the reversal at the time (it describes the mid-draft state, not the shipped state), which
+  left every later note built on top of it (this file, `state-progress-history.md`) describing
+  "Verascope" as the live product identity when it never actually was one, past a same-day draft.
+  All references corrected this pass: `frontend/src/lib/theme.js`'s `THEME_STORAGE_KEY` (was
+  `"verascope-theme"`, a real shipped-but-harmless naming leftover — a returning visitor with the
+  old key just gets the light-default theme once, same as a first-time visitor), `.okf/index.md`,
+  `state-progress.md`, `state-progress-history.md`.
+- **Alternatives considered:** Actually rebrand to Verascope now, to match what the decision log
+  claimed (rejected — the human confirmed OpsFlow is correct and current; the log was wrong, not the
+  code); leave the stale references in place with just a caveat note (rejected — the human explicitly
+  asked for every reference corrected, not just flagged).
+- **Rationale:** Human's explicit correction after last session's cleanup pass flagged the
+  discrepancy as unresolved ("found, not fixed"). Investigated with `git log -S"Verascope"` rather
+  than guessing — the full timeline was a same-day draft-and-revert inside the original hackathon
+  session, not a mysterious later regression.
+- **Date:** 2026-08-17

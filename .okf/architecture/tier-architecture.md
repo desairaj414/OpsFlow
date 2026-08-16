@@ -14,7 +14,8 @@ sources:
 
 # Overview
 
-OpsFlow's design intent (frozen in `PRD_FINAL.md`) is six layers, top to bottom:[^arch-overview]
+OpsFlow's design intent (frozen in `.knowledge/PRD_INITIAL.md`, renamed from `PRD_FINAL.md`
+2026-08-17) is six layers, top to bottom:[^arch-overview]
 
 ```
 PRESENTATION        Next.js cockpit (see cockpit-ui.md)

@@ -1,0 +1,13 @@
+{
+  "id": "SCEN-08",
+  "name": "Patch workflow, dev environment — grouped maintenance window, non-prod",
+  "workflow_type": "patch",
+  "is_edge_case": false,
+  "ci_id": "CI-0017",
+  "alert_category": "fault",
+  "auto_approve": false,
+  "expected": {
+    "status": ["complete", "pending_approval", "stopped", "blocked"],
+    "policy_note": "'blocked' is a real, expected outcome when data/change_calendar.json has an active freeze window at run time (policy_gate.py's FREEZE_WINDOW rule, wired 2026-08-17 — patching workflows only) — not a bug in this fixture."
+  }
+}

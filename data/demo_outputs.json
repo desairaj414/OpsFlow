@@ -1253,5 +1253,845 @@
       "endpoint": "http://localhost:9010/invoke",
       "signature": "602e78df425571f6bfc5367e58140559795b8bf44a6e384ea0cb5cc94766a0e9"
     }
+  },
+  "CI-0028:incident": {
+    "incident_id": "INC-DEMO-SCEN-07",
+    "modality": "alert",
+    "workflow_type": "incident",
+    "status": "pending_approval",
+    "reason": null,
+    "verification_status": null,
+    "trace": [
+      {
+        "agent_name": "enrichment",
+        "incident_id": "INC-DEMO-SCEN-07",
+        "result": {
+          "evidence": [
+            {
+              "artifact_id": "CI-0028",
+              "source_type": "cmdb",
+              "extract": "power-platform-environment in prod, criticality P1, patch_level 3.3.5",
+              "confidence": 1.0
+            },
+            {
+              "artifact_id": "CI-0028",
+              "source_type": "cmdb_relationship",
+              "extract": "2 related CIs: replicates_to->CI-0192, connects_to->CI-0192",
+              "confidence": 1.0
+            },
+            {
+              "artifact_id": "ALERT-0444",
+              "source_type": "alert",
+              "extract": "sync client crash-looped (info severity, via snmp)",
+              "confidence": 1.0
+            },
+            {
+              "artifact_id": "METRICS-CI-0028",
+              "source_type": "metrics",
+              "extract": "stable: memory 33%->27%, latency 76ms->96ms",
+              "confidence": 0.8
+            },
+            {
+              "artifact_id": "TCK-0008",
+              "source_type": "ticket_history_precedent",
+              "extract": "[incident/closed/P3] Service outage - power-platform-environment-involve-200 (CI: CI-0200)",
+              "confidence": 0.6385270059108734
+            },
+            {
+              "artifact_id": "TCK-0332",
+              "source_type": "ticket_history_precedent",
+              "extract": "[incident/closed/P3] Service outage - power-platform-environment-natural-077 (CI: CI-0077)",
+              "confidence": 0.6147929131984711
+            }
+          ]
+        },
+        "cited_artifact_ids": [
+          "CI-0028",
+          "ALERT-0444",
+          "METRICS-CI-0028",
+          "TCK-0008",
+          "TCK-0332"
+        ],
+        "confidence": 1.0,
+        "turns_used": 3,
+        "termination_reason": "evidence_gathering_complete",
+        "latency_ms": 890.2208000072278,
+        "tokens_used": null,
+        "transport": "in_process",
+        "model_used": null,
+        "cache_hit": null
+      },
+      {
+        "agent_name": "diagnosis",
+        "incident_id": "INC-DEMO-SCEN-07",
+        "result": {
+          "hypotheses": [
+            {
+              "text": "A bug introduced in patch level 3.3.5 on CI-0028 caused the sync client (ALERT-0444) to crash‑loop, leading to the outage.",
+              "confidence": 0.85,
+              "cited_artifact_ids": [
+                "CI-0028",
+                "ALERT-0444"
+              ]
+            },
+            {
+              "text": "Increasing latency and dropping memory usage (METRICS-CI-0028) indicate resource exhaustion on CI-0028, which triggered the sync client crash.",
+              "confidence": 0.75,
+              "cited_artifact_ids": [
+                "METRICS-CI-0028",
+                "CI-0028"
+              ]
+            },
+            {
+              "text": "Recurring service outages in TCK-0008 and TCK-0332 show a pattern tied to CI-0028 and its relationships, suggesting a systemic configuration or replication issue.",
+              "confidence": 0.7,
+              "cited_artifact_ids": [
+                "TCK-0008",
+                "TCK-0332",
+                "CI-0028"
+              ]
+            }
+          ]
+        },
+        "cited_artifact_ids": [
+          "ALERT-0444",
+          "CI-0028",
+          "METRICS-CI-0028",
+          "TCK-0008",
+          "TCK-0332"
+        ],
+        "confidence": 0.85,
+        "turns_used": 1,
+        "termination_reason": "hypotheses_generated",
+        "latency_ms": 1465.1515999867115,
+        "tokens_used": 2396,
+        "transport": "a2a",
+        "model_used": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+        "cache_hit": true
+      },
+      {
+        "agent_name": "planner",
+        "incident_id": "INC-DEMO-SCEN-07",
+        "result": {
+          "runbook_id": "RB-002",
+          "steps": [
+            {
+              "step_no": 1,
+              "action": "Confirm the alert against the monitoring simulator: check current status and severity for the affected CI before taking any action.",
+              "cites_runbook_step": "RB-002-step1"
+            }
+          ],
+          "blast_radius": {
+            "ci_id": "CI-0028",
+            "affected_ci_ids": [
+              "CI-0192",
+              "CI-0023",
+              "CI-0188"
+            ],
+            "count": 3,
+            "max_depth": 2
+          },
+          "policy_gate_result": {
+            "decision": "needs_approval",
+            "triggered_rules": [
+              "REQUIRED_APPROVER_ROLE"
+            ],
+            "reasons": [
+              "actor role 'operator' is not an approver role, required for prod and/or P1 actions"
+            ]
+          }
+        },
+        "cited_artifact_ids": [
+          "RB-002-step1"
+        ],
+        "confidence": 1.0,
+        "turns_used": 2,
+        "termination_reason": "plan_drafted",
+        "latency_ms": 2693.483000010019,
+        "tokens_used": 642,
+        "transport": "in_process",
+        "model_used": "gemini-flash-lite-latest",
+        "cache_hit": false
+      }
+    ],
+    "agent_card": {
+      "name": "diagnosis-agent",
+      "description": "Root-cause hypothesis generation & ranking, using the active session's reasoning-role model (provider-dependent, see backend/providers.py). Every hypothesis cites at least one evidence artifact ID; uncited hypotheses are dropped before being returned.",
+      "capabilities": [
+        "generate_diagnosis"
+      ],
+      "endpoint": "http://localhost:9010/invoke",
+      "signature": "6f2e62e5511a55c87e160c319096be13353c2fa88c3bde18f8718b8abf0835e9"
+    }
+  },
+  "CI-0017:patch": {
+    "incident_id": "INC-DEMO-SCEN-08",
+    "modality": "alert",
+    "workflow_type": "patch",
+    "status": "complete",
+    "reason": null,
+    "verification_status": "symptom_suppressed",
+    "trace": [
+      {
+        "agent_name": "enrichment",
+        "incident_id": "INC-DEMO-SCEN-08",
+        "result": {
+          "evidence": [
+            {
+              "artifact_id": "CI-0017",
+              "source_type": "cmdb",
+              "extract": "azure-ad-connect-sync in dev, criticality P2, patch_level 8.11.3",
+              "confidence": 1.0
+            },
+            {
+              "artifact_id": "CI-0017",
+              "source_type": "cmdb_relationship",
+              "extract": "2 related CIs: replicates_to->CI-0075, hosts->CI-0003",
+              "confidence": 1.0
+            },
+            {
+              "artifact_id": "CHANGECAL-CI-0017",
+              "source_type": "change_calendar",
+              "extract": "4 blackout window(s) apply: BLACKOUT-G01 (Annual audit freeze), BLACKOUT-G02 (Year-end code freeze), BLACKOUT-G03 (Regional public holiday freeze), BLACKOUT-E03 (Year-end code freeze)",
+              "confidence": 1.0
+            },
+            {
+              "artifact_id": "ALERT-0050",
+              "source_type": "alert",
+              "extract": "connection refused (critical severity, via snmp)",
+              "confidence": 1.0
+            },
+            {
+              "artifact_id": "ALERT-0065",
+              "source_type": "alert",
+              "extract": "flow run failed - throttled (warning severity, via snmp)",
+              "confidence": 1.0
+            },
+            {
+              "artifact_id": "TCK-0070",
+              "source_type": "ticket_history_precedent",
+              "extract": "[incident/closed/P4] Elevated error rate on azure-ad-connect-sync-treatment-078 (CI: CI-0078)",
+              "confidence": 0.5938014388084412
+            },
+            {
+              "artifact_id": "TCK-0329",
+              "source_type": "ticket_history_precedent",
+              "extract": "[incident/closed/P2] Service outage - azure-ad-connect-sync-gun-186 (CI: CI-0186)",
+              "confidence": 0.5880395770072937
+            }
+          ]
+        },
+        "cited_artifact_ids": [
+          "CI-0017",
+          "CHANGECAL-CI-0017",
+          "ALERT-0050",
+          "ALERT-0065",
+          "TCK-0070",
+          "TCK-0329"
+        ],
+        "confidence": 1.0,
+        "turns_used": 3,
+        "termination_reason": "evidence_gathering_complete",
+        "latency_ms": 674.2072000051849,
+        "tokens_used": null,
+        "transport": "in_process",
+        "model_used": null,
+        "cache_hit": null
+      },
+      {
+        "agent_name": "diagnosis",
+        "incident_id": "INC-DEMO-SCEN-08",
+        "result": {
+          "hypotheses": [
+            {
+              "text": "The service outage and connection refused errors are caused by a rate-limiting or throttling issue on the synchronization pipeline, as indicated by the flow failure and historical precedent.",
+              "confidence": 0.85,
+              "cited_artifact_ids": [
+                "ALERT-0050",
+                "ALERT-0065",
+                "TCK-0329"
+              ]
+            },
+            {
+              "text": "Unauthorized change activity or execution during an active blackout window caused a disruption in the azure-ad-connect-sync service, leading to connection failures.",
+              "confidence": 0.65,
+              "cited_artifact_ids": [
+                "CI-0017",
+                "CHANGECAL-CI-0017",
+                "ALERT-0050"
+              ]
+            },
+            {
+              "text": "A cascading failure from related downstream components or replication targets has resulted in elevated error rates and connectivity refusal for the sync service.",
+              "confidence": 0.5,
+              "cited_artifact_ids": [
+                "CI-0017",
+                "ALERT-0050",
+                "TCK-0070"
+              ]
+            }
+          ]
+        },
+        "cited_artifact_ids": [
+          "ALERT-0050",
+          "ALERT-0065",
+          "CHANGECAL-CI-0017",
+          "CI-0017",
+          "TCK-0070",
+          "TCK-0329"
+        ],
+        "confidence": 0.85,
+        "turns_used": 1,
+        "termination_reason": "hypotheses_generated",
+        "latency_ms": 1061.2978000135627,
+        "tokens_used": 764,
+        "transport": "a2a",
+        "model_used": "gemini-flash-lite-latest",
+        "cache_hit": true
+      },
+      {
+        "agent_name": "planner",
+        "incident_id": "INC-DEMO-SCEN-08",
+        "result": {
+          "runbook_id": "RB-014",
+          "steps": [
+            {
+              "step_no": 1,
+              "action": "Confirm a change-calendar window exists and is approved for this CI; do not patch outside an approved window (Policy Gate).",
+              "cites_runbook_step": "RB-014-step2"
+            }
+          ],
+          "blast_radius": {
+            "ci_id": "CI-0017",
+            "affected_ci_ids": [
+              "CI-0003",
+              "CI-0075",
+              "CI-0032"
+            ],
+            "count": 3,
+            "max_depth": 2
+          },
+          "policy_gate_result": {
+            "decision": "allow",
+            "triggered_rules": [],
+            "reasons": []
+          },
+          "maintenance_window": {
+            "ci_id": "CI-0017",
+            "grouped_patches": [],
+            "proposed_window": null,
+            "sla_at_risk": false,
+            "earliest_sla_due": null,
+            "blackout_windows_checked": 0
+          }
+        },
+        "cited_artifact_ids": [
+          "RB-014-step2"
+        ],
+        "confidence": 1.0,
+        "turns_used": 2,
+        "termination_reason": "plan_drafted",
+        "latency_ms": 677.5730000226758,
+        "tokens_used": 649,
+        "transport": "in_process",
+        "model_used": "gemini-flash-lite-latest",
+        "cache_hit": true
+      },
+      {
+        "agent_name": "verification",
+        "incident_id": "INC-DEMO-SCEN-08",
+        "result": {
+          "alert_cleared": true,
+          "health_probe_recovered": false,
+          "status": "symptom_suppressed"
+        },
+        "cited_artifact_ids": [],
+        "confidence": 1.0,
+        "turns_used": 1,
+        "termination_reason": "verification_complete",
+        "latency_ms": 0.07149999146349728,
+        "tokens_used": null,
+        "transport": "in_process",
+        "model_used": null,
+        "cache_hit": null
+      },
+      {
+        "agent_name": "sync",
+        "incident_id": "INC-DEMO-SCEN-08",
+        "result": {
+          "ticket": {
+            "sys_id": "TCK-0502",
+            "short_description": "[patch] INC-DEMO-SCEN-08: azure-ad-connect-sync-most-017",
+            "state": "2",
+            "priority": "P2",
+            "cmdb_ci": "CI-0017",
+            "opened_at": "2026-08-16T18:31:59.560336+00:00",
+            "closed_at": null,
+            "sys_class_name": "incident",
+            "work_notes": [
+              {
+                "note": "Verification status: symptom_suppressed. Plan runbook_id=RB-014, steps=1.",
+                "actor": "agent:sync",
+                "at": "2026-08-16T18:32:01.319759+00:00"
+              }
+            ]
+          },
+          "cmdb_proposal": null
+        },
+        "cited_artifact_ids": [
+          "TCK-0502",
+          "CI-0017"
+        ],
+        "confidence": 1.0,
+        "turns_used": 1,
+        "termination_reason": "sync_complete",
+        "latency_ms": 6.241900002351031,
+        "tokens_used": null,
+        "transport": "in_process",
+        "model_used": null,
+        "cache_hit": null
+      },
+      {
+        "agent_name": "knowledge",
+        "incident_id": "INC-DEMO-SCEN-08",
+        "result": {
+          "verification_status": "symptom_suppressed",
+          "negative_kb_entry": {
+            "id": "NEGKB-RUNTIME-0517",
+            "ci_class": "azure-ad-connect-sync",
+            "failure_signature": "The service outage and connection refused errors are caused by a rate-limiting or throttling issue on the synchronization pipeline, as indicated by the flow failure and historical precedent."
+          }
+        },
+        "cited_artifact_ids": [],
+        "confidence": 1.0,
+        "turns_used": 1,
+        "termination_reason": "knowledge_capture_complete",
+        "latency_ms": 5.720199987990782,
+        "tokens_used": null,
+        "transport": "in_process",
+        "model_used": null,
+        "cache_hit": null
+      }
+    ],
+    "agent_card": {
+      "name": "diagnosis-agent",
+      "description": "Root-cause hypothesis generation & ranking, using the active session's reasoning-role model (provider-dependent, see backend/providers.py). Every hypothesis cites at least one evidence artifact ID; uncited hypotheses are dropped before being returned.",
+      "capabilities": [
+        "generate_diagnosis"
+      ],
+      "endpoint": "http://localhost:9010/invoke",
+      "signature": "6f2e62e5511a55c87e160c319096be13353c2fa88c3bde18f8718b8abf0835e9"
+    }
+  },
+  "CI-0062:incident": {
+    "incident_id": "INC-DEMO-SCEN-09",
+    "modality": "alert",
+    "workflow_type": "incident",
+    "status": "complete",
+    "reason": null,
+    "verification_status": "symptom_suppressed",
+    "trace": [
+      {
+        "agent_name": "enrichment",
+        "incident_id": "INC-DEMO-SCEN-09",
+        "result": {
+          "evidence": [
+            {
+              "artifact_id": "CI-0062",
+              "source_type": "cmdb",
+              "extract": "sharepoint-site in staging, criticality P3, patch_level 5.6.4",
+              "confidence": 1.0
+            },
+            {
+              "artifact_id": "CI-0062",
+              "source_type": "cmdb_relationship",
+              "extract": "1 related CIs: depends_on->CI-0072",
+              "confidence": 1.0
+            },
+            {
+              "artifact_id": "ALERT-0120",
+              "source_type": "alert",
+              "extract": "connection refused (warning severity, via snmp)",
+              "confidence": 1.0
+            },
+            {
+              "artifact_id": "ALERT-0440",
+              "source_type": "alert",
+              "extract": "access denied - permission error (warning severity, via prometheus)",
+              "confidence": 1.0
+            },
+            {
+              "artifact_id": "TCK-0305",
+              "source_type": "ticket_history_precedent",
+              "extract": "[incident/closed/P2] Service outage - sharepoint-site-his-007 (CI: CI-0007)",
+              "confidence": 0.5429537892341614
+            },
+            {
+              "artifact_id": "TCK-0007",
+              "source_type": "ticket_history_precedent",
+              "extract": "[incident/closed/P2] Service outage - sharepoint-site-drop-188 (CI: CI-0188)",
+              "confidence": 0.540855348110199
+            }
+          ]
+        },
+        "cited_artifact_ids": [
+          "CI-0062",
+          "ALERT-0120",
+          "ALERT-0440",
+          "TCK-0305",
+          "TCK-0007"
+        ],
+        "confidence": 1.0,
+        "turns_used": 3,
+        "termination_reason": "evidence_gathering_complete",
+        "latency_ms": 624.9309999984689,
+        "tokens_used": null,
+        "transport": "in_process",
+        "model_used": null,
+        "cache_hit": null
+      },
+      {
+        "agent_name": "diagnosis",
+        "incident_id": "INC-DEMO-SCEN-09",
+        "result": {
+          "hypotheses": [
+            {
+              "text": "The SharePoint site staging environment is experiencing a permission-related access denial due to misconfigured authorization credentials.",
+              "confidence": 0.65,
+              "cited_artifact_ids": [
+                "CI-0062",
+                "ALERT-0440"
+              ]
+            },
+            {
+              "text": "Network connectivity issues and service refusal are disrupting the dependent upstream components of the SharePoint staging environment.",
+              "confidence": 0.55,
+              "cited_artifact_ids": [
+                "CI-0062",
+                "ALERT-0120"
+              ]
+            },
+            {
+              "text": "A recurring historical service outage pattern is affecting the SharePoint staging infrastructure, similar to previous drop and historical incidents.",
+              "confidence": 0.4,
+              "cited_artifact_ids": [
+                "CI-0062",
+                "TCK-0305",
+                "TCK-0007"
+              ]
+            }
+          ]
+        },
+        "cited_artifact_ids": [
+          "ALERT-0120",
+          "ALERT-0440",
+          "CI-0062",
+          "TCK-0007",
+          "TCK-0305"
+        ],
+        "confidence": 0.65,
+        "turns_used": 1,
+        "termination_reason": "hypotheses_generated",
+        "latency_ms": 1060.3914000093937,
+        "tokens_used": 634,
+        "transport": "a2a",
+        "model_used": "gemini-flash-lite-latest",
+        "cache_hit": true
+      },
+      {
+        "agent_name": "planner",
+        "incident_id": "INC-DEMO-SCEN-09",
+        "result": {
+          "runbook_id": "RB-002",
+          "steps": [
+            {
+              "step_no": 1,
+              "action": "Confirm the alert against the monitoring simulator: check current status and severity for the affected CI before taking any action.",
+              "cites_runbook_step": "RB-002-step1"
+            }
+          ],
+          "blast_radius": {
+            "ci_id": "CI-0062",
+            "affected_ci_ids": [
+              "CI-0072"
+            ],
+            "count": 1,
+            "max_depth": 2
+          },
+          "policy_gate_result": {
+            "decision": "allow",
+            "triggered_rules": [],
+            "reasons": []
+          }
+        },
+        "cited_artifact_ids": [
+          "RB-002-step1"
+        ],
+        "confidence": 1.0,
+        "turns_used": 2,
+        "termination_reason": "plan_drafted",
+        "latency_ms": 2625.3997999883723,
+        "tokens_used": 621,
+        "transport": "in_process",
+        "model_used": "gemini-flash-lite-latest",
+        "cache_hit": false
+      },
+      {
+        "agent_name": "verification",
+        "incident_id": "INC-DEMO-SCEN-09",
+        "result": {
+          "alert_cleared": true,
+          "health_probe_recovered": false,
+          "status": "symptom_suppressed"
+        },
+        "cited_artifact_ids": [],
+        "confidence": 1.0,
+        "turns_used": 1,
+        "termination_reason": "verification_complete",
+        "latency_ms": 0.05929998587816954,
+        "tokens_used": null,
+        "transport": "in_process",
+        "model_used": null,
+        "cache_hit": null
+      },
+      {
+        "agent_name": "sync",
+        "incident_id": "INC-DEMO-SCEN-09",
+        "result": {
+          "ticket": {
+            "sys_id": "TCK-0503",
+            "short_description": "[incident] INC-DEMO-SCEN-09: sharepoint-site-experience-062",
+            "state": "2",
+            "priority": "P2",
+            "cmdb_ci": "CI-0062",
+            "opened_at": "2026-08-16T18:32:09.967318+00:00",
+            "closed_at": null,
+            "sys_class_name": "incident",
+            "work_notes": [
+              {
+                "note": "Verification status: symptom_suppressed. Plan runbook_id=RB-002, steps=1.",
+                "actor": "agent:sync",
+                "at": "2026-08-16T18:32:13.673805+00:00"
+              }
+            ]
+          },
+          "cmdb_proposal": null
+        },
+        "cited_artifact_ids": [
+          "TCK-0503",
+          "CI-0062"
+        ],
+        "confidence": 1.0,
+        "turns_used": 1,
+        "termination_reason": "sync_complete",
+        "latency_ms": 4.328300012275577,
+        "tokens_used": null,
+        "transport": "in_process",
+        "model_used": null,
+        "cache_hit": null
+      },
+      {
+        "agent_name": "knowledge",
+        "incident_id": "INC-DEMO-SCEN-09",
+        "result": {
+          "verification_status": "symptom_suppressed",
+          "negative_kb_entry": {
+            "id": "NEGKB-RUNTIME-0518",
+            "ci_class": "sharepoint-site",
+            "failure_signature": "The SharePoint site staging environment is experiencing a permission-related access denial due to misconfigured authorization credentials."
+          }
+        },
+        "cited_artifact_ids": [],
+        "confidence": 1.0,
+        "turns_used": 1,
+        "termination_reason": "knowledge_capture_complete",
+        "latency_ms": 4.768699989654124,
+        "tokens_used": null,
+        "transport": "in_process",
+        "model_used": null,
+        "cache_hit": null
+      }
+    ],
+    "agent_card": {
+      "name": "diagnosis-agent",
+      "description": "Root-cause hypothesis generation & ranking, using the active session's reasoning-role model (provider-dependent, see backend/providers.py). Every hypothesis cites at least one evidence artifact ID; uncited hypotheses are dropped before being returned.",
+      "capabilities": [
+        "generate_diagnosis"
+      ],
+      "endpoint": "http://localhost:9010/invoke",
+      "signature": "6f2e62e5511a55c87e160c319096be13353c2fa88c3bde18f8718b8abf0835e9"
+    }
+  },
+  "CI-0019:performance": {
+    "incident_id": "INC-DEMO-SCEN-10",
+    "modality": "alert",
+    "workflow_type": "performance",
+    "status": "pending_approval",
+    "reason": null,
+    "verification_status": null,
+    "trace": [
+      {
+        "agent_name": "enrichment",
+        "incident_id": "INC-DEMO-SCEN-10",
+        "result": {
+          "evidence": [
+            {
+              "artifact_id": "CI-0019",
+              "source_type": "cmdb",
+              "extract": "onedrive-sync-cache in prod, criticality P4, patch_level 3.11.6",
+              "confidence": 1.0
+            },
+            {
+              "artifact_id": "CI-0019",
+              "source_type": "cmdb_relationship",
+              "extract": "1 related CIs: depends_on->CI-0046",
+              "confidence": 1.0
+            },
+            {
+              "artifact_id": "ALERT-0389",
+              "source_type": "alert",
+              "extract": "API call duration p95 rising steadily (warning severity, via snmp)",
+              "confidence": 1.0
+            },
+            {
+              "artifact_id": "TCK-0420",
+              "source_type": "ticket_history_precedent",
+              "extract": "[incident/closed/P1] Service outage - onedrive-sync-cache-look-092 (CI: CI-0092)",
+              "confidence": 0.6936838626861572
+            },
+            {
+              "artifact_id": "TCK-0189",
+              "source_type": "ticket_history_precedent",
+              "extract": "[incident/closed/P1] Service outage - onedrive-sync-cache-interesting-154 (CI: CI-0154)",
+              "confidence": 0.6842537820339203
+            }
+          ]
+        },
+        "cited_artifact_ids": [
+          "CI-0019",
+          "ALERT-0389",
+          "TCK-0420",
+          "TCK-0189"
+        ],
+        "confidence": 1.0,
+        "turns_used": 3,
+        "termination_reason": "evidence_gathering_complete",
+        "latency_ms": 553.7776999990456,
+        "tokens_used": null,
+        "transport": "in_process",
+        "model_used": null,
+        "cache_hit": null
+      },
+      {
+        "agent_name": "diagnosis",
+        "incident_id": "INC-DEMO-SCEN-10",
+        "result": {
+          "hypotheses": [
+            {
+              "text": "The degradation in API response times is a precursor to a total service outage of the onedrive-sync-cache service, mirroring historical P1 precedents.",
+              "confidence": 0.65,
+              "cited_artifact_ids": [
+                "ALERT-0389",
+                "TCK-0420",
+                "TCK-0189"
+              ]
+            },
+            {
+              "text": "The onedrive-sync-cache service component is experiencing internal performance bottlenecks due to its current patch level or underlying architectural dependencies.",
+              "confidence": 0.35,
+              "cited_artifact_ids": [
+                "CI-0019",
+                "ALERT-0389"
+              ]
+            }
+          ]
+        },
+        "cited_artifact_ids": [
+          "ALERT-0389",
+          "CI-0019",
+          "TCK-0189",
+          "TCK-0420"
+        ],
+        "confidence": 0.65,
+        "turns_used": 1,
+        "termination_reason": "hypotheses_generated",
+        "latency_ms": 1099.676299985731,
+        "tokens_used": 558,
+        "transport": "a2a",
+        "model_used": "gemini-flash-lite-latest",
+        "cache_hit": true
+      },
+      {
+        "agent_name": "planner",
+        "incident_id": "INC-DEMO-SCEN-10",
+        "result": {
+          "runbook_id": "onedrive-sync-cache",
+          "steps": [
+            {
+              "step_no": 1,
+              "action": "Identify the specific bottleneck resource or query pattern responsible for the trend — do not propose a change without a specific, cited cause.",
+              "cites_runbook_step": "RB-018-step2"
+            }
+          ],
+          "blast_radius": {
+            "ci_id": "CI-0019",
+            "affected_ci_ids": [
+              "CI-0046",
+              "CI-0026",
+              "CI-0057",
+              "CI-0109"
+            ],
+            "count": 4,
+            "max_depth": 2
+          },
+          "policy_gate_result": {
+            "decision": "needs_approval",
+            "triggered_rules": [
+              "ADVISORY_ONLY_WORKFLOW",
+              "REQUIRED_APPROVER_ROLE"
+            ],
+            "reasons": [
+              "'tuning' is advisory-only by design and never auto-executes",
+              "actor role 'operator' is not an approver role, required for prod and/or P1 actions"
+            ]
+          }
+        },
+        "cited_artifact_ids": [
+          "RB-018-step2"
+        ],
+        "confidence": 1.0,
+        "turns_used": 2,
+        "termination_reason": "plan_drafted",
+        "latency_ms": 462.5669000088237,
+        "tokens_used": 648,
+        "transport": "in_process",
+        "model_used": "gemini-flash-lite-latest",
+        "cache_hit": true
+      }
+    ],
+    "agent_card": {
+      "name": "diagnosis-agent",
+      "description": "Root-cause hypothesis generation & ranking, using the active session's reasoning-role model (provider-dependent, see backend/providers.py). Every hypothesis cites at least one evidence artifact ID; uncited hypotheses are dropped before being returned.",
+      "capabilities": [
+        "generate_diagnosis"
+      ],
+      "endpoint": "http://localhost:9010/invoke",
+      "signature": "6f2e62e5511a55c87e160c319096be13353c2fa88c3bde18f8718b8abf0835e9"
+    }
+  },
+  "image_pii_demo": {
+    "signal_id": "IMG-8ada5c",
+    "modality": "image",
+    "received_at": "2026-08-16T18:32:29.913346+00:00",
+    "raw_ref": null,
+    "extracted_text": "ERROR Escalation required | identifiers: CI-0059 | timestamps: 2026-08-11 09:15:00",
+    "candidate_ci_refs": [
+      "CI-0059"
+    ],
+    "candidate_alert_refs": [],
+    "confidence": 0.7,
+    "requires_human_confirmation": true,
+    "parsed_intent": null,
+    "slm_pass_ran": false
   }
 }

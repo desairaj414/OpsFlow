@@ -1,0 +1,13 @@
+{
+  "id": "EDGE-CONFLICTING-EVIDENCE",
+  "name": "Edge case: alert fired (fault) but the metric series for the same CI shows a stable trend, not a degradation trend — evidence sources disagree on whether anything is actually wrong",
+  "workflow_type": "incident",
+  "is_edge_case": true,
+  "ci_id": "CI-0081",
+  "alert_category": "fault",
+  "auto_approve": true,
+  "expected": {
+    "status": ["complete", "pending_approval", "blocked"],
+    "grading_note": "soft-graded — the harness checks the run completes with a valid trace and that both the alert evidence and the metrics evidence (or its absence) are visible in the enrichment result, not a specific verification_status. Diagnosis's own confidence/hypothesis text is the observable signal for how it handled the disagreement, not something this fixture can force deterministically."
+  }
+}
