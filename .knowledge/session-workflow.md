@@ -33,16 +33,24 @@ concepts too, since staleness compounds silently between sessions. Specifically:
 4. Run the okf skill's validate mode (okf:validate --strict .okf) and fix every error.
 5. Check whether any touched .knowledge/ node now exceeds ~200 lines and split it if so (topic
    files, update CLAUDE.md's index and any related: frontmatter pointing at the old node).
-6. Append an entry to .knowledge/session-log.md for this session. Get the exact commit range with
-   git log <previous entry's "Up to commit" hash>..HEAD --oneline — don't guess from memory or
-   dates. Classify each commit as major (product/architecture/decision/bugfix — one bullet each,
-   named commit hash) or minor (housekeeping/wording — one rolled-up line covering all of them).
-   Skip anything that was reverted within this same session before ever being committed. Carry
-   forward any still-unresolved items from the previous entry's "Open / follow-ups" section (remove
-   ones that got resolved this session), add any new ones. Add a "Verified" line: what was actually
-   tested (build/test-suite/live-check results), not just written. Update the "Up to commit"
-   checkpoint to the new HEAD hash. This file is exempt from the 200-line split rule — don't split
-   it, don't trim old entries.
+6. Commit everything from steps 1-5 now — EVERYTHING except .knowledge/session-log.md itself. This
+   is the "content commit." (If you're about to push, do that fetch/divergence-check/push here too,
+   for this commit — session-log.md's own commit in step 7 can go up in the same push right after.)
+7. Only now, append an entry to .knowledge/session-log.md for this session, and commit it ALONE, as
+   a second, separate "session-end commit." Get the exact commit range with
+   git log <previous entry's "Up to commit" hash>..HEAD --oneline (this now includes the content
+   commit from step 6) — don't guess from memory or dates. Classify each commit as major
+   (product/architecture/decision/bugfix — one bullet each, named commit hash) or minor
+   (housekeeping/wording — one rolled-up line covering all of them). Skip anything reverted within
+   this same session before ever being committed. Carry forward any still-open items from the
+   previous entry's "Open / follow-ups" (per session-log.md's own header instructions: delete
+   resolved ones outright, don't strike them through). Add a "Verified" line: what was actually
+   tested, not just written. Set "Up to commit" to the step-6 content commit's hash — NOT this
+   session-end commit's own hash, which doesn't exist yet when you're writing its content and can't
+   self-reference. That one-commit lag is expected and fine: the next session's git log range will
+   start with this session-end commit itself: describe it there as "finalized session N's log," not
+   as new substantive work. This file is exempt from the 200-line split rule — don't split it,
+   don't trim old entries.
 Use targeted edits only, never full-file rewrites — these are shared long-lived documents. When
 done, give me a short summary of what you updated (file list, one line each) and confirm the
 working tree is clean, or tell me exactly what's still uncommitted, before I end the session.
