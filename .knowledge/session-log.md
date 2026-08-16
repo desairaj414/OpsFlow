@@ -27,21 +27,25 @@ Anchor on git, not memory — chat history survives `/compact` unreliably, commi
 - **Skip reverted-within-session noise** (e.g. a binary file that got touched then reverted before
   ever being committed) — no lasting value in recording it.
 - **Open / follow-ups**: anything flagged but not resolved by session end, carried forward so the
-  next session doesn't lose track. Remove an item once it's actually resolved — don't just leave it
-  sitting there.
+  next session doesn't lose track. Once an item resolves — same session or a later one — **delete
+  its bullet outright**, don't strike it through or annotate "RESOLVED" in place; if it's worth
+  remembering that it happened, fold it into that entry's Major list as a normal completed item
+  instead. Also clean up any other place in the same entry that referred to it as still-open. If
+  the list ends up empty, write "None open as of this entry." rather than leaving the header bare.
 - **Verified**: what was actually tested (build/test-suite/live-check results) — distinct from
   "written," matching this project's own honesty discipline (CLAUDE.md maintenance protocol item 1).
 
 ---
 
 ## Session 1 — 2026-08-10 to 2026-08-16
-**Up to commit:** `1552566` (this entry's own finalizing commit necessarily trails by one — same
-caveat as noted when this line was first written; the next session's range will pick it up fine)
-**Commits this session (15):** `bce4785`, `ba2ad42`, `3faf67d`, `613aa88`, `b6ca809`, `b7a8e6b`,
-`046b1a6`, `32e286a`, `8a9dab6`, `bd2446d`, `81ebfe9`, `8039c3d`, `bc2d29e`, `ea246b7`, `1552566` —
-spanning commit timestamps 2026-08-13 22:47 to 2026-08-16 17:xx. The session itself started
-2026-08-10 19:04 (per the Claude Code transcript's first message) — several days of design/audit
-work happened before the first commit landed.
+**Up to commit:** `8d0c87d` (per the two-commit close-out convention below, this is the last
+"content" commit — this entry's own session-end commit isn't listed in itself; it'll show up as
+the first item in Session 2's git-log range instead)
+**Commits this session (17):** `bce4785`, `ba2ad42`, `3faf67d`, `613aa88`, `b6ca809`, `b7a8e6b`,
+`046b1a6`, `32e286a`, `8a9dab6`, `bd2446d`, `81ebfe9`, `8039c3d`, `bc2d29e`, `ea246b7`, `1552566`,
+`35d43a6`, `8d0c87d` — spanning commit timestamps 2026-08-13 22:47 to 2026-08-16. The session
+itself started 2026-08-10 19:04 (per the Claude Code transcript's first message) — several days of
+design/audit work happened before the first commit landed.
 
 **Major:**
 - Pivoted the app off a single hardcoded TCS GenAI Lab endpoint to a 6-provider LLM architecture
@@ -76,26 +80,26 @@ work happened before the first commit landed.
   code bug the audit surfaced: `supervisor.py` hardcoded TCS model names into the Agent Trace's
   `model_used` field regardless of the session's actual active provider — it now reports the real
   answering model via a new `SpecialistResult.model_used` field — `ea246b7`.
-- Added this journal (`session-log.md`) and the git-anchored checkpoint mechanism it uses; verified
-  Render's old pre-rename services are actually gone (`list_services`, confirmed) and found the
-  GitHub repo is likely still private, not public as assumed — `1552566`.
+- Added this journal (`session-log.md`) and the git-anchored checkpoint mechanism it uses —
+  `1552566`. While building it, checked two assumptions directly instead of trusting recollection:
+  confirmed Render's old pre-rename services are actually gone (`list_services`), and found the
+  GitHub repo was still **private**, not public as assumed — an unauthenticated GitHub API request
+  returned `404`, GitHub's signature for private, not missing (the repo demonstrably exists and
+  Render deploys from it live) — `35d43a6`. Flagged this against the original session goal of a
+  public resume link; the human then made it public and it was reconfirmed the same way
+  (`private: false`, `visibility: public`, HTTP 200) — not a git commit, a GitHub repo-settings
+  change.
+- Switched this journal to a two-commit close-out pattern (commit everything else first, then
+  session-log.md alone as a separate "session-end commit") after hitting the self-referential
+  "Up to commit" problem three times in one session — `8d0c87d`. See this file's own header.
+- Pushed all of this session's commits (through this entry's own eventual session-end commit) to
+  `origin/main` after committing it — verified no divergence first via `git fetch` +
+  `git log origin/main..HEAD`.
 
 **Minor:**
 - Theme toggle added to the login screen (post-login screens already had one) — `613aa88`.
 
-**Open / follow-ups for next session:**
-- ~~Commits not yet pushed to `origin/main`~~ — **RESOLVED this session**, pushed after this entry
-  was written (see push confirmation in chat; not re-verified by a later session, so re-check
-  `git status` vs `origin/main` if this note is ever stale).
-- **GitHub repo appears to still be private**, not public. Checked directly: an unauthenticated
-  `GET https://api.github.com/repos/desairaj414/OpsFlow` returns `404 Not Found` — for a repo that
-  demonstrably exists and deploys (Render's `opsflowapp`/`opsflowapp-backend` both pull from it
-  live), that specific response is GitHub's behavior for a private repo, not a missing one. This
-  matters because the original goal for this whole session (this file's own Session 1 entry) was a
-  *public* resume link — a private repo means that goal isn't fully met yet, even with the app
-  itself live and reachable. Needs a decision: make it public, or is private intentional for now.
-- ~~Old `opsflow-backend`/`opsflow-frontend` Render services pending deletion~~ — **RESOLVED**,
-  verified via `list_services`: only `opsflowapp`/`opsflowapp-backend` exist for this project now.
+**Open / follow-ups for next session:** None open as of this entry.
 
 **Verified:** `.okf` bundle `okf:validate --strict` clean (34 concepts, 0 errors) both after the
 docs sync and again after the `model_used` fix; backend suite 96 passed / 2 skipped (real gateway
