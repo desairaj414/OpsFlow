@@ -56,7 +56,11 @@ function IncidentStatusBar({ incident }) {
         </span>
       )}
       {incident.error && <span className="text-xs text-red-500">{incident.error}</span>}
-      <span className="ml-auto text-xs text-muted-foreground">
+      {/* On a narrow screen this sentence is wide enough to wrap and fill nearly the whole line by
+          itself, leaving no free space for ml-auto to push into — it just renders left-aligned
+          instead of "pushed right" as intended. Hiding it below sm rather than fighting that;
+          Incident Workspace is a tab-bar tap away regardless. */}
+      <span className="ml-auto hidden text-xs text-muted-foreground sm:inline">
         Open Incident Workspace for the full record, including the Agent Trace.
       </span>
     </div>

@@ -41,17 +41,17 @@ function formatEvidenceConfidence(confidence) {
 // stopped at Enrichment) renders as a dashed "not reached" node instead of being silently omitted.
 function FlowPipeline({ trace }) {
   return (
-    <div className="flex flex-wrap items-stretch gap-2 overflow-x-auto pb-1">
+    <div className="flex flex-col items-stretch gap-2 sm:flex-row sm:flex-wrap sm:overflow-x-auto sm:pb-1">
       {AGENT_PIPELINE_ORDER.map((agentName, i) => {
         const entry = findEntry(trace, agentName);
         const isLast = i === AGENT_PIPELINE_ORDER.length - 1;
         return (
-          <div key={agentName} className="flex items-stretch gap-2">
+          <div key={agentName} className="flex flex-col items-center gap-2 sm:flex-row sm:items-stretch">
             <div
               className={
                 entry
-                  ? "w-48 rounded-lg border border-border bg-card p-3 shadow-sm"
-                  : "w-48 rounded-lg border border-dashed border-border bg-secondary/30 p-3 text-muted-foreground"
+                  ? "w-full rounded-lg border border-border bg-card p-3 shadow-sm sm:w-48"
+                  : "w-full rounded-lg border border-dashed border-border bg-secondary/30 p-3 text-muted-foreground sm:w-48"
               }
             >
               <div className="mb-1 flex items-center justify-between gap-1">
@@ -63,8 +63,9 @@ function FlowPipeline({ trace }) {
               </p>
             </div>
             {!isLast && (
-              <div className="flex items-center text-muted-foreground">
-                <ArrowRight className="h-4 w-4 shrink-0" />
+              <div className="flex items-center justify-center text-muted-foreground">
+                {/* Points down while cards stack vertically on mobile, right once they're a row at sm+. */}
+                <ArrowRight className="h-4 w-4 shrink-0 rotate-90 sm:rotate-0" />
               </div>
             )}
           </div>

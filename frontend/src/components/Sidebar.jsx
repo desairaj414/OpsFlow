@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Radio, Settings, PlayCircle, ScrollText, Users, BookOpen, PanelLeftClose, PanelLeftOpen, Sun, Moon, X } from "lucide-react";
+import { Radio, Settings, PlayCircle, ScrollText, Users, BookOpen, PanelLeftClose, PanelLeftOpen, Sun, Moon, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/ui/modal";
 import { cn } from "@/lib/utils";
@@ -37,6 +37,10 @@ function ViewAsControl({ apiBase, token, onTokenChange, identity }) {
   const [users, setUsers] = useState([]);
   const [switching, setSwitching] = useState(false);
   const [error, setError] = useState("");
+  // Custom compact dropdown instead of a native <select> — mobile browsers render <select> as a
+  // full-screen OS picker with no CSS control over its size, which read as "the dropdown is huge"
+  // on a phone. This is a plain in-flow expanding list we style ourselves, same everywhere.
+  const [pickerOpen, setPickerOpen] = useState(false);
 
   const isViewingAs = Boolean(identity.realUsername);
   const canUseViewAs = identity.role === "admin" || isViewingAs;
@@ -110,24 +114,42 @@ function ViewAsControl({ apiBase, token, onTokenChange, identity }) {
     );
   }
 
+  const eligibleUsers = users.filter((u) => u.username !== identity.username);
+
   return (
     <div>
       <label className="mb-1 block text-xs font-medium text-muted-foreground">View as (admin only)</label>
-      <select
-        className="w-full rounded-md border border-border bg-background px-2 py-2 text-sm focus:border-accent focus:outline-none"
-        value=""
-        onChange={(e) => viewAs(e.target.value)}
-        disabled={switching}
-      >
-        <option value="">Choose a user to preview their view…</option>
-        {users
-          .filter((u) => u.username !== identity.username)
-          .map((u) => (
-            <option key={u.id} value={u.id}>
-              {u.display_name} — {ROLE_LABELS[u.role] || u.role}
-            </option>
-          ))}
-      </select>
+      <div className="relative">
+        <button
+          type="button"
+          onClick={() => setPickerOpen((v) => !v)}
+          disabled={switching}
+          className="flex w-full items-center justify-between rounded-md border border-border bg-background px-2 py-2 text-left text-sm text-muted-foreground focus:border-accent focus:outline-none"
+        >
+          <span className="truncate">Choose a user to preview their view…</span>
+          <ChevronDown className={cn("h-4 w-4 shrink-0 transition-transform", pickerOpen && "rotate-180")} />
+        </button>
+        {pickerOpen && (
+          <div className="absolute z-10 mt-1 max-h-48 w-full overflow-y-auto rounded-md border border-border bg-card text-sm shadow-md">
+            {eligibleUsers.length === 0 && (
+              <p className="px-3 py-2 text-xs text-muted-foreground">No other users to preview.</p>
+            )}
+            {eligibleUsers.map((u) => (
+              <button
+                key={u.id}
+                type="button"
+                onClick={() => {
+                  setPickerOpen(false);
+                  viewAs(u.id);
+                }}
+                className="block w-full px-3 py-2 text-left text-foreground hover:bg-secondary"
+              >
+                {u.display_name} — {ROLE_LABELS[u.role] || u.role}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
       {error && <p className="mt-1 text-xs text-red-500">{error}</p>}
     </div>
   );

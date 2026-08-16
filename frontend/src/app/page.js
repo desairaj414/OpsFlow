@@ -67,9 +67,40 @@ export default function Home() {
   const [error, setError] = useState("");
   const [loggingIn, setLoggingIn] = useState(false);
   const [mode, setMode] = useState(SERVER_SAFE_DEFAULT_MODE);
+  // Free-tier backends (Render) sleep after 15min idle and can take up to ~60s to cold-start. This
+  // used to only get triggered by the "Log in" click itself, so the very first visitor after a
+  // sleep saw nothing but a stuck "Signing in…" with no explanation. Pinging /health immediately on
+  // page load starts that wake-up in parallel with the visitor reading/filling the form, and the
+  // banner below explains the wait instead of it reading as broken.
+  const [backendAwake, setBackendAwake] = useState(null);
 
   useEffect(() => {
     setMode(getProviderMode());
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    async function pingUntilAwake() {
+      while (!cancelled) {
+        try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 8000);
+          const res = await fetch(`${API_BASE}/health`, { signal: controller.signal });
+          clearTimeout(timeoutId);
+          if (res.ok) {
+            if (!cancelled) setBackendAwake(true);
+            return;
+          }
+        } catch {
+          // Still waking up (or a transient network hiccup) — keep retrying below.
+        }
+        if (!cancelled) await new Promise((resolve) => setTimeout(resolve, 2500));
+      }
+    }
+    pingUntilAwake();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   function handleModeChange(nextMode) {
@@ -188,6 +219,13 @@ export default function Home() {
         <div className="w-full max-w-sm">
           <h2 className="text-xl font-semibold text-foreground">Sign in</h2>
           <p className="mt-1 text-sm text-muted-foreground">Enter your credentials to access your workspace.</p>
+
+          {backendAwake !== true && (
+            <p className="mt-3 rounded-md border border-accent/30 bg-accent-soft px-3 py-2 text-xs text-muted-foreground">
+              Connecting to the server — first load can take up to a minute if it's been idle. Feel
+              free to fill in your details below while it wakes up.
+            </p>
+          )}
 
           <form className="mt-6 space-y-4" onSubmit={handleLogin}>
             <div>

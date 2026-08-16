@@ -50,3 +50,13 @@ never reaches `allow` regardless of other factors (`policy_gate.py` `ADVISORY_ON
 ## Demo coverage (PRD §9 known risk)
 One deep golden-path scenario (incident) shown fully live; patch and performance shown in compressed
 form. Coverage proven by the eval dashboard and clause coverage map, not by three full live runs.
+
+## Auto-triage trigger scope (session addition, not PRD-specified)
+`frontend/src/hooks/useAutoTriage.js` auto-runs diagnosis for newly-arrived alerts, but deliberately
+only those — the SSE stream's initial catch-up burst (the first `INITIAL_BACKLOG_SIZE`, currently 20,
+matching `main.py`'s `_alert_event_stream` replay size) is explicitly excluded. This means: alerts
+that arrive while a session is connected diagnose themselves one at a time; whatever backlog already
+existed before that session opened does not, and needs a manual Diagnose / "Run all untriaged" click
+on Ops Board. This is intentional (bounded, sequential auto-triage rather than an uncontrolled flood
+of every historical alert on connect), surfaced in the Ops Board tab's own description
+(`frontend/src/lib/tabInfo.js`) so it's not a silent behavior.

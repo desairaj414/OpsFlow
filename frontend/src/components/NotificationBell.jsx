@@ -60,7 +60,11 @@ export default function NotificationBell({ notifications, onOpenNotification }) 
       </button>
 
       {open && (
-        <div className="absolute right-0 z-20 mt-2 w-80 rounded-lg border border-border bg-card p-2 text-foreground shadow-lg">
+        // Below sm this is `fixed` (viewport-relative), not `absolute` off the bell's own small
+        // wrapper — the wrapper sits well before the true right edge (Log out comes after it), so a
+        // w-80 panel anchored to the wrapper's right-0 ran ~25px off the left edge of the screen.
+        // sm: and up reproduce the original absolute/right-0/mt-2/w-80 exactly, unchanged.
+        <div className="fixed inset-x-3 top-16 z-20 rounded-lg border border-border bg-card p-2 text-foreground shadow-lg sm:absolute sm:inset-x-auto sm:right-0 sm:top-auto sm:mt-2 sm:w-80">
           <p className="mb-1.5 px-1 text-xs font-medium text-muted-foreground">
             New alerts auto-diagnosed this session
           </p>

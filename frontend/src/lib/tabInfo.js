@@ -9,7 +9,7 @@ export const TAB_INFO = {
   "Ops Board": {
     tagline: "Where problems arrive",
     description:
-      "The live queue of incoming alerts across the SaaS & automation estate (SharePoint, OneDrive, Power Platform, Teams, Exchange, Dataverse). An operator sees a problem here first, or reports one directly by voice or a screenshot.",
+      "The live queue of incoming alerts across the SaaS & automation estate (SharePoint, OneDrive, Power Platform, Teams, Exchange, Dataverse). An operator sees a problem here first, or reports one directly by voice or a screenshot. Alerts that arrive while you're connected diagnose themselves automatically, one at a time; the backlog already here when you opened this tab does not — run those with Diagnose or \"Run all untriaged\".",
   },
   Tickets: {
     tagline: "The ServiceNow / Jira system of record",
