@@ -37,6 +37,78 @@ Anchor on git, not memory — chat history survives `/compact` unreliably, commi
 
 ---
 
+## Session 2 — 2026-08-17
+**Up to commit:** `e10a23b` (per the two-commit close-out convention, this is the last "content"
+commit — this entry's own session-end commit isn't listed in itself; it'll show up as the first
+item in Session 3's git-log range instead)
+**Commits this session (7):** `91fca13`, `9eac9b3`, `289b1fa`, `223bb0d`, `591c5de`, `52dc22d`,
+`e10a23b`. `91fca13` is Session 1's own session-end commit (finalized its log, not new work this
+session — it just happens to be the first item in this session's git-log range).
+
+**Major:**
+- Retired phase-based execution tracking entirely: deleted every `prd-phase-N.md` and
+  `extra-credit.md`, replaced with plain ongoing-state tracking in `state-progress.md`/`CLAUDE.md`.
+  Closed out Phase 5 for real as part of that triage: scenario library grew from 6 to 14 fixtures
+  (10 named + 4 edge-case), a new eval harness (`backend/eval/harness.py`), a model-call cache
+  wiring the long-unused `model_call_cache` table into Diagnosis/Planner, a legacy-UI screenshot
+  fixture, 3 synthetic (Windows TTS) voice-sample placeholders with real recordings still owed and
+  clearly labeled as such. 2 of the 6 originally-planned edge-case types were found already covered
+  by the Phase 2 scrubber test suite — reused, not duplicated. Phase 6 reframed as
+  `.knowledge/reference/future-plans.md` (per-item verdict on what's still worth doing post-pivot);
+  Phase 7 was already superseded by the actively-maintained `README.md` — `289b1fa`.
+- Fixed a real dead-code bug in `guardrails/policy_gate.py`: the `FREEZE_WINDOW`/
+  `MAX_CONCURRENT_CHANGES` rules were fully built and unit-tested but never reachable
+  (`planner.py` always passed an empty `PolicyContext()`). Wired for real, scoped to `patching`
+  workflows only after wiring it universally immediately broke 4 incident/tuning tests (a demo
+  blackout window in `change_calendar.json` is deliberately date-ranged to include "now") —
+  `289b1fa` (code), decision entry appended in `e10a23b`.
+- Corrected the Verascope/OpsFlow branding record across the whole knowledge tree: git-confirmed
+  (`git log -S"Verascope"`) the rebrand was reverted the same day it was introduced, before the
+  hackathon's own Final Submission — the app has never actually shipped as anything but OpsFlow.
+  Fixed the one real shipped leftover (`theme.js`'s `localStorage` key name) — `289b1fa`.
+- Found and deleted 3 genuinely unneeded/misplaced files: an internal PRD draft sitting in the
+  app's live Knowledge Base RAG folder (not yet embedded, but would have leaked into chat retrieval
+  on the next Chroma reindex), a 1.7MB accidentally-committed tiktoken cache (`backend/token/`,
+  properly gitignored now), and an empty root `PRD_DRAFT.md` placeholder — `289b1fa`.
+- Restructured `.knowledge/` from 25 flat files into `domain/`/`architecture/`/`reference/`
+  subfolders (highest-frequency files — `state-progress.md`, `decisions-log.md`, `rules-*.md` —
+  stayed top-level), moved `PRD_FINAL.md`/`PHASE0_FINDINGS.md` into `.knowledge/reference/` with
+  clearer names, rewrote every cross-reference. Split `decisions-log.md` (385 lines) into the live
+  file + `decisions-log-history.md`, and trimmed `state-progress.md`'s stale KNOWN ISSUES back into
+  `state-progress-history.md` — `289b1fa`, `e10a23b`.
+- Found and fixed two separate rounds of a self-inflicted doubled-relative-path bug in the
+  restructuring's own reference-rewrite scripts (`../architecture/../architecture/...` in the first
+  pass, bare `reference/reference/...` with no `../` prefix in files that stayed top-level in a
+  second) — verified clean both times via a full-repo link-resolution walk plus a broad
+  doubled-segment regex sweep, not just spot-checks — `223bb0d`, `e10a23b`.
+
+**Minor:**
+- Portable dev-server launch config for backend/frontend (repo-relative paths, `.nvmrc`) —
+  `9eac9b3`.
+- Documented the `DEFAULT_PROVIDER=openrouter` test-suite fallback in `backend/conftest.py` for
+  when Gemini's free tier rate-limits mid-suite; live-verified the switch itself works, corrected
+  the note after OpenRouter's own free tier hit a separate transient failure on the actual
+  verification run (not a guaranteed fix) — `591c5de`.
+- Fixed a stale `.knowledge/session-log.md` path reference in `session-workflow.md`'s copy-paste
+  prompts, broken by the restructuring (plain inline-code text, not a markdown link, so the
+  reference-rewrite script never touched it) — `52dc22d`.
+
+**Open / follow-ups for next session:**
+- Real recorded voice samples still owed (PRD §6.1/§6.3 require actual human speech; 3 synthetic
+  TTS placeholders exist meanwhile, clearly labeled, in `data/voice_samples/`).
+
+**Verified:** Backend suite 96 passed / 2 skipped, both after the `policy_gate.py` fix and again
+after the full restructuring (the 4 recurring failures are `test_vision_path.py`/
+`test_intake_adapter.py` hitting real Gemini/OpenRouter rate limits — confirmed via isolated
+reruns and a `DEFAULT_PROVIDER=openrouter` retry, unrelated to any code touched this session).
+Eval harness 14/14 twice consecutively, both before and after the `policy_gate.py` fix (with
+`SCEN-04`/`SCEN-08`'s `expected` blocks corrected to the real observed `blocked` outcome, not
+forced to pass). `.okf` bundle `okf:validate --strict` clean (36 concepts, 0 errors) after every
+sync pass. Full-repo relative-markdown-link resolution (203 links) and doubled-path-segment
+sweeps both clean as of the final check. `python -m compileall` clean on the full backend.
+
+---
+
 ## Session 1 — 2026-08-10 to 2026-08-16
 **Up to commit:** `8d0c87d` (per the two-commit close-out convention below, this is the last
 "content" commit — this entry's own session-end commit isn't listed in itself; it'll show up as
