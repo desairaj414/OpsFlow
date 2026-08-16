@@ -3,7 +3,7 @@ type: rules
 title: Backend Rules & Commenting Standard
 status: active
 updated: 2026-08-07
-related: [rules-frontend.md, architecture/architecture/arch-overview.md, reference/reference/env-network.md]
+related: [rules-frontend.md, architecture/arch-overview.md, reference/env-network.md]
 ---
 
 **Re-read this on every coding step. It is a standing rule, not a one-time reminder.**

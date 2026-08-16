@@ -1097,3 +1097,39 @@ submission happened 2026-08-08. Not relevant to any work after that date.
   panel, +`patch_inventory`/`change_calendar` evidence labels), rendered only when
   `run.workflow_type === "patch"`.
 - **Data, new (generated, fixed seed)**: `data/patch_inventory.json`, `data/change_calendar.json`.
+
+## ARCHIVED 2026-08-17 — old KNOWN ISSUES entries, trimmed from state-progress.md at session close-out
+Non-recurring since first logged; kept here for the historical record, not because they're still open.
+
+- **Gateway/proxy flakiness under sustained load (2026-08-07, WATCHING):** first live full-suite
+  re-run (H+5:48 gate confirmation) hit a proxy-level stall (frozen CPU, same signature as the
+  logged `gpt-5.1` sweep hang in `env-network.md`) on one test and a flaky FAILED on another;
+  **both passed cleanly in isolation** (15s each) and a clean full rerun (84/84, 136.85s) confirmed
+  it wasn't a code defect. Same category as the Phi-4-reasoning flakiness below — non-blocking, but
+  re-check near submission if it recurs. **Refined understanding (2026-08-07, Patch Management
+  pass):** root cause narrowed further — the Chroma `"runbooks"` collection's `hnsw:search_ef=500`
+  fix (see errors-solved.md) holds for any single request, but **two `query_collection()` calls
+  landing concurrently in the same backend process** (e.g. a manual `/workflows/run` call racing an
+  open browser tab's `useAutoTriage` background diagnosis) can still trip hnswlib's
+  `RuntimeError: Cannot return the results in a contigious 2D array` — a real concurrent-access
+  limitation in the underlying C extension, not a config gap. Confirmed by direct reproduction: the
+  same query reliably succeeds standalone/in pytest (single caller) and reliably fails only when a
+  second live caller (the auto-triage hook) is active on the same process at the same moment. Not
+  fixed (would mean adding retry/locking to the shared `orchestrator/retrieval.py`, out of scope for
+  the Patch Management ask) — worth a real fix (retry-once-on-this-specific-RuntimeError, or a lock
+  around `query_collection`) if it starts affecting the actual demo, since auto-triage running
+  continuously means this concurrency window is now open for the whole session, not just occasional
+  sustained-load bursts.
+- **Gateway auth-DB outage (2026-08-07, RESOLVED):** during the Ops Board readability step, live
+  gateway calls started failing with a 503 `"Service Unavailable, the authentication database is
+  temporarily unreachable"`, then later a distinct total-outage 404 ("Azure Container App -
+  Unavailable") that also took down `/embeddings` and `/audio/transcriptions` for a stretch — hit all
+  14 gateway-dependent backend tests at worst. Confirmed not code-related throughout (isolated
+  re-runs, same errors, no assertion failures). **Human confirmed with TCS the gateway is back; full
+  32-model smoke sweep + a full backend suite re-run both confirm it — 84/84 real tests, every model
+  this app actually uses (incl. all 3 Phase 0 blocking checks) PASS.** Prompted implementing the
+  offline Ollama fallback (models-routing.md, decisions-log.md) that PRD §3.2 had specified but never
+  wired into code — kept, not reverted, since a future outage should degrade instead of hard-failing.
+- **Phi-4-reasoning flakiness (2026-08-07, WATCHING):** intermittent 404s (3 rechecks: 404, 404, 200) — gateway-side instability, not a deprecation. Non-blocking (smoke-test-only model, unused in primary path), no substitute applicable.
+- **`policy_gate.py`'s `FREEZE_WINDOW`/`MAX_CONCURRENT_CHANGES` rules were dead code in the live
+  path** (found 2026-08-17, fixed same day — see `decisions-log.md`'s policy_gate entry).

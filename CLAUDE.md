@@ -32,6 +32,7 @@ derived from it, not a replacement. See `.okf/index.md` for its entry point.
 - [.knowledge/state-progress.md](.knowledge/state-progress.md) — live single source of truth. Read this before touching anything.
 - [.knowledge/decisions-log.md](.knowledge/decisions-log.md) — resolved decisions, do not re-litigate.
 - [.knowledge/state-progress-history.md](.knowledge/state-progress-history.md) — closed/superseded-step detail (everything through the original hackathon build, plus the archived phase-by-phase narrative from before phase-based tracking was retired 2026-08-17), split out whenever state-progress.md hit ~200 lines. Only open on demand, not every session.
+- [.knowledge/decisions-log-history.md](.knowledge/decisions-log-history.md) — every 2026-08-07 (hackathon-day) decision, split out whenever decisions-log.md hit ~200 lines. Only open on demand.
 
 ## Standing rules (re-read on every coding step, not once)
 - [.knowledge/rules-backend.md](.knowledge/rules-backend.md) — commenting standard, module layout, honesty rule (backend)

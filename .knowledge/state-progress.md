@@ -3,7 +3,7 @@ type: state
 title: State & Progress
 status: active
 updated: 2026-08-17
-related: [decisions-log.md, state-progress-history.md, reference/reference/future-plans.md, reference/reference/env-network.md]
+related: [decisions-log.md, state-progress-history.md, reference/future-plans.md, reference/env-network.md]
 ---
 
 ## PHASE-BASED TRACKING RETIRED (2026-08-17)
@@ -98,7 +98,7 @@ Phase 5/6/7 item — what was worth building vs. already covered elsewhere vs. g
   `SETUP.md` deleted — all frozen at 2026-08-08 (hackathon submission day), describing the pre-pivot
   single-TCS-gateway/DeepSeek/Llama-Vision design; `README.md` has superseded all of them and is
   actively kept current.
-- **RESOLVED (2026-08-17, next session):** the Verascope/OpsFlow discrepancy flagged above was
+- **RESOLVED (2026-08-17, same session):** the Verascope/OpsFlow discrepancy flagged above was
   investigated via `git log -S"Verascope"` — the rebrand was a same-day draft that got reverted
   before the hackathon's own Final Submission (`f731300` introduced it 2026-08-08 05:45, `6299a26`
   reverted it 2026-08-08 10:14). The app has been OpsFlow at every shipped/submitted commit; the
@@ -170,44 +170,16 @@ space. This pass's (2026-08-17) new/changed files:
   `SETUP.md`.
 
 ## KNOWN ISSUES
-- **Gateway/proxy flakiness under sustained load (2026-08-07, WATCHING):** first live full-suite
-  re-run (H+5:48 gate confirmation) hit a proxy-level stall (frozen CPU, same signature as the
-  logged `gpt-5.1` sweep hang in `env-network.md`) on one test and a flaky FAILED on another;
-  **both passed cleanly in isolation** (15s each) and a clean full rerun (84/84, 136.85s) confirmed
-  it wasn't a code defect. Same category as the Phi-4-reasoning flakiness below — non-blocking, but
-  re-check near submission if it recurs. **Refined understanding (2026-08-07, Patch Management
-  pass):** root cause narrowed further — the Chroma `"runbooks"` collection's `hnsw:search_ef=500`
-  fix (see errors-solved.md) holds for any single request, but **two `query_collection()` calls
-  landing concurrently in the same backend process** (e.g. a manual `/workflows/run` call racing an
-  open browser tab's `useAutoTriage` background diagnosis) can still trip hnswlib's
-  `RuntimeError: Cannot return the results in a contigious 2D array` — a real concurrent-access
-  limitation in the underlying C extension, not a config gap. Confirmed by direct reproduction: the
-  same query reliably succeeds standalone/in pytest (single caller) and reliably fails only when a
-  second live caller (the auto-triage hook) is active on the same process at the same moment. Not
-  fixed (would mean adding retry/locking to the shared `orchestrator/retrieval.py`, out of scope for
-  the Patch Management ask) — worth a real fix (retry-once-on-this-specific-RuntimeError, or a lock
-  around `query_collection`) if it starts affecting the actual demo, since auto-triage running
-  continuously means this concurrency window is now open for the whole session, not just occasional
-  sustained-load bursts.
-- **Gateway auth-DB outage (2026-08-07, RESOLVED):** during the Ops Board readability step, live
-  gateway calls started failing with a 503 `"Service Unavailable, the authentication database is
-  temporarily unreachable"`, then later a distinct total-outage 404 ("Azure Container App -
-  Unavailable") that also took down `/embeddings` and `/audio/transcriptions` for a stretch — hit all
-  14 gateway-dependent backend tests at worst. Confirmed not code-related throughout (isolated
-  re-runs, same errors, no assertion failures). **Human confirmed with TCS the gateway is back; full
-  32-model smoke sweep + a full backend suite re-run both confirm it — 84/84 real tests, every model
-  this app actually uses (incl. all 3 Phase 0 blocking checks) PASS.** Prompted implementing the
-  offline Ollama fallback (models-routing.md, decisions-log.md) that PRD §3.2 had specified but never
-  wired into code — kept, not reverted, since a future outage should degrade instead of hard-failing.
-- **Phi-4-reasoning flakiness (2026-08-07, WATCHING):** intermittent 404s (3 rechecks: 404, 404, 200) — gateway-side instability, not a deprecation. Non-blocking (smoke-test-only model, unused in primary path), no substitute applicable.
-- **`policy_gate.py`'s `FREEZE_WINDOW`/`MAX_CONCURRENT_CHANGES` rules are dead code in the live path
-  (found 2026-08-17):** both are fully built and unit-tested, but `agents/planner.py` always calls
-  `evaluate_policy(request, PolicyContext())` with an empty context, so `freeze_windows` is always
-  `[]` and `active_changes_in_environment` is always `0` — neither rule can ever actually fire from a
-  real workflow run. Scoped as a real fix opportunity in [future-plans.md](reference/future-plans.md), not
-  fixed this pass (would need deciding whether `change_calendar.json`'s blackout windows, built for
-  patch scheduling, should also back the general policy gate — a real design question, not a typo).
-- Resolved issues (stack mismatch, model deprecations, gateway outages) moved to [state-progress-history.md](state-progress-history.md).
+- **Gemini/OpenRouter free-tier rate-limit and flakiness under heavy session use (2026-08-17,
+  WATCHING):** hit real 429s from Gemini after many consecutive test/harness/pregenerate runs in one
+  session; `DEFAULT_PROVIDER=openrouter` switches every test/script context off it with no code
+  change (see `backend/conftest.py`), but OpenRouter's own free tier is separately flaky (a
+  `RemoteProtocolError` on the one live-verified attempt) — not a guaranteed fix, worth trying, not
+  a config problem to chase further if it also fails.
+- 2026-08-07 gateway/proxy flakiness (Chroma concurrent-access `RuntimeError`, a TCS auth-DB outage,
+  Phi-4-reasoning intermittent 404s) — all old, non-recurring since, moved to
+  [state-progress-history.md](state-progress-history.md) along with other resolved issues (stack
+  mismatch, model deprecations).
 
 ## RESUME INSTRUCTION
 If resuming a stalled session: read this file, then [decisions-log.md](decisions-log.md). Do not

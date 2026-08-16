@@ -3,7 +3,7 @@ type: rules
 title: Frontend Rules & Commenting Standard
 status: active
 updated: 2026-08-16
-related: [rules-backend.md, architecture/architecture/api-contract.md, domain/domain/domain-multimodal-intake.md]
+related: [rules-backend.md, architecture/api-contract.md, domain/domain-multimodal-intake.md]
 ---
 
 **Re-read this on every coding step. It is a standing rule, not a one-time reminder.**
