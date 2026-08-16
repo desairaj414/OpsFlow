@@ -3,7 +3,7 @@ type: domain
 title: Domain — Three Workflow Families
 status: active
 updated: 2026-08-16
-related: [domain-agents.md, ../architecture/../architecture/schema-db.md]
+related: [domain-agents.md, ../architecture/schema-db.md]
 ---
 
 From PRD §2.4 D7 and §1.2 clauses A1-A3. **Same agent chain, same guardrails, all three run because

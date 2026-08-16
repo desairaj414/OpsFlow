@@ -3,7 +3,7 @@ type: reference
 title: Environment & Network
 status: active
 updated: 2026-08-16
-related: [errors-solved.md, ../architecture/../architecture/models-routing.md]
+related: [errors-solved.md, ../architecture/models-routing.md]
 ---
 
 ## Run commands

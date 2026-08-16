@@ -3,7 +3,7 @@ type: reference
 title: Architecture As-Built — Agent Chain
 status: active
 updated: 2026-08-16
-related: [arch-overview.md, ../domain/../domain/domain-agents.md, models-routing.md, api-contract.md, architecture-as-built-metrics.md]
+related: [arch-overview.md, ../domain/domain-agents.md, models-routing.md, api-contract.md, architecture-as-built-metrics.md]
 ---
 
 Companion to [arch-overview.md](arch-overview.md) (which mirrors the frozen PRD design intent —

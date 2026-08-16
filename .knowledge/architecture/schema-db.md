@@ -3,7 +3,7 @@ type: schema
 title: Database Schema (SQLite + Chroma)
 status: active
 updated: 2026-08-16
-related: [api-contract.md, ../domain/../domain/domain-workflows.md]
+related: [api-contract.md, ../domain/domain-workflows.md]
 ---
 
 **Not specified verbatim in PRD_INITIAL.md — this is the operational detail an execution session

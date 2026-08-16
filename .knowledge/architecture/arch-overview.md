@@ -3,7 +3,7 @@ type: reference
 title: Architecture Overview
 status: active
 updated: 2026-08-16
-related: [models-routing.md, api-contract.md, ../domain/../domain/domain-agents.md, ../rules-backend.md]
+related: [models-routing.md, api-contract.md, ../domain/domain-agents.md, ../rules-backend.md]
 ---
 
 From PRD_INITIAL.md §3. Draw the tier diagram below when a juror asks — do not re-derive it.

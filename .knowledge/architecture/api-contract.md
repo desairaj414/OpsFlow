@@ -3,7 +3,7 @@ type: contract
 title: API & Agent Contracts
 status: active
 updated: 2026-08-16
-related: [schema-db.md, ../domain/../domain/domain-multimodal-intake.md, ../domain/../domain/domain-agents.md, arch-overview.md]
+related: [schema-db.md, ../domain/domain-multimodal-intake.md, ../domain/domain-agents.md, arch-overview.md]
 ---
 
 **Canonical schemas per PRD §0 working method: freeze these at the end of Phase 1 and paste them

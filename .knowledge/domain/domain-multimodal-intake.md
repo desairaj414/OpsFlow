@@ -3,7 +3,7 @@ type: domain
 title: Domain — Multimodal Intake (Voice + Vision)
 status: active
 updated: 2026-08-16
-related: [../architecture/../architecture/api-contract.md, ../architecture/../architecture/models-routing.md, domain-privacy.md]
+related: [../architecture/api-contract.md, ../architecture/models-routing.md, domain-privacy.md]
 ---
 
 From PRD §2.4 D1 (core, not stretch) and §3.2. One `intake/` component, three entry paths, one

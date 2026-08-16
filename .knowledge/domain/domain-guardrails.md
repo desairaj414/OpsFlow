@@ -3,7 +3,7 @@ type: domain
 title: Domain — Guardrails & Bias Mitigation
 status: active
 updated: 2026-08-07
-related: [domain-agents.md, domain-workflows.md, ../architecture/../architecture/schema-db.md]
+related: [domain-agents.md, domain-workflows.md, ../architecture/schema-db.md]
 ---
 
 From PRD §2.3 (four pillars) and §2.5 (bias table). These are graded, testable behaviours — build

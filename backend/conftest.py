@@ -1,5 +1,17 @@
 """Ensures backend/ is importable as the package root for pytest (`from guardrails.x import y`,
-`from correlation.x import y`, etc.) regardless of where pytest is invoked from."""
+`from correlation.x import y`, etc.) regardless of where pytest is invoked from.
+
+Hitting Gemini's free-tier rate limit mid-suite (real gateway calls, no mocking)? Every test/script
+context (pytest, eval/harness.py, scripts/pregenerate_demo_outputs.py, smoke_test.py) reads the
+active provider from provider_context.get_active_provider(), which falls back to
+providers.DEFAULT_PROVIDER outside a live request — and that's a plain env var, already
+OPENROUTER_API_KEY-backed in this repo's .env. No code change needed to switch:
+
+    DEFAULT_PROVIDER=openrouter python -m pytest
+
+Works for both the LangChain-wrapped calls (api_client.get_llm(), used by diagnosis.py/planner.py)
+and the raw-httpx ones (intake/vision_path.py's _extract() — this one has NO automatic in-process
+fallback the way get_llm() does, so a 429 there always needs this env-var switch, not a retry)."""
 import os
 import sys
 

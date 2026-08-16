@@ -3,7 +3,7 @@ type: reference
 title: Model Routing Table
 status: active
 updated: 2026-08-16
-related: [arch-overview.md, ../reference/../reference/citations.md, ../reference/../reference/env-network.md]
+related: [arch-overview.md, ../reference/citations.md, ../reference/env-network.md]
 ---
 
 **CURRENT SCOPE NOTE (2026-08-16):** everything below this line describes the **original,

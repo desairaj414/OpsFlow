@@ -3,7 +3,7 @@ type: reference
 title: TCS Hackathon — Initial Environment & Gateway Findings
 status: done
 updated: 2026-08-17
-related: [env-network.md, ../architecture/../architecture/models-routing.md, ../decisions-log.md]
+related: [env-network.md, ../architecture/models-routing.md, ../decisions-log.md]
 ---
 
 Moved here 2026-08-17 from the repo root (`PHASE0_FINDINGS.md`) and renamed — its content is really

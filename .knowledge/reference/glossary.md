@@ -3,7 +3,7 @@ type: reference
 title: Beginner's Glossary
 status: active
 updated: 2026-08-16
-related: [../architecture/../architecture/arch-overview.md, ../architecture/../architecture/api-contract.md, ../domain/../domain/domain-agents.md, ../domain/../domain/domain-guardrails.md, ../domain/../domain/domain-privacy.md]
+related: [../architecture/arch-overview.md, ../architecture/api-contract.md, ../domain/domain-agents.md, ../domain/domain-guardrails.md, ../domain/domain-privacy.md]
 ---
 
 Plain-language definitions for terms used across the `.knowledge/` tree, written for a

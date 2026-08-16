@@ -3,7 +3,7 @@ type: domain
 title: Domain — Agent Chain & Orchestration
 status: active
 updated: 2026-08-16
-related: [../architecture/../architecture/arch-overview.md, ../architecture/../architecture/api-contract.md, domain-workflows.md, domain-guardrails.md]
+related: [../architecture/arch-overview.md, ../architecture/api-contract.md, domain-workflows.md, domain-guardrails.md]
 ---
 
 From PRD §3.4 and §5 Phase 3 build order. **Two levels only: Supervisor + specialists — do not add

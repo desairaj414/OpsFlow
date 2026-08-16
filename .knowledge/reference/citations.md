@@ -3,7 +3,7 @@ type: reference
 title: Citations & Provenance
 status: active
 updated: 2026-08-07
-related: [../domain/../domain/domain-privacy.md]
+related: [../domain/domain-privacy.md]
 ---
 
 Seeded from `PRD_INITIAL.md` §6 (Synthetic Data Strategy) and §6.3 (Provenance). Paste directly into

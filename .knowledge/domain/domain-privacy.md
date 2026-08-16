@@ -3,7 +3,7 @@ type: domain
 title: Domain — Privacy, Scrubbing & Audit
 status: active
 updated: 2026-08-07
-related: [domain-multimodal-intake.md, domain-guardrails.md, ../architecture/../architecture/schema-db.md]
+related: [domain-multimodal-intake.md, domain-guardrails.md, ../architecture/schema-db.md]
 ---
 
 From PRD §1.5. **Domain is IT Operations/ITSM — not Life Sciences/Healthcare. No PHI. Do not add
