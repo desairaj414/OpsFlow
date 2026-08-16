@@ -33,10 +33,10 @@ concepts too, since staleness compounds silently between sessions. Specifically:
 4. Run the okf skill's validate mode (okf:validate --strict .okf) and fix every error.
 5. Check whether any touched .knowledge/ node now exceeds ~200 lines and split it if so (topic
    files, update CLAUDE.md's index and any related: frontmatter pointing at the old node).
-6. Commit everything from steps 1-5 now — EVERYTHING except .knowledge/session-log.md itself. This
+6. Commit everything from steps 1-5 now — EVERYTHING except .knowledge/reference/session-log.md itself. This
    is the "content commit." (If you're about to push, do that fetch/divergence-check/push here too,
    for this commit — session-log.md's own commit in step 7 can go up in the same push right after.)
-7. Only now, append an entry to .knowledge/session-log.md for this session, and commit it ALONE, as
+7. Only now, append an entry to .knowledge/reference/session-log.md for this session, and commit it ALONE, as
    a second, separate "session-end commit." Get the exact commit range with
    git log <previous entry's "Up to commit" hash>..HEAD --oneline (this now includes the content
    commit from step 6) — don't guess from memory or dates. Classify each commit as major
@@ -67,7 +67,7 @@ pass) is tracked there and in decisions-log.md, not narrated in state-progress.m
 "POST-SUBMISSION WORK" note for why. Check for anything logged after your own last known date that
 you haven't accounted for yet. Once synced, tell me so and ask what I want to work on — don't start
 executing anything until I've told you the actual task. Before that, also skim the most recent
-entry in .knowledge/session-log.md — its "Open / follow-ups" section is exactly the stuff that got
+entry in .knowledge/reference/session-log.md — its "Open / follow-ups" section is exactly the stuff that got
 flagged but not finished last time (e.g. "committed but not pushed"), and its "Up to commit" hash
 is what Prompt A will anchor the next close-out entry to.
 ```
