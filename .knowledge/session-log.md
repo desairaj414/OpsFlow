@@ -35,12 +35,13 @@ Anchor on git, not memory — chat history survives `/compact` unreliably, commi
 ---
 
 ## Session 1 — 2026-08-10 to 2026-08-16
-**Up to commit:** `ea246b7`
-**Commits this session (14):** `bce4785`, `ba2ad42`, `3faf67d`, `613aa88`, `b6ca809`, `b7a8e6b`,
-`046b1a6`, `32e286a`, `8a9dab6`, `bd2446d`, `81ebfe9`, `8039c3d`, `bc2d29e`, `ea246b7` — spanning
-commit timestamps 2026-08-13 22:47 to 2026-08-16 16:42. The session itself started 2026-08-10
-19:04 (per the Claude Code transcript's first message) — several days of design/audit work
-happened before the first commit landed.
+**Up to commit:** `1552566` (this entry's own finalizing commit necessarily trails by one — same
+caveat as noted when this line was first written; the next session's range will pick it up fine)
+**Commits this session (15):** `bce4785`, `ba2ad42`, `3faf67d`, `613aa88`, `b6ca809`, `b7a8e6b`,
+`046b1a6`, `32e286a`, `8a9dab6`, `bd2446d`, `81ebfe9`, `8039c3d`, `bc2d29e`, `ea246b7`, `1552566` —
+spanning commit timestamps 2026-08-13 22:47 to 2026-08-16 17:xx. The session itself started
+2026-08-10 19:04 (per the Claude Code transcript's first message) — several days of design/audit
+work happened before the first commit landed.
 
 **Major:**
 - Pivoted the app off a single hardcoded TCS GenAI Lab endpoint to a 6-provider LLM architecture
@@ -75,17 +76,26 @@ happened before the first commit landed.
   code bug the audit surfaced: `supervisor.py` hardcoded TCS model names into the Agent Trace's
   `model_used` field regardless of the session's actual active provider — it now reports the real
   answering model via a new `SpecialistResult.model_used` field — `ea246b7`.
+- Added this journal (`session-log.md`) and the git-anchored checkpoint mechanism it uses; verified
+  Render's old pre-rename services are actually gone (`list_services`, confirmed) and found the
+  GitHub repo is likely still private, not public as assumed — `1552566`.
 
 **Minor:**
 - Theme toggle added to the login screen (post-login screens already had one) — `613aa88`.
 
 **Open / follow-ups for next session:**
-- `bc2d29e`/`ea246b7` (today's docs sync + `model_used` fix) are committed locally but **not yet
-  pushed** to `origin/main` — needs a go-ahead.
-- The old `opsflow-backend`/`opsflow-frontend` Render services (pre-rename) are still running,
-  pending manual deletion — the human said they'd do this themselves.
-- Whether the GitHub repo is actually public was never independently re-confirmed this session
-  (the original hosting plan flagged this as a checkpoint item) — worth a quick check.
+- ~~Commits not yet pushed to `origin/main`~~ — **RESOLVED this session**, pushed after this entry
+  was written (see push confirmation in chat; not re-verified by a later session, so re-check
+  `git status` vs `origin/main` if this note is ever stale).
+- **GitHub repo appears to still be private**, not public. Checked directly: an unauthenticated
+  `GET https://api.github.com/repos/desairaj414/OpsFlow` returns `404 Not Found` — for a repo that
+  demonstrably exists and deploys (Render's `opsflowapp`/`opsflowapp-backend` both pull from it
+  live), that specific response is GitHub's behavior for a private repo, not a missing one. This
+  matters because the original goal for this whole session (this file's own Session 1 entry) was a
+  *public* resume link — a private repo means that goal isn't fully met yet, even with the app
+  itself live and reachable. Needs a decision: make it public, or is private intentional for now.
+- ~~Old `opsflow-backend`/`opsflow-frontend` Render services pending deletion~~ — **RESOLVED**,
+  verified via `list_services`: only `opsflowapp`/`opsflowapp-backend` exist for this project now.
 
 **Verified:** `.okf` bundle `okf:validate --strict` clean (34 concepts, 0 errors) both after the
 docs sync and again after the `model_used` fix; backend suite 96 passed / 2 skipped (real gateway
