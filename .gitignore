@@ -38,6 +38,10 @@ backend/app.db
 .vscode/*
 !.vscode/settings.json
 
+# --- Claude Code local state (machine-specific, not shared) ---
+.claude/settings.local.json
+.claude/scheduled_tasks.lock
+
 # --- Explicitly KEEP (do not ignore) ---
 !.knowledge/
 !CLAUDE.md
