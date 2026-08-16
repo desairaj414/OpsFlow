@@ -3,7 +3,7 @@ type: process
 title: Session Workflow — Close-out & Start-up Prompts
 status: active
 updated: 2026-08-16
-related: [state-progress.md, decisions-log.md]
+related: [state-progress.md, decisions-log.md, session-log.md]
 ---
 
 Two reusable prompts for splitting long working threads into fresh sessions without losing
@@ -33,6 +33,16 @@ concepts too, since staleness compounds silently between sessions. Specifically:
 4. Run the okf skill's validate mode (okf:validate --strict .okf) and fix every error.
 5. Check whether any touched .knowledge/ node now exceeds ~200 lines and split it if so (topic
    files, update CLAUDE.md's index and any related: frontmatter pointing at the old node).
+6. Append an entry to .knowledge/session-log.md for this session. Get the exact commit range with
+   git log <previous entry's "Up to commit" hash>..HEAD --oneline — don't guess from memory or
+   dates. Classify each commit as major (product/architecture/decision/bugfix — one bullet each,
+   named commit hash) or minor (housekeeping/wording — one rolled-up line covering all of them).
+   Skip anything that was reverted within this same session before ever being committed. Carry
+   forward any still-unresolved items from the previous entry's "Open / follow-ups" section (remove
+   ones that got resolved this session), add any new ones. Add a "Verified" line: what was actually
+   tested (build/test-suite/live-check results), not just written. Update the "Up to commit"
+   checkpoint to the new HEAD hash. This file is exempt from the 200-line split rule — don't split
+   it, don't trim old entries.
 Use targeted edits only, never full-file rewrites — these are shared long-lived documents. When
 done, give me a short summary of what you updated (file list, one line each) and confirm the
 working tree is clean, or tell me exactly what's still uncommitted, before I end the session.
@@ -48,7 +58,10 @@ LLM pivot, 3-mode public demo UX, Render hosting, the OKF bundle itself, the mob
 pass) is tracked there and in decisions-log.md, not narrated in state-progress.md — see that file's
 "POST-SUBMISSION WORK" note for why. Check for anything logged after your own last known date that
 you haven't accounted for yet. Once synced, tell me so and ask what I want to work on — don't start
-executing anything until I've told you the actual task.
+executing anything until I've told you the actual task. Before that, also skim the most recent
+entry in .knowledge/session-log.md — its "Open / follow-ups" section is exactly the stuff that got
+flagged but not finished last time (e.g. "committed but not pushed"), and its "Up to commit" hash
+is what Prompt A will anchor the next close-out entry to.
 ```
 
 ## Why two prompts, not one

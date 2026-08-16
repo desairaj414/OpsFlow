@@ -63,6 +63,7 @@ derived from it, not a replacement. See `.okf/index.md` for its entry point.
 - [.knowledge/extra-credit.md](.knowledge/extra-credit.md) — §8 backlog, INCLUDE/SKIP as decided
 - [.knowledge/errors-solved.md](.knowledge/errors-solved.md) — error signature → root cause → fix
 - [.knowledge/session-workflow.md](.knowledge/session-workflow.md) — copy-paste session close-out / start-up prompts that keep `.knowledge/`+`.okf/` in sync across a fresh-session split
+- [.knowledge/session-log.md](.knowledge/session-log.md) — human-facing "what happened each session" journal, git-commit-anchored, exempt from the 200-line rule
 
 ## Hard schedule anchors (non-negotiable, computed from H+1:30 @ Fri 10:30)
 - Handover: Fri 09:00 (H+0:00)
